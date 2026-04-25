@@ -12,12 +12,10 @@ interface SlideContentProps {
 
 export const SlideContent = ({ slide }: SlideContentProps) => (
   <View style={{ width }} className="flex-1 bg-[#F0F9FF] px-[5%]">
-    {/* Illustration */}
-    <View className="items-center mt-10 mb-6">
+    <View className="items-center mt-[5%] mb-[4%]">
       <SvgXml xml={slide.svg} width={width * 0.82} height={220} />
     </View>
 
-    {/* Title */}
     <Text
       className="font-Inter_Bold text-gray-900 mb-2"
       style={{ fontSize: 24, lineHeight: 32 }}
@@ -25,7 +23,6 @@ export const SlideContent = ({ slide }: SlideContentProps) => (
       {slide.title}
     </Text>
 
-    {/* Description */}
     <Text
       className="font-Inter_Regular text-gray-500 mb-4"
       style={{ fontSize: 14, lineHeight: 22 }}
@@ -33,7 +30,6 @@ export const SlideContent = ({ slide }: SlideContentProps) => (
       {slide.description}
     </Text>
 
-    {/* Chips — screen 1 */}
     {slide.chips && (
       <View className="flex-row flex-wrap mb-2">
         {slide.chips.map((chip) => (
@@ -42,7 +38,6 @@ export const SlideContent = ({ slide }: SlideContentProps) => (
       </View>
     )}
 
-    {/* List items */}
     {slide.listItems && (
       <View className="mb-2">
         {slide.listItems.map((item) => (
@@ -51,7 +46,6 @@ export const SlideContent = ({ slide }: SlideContentProps) => (
       </View>
     )}
 
-    {/* Note — screen 5 */}
     {slide.note && (
       <View className="bg-gray-100 rounded-xl px-4 py-3 mb-4">
         <Text className="text-xs text-gray-500 font-Inter_Regular text-center">

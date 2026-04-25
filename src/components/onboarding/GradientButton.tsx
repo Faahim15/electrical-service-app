@@ -4,7 +4,7 @@ import { Text, TouchableOpacity } from "react-native";
 
 interface GradientButtonProps {
   label: string;
-  onPress: () => void;
+  onPress?: () => void;
 }
 
 export const GradientButton = ({ label, onPress }: GradientButtonProps) => (

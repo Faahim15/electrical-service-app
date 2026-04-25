@@ -1,18 +1,18 @@
 import React, { useCallback, useState } from "react";
 import {
-    Dimensions,
-    StatusBar,
-    Text,
-    TouchableOpacity,
-    View,
+  Dimensions,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
-    Easing,
-    runOnJS,
-    useAnimatedStyle,
-    useSharedValue,
-    withTiming,
+  Easing,
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
 } from "react-native-reanimated";
 
 // আপনার কম্পোনেন্ট ইমপোর্টগুলো ঠিক রাখুন
@@ -31,26 +31,21 @@ export default function OnboardingScreen() {
   const translateX = useSharedValue(0);
   const startX = useSharedValue(0);
 
-  // JS Thread এ স্টেট আপডেট করার ফাংশন
   const updateIndex = (nextIndex: number) => {
     setCurrentIndex(nextIndex);
   };
 
-  // এনিমেশন এবং স্টেট ম্যানেজমেন্ট ফাংশন
   const animateTo = useCallback((nextIndex: number) => {
     if (nextIndex < 0 || nextIndex >= TOTAL) return;
 
-    // ১. স্টেট আপডেট (JS Thread)
     updateIndex(nextIndex);
 
-    // ২. এনিমেশন রান করা (UI Thread)
     translateX.value = withTiming(-nextIndex * width, {
       duration: DURATION,
       easing: Easing.out(Easing.cubic),
     });
   }, []);
 
-  // Gesture Logic
   const panGesture = Gesture.Pan()
     .onStart(() => {
       "worklet";
@@ -59,7 +54,6 @@ export default function OnboardingScreen() {
     .onUpdate((e) => {
       "worklet";
       const proposed = startX.value + e.translationX;
-      // স্ক্রিনের বাইরে ড্র্যাগ করা আটকানো (Bouncing effect check)
       const minVal = -(TOTAL - 1) * width;
       translateX.value = Math.max(minVal - 50, Math.min(50, proposed));
     })
@@ -69,7 +63,6 @@ export default function OnboardingScreen() {
         e.translationX < -SWIPE_THRESHOLD || e.velocityX < -500;
       const swipedRight = e.translationX > SWIPE_THRESHOLD || e.velocityX > 500;
 
-      // বর্তমান ইনডেক্স ক্যালকুলেশন (translateX থেকে)
       const currentIndexUI = Math.round(Math.abs(startX.value / width));
       let next = currentIndexUI;
 
@@ -79,13 +72,11 @@ export default function OnboardingScreen() {
         next = currentIndexUI - 1;
       }
 
-      // এনিমেশন রান করা
       translateX.value = withTiming(-next * width, {
         duration: DURATION,
         easing: Easing.out(Easing.cubic),
       });
 
-      // JS State আপডেট করা
       runOnJS(updateIndex)(next);
     });
 
@@ -93,7 +84,6 @@ export default function OnboardingScreen() {
     transform: [{ translateX: translateX.value }],
   }));
 
-  // প্যানিক চেক: স্লাইড যেন undefined না হয়
   const slide = slides[currentIndex] || slides[0];
 
   return (
@@ -115,7 +105,7 @@ export default function OnboardingScreen() {
         </Animated.View>
       </GestureDetector>
 
-      <View className="px-[5%] pb-10 bg-[#F0F9FF]">
+      <View className="px-[5%] pt-[5%] bg-[#F0F9FF]">
         <GradientButton
           label={slide.primaryBtn}
           onPress={() => animateTo(currentIndex + 1)}

@@ -1,15 +1,14 @@
 import {
-  appIcon,
-  appleIconXml,
-  googleIconXml,
+    appleIconXml,
+    createAccountIcon,
+    googleIconXml,
 } from "@/assets/images/svg/auth-svg";
-import Apptext from "@/src/components/auth/Apptext";
 import AuthHeading from "@/src/components/auth/AuthHeading";
 import Divider from "@/src/components/auth/Divider";
 import Footer from "@/src/components/auth/Footer";
-import ForgotPassword from "@/src/components/auth/ForgotPassword";
-import SignUpLink from "@/src/components/auth/SignUpLink";
+import SignInLink from "@/src/components/auth/SignUpLink";
 import SocialButton from "@/src/components/auth/SocialButton";
+import TermsAndPolicy from "@/src/components/auth/TermsAndPolicy";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import CustomInput from "@/src/components/shared/CustomInput";
 import CustomSvg from "@/src/components/shared/CustomSvg";
@@ -19,9 +18,12 @@ import { router } from "expo-router";
 import { useState } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 
-export default function LoginScreen() {
+export default function SignUpScreen() {
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   return (
     <LinearGradient
@@ -43,22 +45,28 @@ export default function LoginScreen() {
             {/* Logo */}
             <View className="items-center">
               <CustomSvg
-                xml={appIcon}
+                xml={createAccountIcon}
                 height={verticalScale(92)}
                 width={scale(158)}
               />
             </View>
 
-            {/* Brand Name */}
-            <Apptext
-              title="Four Elements Electric"
-              className="font-Inter_Bold text-center text-2xl"
-            />
-
             {/* Heading */}
             <AuthHeading
-              title="Welcome back"
-              subtitle="Sign in to manage quotes, reminders, saved services, and notifications."
+              title="Create your account"
+              subtitle="Set up your profile to request quotes faster, track reminders, and save helpful resources."
+            />
+
+            {/* Full Name Input */}
+            <CustomInput
+              label="Full Name"
+              leftIcon="person-outline"
+              textInputConfig={{
+                placeholder: "Enter your full name",
+                autoCapitalize: "words",
+                value: fullName,
+                onChangeText: setFullName,
+              }}
             />
 
             {/* Email Input */}
@@ -74,26 +82,47 @@ export default function LoginScreen() {
               }}
             />
 
+            {/* Phone Number Input */}
+            <CustomInput
+              label="Phone Number"
+              leftIcon="call-outline"
+              textInputConfig={{
+                placeholder: "Enter your phone number",
+                keyboardType: "phone-pad",
+                value: phone,
+                onChangeText: setPhone,
+              }}
+            />
+
             {/* Password Input */}
             <CustomInput
               label="Password"
               leftIcon="lock-closed-outline"
               textInputConfig={{
-                placeholder: "Enter your password",
+                placeholder: "Create a password",
                 secureTextEntry: true,
                 value: password,
                 onChangeText: setPassword,
               }}
             />
 
-            {/* Remember Me + Forgot Password */}
-            <ForgotPassword title="Remember me" subtitle="Forgot Password?" />
-
-            {/* Sign In Button */}
-            <GradientButton
-              onPress={() => router.push("/(tabs)/home")}
-              label="Sign In"
+            {/* Confirm Password Input */}
+            <CustomInput
+              label="Confirm Password"
+              leftIcon="lock-closed-outline"
+              textInputConfig={{
+                placeholder: "Confirm your password",
+                secureTextEntry: true,
+                value: confirmPassword,
+                onChangeText: setConfirmPassword,
+              }}
             />
+
+            {/* Terms & Privacy Policy */}
+            <TermsAndPolicy />
+
+            {/* Create Account Button */}
+            <GradientButton onPress={() => {}} label="Create Account" />
 
             {/* Divider */}
             <Divider title="or continue with" />
@@ -112,11 +141,11 @@ export default function LoginScreen() {
               />
             </View>
 
-            {/* Sign Up Link */}
-            <SignUpLink
-              onPress={() => router.push("/auth/sign-up")}
-              title=" Don't have an account?"
-              subtitle="Sign Up"
+            {/* Sign In Link */}
+            <SignInLink
+              onPress={() => router.push("/auth/sign-in")}
+              title="Already have an account?"
+              subtitle="Sign In"
             />
 
             {/* Footer */}
