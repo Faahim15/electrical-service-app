@@ -1,15 +1,23 @@
 import { Entypo } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { Href, router } from "expo-router";
 import React, { useEffect, useRef } from "react";
-import { Animated, Pressable, Text, View } from "react-native";
+import { Animated, Text, TouchableOpacity, View } from "react-native";
 import { SvgXml } from "react-native-svg";
 type MenuRowProps = {
   emoji: string;
+  route: Href;
   title: string;
   subtitle: string;
   delay: number;
 };
-const MenuRowProfile = ({ emoji, title, subtitle, delay }: MenuRowProps) => {
+const MenuRowProfile = ({
+  emoji,
+  route,
+  title,
+  subtitle,
+  delay,
+}: MenuRowProps) => {
   const translateX = useRef(new Animated.Value(60)).current;
   const opacity = useRef(new Animated.Value(0)).current;
   const scale = useRef(new Animated.Value(1)).current;
@@ -32,30 +40,29 @@ const MenuRowProfile = ({ emoji, title, subtitle, delay }: MenuRowProps) => {
     ]).start();
   }, []);
 
-  const handlePressIn = () => {
-    Animated.spring(scale, {
-      toValue: 0.97,
-      useNativeDriver: true,
-      tension: 200,
-    }).start();
-  };
+  // const handlePressIn = () => {
+  //   Animated.spring(scale, {
+  //     toValue: 0.97,
+  //     useNativeDriver: true,
+  //     tension: 200,
+  //   }).start();
+  // };
 
-  const handlePressOut = () => {
-    Animated.spring(scale, {
-      toValue: 1,
-      useNativeDriver: true,
-      tension: 200,
-    }).start();
-  };
+  // const handlePressOut = () => {
+  //   Animated.spring(scale, {
+  //     toValue: 1,
+  //     useNativeDriver: true,
+  //     tension: 200,
+  //   }).start();
+  // };
 
   return (
     <Animated.View
       style={{ transform: [{ translateX }, { scale }], opacity }}
       className="mb-3"
     >
-      <Pressable
-        onPressIn={handlePressIn}
-        onPressOut={handlePressOut}
+      <TouchableOpacity
+        onPress={() => router.push(route)}
         className="bg-white rounded-2xl px-4 py-3.5 flex-row items-center shadow-sm"
         style={{
           shadowColor: "#0000001A",
@@ -92,7 +99,7 @@ const MenuRowProfile = ({ emoji, title, subtitle, delay }: MenuRowProps) => {
         <View>
           <Entypo name="chevron-small-right" size={24} color="#CBD5E1" />
         </View>
-      </Pressable>
+      </TouchableOpacity>
     </Animated.View>
   );
 };

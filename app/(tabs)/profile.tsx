@@ -9,6 +9,7 @@ import MenuRowProfile from "@/src/components/profile/MenuRowProfile";
 import StatCardProfile from "@/src/components/profile/StatCardProfile";
 import UserProfileCard from "@/src/components/profile/UserProfileCard";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
+import { Href } from "expo-router";
 import React, { useEffect, useRef } from "react";
 import { Animated, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -16,6 +17,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 // ----------- Animated menu row --------------------------------
 type MenuRowProps = {
   emoji: string;
+  route: Href;
   title: string;
   subtitle: string;
   delay: number;
@@ -23,30 +25,35 @@ type MenuRowProps = {
 const menuItems: MenuRowProps[] = [
   {
     emoji: notesIcon,
+    route: "/my-quotes",
     title: "My Quotes",
     subtitle: "View all quote requests",
     delay: 400,
   },
   {
     emoji: clockIcon,
+    route: "/my-reminder",
     title: "My Reminders",
     subtitle: "Manage maintenance alerts",
     delay: 480,
   },
   {
     emoji: openbookIcon,
+    route: "/save-guides",
     title: "Saved Guides",
     subtitle: "Bookmarked help articles",
     delay: 560,
   },
   {
     emoji: favoriteIcon,
+    route: "/favorite-partners",
     title: "Favorite Partners",
     subtitle: "Your preferred contractors",
     delay: 640,
   },
   {
     emoji: settingsIcon,
+    route: "/settings",
     title: "Settings",
     subtitle: "App preferences",
     delay: 720,

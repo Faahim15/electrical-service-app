@@ -10,7 +10,14 @@ export default function Layout() {
           animation: "slide_from_right",
         }}
       >
-        <Stack.Screen name="editprofile" />
+        <Stack.Screen name="my-quotedetais" />
+        <Stack.Screen name="my-quotes" />
+        <Stack.Screen name="my-reminder" />
+        <Stack.Screen name="reminder-details" />
+        <Stack.Screen name="save-guides " />
+        <Stack.Screen name="favorite-partners" />
+        <Stack.Screen name="settings" />
+        <Stack.Screen name="(setting)" />
       </Stack>
     </SafeAreaProvider>
   );
