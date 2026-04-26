@@ -1,5 +1,6 @@
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
 import { Animated, Text, TouchableOpacity, View } from "react-native";
 
@@ -76,6 +77,7 @@ const UserProfileCard = () => {
 
           {/* Edit Profile button */}
           <TouchableOpacity
+            onPress={() => router.push("/editprofile")}
             activeOpacity={0.82}
             className="bg-white rounded-[18px] py-[13px] flex-row items-center justify-center gap-[9px]"
           >
