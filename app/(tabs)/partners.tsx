@@ -1,5 +1,7 @@
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
+import { setSelectedCategory } from "@/src/redux/slices/partnersRouterSlice";
 import { Entypo } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
 import {
   Animated,
@@ -9,8 +11,15 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-const CATEGORIES = [
+import { useDispatch } from "react-redux";
+interface Category {
+  id: string;
+  title: string;
+  description: string;
+  partners: number;
+  emoji: string;
+}
+const CATEGORIES: Category[] = [
   {
     id: "1",
     title: "Accessory Building / Structure",
@@ -94,6 +103,7 @@ const CATEGORIES = [
   },
   {
     id: "12",
+
     title: "Septic",
     description: "Contact our trusted partners for your Septic needs.",
     partners: 1,
@@ -101,6 +111,7 @@ const CATEGORIES = [
   },
   {
     id: "13",
+
     title: "Solar",
     description: "Contact our trusted partners for your HVAC needs.",
     partners: 1,
@@ -143,6 +154,12 @@ const CategoryCard = ({
     ]).start();
   }, []);
 
+  const dispatch = useDispatch();
+
+  const handleRoute = () => {
+    dispatch(setSelectedCategory(item));
+    router.push("/partner-categorie");
+  };
   return (
     <Animated.View
       style={{
@@ -161,6 +178,7 @@ const CategoryCard = ({
           shadowRadius: 4,
           elevation: 2,
         }}
+        onPress={handleRoute}
       >
         <View className="w-11 h-11 rounded-xl bg-slate-50 items-center justify-center mr-3">
           <Text style={{ fontSize: 24 }}>{item.emoji}</Text>
@@ -222,7 +240,7 @@ const Partners = () => {
           className="pb-4"
         >
           <Text className="text-2xl font-Inter_Bold text-[#0F172A]">
-            Partners
+            Partners Categories
           </Text>
         </Animated.View>
 

@@ -6,6 +6,7 @@ export default function Layout() {
     <SafeAreaProvider>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(page)" />
+        <Stack.Screen name="(partners)" />
       </Stack>
     </SafeAreaProvider>
   );
