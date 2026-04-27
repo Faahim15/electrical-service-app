@@ -279,7 +279,10 @@ const Trobleshooting = () => {
                 smells, heat, or visible damage.
               </Text>
               {/* CTA */}
-              <TouchableOpacity activeOpacity={0.7}>
+              <TouchableOpacity
+                onPress={() => router.push("/safety-warning")}
+                activeOpacity={0.7}
+              >
                 <Text className="text-[13px] font-Inter_SemiBold text-[#F59E0B]">
                   View Safety Warning
                 </Text>

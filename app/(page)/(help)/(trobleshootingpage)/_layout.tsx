@@ -10,10 +10,7 @@ export default function Layout() {
           animation: "slide_from_right",
         }}
       >
-        <Stack.Screen name="trobleshooting" />
-        <Stack.Screen name="safety" />
-        <Stack.Screen name="(safety)" />
-        <Stack.Screen name="(trobleshootingpage)" />
+        <Stack.Screen name="safety-warning" />
       </Stack>
     </SafeAreaProvider>
   );

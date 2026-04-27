@@ -12,8 +12,6 @@ export default function Layout() {
       >
         <Stack.Screen name="trobleshooting" />
         <Stack.Screen name="safety" />
-        <Stack.Screen name="(safety)" />
-        <Stack.Screen name="(trobleshootingpage)" />
       </Stack>
     </SafeAreaProvider>
   );
