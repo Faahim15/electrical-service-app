@@ -12,7 +12,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const PARTNERS = [
   {
@@ -63,7 +63,7 @@ const Partnercategorie = () => {
       }),
     ]).start();
   }, []);
-  const dispatch = useDispatch();
+
   const category = useSelector(
     (state: RootState) => state.partners.selectedCategory,
   );
