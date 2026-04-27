@@ -4,6 +4,7 @@ import { Href, router } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
+  Linking,
   Modal,
   ScrollView,
   Text,
@@ -128,7 +129,14 @@ const SettingsRow = ({
         activeOpacity={1}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
-        onPress={() => router.push(item.route)}
+        onPress={() => {
+          if (item.title === "Language") return;
+          if (item.title === "Privacy Policy") {
+            Linking.openURL("https://www.fourelementselectric.com/privacy");
+          } else {
+            router.push(item.route);
+          }
+        }}
         className="bg-white rounded-2xl px-4 py-4 flex-row items-center justify-between"
       >
         <View className="flex-row items-center gap-3 flex-1">
@@ -139,16 +147,20 @@ const SettingsRow = ({
 
           {/* Text */}
           <View className="flex-1">
-            <Text className="text-sm text-[#111827] font-Inter_SemiBold">
+            <Text className="text-base text-[#111827] font-Inter_SemiBold">
               {item.title}
             </Text>
-            <Text className="text-xs text-gray-400 font-Inter_Regular mt-0.5">
+            <Text className="text-sm text-gray-400 font-Inter_Regular mt-0.5">
               {item.subtitle}
             </Text>
           </View>
         </View>
 
-        <Feather name="chevron-right" size={18} color="#9CA3AF" />
+        {item.title === "Language" ? (
+          ""
+        ) : (
+          <Feather name="chevron-right" size={18} color="#9CA3AF" />
+        )}
       </TouchableOpacity>
     </Animated.View>
   );
