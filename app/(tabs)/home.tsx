@@ -1,83 +1,21 @@
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
+import {
+  quickActions,
+  recentActivity,
+} from "@/src/constants/tabs.home.constant";
+import { ActivityItem, QuickAction } from "@/src/types/tabs.home.types";
+import { scale, verticalScale } from "@/src/utils/Scaling";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { router } from "expo-router";
 import {
-    FlatList,
-    Pressable,
-    ScrollView,
-    Text,
-    TouchableOpacity,
-    View,
+  FlatList,
+  Pressable,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-
-// ─── Types ───────────────────────────────────────────────
-type QuickAction = {
-  id: string;
-  icon: keyof typeof Ionicons.glyphMap;
-  title: string;
-  subtitle: string;
-};
-type ActivityItem = {
-  id: string;
-  icon: keyof typeof Ionicons.glyphMap;
-  title: string;
-  subtitle: string;
-  badge?: string;
-  badgeColor?: string;
-};
-
-// ─── Data ────────────────────────────────────────────────
-const quickActions: QuickAction[] = [
-  {
-    id: "1",
-    icon: "shield-checkmark-outline",
-    title: "Safety Reminders",
-    subtitle: "Stay safe and informed",
-  },
-  {
-    id: "2",
-    icon: "construct-outline",
-    title: "Troubleshooting",
-    subtitle: "Fix common issues fast",
-  },
-  {
-    id: "3",
-    icon: "document-text-outline",
-    title: "Saved Draft Quotes",
-    subtitle: "Get in touch quickly",
-  },
-  {
-    id: "4",
-    icon: "document-outline",
-    title: "My Quotes",
-    subtitle: "Get in touch quickly",
-  },
-];
-
-const recentActivity: ActivityItem[] = [
-  {
-    id: "1",
-    icon: "flash-outline",
-    title: "EV Charger Quote",
-    subtitle: "Submitted 2 days ago",
-    badge: "Pending",
-    badgeColor: "#F59E0B",
-  },
-  {
-    id: "2",
-    icon: "alarm-outline",
-    title: "Smoke Detector Check",
-    subtitle: "Due in 3 days",
-    badge: "Upcoming",
-    badgeColor: "#3B82F6",
-  },
-  {
-    id: "3",
-    icon: "power-outline",
-    title: "GFCI Reset Guide",
-    subtitle: "Viewed yesterday",
-  },
-];
 
 // ─── Sub-components ───────────────────────────────────────
 function QuickActionCard({ item }: { item: QuickAction }) {
@@ -155,8 +93,7 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 100 }}
       >
-        <View className="px-[6%] pt-[14%]">
-          {/* ── Header ── */}
+        <View className="pt-[14%]">
           <View className="flex-row items-center justify-between mb-1">
             <View>
               <Text className="font-Inter_Bold text-2xl text-gray-900">
@@ -214,7 +151,12 @@ export default function HomeScreen() {
             colors={["#00ABB0", "#0096A6"]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
-            className="rounded-3xl p-5 mb-6"
+            style={{
+              borderRadius: scale(24),
+              paddingHorizontal: scale(20),
+              paddingVertical: verticalScale(20),
+              marginBottom: verticalScale(16),
+            }}
           >
             <View className="w-10 h-10 rounded-xl bg-white/20 items-center justify-center mb-3">
               <Ionicons name="flash" size={20} color="#fff" />
@@ -229,6 +171,7 @@ export default function HomeScreen() {
               <TouchableOpacity
                 activeOpacity={0.85}
                 className="bg-white rounded-xl px-4 py-2.5"
+                onPress={() => router.push("/quote/choose-category")}
               >
                 <Text className="font-Inter_SemiBold text-sm text-[#00ABB0]">
                   Start a Quote
