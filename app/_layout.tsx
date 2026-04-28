@@ -1,9 +1,11 @@
 import "@/global.css";
+import { store } from "@/src/redux/store";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Provider } from "react-redux";
 import { Toaster } from "sonner-native";
 
 SplashScreen.preventAutoHideAsync();
@@ -26,8 +28,12 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <Stack screenOptions={{ headerShown: false }} />
-      <Toaster />
+      <Provider store={store}>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(page)" />
+        </Stack>
+        <Toaster />
+      </Provider>
     </GestureHandlerRootView>
   );
 }
