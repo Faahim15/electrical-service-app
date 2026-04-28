@@ -1,4 +1,9 @@
+import {
+  TROUBLESHOOTING_DATA,
+  TroubleshootingCategory,
+} from "@/assets/data/troubleshootData";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
+import { setSelectedCategory } from "@/src/redux/slices/troubleshootRouteSlice";
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
@@ -11,46 +16,19 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// ── Troubleshooting items data ──
-interface TroubleshootingItem {
-  id: string;
-  icon: "zap" | "shield";
-  title: string;
-  description: string;
-}
-
-const TROUBLESHOOTING_ITEMS: TroubleshootingItem[] = [
-  {
-    id: "1",
-    icon: "zap" as const,
-    title: "Reset GFCI Outlets",
-    description: "Guide to reset a tripped GFCI outlet",
-  },
-  {
-    id: "2",
-    icon: "zap" as const,
-    title: "Reset Circuit Breaker",
-    description: "Step-by-step breaker reset instructions",
-  },
-  {
-    id: "3",
-    icon: "zap" as const,
-    title: "Outlet Not Working",
-    description: "Diagnose and fix outlet issues",
-  },
-];
+import { useDispatch } from "react-redux";
 
 // ── Animated Troubleshooting Card ──
 const TroubleshootingCard = ({
   item,
   index,
 }: {
-  item: (typeof TROUBLESHOOTING_ITEMS)[0];
+  item: TroubleshootingCategory; // ✅ use full type, not TroubleshootingItem
   index: number;
 }) => {
   const slideAnim = useRef(new Animated.Value(40)).current;
   const opacityAnim = useRef(new Animated.Value(0)).current;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     Animated.parallel([
@@ -79,7 +57,10 @@ const TroubleshootingCard = ({
     >
       <TouchableOpacity
         activeOpacity={0.82}
-        // onPress={() => router.push(item.route as any)}
+        onPress={() => {
+          dispatch(setSelectedCategory(item)); // ✅ now TroubleshootingCategory, type matches
+          router.push("/troubleshooting-guides");
+        }}
       >
         <View
           className="bg-white rounded-2xl px-4 py-4 flex-row items-center gap-4"
@@ -125,9 +106,7 @@ const TroubleshootingCard = ({
   );
 };
 
-// ───────────────────────────────────────────────────────────────────────────────
-// ── Troubleshooting Screen ─────────────────────────────────────────────────────
-// ───────────────────────────────────────────────────────────────────────────────
+// ── Troubleshooting Screen ──
 const Trobleshooting = () => {
   const headerSlide = useRef(new Animated.Value(-30)).current;
   const headerOpacity = useRef(new Animated.Value(0)).current;
@@ -140,7 +119,6 @@ const Trobleshooting = () => {
 
   useEffect(() => {
     Animated.parallel([
-      // header
       Animated.timing(headerSlide, {
         toValue: 0,
         duration: 500,
@@ -151,7 +129,6 @@ const Trobleshooting = () => {
         duration: 500,
         useNativeDriver: true,
       }),
-      // hero banner
       Animated.timing(heroBannerSlide, {
         toValue: 0,
         duration: 500,
@@ -164,7 +141,6 @@ const Trobleshooting = () => {
         delay: 150,
         useNativeDriver: true,
       }),
-      // safety card
       Animated.timing(safetySlide, {
         toValue: 0,
         duration: 480,
@@ -177,17 +153,16 @@ const Trobleshooting = () => {
         delay: 260,
         useNativeDriver: true,
       }),
-      // footer
       Animated.timing(footerSlide, {
         toValue: 0,
         duration: 480,
-        delay: 200 + TROUBLESHOOTING_ITEMS.length * 110 + 100,
+        delay: 200 + TROUBLESHOOTING_DATA.length * 110 + 100, // ✅ use TROUBLESHOOTING_DATA.length
         useNativeDriver: true,
       }),
       Animated.timing(footerOpacity, {
         toValue: 1,
         duration: 480,
-        delay: 200 + TROUBLESHOOTING_ITEMS.length * 110 + 100,
+        delay: 200 + TROUBLESHOOTING_DATA.length * 110 + 100,
         useNativeDriver: true,
       }),
     ]).start();
@@ -266,19 +241,16 @@ const Trobleshooting = () => {
                 elevation: 2,
               }}
             >
-              {/* Title row */}
               <View className="flex-row items-center gap-2 mb-1.5">
                 <Feather name="alert-triangle" size={18} color="#F59E0B" />
                 <Text className="text-[15px] font-Inter_Bold text-[#0F172A]">
                   Safety First
                 </Text>
               </View>
-              {/* Body */}
               <Text className="text-[13px] font-Inter_Regular text-[#64748B] leading-5 mb-3">
                 Stop and call a professional if you notice sparks, burning
                 smells, heat, or visible damage.
               </Text>
-              {/* CTA */}
               <TouchableOpacity
                 onPress={() => router.push("/safety-warning")}
                 activeOpacity={0.7}
@@ -290,8 +262,8 @@ const Trobleshooting = () => {
             </View>
           </Animated.View>
 
-          {/* ── Troubleshooting Cards ── */}
-          {TROUBLESHOOTING_ITEMS.map((item, index) => (
+          {/* ── Troubleshooting Cards ── ✅ use TROUBLESHOOTING_DATA */}
+          {TROUBLESHOOTING_DATA.map((item, index) => (
             <TroubleshootingCard key={item.id} item={item} index={index} />
           ))}
 
@@ -319,8 +291,6 @@ const Trobleshooting = () => {
               <Text className="text-[13px] font-Inter_Regular text-[#64748B] leading-5 mb-4">
                 Contact us or request service if your issue is not resolved.
               </Text>
-
-              {/* Contact Us button */}
               <TouchableOpacity activeOpacity={0.85}>
                 <LinearGradient
                   colors={["#06B6D4", "#14B8A6"]}

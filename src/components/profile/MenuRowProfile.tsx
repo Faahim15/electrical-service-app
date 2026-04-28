@@ -40,22 +40,6 @@ const MenuRowProfile = ({
     ]).start();
   }, []);
 
-  // const handlePressIn = () => {
-  //   Animated.spring(scale, {
-  //     toValue: 0.97,
-  //     useNativeDriver: true,
-  //     tension: 200,
-  //   }).start();
-  // };
-
-  // const handlePressOut = () => {
-  //   Animated.spring(scale, {
-  //     toValue: 1,
-  //     useNativeDriver: true,
-  //     tension: 200,
-  //   }).start();
-  // };
-
   return (
     <Animated.View
       style={{ transform: [{ translateX }, { scale }], opacity }}
@@ -65,7 +49,7 @@ const MenuRowProfile = ({
         onPress={() => router.push(route)}
         className="bg-white rounded-2xl px-4 py-3.5 flex-row items-center shadow-sm"
         style={{
-          shadowColor: "#0000001A",
+          shadowColor: "#06B6D4",
           shadowOffset: { width: 0, height: 4 },
           shadowOpacity: 0.1,
           shadowRadius: 10,

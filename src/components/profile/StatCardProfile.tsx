@@ -24,7 +24,16 @@ const StatCardProfile = ({ value, label, delay }: StatCardProps) => {
   }, []);
   return (
     <Animated.View
-      style={{ transform: [{ scale }], opacity, flex: 1 }}
+      style={{
+        transform: [{ scale }],
+        opacity,
+        flex: 1,
+        shadowColor: "#06B6D4",
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 10,
+        elevation: 5,
+      }}
       className="bg-white rounded-2xl mx-1 py-4 items-center shadow-sm"
     >
       <Text className="text-2xl font-bold text-[#0F172A]">{value}</Text>

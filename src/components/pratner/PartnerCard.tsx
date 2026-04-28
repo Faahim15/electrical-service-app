@@ -47,11 +47,11 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
       <View
         className="bg-white rounded-2xl px-4 py-4"
         style={{
-          shadowColor: "#000",
-          shadowOffset: { width: 0, height: 1 },
-          shadowOpacity: 0.06,
-          shadowRadius: 4,
-          elevation: 2,
+          shadowColor: "#06B6D4",
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.1,
+          shadowRadius: 10,
+          elevation: 5,
         }}
       >
         {/* Name + Favourite */}

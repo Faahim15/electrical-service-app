@@ -11,6 +11,7 @@ export default function Layout() {
         }}
       >
         <Stack.Screen name="safety-warning" />
+        <Stack.Screen name="troubleshooting-guides" />
       </Stack>
     </SafeAreaProvider>
   );
