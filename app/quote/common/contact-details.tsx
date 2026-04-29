@@ -2,6 +2,7 @@ import AuthHeading from "@/src/components/auth/AuthHeading";
 import TermsAndPolicy from "@/src/components/auth/TermsAndPolicy";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import PreferredContactSelector from "@/src/components/quote/PreferredContactSelector";
+import BackButton from "@/src/components/shared/BackButton";
 import CustomInput from "@/src/components/shared/CustomInput";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
@@ -11,6 +12,7 @@ import {
     setPhone,
 } from "@/src/redux/slices/servicDetailSlice";
 import { RootState } from "@/src/redux/store";
+import { router } from "expo-router";
 import React from "react";
 import { View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,6 +25,7 @@ export default function ContactDetails() {
 
   return (
     <ScreenWrapper paddingHorizontal={20}>
+      <BackButton />
       <View>
         <StepProgressBar currentStep={1} />
         <AuthHeading
@@ -71,7 +74,10 @@ export default function ContactDetails() {
           subtitle="contacted about this request"
         />
 
-        <GradientButton label="Continue" />
+        <GradientButton
+          label="Continue"
+          onPress={() => router.push("/quote/common/service-address")}
+        />
       </View>
     </ScreenWrapper>
   );
