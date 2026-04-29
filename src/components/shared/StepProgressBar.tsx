@@ -4,7 +4,7 @@ import { Animated, Text, View } from "react-native";
 
 type StepProgressBarProps = {
   currentStep: number;
-  totalSteps: number;
+  totalSteps?: number;
 };
 
 export default function StepProgressBar({
@@ -28,7 +28,7 @@ export default function StepProgressBar({
   });
 
   return (
-    <View className="px-[4%] py-[3%] mt-[1%] ">
+    <View className=" py-[3%] mt-[1%] ">
       {/* Labels */}
       <View className="flex-row justify-between items-center mb-2">
         <Text className="text-[#64748B] text-[13px] font-Inter_Medium">

@@ -3,6 +3,7 @@ import categoryRouteReducer from "./slices/categoryRouteSlice";
 import partnerDetailsReducer from "./slices/parnerDetailsSlice";
 import partnersReducer from "./slices/partnersRouterSlice";
 import safetyMaintenanceReducer from "./slices/seftymaintanceSlice";
+import serviceDetailsReducer from "./slices/servicDetailSlice";
 import troubleshootRouteReducer from "./slices/troubleshootRouteSlice";
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     troubleshootRoute: troubleshootRouteReducer,
     categoryRoute: categoryRouteReducer,
     safetyMaintenance: safetyMaintenanceReducer,
+    serviceDetails: serviceDetailsReducer,
   },
 });
 
