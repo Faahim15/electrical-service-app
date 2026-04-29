@@ -25,7 +25,7 @@ const Partnerdetails = () => {
   const reasonsSlide = useRef(new Animated.Value(40)).current;
   const buttonsOpacity = useRef(new Animated.Value(0)).current;
   const buttonsSlide = useRef(new Animated.Value(40)).current;
-
+  // animations
   useEffect(() => {
     Animated.sequence([
       // Header slides in first

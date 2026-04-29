@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import categoryRouteReducer from "./slices/categoryRouteSlice";
 import partnerDetailsReducer from "./slices/parnerDetailsSlice";
 import partnersReducer from "./slices/partnersRouterSlice";
+import safetyMaintenanceReducer from "./slices/seftymaintanceSlice";
 import troubleshootRouteReducer from "./slices/troubleshootRouteSlice";
 export const store = configureStore({
   reducer: {
@@ -9,6 +10,7 @@ export const store = configureStore({
     partnerDetails: partnerDetailsReducer,
     troubleshootRoute: troubleshootRouteReducer,
     categoryRoute: categoryRouteReducer,
+    safetyMaintenance: safetyMaintenanceReducer,
   },
 });
 
