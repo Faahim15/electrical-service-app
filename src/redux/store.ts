@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import categoryRouteReducer from "./slices/categoryRouteSlice";
+import evChargerReducer from "./slices/evChargerSlice";
 import otherRouteRecucer from "./slices/otherRouteSlice";
 import partnerDetailsReducer from "./slices/parnerDetailsSlice";
 import partnersReducer from "./slices/partnersRouterSlice";
 import safetyMaintenanceReducer from "./slices/seftymaintanceSlice";
 import serviceDetailsReducer from "./slices/servicDetailSlice";
 import troubleshootRouteReducer from "./slices/troubleshootRouteSlice";
+
 export const store = configureStore({
   reducer: {
     partners: partnersReducer,
@@ -15,6 +17,7 @@ export const store = configureStore({
     safetyMaintenance: safetyMaintenanceReducer,
     serviceDetails: serviceDetailsReducer,
     openCategoryRoute: otherRouteRecucer,
+    evCharger: evChargerReducer,
   },
 });
 
