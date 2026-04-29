@@ -93,7 +93,7 @@ const ServiceCard = ({ item, index }: { item: Service; index: number }) => {
   const dispatch = useDispatch();
   const handlePress = () => {
     dispatch(setSelectedRouteCategory(item));
-    router.push("/other-start");
+    router.push("/other-start" as any);
   };
 
   return (

@@ -12,9 +12,9 @@ const CategoryItem = ({ item }: { item: ServiceCategory }) => {
     dispatch(setSelectedRouteCategory(item));
 
     if (item.title === "Other Custom Service") {
-      router.push("/other-custom-service");
+      router.push("/");
     } else if (item.title === "Solar Installation") {
-      router.push("/sollar-installation");
+      router.push("/quote/solar/solar-project-details" as any);
     } else {
       router.push("/quote/service-details");
     }
