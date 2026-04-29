@@ -4,11 +4,13 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 export default function Layout() {
   return (
     <SafeAreaProvider>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(page)" />
-        <Stack.Screen name="(partners)" />
-        <Stack.Screen name="(help)" />
-        <Stack.Screen name="(quote)" />
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+      >
+        <Stack.Screen name="other-start" />
       </Stack>
     </SafeAreaProvider>
   );

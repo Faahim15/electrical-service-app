@@ -10,7 +10,14 @@ const CategoryItem = ({ item }: { item: ServiceCategory }) => {
   const dispatch = useDispatch();
   const handlePress = () => {
     dispatch(setSelectedRouteCategory(item));
-    router.push("/quote/service-details");
+
+    if (item.title === "Other Custom Service") {
+      router.push("/other-custom-service");
+    } else if (item.title === "Solar Installation") {
+      router.push("/sollar-installation");
+    } else {
+      router.push("/quote/service-details");
+    }
   };
 
   return (
