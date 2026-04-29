@@ -1,4 +1,5 @@
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
+import { setSelectedRouteCategory } from "@/src/redux/slices/otherRouteSlice";
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
@@ -10,8 +11,15 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useDispatch } from "react-redux";
 
-const services = [
+interface Service {
+  id: number;
+  icon: string;
+  title: string;
+  subtitle: string;
+}
+const services: Service[] = [
   {
     id: 1,
     icon: "zap",
@@ -62,17 +70,7 @@ const services = [
   },
 ];
 
-const ServiceCard = ({
-  title,
-  subtitle,
-  icon,
-  index,
-}: {
-  title: string;
-  subtitle: string;
-  icon: string;
-  index: number;
-}) => {
+const ServiceCard = ({ item, index }: { item: Service; index: number }) => {
   const slideAnim = useRef(new Animated.Value(40)).current;
   const opacityAnim = useRef(new Animated.Value(0)).current;
 
@@ -92,6 +90,11 @@ const ServiceCard = ({
       }),
     ]).start();
   }, []);
+  const dispatch = useDispatch();
+  const handlePress = () => {
+    dispatch(setSelectedRouteCategory(item));
+    router.push("/other-start");
+  };
 
   return (
     <Animated.View
@@ -102,7 +105,7 @@ const ServiceCard = ({
       }}
     >
       <TouchableOpacity
-        onPress={() => router.push("/other-start")}
+        onPress={handlePress}
         activeOpacity={0.75}
         style={{
           backgroundColor: "#FFFFFF",
@@ -130,7 +133,7 @@ const ServiceCard = ({
             marginRight: 14,
           }}
         >
-          <Feather name={icon as any} size={18} color="#06B6D4" />
+          <Feather name={item.icon as any} size={18} color="#06B6D4" />
         </View>
 
         {/* Text */}
@@ -139,13 +142,13 @@ const ServiceCard = ({
             className="font-Inter_SemiBold"
             style={{ fontSize: 15, color: "#111827", marginBottom: 3 }}
           >
-            {title}
+            {item.title}
           </Text>
           <Text
             className="font-Inter_Regular"
             style={{ fontSize: 13, color: "#9CA3AF" }}
           >
-            {subtitle}
+            {item.subtitle}
           </Text>
         </View>
 
@@ -192,6 +195,7 @@ const OtherCustomService = () => {
             }}
           >
             <TouchableOpacity
+              onPress={() => router.back()}
               style={{ marginRight: 12, padding: 4 }}
               activeOpacity={0.7}
             >
@@ -212,13 +216,7 @@ const OtherCustomService = () => {
             showsVerticalScrollIndicator={false}
           >
             {services.map((item, index) => (
-              <ServiceCard
-                key={item.id}
-                title={item.title}
-                subtitle={item.subtitle}
-                icon={item.icon}
-                index={index}
-              />
+              <ServiceCard key={item.id} item={item} index={index} />
             ))}
           </ScrollView>
         </View>

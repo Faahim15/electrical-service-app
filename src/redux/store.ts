@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import categoryRouteReducer from "./slices/categoryRouteSlice";
+import otherRouteRecucer from "./slices/otherRouteSlice";
 import partnerDetailsReducer from "./slices/parnerDetailsSlice";
 import partnersReducer from "./slices/partnersRouterSlice";
 import safetyMaintenanceReducer from "./slices/seftymaintanceSlice";
@@ -13,6 +14,7 @@ export const store = configureStore({
     categoryRoute: categoryRouteReducer,
     safetyMaintenance: safetyMaintenanceReducer,
     serviceDetails: serviceDetailsReducer,
+    openCategoryRoute: otherRouteRecucer,
   },
 });
 

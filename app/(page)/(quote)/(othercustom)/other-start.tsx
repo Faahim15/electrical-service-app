@@ -1,4 +1,5 @@
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
+import { RootState } from "@/src/redux/store";
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
@@ -10,6 +11,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
 
 const bestForItems = [
   "Whole-home surge devices",
@@ -123,6 +125,10 @@ const OtherStart = () => {
     ]).start();
   }, []);
 
+  const oipencategory = useSelector(
+    (state: RootState) => state.openCategoryRoute.selectedOtherCategory,
+  );
+  console.log("Selected Other Category:", oipencategory);
   return (
     <ScreenWrapper>
       <SafeAreaView edges={["top"]} className="flex-1">
@@ -166,7 +172,15 @@ const OtherStart = () => {
                   justifyContent: "center",
                 }}
               >
-                <Feather name="shield" size={32} color="#06B6D4" />
+                <Feather
+                  name={
+                    oipencategory?.icon as React.ComponentProps<
+                      typeof Feather
+                    >["name"]
+                  }
+                  size={32}
+                  color="#06B6D4"
+                />
               </View>
             </Animated.View>
 
@@ -188,7 +202,7 @@ const OtherStart = () => {
                   marginBottom: 8,
                 }}
               >
-                Whole Home Surge Protection
+                {oipencategory?.title}
               </Text>
               <Text
                 className="font-Inter_Regular"
@@ -199,8 +213,7 @@ const OtherStart = () => {
                   lineHeight: 20,
                 }}
               >
-                Request a quote for protecting your{"\n"}
-                {`home's electrical system from surges.`}
+                {oipencategory?.subtitle}
               </Text>
             </Animated.View>
 
