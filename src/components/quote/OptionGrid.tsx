@@ -1,4 +1,3 @@
-// src/components/shared/OptionGrid.tsx
 import { Text, TouchableOpacity, View } from "react-native";
 
 interface OptionGridProps {

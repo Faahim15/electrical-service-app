@@ -7,9 +7,9 @@ import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
 import {
-    setOwnershipStatus,
-    setPropertyType,
-    setTimeline,
+  setOwnershipStatus,
+  setPropertyType,
+  setTimeline,
 } from "@/src/redux/slices/servicDetailSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
@@ -22,6 +22,20 @@ export default function ProjectBasics() {
   const { propertyType, ownershipStatus, timeline } = useSelector(
     (state: RootState) => state.serviceDetails,
   );
+
+  const selectedCategory = useSelector(
+    (state: RootState) => state.categoryRoute.selectedCategory,
+  );
+
+  console.log("selectedCategory:", selectedCategory?.id);
+
+  const handleContinue = () => {
+    if (selectedCategory?.id === "1") {
+      router.push("/quote/common/project-details");
+    } else if (selectedCategory?.id === "2") {
+      router.push("/quote/ev-charger/ev-projectDetails");
+    }
+  };
 
   return (
     <ScreenWrapper paddingHorizontal={20}>
@@ -66,10 +80,7 @@ export default function ProjectBasics() {
 
           <InfoBanner message="The more accurate your details, the faster we can respond with a quote." />
 
-          <GradientButton
-            label="Continue"
-            onPress={() => router.push("/quote/common/project-details")}
-          />
+          <GradientButton label="Continue" onPress={handleContinue} />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>
