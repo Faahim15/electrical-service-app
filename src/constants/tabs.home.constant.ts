@@ -1,4 +1,8 @@
-import { ActivityItem, QuickAction } from "@/src/types/tabs.home.types";
+import {
+  ActivityItem,
+  QuickAction,
+  ServiceCategory,
+} from "@/src/types/tabs.home.types";
 export const quickActions: QuickAction[] = [
   {
     id: "1",
@@ -48,5 +52,104 @@ export const recentActivity: ActivityItem[] = [
     icon: "power-outline",
     title: "GFCI Reset Guide",
     subtitle: "Viewed yesterday",
+  },
+];
+
+export const SERVICE_CATEGORIES: ServiceCategory[] = [
+  {
+    id: "1",
+    title: "Service Call",
+    description: "Quick repairs and electrical\ntroubleshooting",
+    iconName: "flash-outline",
+    iconBg: "#E8F8F5",
+    iconColor: "#2DC99C",
+  },
+  {
+    id: "2",
+    title: "EV Charger Installation",
+    description: "Home EV charger setup\nWith safe wiring support",
+    iconName: "home-outline",
+    iconBg: "#E8F3FD",
+    iconColor: "#4A90D9",
+  },
+  {
+    id: "3",
+    title: "Panel Upgrade",
+    description: "Upgrade your panel\nFor safer, stronger power",
+    iconName: "cube-outline",
+    iconBg: "#F0EDFB",
+    iconColor: "#7B61FF",
+  },
+  {
+    id: "4",
+    title: "Remodeling",
+    description: "Electrical work for\nHome remodel projects",
+    iconName: "hammer-outline",
+    iconBg: "#FEF3E8",
+    iconColor: "#F5A623",
+  },
+  {
+    id: "5",
+    title: "Accessory Building /\nShed Power",
+    description: "Power for sheds and\nDetached buildings",
+    iconName: "business-outline",
+    iconBg: "#F5F5F5",
+    iconColor: "#888888",
+  },
+  {
+    id: "6",
+    title: "Hot Tub Installation",
+    description: "Safe electrical setup For\nhot tubs and swim spas",
+    iconName: "water-outline",
+    iconBg: "#E8F3FD",
+    iconColor: "#4A90D9",
+  },
+  {
+    id: "7",
+    title: "Dock Power",
+    description: "Power solutions for\nDocks and waterfront use",
+    iconName: "power-outline",
+    iconBg: "#E8F8F5",
+    iconColor: "#2DC99C",
+  },
+  {
+    id: "8",
+    title: "Electrical Inspection",
+    description: "Inspect your system\nFor safety and issues",
+    iconName: "document-text-outline",
+    iconBg: "#FDF0F8",
+    iconColor: "#C94AA0",
+  },
+  {
+    id: "9",
+    title: "Generator Installation",
+    description: "Backup power setup\nFor homes and buildings",
+    iconName: "battery-charging-outline",
+    iconBg: "#F5F5F5",
+    iconColor: "#888888",
+  },
+  {
+    id: "10",
+    title: "New Construction",
+    description: "Electrical work for\nNew build projects",
+    iconName: "grid-outline",
+    iconBg: "#F5F5F5",
+    iconColor: "#888888",
+  },
+  {
+    id: "11",
+    title: "Solar Installation",
+    description: "Electrical support for\nSolar system projects",
+    iconName: "sunny-outline",
+    iconBg: "#FEF9E8",
+    iconColor: "#F5C623",
+  },
+  {
+    id: "12",
+    title: "Other Custom Service",
+    description: "Custom electrical help\nFor unique projects",
+    iconName: "document-outline",
+    iconBg: "#F0EDFB",
+    iconColor: "#7B61FF",
   },
 ];

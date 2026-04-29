@@ -4,15 +4,19 @@ import { ReactNode } from "react";
 
 type ScreenWrapperProps = {
   children: ReactNode;
+  paddingHorizontal?: number;
 };
 
-const ScreenWrapper = ({ children }: ScreenWrapperProps) => {
+const ScreenWrapper = ({
+  children,
+  paddingHorizontal = scale(20),
+}: ScreenWrapperProps) => {
   return (
     <LinearGradient
       colors={["#F9FBFD", "#E0F2FE"]}
       start={{ x: 0, y: 0 }}
       end={{ x: 0, y: 1 }}
-      style={{ flex: 1, paddingHorizontal: scale(20) }}
+      style={{ flex: 1, paddingHorizontal }}
     >
       {children}
     </LinearGradient>

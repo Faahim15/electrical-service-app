@@ -1,12 +1,11 @@
+import ElectricalHelpCard from "@/src/components/profile/ElectricalHelpCard";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import {
   quickActions,
   recentActivity,
 } from "@/src/constants/tabs.home.constant";
 import { ActivityItem, QuickAction } from "@/src/types/tabs.home.types";
-import { scale, verticalScale } from "@/src/utils/Scaling";
 import { Ionicons } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import {
   FlatList,
@@ -147,46 +146,8 @@ export default function HomeScreen() {
           </View>
 
           {/* ── Hero Banner ── */}
-          <LinearGradient
-            colors={["#00ABB0", "#0096A6"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={{
-              borderRadius: scale(24),
-              paddingHorizontal: scale(20),
-              paddingVertical: verticalScale(20),
-              marginBottom: verticalScale(16),
-            }}
-          >
-            <View className="w-10 h-10 rounded-xl bg-white/20 items-center justify-center mb-3">
-              <Ionicons name="flash" size={20} color="#fff" />
-            </View>
-            <Text className="font-Inter_Bold text-white text-lg mb-1">
-              Need electrical help fast?
-            </Text>
-            <Text className="font-Inter_Regular text-white/80 text-sm mb-5">
-              Request a quote or get guided help{"\n"}in minutes.
-            </Text>
-            <View className="flex-row gap-3">
-              <TouchableOpacity
-                activeOpacity={0.85}
-                className="bg-white rounded-xl px-4 py-2.5"
-                onPress={() => router.push("/quote/choose-category")}
-              >
-                <Text className="font-Inter_SemiBold text-sm text-[#00ABB0]">
-                  Start a Quote
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.85}
-                className="bg-white/20 border border-white/40 rounded-xl px-4 py-2.5"
-              >
-                <Text className="font-Inter_SemiBold text-sm text-white">
-                  Get Help
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </LinearGradient>
+
+          <ElectricalHelpCard />
 
           {/* ── Quick Actions ── */}
           <Text className="font-Inter_Bold text-base text-gray-900 mb-3">
@@ -235,12 +196,20 @@ export default function HomeScreen() {
               <TouchableOpacity
                 activeOpacity={0.85}
                 className="bg-red-500 rounded-xl px-4 py-2.5"
+                onPress={() => router.push("/shared/help")}
               >
                 <Text className="font-Inter_SemiBold text-sm text-white">
                   Call Now
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity activeOpacity={0.8}>
+              <TouchableOpacity
+                onPress={() =>
+                  router.push(
+                    "/(page)/(help)/(trobleshootingpage)/safety-warning",
+                  )
+                }
+                activeOpacity={0.8}
+              >
                 <Text className="font-Inter_Medium text-sm text-gray-600">
                   View Safety Tips
                 </Text>

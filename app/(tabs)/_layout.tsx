@@ -1,29 +1,28 @@
-import {
-    help,
-    home,
-    partners,
-    profile,
-    quotes,
-} from "@/assets/images/svg/tabs-svg";
+import { Ionicons } from "@expo/vector-icons";
 import { router, Tabs, usePathname } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import { SvgXml } from "react-native-svg";
 
 const tabs = [
-  { name: "home", route: "/(tabs)/home", icon: home, label: "Home" },
-  { name: "quotes", route: "/(tabs)/quotes", icon: quotes, label: "Quotes" },
-  { name: "help", route: "/(tabs)/help", icon: help, label: "Help" },
+  { name: "home", route: "/(tabs)/home", icon: "home", label: "Home" },
+  {
+    name: "quotes",
+    route: "/(tabs)/quotes",
+    icon: "document-text",
+    label: "Quotes",
+  },
+  { name: "help", route: "/(tabs)/help", icon: "build", label: "Help" },
   {
     name: "partners",
     route: "/(tabs)/partners",
-    icon: partners,
+    icon: "people",
     label: "Partners",
   },
   {
     name: "profile",
     route: "/(tabs)/profile",
-    icon: profile,
+    icon: "person",
     label: "Profile",
   },
 ];
@@ -68,12 +67,36 @@ function CustomTabBar() {
               gap: 4,
             }}
           >
-            <SvgXml
-              xml={tab.icon}
-              width={22}
-              height={22}
-              color={focused ? "#00ABB0" : "#9CA3AF"}
-            />
+            <View
+              style={{
+                position: "relative",
+                alignItems: "center",
+                justifyContent: "center",
+                width: 46,
+                height: 30,
+                borderRadius: 15,
+                backgroundColor: focused ? "#E0F7F7" : "transparent",
+              }}
+            >
+              {focused && (
+                <View
+                  style={{
+                    position: "absolute",
+                    top: -10,
+                    width: 18,
+                    height: 3,
+                    borderRadius: 2,
+                    backgroundColor: "#00ABB0",
+                  }}
+                />
+              )}
+              <Ionicons
+                name={(focused ? tab.icon : `${tab.icon}-outline`) as any}
+                size={22}
+                color={focused ? "#00ABB0" : "#9CA3AF"}
+              />
+            </View>
+
             <Text
               style={{
                 fontSize: 10,
@@ -92,17 +115,20 @@ function CustomTabBar() {
 
 export default function Layout() {
   return (
-    <Tabs
-      tabBar={() => <CustomTabBar />}
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Tabs.Screen name="home" />
-      <Tabs.Screen name="quotes" />
-      <Tabs.Screen name="help" />
-      <Tabs.Screen name="partners" />
-      <Tabs.Screen name="profile" />
-    </Tabs>
+    <>
+      <StatusBar style="dark" backgroundColor="transparent" translucent />
+      <Tabs
+        tabBar={() => <CustomTabBar />}
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Tabs.Screen name="home" />
+        <Tabs.Screen name="quotes" />
+        <Tabs.Screen name="help" />
+        <Tabs.Screen name="partners" />
+        <Tabs.Screen name="profile" />
+      </Tabs>
+    </>
   );
 }

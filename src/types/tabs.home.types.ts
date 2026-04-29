@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
- export type QuickAction = {
+export type QuickAction = {
   id: string;
   icon: keyof typeof Ionicons.glyphMap;
   title: string;
@@ -13,3 +13,12 @@ export type ActivityItem = {
   badge?: string;
   badgeColor?: string;
 };
+
+export interface ServiceCategory {
+  id: string;
+  title: string;
+  description: string;
+  iconName: keyof typeof Ionicons.glyphMap;
+  iconBg: string;
+  iconColor: string;
+}
