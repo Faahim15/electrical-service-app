@@ -1,7 +1,17 @@
 import Step1 from "@/src/components/quote/other/common/Step1";
 import Step2 from "@/src/components/quote/other/common/Step2";
 import Step3 from "@/src/components/quote/other/common/Step3";
+import DedicatedCircuitSt1 from "@/src/components/quote/other/DedicatedCircuit/DedicatedCircuitSt1";
+import DedicatedCircuitSt2 from "@/src/components/quote/other/DedicatedCircuit/DedicatedCircuitSt2";
+import DedicatedCircuitSt3 from "@/src/components/quote/other/DedicatedCircuit/DedicatedCircuitSt3";
+import DedicatedCircuitSt4 from "@/src/components/quote/other/DedicatedCircuit/DedicatedCircuitSt4";
+import StarlinkSt1 from "@/src/components/quote/other/starlink/StarlinkSt1";
+import StarlinkSt2 from "@/src/components/quote/other/starlink/StarlinkSt2";
+import StarlinkSt3 from "@/src/components/quote/other/starlink/StarlinkSt3";
+import StarlinkSt4 from "@/src/components/quote/other/starlink/StarlinkSt4";
+import WholeHomeSt1 from "@/src/components/quote/other/WholeHome/WholeHomeSt1";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
+import { RootState } from "@/src/redux/store";
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useRef, useState } from "react";
@@ -13,19 +23,54 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
 
-// ─── Step Config ──────────────────────────────────────────────────────────────
+// ─── Step type ────────────────────────────────────────────────────────────────
 
-const STEPS = [
+type StepConfig = { component: React.ComponentType; title: string };
+
+// ─── Common Steps (always shown) ─────────────────────────────────────────────
+
+const COMMON_STEPS: StepConfig[] = [
   { component: Step1, title: "Contact" },
   { component: Step2, title: "Address" },
   { component: Step3, title: "Project" },
-  // Add more steps here: { component: Step4, title: "..." }
 ];
+
+// ─── Category-specific steps (all values are arrays) ─────────────────────────
+
+const CATEGORY_STEP_MAP: Record<string, StepConfig[]> = {
+  "Whole Home Surge Protection": [
+    { component: WholeHomeSt1, title: "Whole Home Surge Protection" },
+  ],
+  "Starlink Installation": [
+    { component: StarlinkSt1, title: "Starlink Installation" },
+    { component: StarlinkSt2, title: "Starlink Installation" },
+    { component: StarlinkSt3, title: "Starlink Installation" },
+    { component: StarlinkSt4, title: "Starlink Installation" },
+  ],
+  "Dedicated Circuit": [
+    { component: DedicatedCircuitSt1, title: "Dedicated Circuit" },
+    { component: DedicatedCircuitSt2, title: "Dedicated Circuit" },
+    { component: DedicatedCircuitSt3, title: "Dedicated Circuit" },
+    { component: DedicatedCircuitSt4, title: "Dedicated Circuit" },
+  ],
+  // Add more categories here — just add a new key with an array of steps
+};
 
 // ─── Main Screen ──────────────────────────────────────────────────────────────
 
 const OtherFormProgress = () => {
+  const category = useSelector((state: RootState) => state.openCategoryRoute);
+
+  const selectedTitle = category.selectedOtherCategory?.title ?? "";
+
+  // Spread category-specific steps after common steps
+  const STEPS: StepConfig[] = [
+    ...COMMON_STEPS,
+    ...(CATEGORY_STEP_MAP[selectedTitle] ?? []),
+  ];
+
   const [currentStep, setCurrentStep] = useState(0);
   const progressAnim = useRef(new Animated.Value(0)).current;
   const fadeAnim = useRef(new Animated.Value(1)).current;
@@ -36,14 +81,12 @@ const OtherFormProgress = () => {
   const animateProgress = (nextStep: number) => {
     const nextPercent = ((nextStep + 1) / totalSteps) * 100;
 
-    // Fade out current content
     Animated.timing(fadeAnim, {
       toValue: 0,
       duration: 150,
       useNativeDriver: true,
     }).start(() => {
       setCurrentStep(nextStep);
-      // Fade in next content
       Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 200,
@@ -51,7 +94,6 @@ const OtherFormProgress = () => {
       }).start();
     });
 
-    // Animate progress bar
     Animated.timing(progressAnim, {
       toValue: nextPercent,
       duration: 400,
@@ -59,12 +101,18 @@ const OtherFormProgress = () => {
     }).start();
   };
 
+  console.log("selected title ==============", selectedTitle);
+  console.log(
+    "resolved steps ==============",
+    STEPS.map((s) => s.title),
+  );
+
   const goNext = () => {
     if (currentStep < totalSteps - 1) {
       animateProgress(currentStep + 1);
     } else {
       // Last step — submit / navigate
-      //   router.push("/some-confirmation-screen");
+      // router.push("/some-confirmation-screen");
     }
   };
 
@@ -78,7 +126,6 @@ const OtherFormProgress = () => {
 
   const CurrentStepComponent = STEPS[currentStep].component;
 
-  // Initialize progress bar on mount
   React.useEffect(() => {
     Animated.timing(progressAnim, {
       toValue: progressPercent,
@@ -106,7 +153,6 @@ const OtherFormProgress = () => {
 
         {/* ── Progress Bar ── */}
         <View className="mb-5">
-          {/* Step label */}
           <View className="flex-row justify-between items-center mb-2">
             <Text className="text-xs text-[#6B7280] font-Inter_Medium">
               Step {currentStep + 1} of {totalSteps}
@@ -116,25 +162,11 @@ const OtherFormProgress = () => {
             </Text>
           </View>
 
-          {/* Track */}
           <View className="h-1.5 bg-[#E5E7EB] rounded-full overflow-hidden">
             <Animated.View
               style={{ width: progressWidth }}
               className="h-full bg-[#38BDF8] rounded-full"
             />
-          </View>
-
-          {/* Step dots */}
-          <View className="flex-row justify-between mt-2 px-0.5">
-            {STEPS.map((step, index) => (
-              <View key={index} className="items-center">
-                <View
-                  className={`w-2 h-2 rounded-full ${
-                    index <= currentStep ? "bg-[#38BDF8]" : "bg-[#E5E7EB]"
-                  }`}
-                />
-              </View>
-            ))}
           </View>
         </View>
 
