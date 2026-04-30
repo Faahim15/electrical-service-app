@@ -427,6 +427,7 @@ const OtherStart = () => {
               }}
             >
               <TouchableOpacity
+                onPress={() => router.push("/other-form-progress")}
                 activeOpacity={0.85}
                 style={{
                   height: 52,

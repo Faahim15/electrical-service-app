@@ -11,6 +11,7 @@ export default function Layout() {
         }}
       >
         <Stack.Screen name="other-start" />
+        <Stack.Screen name="other-form-progress" />
       </Stack>
     </SafeAreaProvider>
   );
