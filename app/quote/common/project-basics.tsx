@@ -6,11 +6,7 @@ import TimelineOption from "@/src/components/quote/TimelineOption";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
-import {
-  setOwnershipStatus,
-  setPropertyType,
-  setTimeline,
-} from "@/src/redux/slices/servicDetailSlice";
+import { updateProjectBasics } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
@@ -20,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 export default function ProjectBasics() {
   const dispatch = useDispatch();
   const { propertyType, ownershipStatus, timeline } = useSelector(
-    (state: RootState) => state.serviceDetails,
+    (state: RootState) => state.serviceForm.projectBasics,
   );
 
   const selectedCategory = useSelector(
@@ -31,7 +27,7 @@ export default function ProjectBasics() {
 
   const handleContinue = () => {
     if (selectedCategory?.id === "1") {
-      router.push("/quote/common/project-details");
+      router.push("/quote/service-call/project-details");
     } else if (selectedCategory?.id === "2") {
       router.push("/quote/ev-charger/ev-projectDetails");
     }
@@ -60,7 +56,9 @@ export default function ProjectBasics() {
             required
             options={["House", "Condo", "Apartment", "Commercial"]}
             selected={propertyType}
-            onSelect={(val) => dispatch(setPropertyType(val as any))}
+            onSelect={(val) =>
+              dispatch(updateProjectBasics({ propertyType: val as any }))
+            }
             numColumns={2}
           />
 
@@ -69,13 +67,17 @@ export default function ProjectBasics() {
             required
             options={["Owner", "Tenant", "Property Manager", "Other"]}
             selected={ownershipStatus}
-            onSelect={(val) => dispatch(setOwnershipStatus(val as any))}
+            onSelect={(val) =>
+              dispatch(updateProjectBasics({ ownershipStatus: val as any }))
+            }
             numColumns={1}
           />
 
           <TimelineOption
             selected={timeline}
-            onSelect={(val) => dispatch(setTimeline(val as any))}
+            onSelect={(val) =>
+              dispatch(updateProjectBasics({ timeline: val as any }))
+            }
           />
 
           <InfoBanner message="The more accurate your details, the faster we can respond with a quote." />

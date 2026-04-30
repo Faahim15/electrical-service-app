@@ -1,4 +1,4 @@
-import { setPreferredContact } from "@/src/redux/slices/servicDetailSlice";
+import { updateContactDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -9,11 +9,11 @@ const OPTIONS = ["Call", "Text", "Email"] as const;
 export default function PreferredContactSelector() {
   const dispatch = useDispatch();
   const selected = useSelector(
-    (state: RootState) => state.serviceDetails.preferredContact,
+    (state: RootState) => state.serviceForm.contactDetails.preferredContact,
   );
 
   return (
-    <View className="mb-[4%] mt-[2%] ">
+    <View className="mb-[4%] mt-[2%]">
       <View className="flex-row items-center mb-2">
         <Text className="text-[#1E293B] text-[13.5px] font-Inter_SemiBold">
           Preferred contact method
@@ -28,7 +28,9 @@ export default function PreferredContactSelector() {
             <TouchableOpacity
               key={option}
               activeOpacity={0.8}
-              onPress={() => dispatch(setPreferredContact(option))}
+              onPress={() =>
+                dispatch(updateContactDetails({ preferredContact: option }))
+              }
               style={{
                 paddingHorizontal: 24,
                 paddingVertical: 11,

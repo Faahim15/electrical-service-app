@@ -4,11 +4,7 @@ import PhotoUploadSection from "@/src/components/quote/PhotoUploadSection";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
-import {
-  setPanelPhotos,
-  setReferencePhotos,
-  setWorkAreaPhotos,
-} from "@/src/redux/slices/servicDetailSlice";
+import { updateServiceCallDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import * as ImagePicker from "expo-image-picker";
 import { router } from "expo-router";
@@ -18,15 +14,29 @@ import {
   Platform,
   ScrollView,
   Text,
-  View
+  View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function UploadPhotos() {
   const dispatch = useDispatch();
-  const { panelPhotos, workAreaPhotos, referencePhotos } = useSelector(
-    (state: RootState) => state.serviceDetails,
-  );
+  const panelPhotos = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "1") return data?.details?.panelPhotos;
+    return [];
+  });
+
+  const workAreaPhotos = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "1") return data?.details?.workAreaPhotos;
+    return [];
+  });
+
+  const referencePhotos = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "1") return data?.details?.referencePhotos;
+    return [];
+  });
 
   const pickFromCamera = async (
     setter: (photos: string[]) => void,
@@ -93,20 +103,26 @@ export default function UploadPhotos() {
 
           <PhotoUploadSection
             label="Panel Photos"
-            photos={panelPhotos}
-            onPhotosChange={(p) => dispatch(setPanelPhotos(p))}
+            photos={panelPhotos || []}
+            onPhotosChange={(p) =>
+              dispatch(updateServiceCallDetails({ panelPhotos: p }))
+            }
           />
 
           <PhotoUploadSection
             label="Work Area Photos"
-            photos={workAreaPhotos}
-            onPhotosChange={(p) => dispatch(setWorkAreaPhotos(p))}
+            photos={workAreaPhotos || []}
+            onPhotosChange={(p) =>
+              dispatch(updateServiceCallDetails({ workAreaPhotos: p }))
+            }
           />
 
           <PhotoUploadSection
             label="Extra Reference Photos"
-            photos={referencePhotos}
-            onPhotosChange={(p) => dispatch(setReferencePhotos(p))}
+            photos={referencePhotos || []}
+            onPhotosChange={(p) =>
+              dispatch(updateServiceCallDetails({ referencePhotos: p }))
+            }
           />
 
           <GradientButton

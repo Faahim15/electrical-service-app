@@ -6,14 +6,7 @@ import BackButton from "@/src/components/shared/BackButton";
 import CustomInput from "@/src/components/shared/CustomInput";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
-import {
-    setApartment,
-    setCity,
-    setIsHomeAddress,
-    setState,
-    setStreetAddress,
-    setZipCode,
-} from "@/src/redux/slices/servicDetailSlice";
+import { updateServiceAddress } from "@/src/redux/slices/serviceFormSlice";
 
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
@@ -24,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 export default function ServiceAddress() {
   const dispatch = useDispatch();
   const { streetAddress, apartment, city, state, zipCode, isHomeAddress } =
-    useSelector((state: RootState) => state.serviceDetails);
+    useSelector((state: RootState) => state.serviceForm.serviceAddress);
 
   return (
     <ScreenWrapper paddingHorizontal={20}>
@@ -51,7 +44,8 @@ export default function ServiceAddress() {
               placeholder: "Enter your street address",
               autoCapitalize: "words",
               value: streetAddress,
-              onChangeText: (text) => dispatch(setStreetAddress(text)),
+              onChangeText: (text) =>
+                dispatch(updateServiceAddress({ streetAddress: text })),
             }}
           />
 
@@ -63,7 +57,8 @@ export default function ServiceAddress() {
               keyboardType: "default",
               autoCapitalize: "none",
               value: apartment,
-              onChangeText: (text) => dispatch(setApartment(text)),
+              onChangeText: (text) =>
+                dispatch(updateServiceAddress({ apartment: text })),
             }}
           />
 
@@ -75,7 +70,8 @@ export default function ServiceAddress() {
               keyboardType: "default",
               autoCapitalize: "words",
               value: city,
-              onChangeText: (text) => dispatch(setCity(text)),
+              onChangeText: (text) =>
+                dispatch(updateServiceAddress({ city: text })),
             }}
           />
 
@@ -87,7 +83,8 @@ export default function ServiceAddress() {
               keyboardType: "default",
               autoCapitalize: "characters",
               value: state,
-              onChangeText: (text) => dispatch(setState(text)),
+              onChangeText: (text) =>
+                dispatch(updateServiceAddress({ state: text })),
             }}
           />
 
@@ -99,7 +96,8 @@ export default function ServiceAddress() {
               keyboardType: "number-pad",
               autoCapitalize: "none",
               value: zipCode,
-              onChangeText: (text) => dispatch(setZipCode(text)),
+              onChangeText: (text) =>
+                dispatch(updateServiceAddress({ zipCode: text })),
             }}
           />
 
@@ -107,7 +105,9 @@ export default function ServiceAddress() {
             shouldShowTitle={false}
             subtitle="This is my home address"
             value={isHomeAddress}
-            onToggle={(val) => dispatch(setIsHomeAddress(val))}
+            onToggle={(val) =>
+              dispatch(updateServiceAddress({ isHomeAddress: val }))
+            }
           />
           <InfoBanner />
 

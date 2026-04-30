@@ -1,6 +1,7 @@
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
+import { SERVICE_CATEGORIES } from "@/src/constants/tabs.home.constant";
 import { RootState } from "@/src/redux/store";
 import { Image } from "expo-image";
 import { router } from "expo-router";
@@ -83,9 +84,26 @@ const SectionTitle = ({ title }: { title: string }) => (
 );
 
 export default function ReviewRequest() {
-  const s = useSelector((state: RootState) => state.serviceDetails);
-  const selectedCategory = useSelector(
-    (state: RootState) => state.categoryRoute.selectedCategory,
+  // Common data
+  const selectedCategoryId = useSelector(
+    (state: RootState) => state.serviceForm.selectedCategoryId,
+  );
+  const contactDetails = useSelector(
+    (state: RootState) => state.serviceForm.contactDetails,
+  );
+  const serviceAddress = useSelector(
+    (state: RootState) => state.serviceForm.serviceAddress,
+  );
+  const projectBasics = useSelector(
+    (state: RootState) => state.serviceForm.projectBasics,
+  );
+  const categoryData = useSelector(
+    (state: RootState) => state.serviceForm.categoryData,
+  );
+
+  // Category title SERVICE_CATEGORIES থেকে নাও
+  const selectedCategory = SERVICE_CATEGORIES.find(
+    (c) => c.id === selectedCategoryId,
   );
 
   return (
@@ -101,6 +119,7 @@ export default function ReviewRequest() {
         >
           <StepProgressBar currentStep={8} />
 
+          {/* Category Tag */}
           {selectedCategory && (
             <View className="self-start mb-4">
               <View
@@ -125,61 +144,142 @@ export default function ReviewRequest() {
             Check your answers before sending
           </Text>
 
-          {/* Contact */}
+          {/* Contact — সব category র জন্য same */}
           <SectionTitle title="Contact Details" />
-          <ReviewRow label="Full Name" value={s.fullName} />
-          <ReviewRow label="Email Address" value={s.email} />
-          <ReviewRow label="Phone Number" value={s.phone} />
-          <ReviewRow label="Preferred Contact" value={s.preferredContact} />
+          <ReviewRow label="Full Name" value={contactDetails.fullName} />
+          <ReviewRow label="Email Address" value={contactDetails.email} />
+          <ReviewRow label="Phone Number" value={contactDetails.phone} />
+          <ReviewRow
+            label="Preferred Contact"
+            value={contactDetails.preferredContact}
+          />
 
-          {/* Address */}
+          {/* Address — সব category র জন্য same */}
           <SectionTitle title="Service Address" />
-          <ReviewRow label="Street Address" value={s.streetAddress} />
-          <ReviewRow label="Apartment / Unit" value={s.apartment} />
-          <ReviewRow label="City" value={s.city} />
-          <ReviewRow label="State" value={s.state} />
-          <ReviewRow label="Zip Code" value={s.zipCode} />
+          <ReviewRow
+            label="Street Address"
+            value={serviceAddress.streetAddress}
+          />
+          <ReviewRow
+            label="Apartment / Unit"
+            value={serviceAddress.apartment}
+          />
+          <ReviewRow label="City" value={serviceAddress.city} />
+          <ReviewRow label="State" value={serviceAddress.state} />
+          <ReviewRow label="Zip Code" value={serviceAddress.zipCode} />
           <ReviewRow
             label="Home Address"
-            value={s.isHomeAddress ? "Yes" : "No"}
+            value={serviceAddress.isHomeAddress ? "Yes" : "No"}
           />
 
-          {/* Project Basics */}
+          {/* Project Basics — সব category র জন্য same */}
           <SectionTitle title="Project Basics" />
-          <ReviewRow label="Property Type" value={s.propertyType} />
-          <ReviewRow label="Ownership Status" value={s.ownershipStatus} />
-          <ReviewRow label="Timeline / Urgency" value={s.timeline} />
-
-          {/* Project Details */}
-          <SectionTitle title="Project Details" />
-          <ReviewRow label="Issue Description" value={s.projectDetails} />
-
-          {/* Scheduling */}
-          <SectionTitle title="Scheduling" />
-          <ReviewRow label="Preferred Time" value={s.preferredTime} />
+          <ReviewRow label="Property Type" value={projectBasics.propertyType} />
           <ReviewRow
-            label="Preferred Days"
-            value={
-              s.schedulingDays.length > 0 ? s.schedulingDays.join(", ") : ""
-            }
+            label="Ownership Status"
+            value={projectBasics.ownershipStatus}
           />
-
-          {/* Photos */}
-          <SectionTitle title="Photos" />
-          <ReviewPhotos label="Panel Photos" photos={s.panelPhotos} />
-          <ReviewPhotos label="Work Area Photos" photos={s.workAreaPhotos} />
-          <ReviewPhotos
-            label="Extra Reference Photos"
-            photos={s.referencePhotos}
-          />
-
-          {/* Notes */}
-          <SectionTitle title="Additional Notes" />
-          <ReviewRow label="Notes" value={s.additionalNotes} />
           <ReviewRow
-            label="Quick Tags"
-            value={s.quickTags.length > 0 ? s.quickTags.join(", ") : ""}
+            label="Timeline / Urgency"
+            value={projectBasics.timeline}
           />
+
+          {/* Category Specific — id দিয়ে আলাদা করা */}
+          {categoryData?.categoryId === "1" && categoryData.details && (
+            <>
+              <SectionTitle title="Project Details" />
+              <ReviewRow
+                label="Issue Description"
+                value={categoryData.details.projectDetails}
+              />
+
+              <SectionTitle title="Scheduling" />
+              <ReviewRow
+                label="Preferred Time"
+                value={categoryData.details.preferredTime}
+              />
+              <ReviewRow
+                label="Preferred Days"
+                value={categoryData.details.schedulingDays.join(", ")}
+              />
+
+              <SectionTitle title="Photos" />
+              <ReviewPhotos
+                label="Panel Photos"
+                photos={categoryData.details.panelPhotos}
+              />
+              <ReviewPhotos
+                label="Work Area Photos"
+                photos={categoryData.details.workAreaPhotos}
+              />
+              <ReviewPhotos
+                label="Extra Reference Photos"
+                photos={categoryData.details.referencePhotos}
+              />
+
+              <SectionTitle title="Additional Notes" />
+              <ReviewRow
+                label="Notes"
+                value={categoryData.details.additionalNotes}
+              />
+              <ReviewRow
+                label="Quick Tags"
+                value={categoryData.details.quickTags.join(", ")}
+              />
+            </>
+          )}
+
+          {categoryData?.categoryId === "2" && categoryData.details && (
+            <>
+              <SectionTitle title="EV Charger Details" />
+              <ReviewRow
+                label="Charger Type"
+                value={categoryData.details.chargerType}
+              />
+              <ReviewRow
+                label="NEMA Config"
+                value={categoryData.details.nemaConfig}
+              />
+              <ReviewRow
+                label="Providing Charger"
+                value={categoryData.details.providingCharger}
+              />
+              <ReviewRow
+                label="Charger Status"
+                value={categoryData.details.chargerStatus}
+              />
+
+              <SectionTitle title="Installation" />
+              <ReviewRow
+                label="Installation Location"
+                value={categoryData.details.installationLocation}
+              />
+              <ReviewRow
+                label="Panel Location"
+                value={categoryData.details.panelLocation}
+              />
+              <ReviewRow
+                label="Panel Distance"
+                value={categoryData.details.panelDistance}
+              />
+
+              <SectionTitle title="Photos" />
+              <ReviewPhotos
+                label="Charger Area Photos"
+                photos={categoryData.details.chargerAreaPhotos}
+              />
+              <ReviewPhotos
+                label="Panel Photos"
+                photos={categoryData.details.panelPhotos}
+              />
+
+              <SectionTitle title="Additional Info" />
+              <ReviewRow
+                label="Additional Info"
+                value={categoryData.details.additionalInfo}
+              />
+            </>
+          )}
 
           <GradientButton
             label="Submit"

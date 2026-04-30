@@ -7,18 +7,18 @@ import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
 import {
-    setPreferredTime,
-    toggleSchedulingDay,
-} from "@/src/redux/slices/servicDetailSlice";
+  updateServiceCallDetails
+} from "@/src/redux/slices/serviceFormSlice";
+
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
 import {
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    Text,
-    View,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -26,9 +26,17 @@ const DAYS = ["Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays"];
 
 export default function FinalProjectQuestions() {
   const dispatch = useDispatch();
-  const { preferredTime, schedulingDays } = useSelector(
-    (state: RootState) => state.serviceDetails,
-  );
+  const preferredTime = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "1") return data?.details?.preferredTime;
+    return "" as const;
+  });
+
+  const schedulingDays = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "1") return data?.details?.schedulingDays;
+    return [];
+  });
 
   const selectedCategory = useSelector(
     (state: RootState) => state.categoryRoute.selectedCategory,
@@ -73,16 +81,20 @@ export default function FinalProjectQuestions() {
           <OptionGrid
             label="Preferred time for Service"
             options={["AM (8-11)", "PM (12-2)"]}
-            selected={preferredTime}
-            onSelect={(val) => dispatch(setPreferredTime(val as any))}
+            selected={preferredTime || ""}
+            onSelect={(val) =>
+              dispatch(updateServiceCallDetails({ preferredTime: val as any }))
+            }
             numColumns={1}
           />
 
           <MultiSelectList
             label="Scheduling preference"
             options={DAYS}
-            selected={schedulingDays}
-            onToggle={(val) => dispatch(toggleSchedulingDay(val))}
+            selected={schedulingDays || []}
+            onToggle={(val) =>
+              dispatch(updateServiceCallDetails({ schedulingDays: val as any }))
+            }
           />
 
           <InfoBanner message="You can add extra details and photos next." />

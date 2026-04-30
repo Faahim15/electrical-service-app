@@ -4,25 +4,29 @@ import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
 import TextAreaInput from "@/src/components/shared/TextAreaInput";
-import { setProjectDetails } from "@/src/redux/slices/servicDetailSlice";
+import { updateServiceCallDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
 import {
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    Text,
-    View,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function ProjectDetails() {
   const dispatch = useDispatch();
 
-  const { projectDetails } = useSelector(
-    (state: RootState) => state.serviceDetails,
-  );
+  const projectDetails = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "1") {
+      return data?.details?.projectDetails;
+    }
+    return "";
+  });
 
   const selectedCategory = useSelector(
     (state: RootState) => state.categoryRoute.selectedCategory,
@@ -69,7 +73,9 @@ export default function ProjectDetails() {
             label="Explain the issue you are having"
             placeholder="Explain the issue details, concerns, or special requirements..."
             value={projectDetails}
-            onChangeText={(text) => dispatch(setProjectDetails(text))}
+            onChangeText={(text) =>
+              dispatch(updateServiceCallDetails({ projectDetails: text }))
+            }
           />
 
           <GradientButton

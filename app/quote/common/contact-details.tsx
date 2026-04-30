@@ -6,11 +6,7 @@ import BackButton from "@/src/components/shared/BackButton";
 import CustomInput from "@/src/components/shared/CustomInput";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
-import {
-    setEmail,
-    setFullName,
-    setPhone,
-} from "@/src/redux/slices/servicDetailSlice";
+import { updateContactDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
@@ -20,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 export default function ContactDetails() {
   const dispatch = useDispatch();
   const { fullName, email, phone } = useSelector(
-    (state: RootState) => state.serviceDetails,
+    (state: RootState) => state.serviceForm.contactDetails,
   );
 
   return (
@@ -40,7 +36,8 @@ export default function ContactDetails() {
             placeholder: "Enter your full name",
             autoCapitalize: "words",
             value: fullName,
-            onChangeText: (text) => dispatch(setFullName(text)),
+            onChangeText: (text) =>
+              dispatch(updateContactDetails({ fullName: text })),
           }}
         />
 
@@ -52,7 +49,8 @@ export default function ContactDetails() {
             keyboardType: "email-address",
             autoCapitalize: "none",
             value: email,
-            onChangeText: (text) => dispatch(setEmail(text)),
+            onChangeText: (text) =>
+              dispatch(updateContactDetails({ email: text })),
           }}
         />
 
@@ -63,7 +61,8 @@ export default function ContactDetails() {
             placeholder: "Enter your phone number",
             keyboardType: "phone-pad",
             value: phone,
-            onChangeText: (text) => dispatch(setPhone(text)),
+            onChangeText: (text) =>
+              dispatch(updateContactDetails({ phone: text })),
           }}
         />
 

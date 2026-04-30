@@ -4,23 +4,22 @@ import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
 import {
-    setChargerStatus,
-    setChargerType,
-    setNemaConfig,
-    setProvidingCharger,
-} from "@/src/redux/slices/evChargerSlice";
+  setEVChargerType,
+  setEVProvidingCharger,
+  updateEVChargerDetails,
+} from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
 import {
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -93,8 +92,26 @@ const SelectOption = ({
 
 export default function EVChargerDetails() {
   const dispatch = useDispatch();
-  const { chargerType, nemaConfig, providingCharger, chargerStatus } =
-    useSelector((state: RootState) => state.evCharger);
+  const chargerType = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "2") return data?.details?.chargerType;
+    return "" as const;
+  });
+  const nemaConfig = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "2") return data?.details?.nemaConfig;
+    return "";
+  });
+  const providingCharger = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "2") return data?.details?.providingCharger;
+    return "" as const;
+  });
+  const chargerStatus = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "2") return data?.details?.chargerStatus;
+    return "" as const;
+  });
 
   const isPlugIn = chargerType === "Plug-in";
   const isHardwired = chargerType === "Hardwired";
@@ -144,7 +161,7 @@ export default function EVChargerDetails() {
                 key={option}
                 label={option}
                 selected={chargerType === option}
-                onPress={() => dispatch(setChargerType(option as any))}
+                onPress={() => dispatch(setEVChargerType(option as any))}
               />
             ))}
           </View>
@@ -163,7 +180,9 @@ export default function EVChargerDetails() {
                     placeholder="14-50, 6-50, 14-30, unsure, etc."
                     placeholderTextColor="#AABCD0"
                     value={nemaConfig}
-                    onChangeText={(text) => dispatch(setNemaConfig(text))}
+                    onChangeText={(text) =>
+                      dispatch(updateEVChargerDetails({ nemaConfig: text }))
+                    }
                     style={{
                       backgroundColor: "#FFFFFF",
                       borderRadius: 12,
@@ -192,7 +211,9 @@ export default function EVChargerDetails() {
                     key={option}
                     label={option}
                     selected={providingCharger === option}
-                    onPress={() => dispatch(setProvidingCharger(option as any))}
+                    onPress={() =>
+                      dispatch(setEVProvidingCharger(option as any))
+                    }
                   />
                 ))}
               </View>
@@ -206,7 +227,13 @@ export default function EVChargerDetails() {
                       key={option}
                       label={option}
                       selected={chargerStatus === option}
-                      onPress={() => dispatch(setChargerStatus(option as any))}
+                      onPress={() =>
+                        dispatch(
+                          updateEVChargerDetails({
+                            chargerStatus: option as any,
+                          }),
+                        )
+                      }
                     />
                   ))}
                 </View>

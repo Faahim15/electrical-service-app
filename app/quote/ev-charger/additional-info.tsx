@@ -6,28 +6,37 @@ import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
 import TextAreaInput from "@/src/components/shared/TextAreaInput";
-import {
-    setAdditionalInfo,
-    setChargerAreaPhotos,
-    setEVPanelPhotos,
-} from "@/src/redux/slices/evChargerSlice";
+import { updateEVChargerDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
 import {
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    Text,
-    View,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function AdditionalInfo() {
   const dispatch = useDispatch();
-  const { additionalInfo, chargerAreaPhotos, panelPhotos } = useSelector(
-    (state: RootState) => state.evCharger,
-  );
+  // selector replace করো
+  const additionalInfo = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "2") return data?.details?.additionalInfo;
+    return "";
+  });
+  const chargerAreaPhotos = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "2") return data?.details?.chargerAreaPhotos;
+    return [];
+  });
+  const panelPhotos = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "2") return data?.details?.panelPhotos;
+    return [];
+  });
 
   return (
     <ScreenWrapper paddingHorizontal={20}>
@@ -69,7 +78,9 @@ export default function AdditionalInfo() {
             label=""
             placeholder="Any additional information you feel we should know..."
             value={additionalInfo}
-            onChangeText={(text) => dispatch(setAdditionalInfo(text))}
+            onChangeText={(text) =>
+              dispatch(updateEVChargerDetails({ additionalInfo: text }))
+            }
             minHeight={120}
           />
 
@@ -80,19 +91,23 @@ export default function AdditionalInfo() {
 
           <PhotoUploadSection
             label="Upload photo of area you want EV charger installed"
-            photos={chargerAreaPhotos}
-            onPhotosChange={(p) => dispatch(setChargerAreaPhotos(p))}
+            photos={chargerAreaPhotos || []}
+            onPhotosChange={(p) =>
+              dispatch(updateEVChargerDetails({ chargerAreaPhotos: p }))
+            }
           />
 
           <PhotoUploadSection
             label="Upload photos of your electrical panel up close so we can see the breakers/panel label and about 10 ft away"
-            photos={panelPhotos}
-            onPhotosChange={(p) => dispatch(setEVPanelPhotos(p))}
+            photos={panelPhotos || []}
+            onPhotosChange={(p) =>
+              dispatch(updateEVChargerDetails({ panelPhotos: p }))
+            }
           />
 
           <GradientButton
             label="Continue"
-            onPress={() => router.push("/quote/common/review" as any)}
+            onPress={() => router.push("/quote/common/review-request")}
           />
         </ScrollView>
       </KeyboardAvoidingView>

@@ -3,17 +3,18 @@ import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
-import { setInstallationLocation } from "@/src/redux/slices/evChargerSlice";
+import { updateEVChargerDetails } from "@/src/redux/slices/serviceFormSlice";
+
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
 import {
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    Text,
-    TouchableOpacity,
-    View,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -57,10 +58,11 @@ const SelectOption = ({
 
 export default function InstallationLocation() {
   const dispatch = useDispatch();
-  const { installationLocation } = useSelector(
-    (state: RootState) => state.evCharger,
-  );
-
+  const installationLocation = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "2") return data?.details?.installationLocation;
+    return "" as const;
+  });
   return (
     <ScreenWrapper paddingHorizontal={20}>
       <KeyboardAvoidingView
@@ -105,7 +107,13 @@ export default function InstallationLocation() {
                 key={option}
                 label={option}
                 selected={installationLocation === option}
-                onPress={() => dispatch(setInstallationLocation(option as any))}
+                onPress={() =>
+                  dispatch(
+                    updateEVChargerDetails({
+                      installationLocation: option as any,
+                    }),
+                  )
+                }
               />
             ))}
           </View>

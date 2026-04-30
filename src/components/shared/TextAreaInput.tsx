@@ -5,7 +5,7 @@ import { Text, TextInput, TextInputProps, View } from "react-native";
 interface TextAreaInputProps {
   label: string;
   placeholder?: string;
-  value: string;
+  value?: string;
   onChangeText: (text: string) => void;
   numberOfLines?: number;
   minHeight?: number;
