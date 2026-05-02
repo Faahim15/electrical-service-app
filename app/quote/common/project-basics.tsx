@@ -39,6 +39,12 @@ export default function ProjectBasics() {
     } else if (selectedCategory?.id === "3") {
       dispatch(selectCategory("3"));
       router.push("/quote/panel-upgrade/service-type");
+    } else if (selectedCategory?.id === "4") {
+      dispatch(selectCategory("4"));
+      router.push("/quote/remodeling/project-basics");
+    } else if (selectedCategory?.id === "5") {
+      dispatch(selectCategory("5"));
+      router.push("/quote/accessory-building/building-basics");
     }
   };
 
@@ -54,7 +60,10 @@ export default function ProjectBasics() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={3} />
+          <StepProgressBar
+            currentStep={3}
+            totalSteps={selectedCategory?.id === "5" ? 10 : 8}
+          />
           <AuthHeading
             title="Project basics"
             subtitle="A few details to help us understand the job"

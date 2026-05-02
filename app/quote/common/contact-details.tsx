@@ -18,12 +18,18 @@ export default function ContactDetails() {
   const { fullName, email, phone } = useSelector(
     (state: RootState) => state.serviceForm.contactDetails,
   );
+  const selectedCategory = useSelector(
+    (state: RootState) => state.categoryRoute.selectedCategory,
+  );
 
   return (
     <ScreenWrapper paddingHorizontal={20}>
       <BackButton />
       <View>
-        <StepProgressBar currentStep={1} />
+        <StepProgressBar
+          currentStep={1}
+          totalSteps={selectedCategory?.id === "5" ? 10 : 8}
+        />
         <AuthHeading
           title="Your contact details"
           subtitle="We'll use this to follow up on your request"

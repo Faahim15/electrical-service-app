@@ -18,6 +18,9 @@ export default function ServiceAddress() {
   const dispatch = useDispatch();
   const { streetAddress, apartment, city, state, zipCode, isHomeAddress } =
     useSelector((state: RootState) => state.serviceForm.serviceAddress);
+  const selectedCategory = useSelector(
+    (state: RootState) => state.categoryRoute.selectedCategory,
+  );
 
   return (
     <ScreenWrapper paddingHorizontal={20}>
@@ -31,7 +34,10 @@ export default function ServiceAddress() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={2} />
+          <StepProgressBar
+            currentStep={2}
+            totalSteps={selectedCategory?.id === "5" ? 10 : 8}
+          />
           <AuthHeading
             title="Your service address"
             subtitle="Where is the work needed?"

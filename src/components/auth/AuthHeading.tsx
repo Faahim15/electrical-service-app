@@ -14,9 +14,11 @@ const AuthHeading = ({ title, subtitle }: AuthHeaderProps) => {
       </Text>
 
       {/* Subheading */}
-      <Text className="font-Inter_Regular text-sm text-[#475569] mb-[5%] leading-5">
-        {subtitle}
-      </Text>
+      {subtitle && (
+        <Text className="font-Inter_Regular text-sm text-[#475569] mb-[5%] leading-5">
+          {subtitle}
+        </Text>
+      )}
     </View>
   );
 };

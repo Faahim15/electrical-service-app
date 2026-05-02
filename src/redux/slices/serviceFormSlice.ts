@@ -127,6 +127,144 @@ const initialPanelUpgradeDetails: PanelUpgradeDetails = {
   meterPhotos: [],
   panelPhotos: [],
 };
+
+type Remodeling_PanelLocation =
+  | "Basement (Finished)"
+  | "Basement (Unfinished)"
+  | "Garage (Finished)"
+  | "Garage (Unfinished)"
+  | "Other (please specify)"
+  | "";
+type HasPlans = "Yes" | "No" | "";
+
+interface RemodelingDetails {
+  panelLocation: Remodeling_PanelLocation;
+  remodlingArea: string;
+  hasPlans: HasPlans;
+  planPhotos: string[];
+  electricalNeeds: string;
+
+  hasPermit: "Yes" | "No" | "";
+  permitNumber: string;
+  additionalInfo: string;
+  existingSpacePhotos: string[];
+  panelPhotos: string[];
+}
+
+const initialRemodelingDetails: RemodelingDetails = {
+  panelLocation: "",
+  remodlingArea: "",
+  hasPlans: "",
+  planPhotos: [],
+  electricalNeeds: "",
+  hasPermit: "",
+  permitNumber: "",
+  additionalInfo: "",
+  existingSpacePhotos: [],
+  panelPhotos: [],
+};
+
+// id: "5" - Accessory Building / Shed Power
+type BuildingStatus = "Yes" | "No" | "Will be delivered / built soon" | "";
+type ConstructionType =
+  | "Metal/Steel"
+  | "Pole Barn"
+  | "Wood (Pre-fabricated)"
+  | "Wood (built on site)"
+  | "";
+type FloorType = "Dirt" | "Stone" | "Wood" | "Concrete" | "";
+type HeatingCooling = "Yes" | "No" | "";
+type ServiceType_5 =
+  | "New Service"
+  | "Sub-panel"
+  | "1-2 dedicated circuits"
+  | "";
+type NewServiceSize =
+  | "100 amp"
+  | "125 amp"
+  | "150 amp"
+  | "200 amp"
+  | "300 amp"
+  | "350 amp"
+  | "400 amp"
+  | "Unsure"
+  | "Other"
+  | "";
+type SubPanelSize =
+  | "30 amp"
+  | "50 amp"
+  | "60 amp"
+  | "100 amp"
+  | "125 amp"
+  | "Unsure"
+  | "Other"
+  | "";
+type CircuitCount = "1" | "2" | "";
+type AmpRating = "15" | "20" | "";
+type AccessoryPanelLocation =
+  | "Basement (Finished)"
+  | "Basement (Unfinished)"
+  | "Garage (Finished)"
+  | "Garage (Unfinished)"
+  | "Other (please specify)"
+  | "";
+
+interface AccessoryBuildingDetails {
+  squareFootage: string;
+  intendedUse: string;
+  buildingStatus: BuildingStatus;
+  constructionType: ConstructionType;
+  floorType: FloorType;
+  electricalNeeds: string;
+  hasHeatingCooling: HeatingCooling;
+  serviceType: ServiceType_5;
+  // New Service specific
+  newServiceSize: NewServiceSize;
+  // Sub-panel specific
+  subPanelSize: SubPanelSize;
+  // 1-2 circuits specific
+  circuitCount: CircuitCount;
+  ampRating: AmpRating;
+  // Common
+  panelLocation: AccessoryPanelLocation;
+  panelPhotos: string[];
+
+  privateUtilities: string;
+  routeDistance: string;
+  existingSpacePhotos: string[];
+  hasPlans: "Yes" | "No" | "";
+  planDrawingPhotos: string[];
+  hasPermit: "Yes" | "No" | "";
+  permitNumber: string;
+  additionalInfo: string;
+}
+
+const initialAccessoryBuildingDetails: AccessoryBuildingDetails = {
+  squareFootage: "",
+  intendedUse: "",
+  buildingStatus: "",
+  constructionType: "",
+  floorType: "",
+  electricalNeeds: "",
+  hasHeatingCooling: "",
+  serviceType: "",
+  newServiceSize: "",
+  subPanelSize: "",
+  circuitCount: "",
+  ampRating: "",
+  panelLocation: "",
+  panelPhotos: [],
+
+  privateUtilities: "",
+  routeDistance: "",
+  existingSpacePhotos: [],
+  hasPlans: "",
+  planDrawingPhotos: [],
+  hasPermit: "",
+  permitNumber: "",
+  additionalInfo: "",
+};
+
 // ============================================
 // CATEGORY DATA — আলাদা typed container
 // ============================================
@@ -147,11 +285,22 @@ interface CategoryData_3 {
   categoryId: "3";
   details: PanelUpgradeDetails;
 }
+interface CategoryData_4 {
+  categoryId: "4";
+  details: RemodelingDetails;
+}
+
+interface CategoryData_5 {
+  categoryId: "5";
+  details: AccessoryBuildingDetails;
+}
 
 type CategorySpecificData =
   | CategoryData_1
   | CategoryData_2
-  | CategoryData_3 // ← নতুন
+  | CategoryData_3
+  | CategoryData_4
+  | CategoryData_5 // ← নতুন
   | CategoryData_Other;
 
 // ============================================
@@ -235,6 +384,13 @@ const getCategoryInitialData = (categoryId: string): CategorySpecificData => {
       return { categoryId: "2", details: { ...initialEVChargerDetails } };
     case "3":
       return { categoryId: "3", details: { ...initialPanelUpgradeDetails } };
+    case "4":
+      return { categoryId: "4", details: { ...initialRemodelingDetails } };
+    case "5":
+      return {
+        categoryId: "5",
+        details: { ...initialAccessoryBuildingDetails },
+      };
     default:
       return { categoryId, details: null };
   }
@@ -249,6 +405,16 @@ function isServiceCall(data: CategorySpecificData): data is CategoryData_1 {
 
 function isEVCharger(data: CategorySpecificData): data is CategoryData_2 {
   return data.categoryId === "2";
+}
+
+function isRemodeling(data: CategorySpecificData): data is CategoryData_4 {
+  return data.categoryId === "4";
+}
+
+function isAccessoryBuilding(
+  data: CategorySpecificData,
+): data is CategoryData_5 {
+  return data.categoryId === "5";
 }
 
 // ============================================
@@ -364,6 +530,29 @@ const serviceFormSlice = createSlice({
         Object.assign(state.categoryData.details, action.payload);
       }
     },
+    updateRemodelingDetails: (
+      state,
+      action: PayloadAction<Partial<RemodelingDetails>>,
+    ) => {
+      if (
+        state.categoryData?.categoryId === "4" &&
+        state.categoryData.details
+      ) {
+        Object.assign(state.categoryData.details, action.payload);
+      }
+    },
+
+    updateAccessoryBuildingDetails: (
+      state,
+      action: PayloadAction<Partial<AccessoryBuildingDetails>>,
+    ) => {
+      if (
+        state.categoryData?.categoryId === "5" &&
+        state.categoryData.details
+      ) {
+        Object.assign(state.categoryData.details, action.payload);
+      }
+    },
 
     // --- Reset ---
     clearServiceForm: () => initialState,
@@ -388,10 +577,12 @@ export const {
   toggleSchedulingDay,
   updateEVChargerDetails,
   setEVChargerType,
+  updateRemodelingDetails,
   setEVProvidingCharger,
   clearServiceForm,
   clearCategoryData,
   updatePanelUpgradeDetails,
+  updateAccessoryBuildingDetails,
 } = serviceFormSlice.actions;
 
 export default serviceFormSlice.reducer;

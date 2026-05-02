@@ -1,90 +1,23 @@
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
+import { AccessoryBuildingReview } from "@/src/components/quote/review/AccessoryBuildingReview";
+import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
+import { EVChargerReview } from "@/src/components/quote/review/EVChargerRow";
+import { PanelUpgradeReview } from "@/src/components/quote/review/PanelUpgradeReview";
+import { RemodelingReview } from "@/src/components/quote/review/RemodelingReview";
+import { ReviewRow } from "@/src/components/quote/review/ReviewRow";
+import { ReviewSectionTitle } from "@/src/components/quote/review/ReviewSectionTitle";
+import { ServiceCallReview } from "@/src/components/quote/review/ServiceCallReview";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
 import { SERVICE_CATEGORIES } from "@/src/constants/tabs.home.constant";
 import { RootState } from "@/src/redux/store";
-import { Image } from "expo-image";
+import { router } from "expo-router";
 import React from "react";
-import {
-  FlatList,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, Text } from "react-native";
 import { useSelector } from "react-redux";
 
-const ReviewRow = ({ label, value }: { label: string; value: string }) => (
-  <View
-    className="bg-white rounded-2xl px-4 py-4 mb-3"
-    style={{
-      shadowColor: "#94A3B8",
-      shadowOffset: { width: 0, height: 1 },
-      shadowOpacity: 0.07,
-      shadowRadius: 4,
-      elevation: 1,
-    }}
-  >
-    <Text className="text-[#94A3B8] text-[11.5px] font-Inter_Medium mb-1">
-      {label}
-    </Text>
-    <Text className="text-[#1E293B] text-[14px] font-Inter_SemiBold">
-      {value || "None provided"}
-    </Text>
-  </View>
-);
-
-const ReviewPhotos = ({
-  label,
-  photos,
-}: {
-  label: string;
-  photos: string[];
-}) => {
-  if (photos.length === 0)
-    return <ReviewRow label={label} value="No photos added" />;
-  return (
-    <View
-      className="bg-white rounded-2xl px-4 py-4 mb-3"
-      style={{
-        shadowColor: "#94A3B8",
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.07,
-        shadowRadius: 4,
-        elevation: 1,
-      }}
-    >
-      <Text className="text-[#94A3B8] text-[11.5px] font-Inter_Medium mb-2">
-        {label}
-      </Text>
-      <FlatList
-        data={photos}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        keyExtractor={(_, i) => i.toString()}
-        contentContainerStyle={{ gap: 8 }}
-        renderItem={({ item }) => (
-          <Image
-            source={{ uri: item }}
-            style={{ width: 64, height: 64, borderRadius: 8 }}
-            contentFit="cover"
-          />
-        )}
-      />
-    </View>
-  );
-};
-
-const SectionTitle = ({ title }: { title: string }) => (
-  <Text className="text-[#0EA5E9] text-[12px] font-Inter_SemiBold uppercase tracking-widest mb-2 mt-2">
-    {title}
-  </Text>
-);
-
 export default function ReviewRequest() {
-  // Common data
   const selectedCategoryId = useSelector(
     (state: RootState) => state.serviceForm.selectedCategoryId,
   );
@@ -101,7 +34,6 @@ export default function ReviewRequest() {
     (state: RootState) => state.serviceForm.categoryData,
   );
 
-  // Category title SERVICE_CATEGORIES থেকে নাও
   const selectedCategory = SERVICE_CATEGORIES.find(
     (c) => c.id === selectedCategoryId,
   );
@@ -118,25 +50,12 @@ export default function ReviewRequest() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={8} />
+          <StepProgressBar
+            currentStep={selectedCategory?.id === "5" ? 10 : 8}
+            totalSteps={selectedCategory?.id === "5" ? 10 : 8}
+          />
 
-          {/* Category Tag */}
-          {selectedCategory && (
-            <View className="self-start mb-4">
-              <View
-                className="px-3 py-[6px] rounded-full"
-                style={{
-                  backgroundColor: "#EEF9FF",
-                  borderWidth: 1,
-                  borderColor: "#BAE6FD",
-                }}
-              >
-                <Text className="text-[#0EA5E9] text-[12.5px] font-Inter_Medium">
-                  {selectedCategory.title}
-                </Text>
-              </View>
-            </View>
-          )}
+          {selectedCategory && <CategoryTag title={selectedCategory.title} />}
 
           <Text className="text-[#1E293B] text-[22px] font-Inter_Bold mb-1">
             Review your request
@@ -145,8 +64,8 @@ export default function ReviewRequest() {
             Check your answers before sending
           </Text>
 
-          {/* Contact — সব category র জন্য same */}
-          <SectionTitle title="Contact Details" />
+          {/* Common — সব category */}
+          <ReviewSectionTitle title="Contact Details" />
           <ReviewRow label="Full Name" value={contactDetails.fullName} />
           <ReviewRow label="Email Address" value={contactDetails.email} />
           <ReviewRow label="Phone Number" value={contactDetails.phone} />
@@ -155,8 +74,7 @@ export default function ReviewRequest() {
             value={contactDetails.preferredContact}
           />
 
-          {/* Address — সব category র জন্য same */}
-          <SectionTitle title="Service Address" />
+          <ReviewSectionTitle title="Service Address" />
           <ReviewRow
             label="Street Address"
             value={serviceAddress.streetAddress}
@@ -173,8 +91,7 @@ export default function ReviewRequest() {
             value={serviceAddress.isHomeAddress ? "Yes" : "No"}
           />
 
-          {/* Project Basics — সব category র জন্য same */}
-          <SectionTitle title="Project Basics" />
+          <ReviewSectionTitle title="Project Basics" />
           <ReviewRow label="Property Type" value={projectBasics.propertyType} />
           <ReviewRow
             label="Ownership Status"
@@ -185,148 +102,28 @@ export default function ReviewRequest() {
             value={projectBasics.timeline}
           />
 
-          {/* Category Specific — id দিয়ে আলাদা করা */}
+          {/* Category Specific */}
           {categoryData?.categoryId === "1" && categoryData.details && (
-            <>
-              <SectionTitle title="Project Details" />
-              <ReviewRow
-                label="Issue Description"
-                value={categoryData.details.projectDetails}
-              />
-
-              <SectionTitle title="Scheduling" />
-              <ReviewRow
-                label="Preferred Time"
-                value={categoryData.details.preferredTime}
-              />
-              <ReviewRow
-                label="Preferred Days"
-                value={categoryData.details.schedulingDays.join(", ")}
-              />
-
-              <SectionTitle title="Photos" />
-              <ReviewPhotos
-                label="Panel Photos"
-                photos={categoryData.details.panelPhotos}
-              />
-              <ReviewPhotos
-                label="Work Area Photos"
-                photos={categoryData.details.workAreaPhotos}
-              />
-              <ReviewPhotos
-                label="Extra Reference Photos"
-                photos={categoryData.details.referencePhotos}
-              />
-
-              <SectionTitle title="Additional Notes" />
-              <ReviewRow
-                label="Notes"
-                value={categoryData.details.additionalNotes}
-              />
-              <ReviewRow
-                label="Quick Tags"
-                value={categoryData.details.quickTags.join(", ")}
-              />
-            </>
+            <ServiceCallReview details={categoryData.details} />
           )}
-
           {categoryData?.categoryId === "2" && categoryData.details && (
-            <>
-              <SectionTitle title="EV Charger Details" />
-              <ReviewRow
-                label="Charger Type"
-                value={categoryData.details.chargerType}
-              />
-              <ReviewRow
-                label="NEMA Config"
-                value={categoryData.details.nemaConfig}
-              />
-              <ReviewRow
-                label="Providing Charger"
-                value={categoryData.details.providingCharger}
-              />
-              <ReviewRow
-                label="Charger Status"
-                value={categoryData.details.chargerStatus}
-              />
-
-              <SectionTitle title="Installation" />
-              <ReviewRow
-                label="Installation Location"
-                value={categoryData.details.installationLocation}
-              />
-              <ReviewRow
-                label="Panel Location"
-                value={categoryData.details.panelLocation}
-              />
-              <ReviewRow
-                label="Panel Distance"
-                value={categoryData.details.panelDistance}
-              />
-
-              <SectionTitle title="Photos" />
-              <ReviewPhotos
-                label="Charger Area Photos"
-                photos={categoryData.details.chargerAreaPhotos}
-              />
-              <ReviewPhotos
-                label="Panel Photos"
-                photos={categoryData.details.panelPhotos}
-              />
-
-              <SectionTitle title="Additional Info" />
-              <ReviewRow
-                label="Additional Info"
-                value={categoryData.details.additionalInfo}
-              />
-            </>
+            <EVChargerReview details={categoryData.details} />
           )}
-
           {categoryData?.categoryId === "3" && categoryData.details && (
-            <>
-              <SectionTitle title="Service Type" />
-              <ReviewRow
-                label="Service Type"
-                value={categoryData.details.serviceType}
-              />
-              <ReviewRow
-                label="Upgrade Amps"
-                value={categoryData.details.upgradeAmps}
-              />
-
-              <SectionTitle title="Current Panel" />
-              <ReviewRow
-                label="Current Amperage"
-                value={categoryData.details.currentAmperage}
-              />
-              <ReviewRow
-                label="Power Type"
-                value={categoryData.details.powerType}
-              />
-
-              <SectionTitle title="Panel Location" />
-              <ReviewRow
-                label="Panel Location"
-                value={categoryData.details.panelLocation}
-              />
-              <ReviewRow
-                label="Additional Info"
-                value={categoryData.details.additionalInfo}
-              />
-
-              <SectionTitle title="Photos" />
-              <ReviewPhotos
-                label="Meter Photos"
-                photos={categoryData.details.meterPhotos}
-              />
-              <ReviewPhotos
-                label="Panel Photos"
-                photos={categoryData.details.panelPhotos}
-              />
-            </>
+            <PanelUpgradeReview details={categoryData.details} />
+          )}
+          {categoryData?.categoryId === "4" && categoryData.details && (
+            <RemodelingReview details={categoryData.details} />
           )}
 
-          <GradientButton label="Submit" onPress={() => {}} />
+          {categoryData?.categoryId === "5" && categoryData.details && (
+            <AccessoryBuildingReview details={categoryData.details} />
+          )}
+
+          <GradientButton
+            label="Submit"
+            onPress={() => router.push("/submit-success" as any)}
+          />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>
