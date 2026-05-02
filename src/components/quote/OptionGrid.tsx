@@ -1,3 +1,4 @@
+import { verticalScale } from "@/src/utils/Scaling";
 import { Text, TouchableOpacity, View } from "react-native";
 
 interface OptionGridProps {
@@ -20,7 +21,7 @@ const OptionGrid = ({
   const isFullWidth = numColumns === 1;
 
   return (
-    <View className="mb-5">
+    <View className="mb-[1%]">
       <View className="flex-row items-center mb-2">
         <Text className="text-[#1E293B] text-[13.5px] font-Inter_SemiBold">
           {label}
@@ -39,7 +40,7 @@ const OptionGrid = ({
               style={{
                 width: isFullWidth ? "100%" : "48%",
                 paddingVertical: 13,
-                paddingHorizontal: 16,
+                paddingHorizontal: verticalScale(18),
                 borderRadius: 12,
                 backgroundColor: isSelected ? "#EEF9FF" : "#FFFFFF",
                 borderWidth: 1.5,

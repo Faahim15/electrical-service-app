@@ -6,7 +6,11 @@ import TimelineOption from "@/src/components/quote/TimelineOption";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
-import { updateProjectBasics } from "@/src/redux/slices/serviceFormSlice";
+
+import {
+  selectCategory,
+  updateProjectBasics,
+} from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
@@ -27,9 +31,14 @@ export default function ProjectBasics() {
 
   const handleContinue = () => {
     if (selectedCategory?.id === "1") {
+      dispatch(selectCategory("1"));
       router.push("/quote/service-call/project-details");
     } else if (selectedCategory?.id === "2") {
+      dispatch(selectCategory("2"));
       router.push("/quote/ev-charger/ev-projectDetails");
+    } else if (selectedCategory?.id === "3") {
+      dispatch(selectCategory("3"));
+      router.push("/quote/panel-upgrade/service-type");
     }
   };
 

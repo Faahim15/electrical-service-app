@@ -85,6 +85,48 @@ interface EVChargerDetails {
   panelPhotos: string[];
 }
 
+// id: "3" - Panel Upgrade
+type CurrentAmperage =
+  | "50"
+  | "60"
+  | "100"
+  | "150"
+  | "200"
+  | "Unsure"
+  | "Other"
+  | "";
+type ServiceType = "Replacement" | "Upgrade" | "";
+type PowerType = "Overhead" | "Underground" | "Unsure" | "";
+type PanelLocationUpgrade =
+  | "Basement (Finished)"
+  | "Basement (Unfinished)"
+  | "Garage (Finished)"
+  | "Garage (Unfinished)"
+  | "Other (please specify)"
+  | "";
+type UpgradeAmps = "100" | "150" | "200" | "300" | "350" | "400" | "";
+interface PanelUpgradeDetails {
+  serviceType: ServiceType;
+  upgradeAmps: UpgradeAmps;
+  // নতুন fields
+  currentAmperage: CurrentAmperage;
+  powerType: PowerType;
+  panelLocation: PanelLocationUpgrade;
+  additionalInfo: string;
+  meterPhotos: string[];
+  panelPhotos: string[];
+}
+
+const initialPanelUpgradeDetails: PanelUpgradeDetails = {
+  serviceType: "",
+  upgradeAmps: "",
+  currentAmperage: "",
+  powerType: "",
+  panelLocation: "",
+  additionalInfo: "",
+  meterPhotos: [],
+  panelPhotos: [],
+};
 // ============================================
 // CATEGORY DATA — আলাদা typed container
 // ============================================
@@ -101,9 +143,15 @@ interface CategoryData_Other {
   details: null;
 }
 
+interface CategoryData_3 {
+  categoryId: "3";
+  details: PanelUpgradeDetails;
+}
+
 type CategorySpecificData =
   | CategoryData_1
   | CategoryData_2
+  | CategoryData_3 // ← নতুন
   | CategoryData_Other;
 
 // ============================================
@@ -185,6 +233,8 @@ const getCategoryInitialData = (categoryId: string): CategorySpecificData => {
       return { categoryId: "1", details: { ...initialServiceCallDetails } };
     case "2":
       return { categoryId: "2", details: { ...initialEVChargerDetails } };
+    case "3":
+      return { categoryId: "3", details: { ...initialPanelUpgradeDetails } };
     default:
       return { categoryId, details: null };
   }
@@ -303,6 +353,18 @@ const serviceFormSlice = createSlice({
       }
     },
 
+    updatePanelUpgradeDetails: (
+      state,
+      action: PayloadAction<Partial<PanelUpgradeDetails>>,
+    ) => {
+      if (
+        state.categoryData?.categoryId === "3" &&
+        state.categoryData.details
+      ) {
+        Object.assign(state.categoryData.details, action.payload);
+      }
+    },
+
     // --- Reset ---
     clearServiceForm: () => initialState,
     clearCategoryData: (state) => {
@@ -329,6 +391,7 @@ export const {
   setEVProvidingCharger,
   clearServiceForm,
   clearCategoryData,
+  updatePanelUpgradeDetails,
 } = serviceFormSlice.actions;
 
 export default serviceFormSlice.reducer;

@@ -1,10 +1,10 @@
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
+import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
 import { SERVICE_CATEGORIES } from "@/src/constants/tabs.home.constant";
 import { RootState } from "@/src/redux/store";
 import { Image } from "expo-image";
-import { router } from "expo-router";
 import React from "react";
 import {
   FlatList,
@@ -108,6 +108,7 @@ export default function ReviewRequest() {
 
   return (
     <ScreenWrapper paddingHorizontal={20}>
+      <BackButton />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
@@ -281,10 +282,51 @@ export default function ReviewRequest() {
             </>
           )}
 
-          <GradientButton
-            label="Submit"
-            onPress={() => router.push("/submit-success" as any)}
-          />
+          {categoryData?.categoryId === "3" && categoryData.details && (
+            <>
+              <SectionTitle title="Service Type" />
+              <ReviewRow
+                label="Service Type"
+                value={categoryData.details.serviceType}
+              />
+              <ReviewRow
+                label="Upgrade Amps"
+                value={categoryData.details.upgradeAmps}
+              />
+
+              <SectionTitle title="Current Panel" />
+              <ReviewRow
+                label="Current Amperage"
+                value={categoryData.details.currentAmperage}
+              />
+              <ReviewRow
+                label="Power Type"
+                value={categoryData.details.powerType}
+              />
+
+              <SectionTitle title="Panel Location" />
+              <ReviewRow
+                label="Panel Location"
+                value={categoryData.details.panelLocation}
+              />
+              <ReviewRow
+                label="Additional Info"
+                value={categoryData.details.additionalInfo}
+              />
+
+              <SectionTitle title="Photos" />
+              <ReviewPhotos
+                label="Meter Photos"
+                photos={categoryData.details.meterPhotos}
+              />
+              <ReviewPhotos
+                label="Panel Photos"
+                photos={categoryData.details.panelPhotos}
+              />
+            </>
+          )}
+
+          <GradientButton label="Submit" onPress={() => {}} />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>
