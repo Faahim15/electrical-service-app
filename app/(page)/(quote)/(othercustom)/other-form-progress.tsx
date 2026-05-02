@@ -5,10 +5,18 @@ import DedicatedCircuitSt1 from "@/src/components/quote/other/DedicatedCircuit/D
 import DedicatedCircuitSt2 from "@/src/components/quote/other/DedicatedCircuit/DedicatedCircuitSt2";
 import DedicatedCircuitSt3 from "@/src/components/quote/other/DedicatedCircuit/DedicatedCircuitSt3";
 import DedicatedCircuitSt4 from "@/src/components/quote/other/DedicatedCircuit/DedicatedCircuitSt4";
+import ExhaustFanSt1 from "@/src/components/quote/other/exhaustfan/ExhaustFanSt1";
+import OutletsSt1 from "@/src/components/quote/other/outlets/OutletsSt1";
+import OutletsSt2 from "@/src/components/quote/other/outlets/OutletsSt2";
+import OutletsSt3 from "@/src/components/quote/other/outlets/OutletsSt3";
+import OutletsSt4 from "@/src/components/quote/other/outlets/OutletsSt4";
 import StarlinkSt1 from "@/src/components/quote/other/starlink/StarlinkSt1";
 import StarlinkSt2 from "@/src/components/quote/other/starlink/StarlinkSt2";
 import StarlinkSt3 from "@/src/components/quote/other/starlink/StarlinkSt3";
 import StarlinkSt4 from "@/src/components/quote/other/starlink/StarlinkSt4";
+import SwitchesSt1 from "@/src/components/quote/other/switches/SwitchesSt1";
+import SwitchesSt2 from "@/src/components/quote/other/switches/SwitchesSt2";
+import SwitchesSt3 from "@/src/components/quote/other/switches/SwitchesSt3";
 import WholeHomeSt1 from "@/src/components/quote/other/WholeHome/WholeHomeSt1";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import { RootState } from "@/src/redux/store";
@@ -54,6 +62,18 @@ const CATEGORY_STEP_MAP: Record<string, StepConfig[]> = {
     { component: DedicatedCircuitSt2, title: "Dedicated Circuit" },
     { component: DedicatedCircuitSt3, title: "Dedicated Circuit" },
     { component: DedicatedCircuitSt4, title: "Dedicated Circuit" },
+  ],
+  "Exhaust Fan": [{ component: ExhaustFanSt1, title: "Exhaust Fan" }],
+  Outlets: [
+    { component: OutletsSt1, title: "Outlets" },
+    { component: OutletsSt2, title: "Outlets" },
+    { component: OutletsSt3, title: "Outlets" },
+    { component: OutletsSt4, title: "Outlets" },
+  ],
+  Switches: [
+    { component: SwitchesSt1, title: "Switches" },
+    { component: SwitchesSt2, title: "Switches" },
+    { component: SwitchesSt3, title: "Switches" },
   ],
   // Add more categories here — just add a new key with an array of steps
 };
