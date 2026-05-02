@@ -1,3 +1,6 @@
+import CeilingFanSt1 from "@/src/components/quote/other/cellingfan/CeilingFanSt1";
+import CeilingFanSt2 from "@/src/components/quote/other/cellingfan/CeilingFanSt2";
+import CeilingFanSt3 from "@/src/components/quote/other/cellingfan/CeilingFanSt3";
 import Step1 from "@/src/components/quote/other/common/Step1";
 import Step2 from "@/src/components/quote/other/common/Step2";
 import Step3 from "@/src/components/quote/other/common/Step3";
@@ -77,7 +80,11 @@ const CATEGORY_STEP_MAP: Record<string, StepConfig[]> = {
     { component: SwitchesSt3, title: "Switches" },
   ],
   Lighting: [{ component: LightingSt1, title: "Lighting" }],
-  // Add more categories here — just add a new key with an array of steps
+  "Ceiling Fan": [
+    { component: CeilingFanSt1, title: "Ceiling Fan" },
+    { component: CeilingFanSt2, title: "Ceiling Fan" },
+    { component: CeilingFanSt3, title: "Ceiling Fan" },
+  ],
 };
 
 // ─── Main Screen ──────────────────────────────────────────────────────────────
