@@ -6,6 +6,7 @@ import DedicatedCircuitSt2 from "@/src/components/quote/other/DedicatedCircuit/D
 import DedicatedCircuitSt3 from "@/src/components/quote/other/DedicatedCircuit/DedicatedCircuitSt3";
 import DedicatedCircuitSt4 from "@/src/components/quote/other/DedicatedCircuit/DedicatedCircuitSt4";
 import ExhaustFanSt1 from "@/src/components/quote/other/exhaustfan/ExhaustFanSt1";
+import LightingSt1 from "@/src/components/quote/other/lighting/LightingSt1";
 import OutletsSt1 from "@/src/components/quote/other/outlets/OutletsSt1";
 import OutletsSt2 from "@/src/components/quote/other/outlets/OutletsSt2";
 import OutletsSt3 from "@/src/components/quote/other/outlets/OutletsSt3";
@@ -75,6 +76,7 @@ const CATEGORY_STEP_MAP: Record<string, StepConfig[]> = {
     { component: SwitchesSt2, title: "Switches" },
     { component: SwitchesSt3, title: "Switches" },
   ],
+  Lighting: [{ component: LightingSt1, title: "Lighting" }],
   // Add more categories here — just add a new key with an array of steps
 };
 
