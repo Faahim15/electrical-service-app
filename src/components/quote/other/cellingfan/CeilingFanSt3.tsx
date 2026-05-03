@@ -96,9 +96,6 @@ const CeilingFanSt3 = () => {
     </Animated.View>
   );
 
-  const showSwitchTypeGrid =
-    upgradeSwitch === "yes" || switchConnection === "new";
-
   return (
     <View className="flex-1 ">
       <ScrollView
@@ -309,7 +306,7 @@ const CeilingFanSt3 = () => {
           onChangeText={setAdditionalInfo}
           placeholder=""
           placeholderTextColor="#9CA3AF"
-          className="border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-700 font-Inter_Regular"
+          className="bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-700 font-Inter_Regular"
           multiline
           numberOfLines={4}
           textAlignVertical="top"

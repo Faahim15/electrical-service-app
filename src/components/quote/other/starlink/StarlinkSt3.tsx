@@ -1,8 +1,13 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 const UploadArea = ({ label }: { label: string }) => (
   <View className="border border-dashed border-gray-300 rounded-xl p-5 items-center mt-2 mb-4 bg-gray-50">
-    <Text className="text-cyan-400 text-3xl mb-2">↑</Text>
+    <MaterialCommunityIcons
+      name="file-image-plus-outline"
+      size={24}
+      color="#4b5563"
+    />
     <Text className="text-gray-500 font-Inter_Regular text-xs text-center mb-3">
       {label}
     </Text>

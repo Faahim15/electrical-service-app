@@ -1,3 +1,4 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import React, { useRef, useState } from "react";
 import {
@@ -138,7 +139,11 @@ const UploadCard = ({
               marginBottom: 12,
             }}
           >
-            <Text style={{ fontSize: 20 }}>⬆</Text>
+            <MaterialCommunityIcons
+              name="file-image-plus-outline"
+              size={24}
+              color="#4b5563"
+            />
           </View>
 
           <Text

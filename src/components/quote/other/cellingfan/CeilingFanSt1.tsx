@@ -1,3 +1,4 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import React, { useRef, useState } from "react";
 import {
@@ -142,104 +143,116 @@ const CeilingFanSt1 = () => {
         />
 
         {/* Photo Upload */}
-        <View className="mt-5 mb-4 items-center">
-          <TouchableOpacity
-            onPress={pickImage}
-            className="items-center"
-            activeOpacity={0.8}
-          >
-            {photoUri ? (
-              <Image
-                source={{ uri: photoUri }}
-                className="w-28 h-28 rounded-xl mb-2"
-                resizeMode="cover"
+        {installationType === "replacement" && (
+          <View className="bg-white border border-gray-200   p-6 rounded-xl  items-center">
+            <TouchableOpacity
+              onPress={pickImage}
+              className="items-center"
+              activeOpacity={0.8}
+            >
+              {photoUri ? (
+                <Image
+                  source={{ uri: photoUri }}
+                  className="w-28 h-28 rounded-xl mb-2"
+                  resizeMode="cover"
+                />
+              ) : (
+                <View className="w-16 h-16 items-center justify-center mb-2">
+                  <MaterialCommunityIcons
+                    name="file-image-plus-outline"
+                    size={24}
+                    color="#9ca3af"
+                  />
+                </View>
+              )}
+              <Text className="text-xs text-gray-400 font-Inter_Regular text-center mb-3">
+                Please upload a photo of your{"\n"}current ceiling fan
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={pickImage}
+              className="border border-gray-300 rounded-lg px-6 py-2"
+              activeOpacity={0.8}
+            >
+              <Text className="text-sm text-gray-600 font-Inter_Medium">
+                Choose File
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
+        {installationType === "new_install" && (
+          <View>
+            {/* Space above */}
+            <Text className="text-sm text-gray-500 font-Inter_Regular mb-3 mt-2">
+              What is above / below the area the ceiling fan will be installed?
+            </Text>
+
+            {(
+              [
+                { key: "attic_above", label: "Attic above" },
+                { key: "occupied_above", label: "Occupied space above" },
+                {
+                  key: "crawlspace_unfinished",
+                  label: "Crawlspace (unfinished)",
+                },
+                {
+                  key: "crawlspace_encapsulated",
+                  label: "Crawlspace (encapsulated)",
+                },
+                { key: "basement_unfinished", label: "Basement (unfinished)" },
+                { key: "basement_finished", label: "Basement (finished)" },
+              ] as { key: SpaceType; label: string }[]
+            ).map((item) => (
+              <SelectButton
+                key={item.key!}
+                label={item.label}
+                isSelected={spaceType === item.key}
+                onPress={() => setSpaceType(item.key)}
+                animKey={`space_${item.key}`}
               />
-            ) : (
-              <View className="w-16 h-16 items-center justify-center mb-2">
-                <Text className="text-4xl text-gray-300">⬆</Text>
-              </View>
-            )}
-            <Text className="text-xs text-gray-400 font-Inter_Regular text-center mb-3">
-              Please upload a photo of your{"\n"}current ceiling fan
+            ))}
+
+            {/* Light fixture */}
+            <Text className="text-sm text-gray-500 font-Inter_Regular mb-3 mt-4">
+              Is there a current light fixture where you want the fan installed?
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={pickImage}
-            className="border border-gray-300 rounded-lg px-6 py-2"
-            activeOpacity={0.8}
-          >
-            <Text className="text-sm text-gray-600 font-Inter_Medium">
-              Choose File
+            <SelectButton
+              label="Yes"
+              isSelected={hasLightFixture === "yes"}
+              onPress={() => setHasLightFixture("yes")}
+              animKey="light_yes"
+            />
+            <SelectButton
+              label="No"
+              isSelected={hasLightFixture === "no"}
+              onPress={() => setHasLightFixture("no")}
+              animKey="light_no"
+            />
+
+            {/* Pre-wired */}
+            <Text className="text-sm text-gray-500 font-Inter_Regular mb-3 mt-4">
+              Was the area prewired for a ceiling fan?
             </Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* Space above */}
-        <Text className="text-sm text-gray-500 font-Inter_Regular mb-3 mt-2">
-          What is above / below the area the ceiling fan will be installed?
-        </Text>
-
-        {(
-          [
-            { key: "attic_above", label: "Attic above" },
-            { key: "occupied_above", label: "Occupied space above" },
-            { key: "crawlspace_unfinished", label: "Crawlspace (unfinished)" },
-            {
-              key: "crawlspace_encapsulated",
-              label: "Crawlspace (encapsulated)",
-            },
-            { key: "basement_unfinished", label: "Basement (unfinished)" },
-            { key: "basement_finished", label: "Basement (finished)" },
-          ] as { key: SpaceType; label: string }[]
-        ).map((item) => (
-          <SelectButton
-            key={item.key!}
-            label={item.label}
-            isSelected={spaceType === item.key}
-            onPress={() => setSpaceType(item.key)}
-            animKey={`space_${item.key}`}
-          />
-        ))}
-
-        {/* Light fixture */}
-        <Text className="text-sm text-gray-500 font-Inter_Regular mb-3 mt-4">
-          Is there a current light fixture where you want the fan installed?
-        </Text>
-        <SelectButton
-          label="Yes"
-          isSelected={hasLightFixture === "yes"}
-          onPress={() => setHasLightFixture("yes")}
-          animKey="light_yes"
-        />
-        <SelectButton
-          label="No"
-          isSelected={hasLightFixture === "no"}
-          onPress={() => setHasLightFixture("no")}
-          animKey="light_no"
-        />
-
-        {/* Pre-wired */}
-        <Text className="text-sm text-gray-500 font-Inter_Regular mb-3 mt-4">
-          Was the area prewired for a ceiling fan?
-        </Text>
-        <SelectButton
-          label="Yes"
-          isSelected={preWired === "yes"}
-          onPress={() => setPreWired("yes")}
-          animKey="pre_yes"
-        />
-        <SelectButton
-          label="No"
-          isSelected={preWired === "no"}
-          onPress={() => setPreWired("no")}
-          animKey="pre_no"
-        />
-        <SelectButton
-          label="I'm not sure"
-          isSelected={preWired === "unsure"}
-          onPress={() => setPreWired("unsure")}
-          animKey="pre_unsure"
-        />
+            <SelectButton
+              label="Yes"
+              isSelected={preWired === "yes"}
+              onPress={() => setPreWired("yes")}
+              animKey="pre_yes"
+            />
+            <SelectButton
+              label="No"
+              isSelected={preWired === "no"}
+              onPress={() => setPreWired("no")}
+              animKey="pre_no"
+            />
+            <SelectButton
+              label="I'm not sure"
+              isSelected={preWired === "unsure"}
+              onPress={() => setPreWired("unsure")}
+              animKey="pre_unsure"
+            />
+          </View>
+        )}
       </ScrollView>
     </View>
   );

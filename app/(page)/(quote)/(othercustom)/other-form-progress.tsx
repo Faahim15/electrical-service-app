@@ -12,7 +12,6 @@ import ExhaustFanSt1 from "@/src/components/quote/other/exhaustfan/ExhaustFanSt1
 import LightingSt1 from "@/src/components/quote/other/lighting/LightingSt1";
 import OutletsSt1 from "@/src/components/quote/other/outlets/OutletsSt1";
 import OutletsSt2 from "@/src/components/quote/other/outlets/OutletsSt2";
-import OutletsSt3 from "@/src/components/quote/other/outlets/OutletsSt3";
 import OutletsSt4 from "@/src/components/quote/other/outlets/OutletsSt4";
 import StarlinkSt1 from "@/src/components/quote/other/starlink/StarlinkSt1";
 import StarlinkSt2 from "@/src/components/quote/other/starlink/StarlinkSt2";
@@ -71,7 +70,7 @@ const CATEGORY_STEP_MAP: Record<string, StepConfig[]> = {
   Outlets: [
     { component: OutletsSt1, title: "Outlets" },
     { component: OutletsSt2, title: "Outlets" },
-    { component: OutletsSt3, title: "Outlets" },
+    // { component: OutletsSt3, title: "Outlets" },
     { component: OutletsSt4, title: "Outlets" },
   ],
   Switches: [
@@ -141,7 +140,7 @@ const OtherFormProgress = () => {
       animateProgress(currentStep + 1);
     } else {
       // Last step — submit / navigate
-      // router.push("/some-confirmation-screen");
+      router.push("/submit-quote-request");
     }
   };
 

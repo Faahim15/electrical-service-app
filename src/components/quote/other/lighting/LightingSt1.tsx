@@ -1,3 +1,4 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import React, { useRef, useState } from "react";
 import {
@@ -212,7 +213,11 @@ const UploadBox = ({
     <View>
       <AnimatedTouchable onPress={pickImage}>
         <View className="border border-gray-200 rounded-xl p-4 items-center bg-white">
-          <Text className="text-2xl text-gray-400 mb-1">↑</Text>
+          <MaterialCommunityIcons
+            name="file-image-plus-outline"
+            size={24}
+            color="#4b5563"
+          />
           <Text className="text-gray-500 font-Inter_Regular text-sm">
             {label}
           </Text>
@@ -516,18 +521,14 @@ const FloodLightsSection = () => {
         ))}
       </View>
 
-      {installType === "Replacement" && (
-        <>
-          <Label>Upload photo(s) of current flood light(s)</Label>
-          <View className="mb-4">
-            <UploadBox
-              label="Upload Current Flood Light Photos"
-              images={currentPhotos}
-              onAdd={(uri) => setCurrentPhotos((p) => [...p, uri])}
-            />
-          </View>
-        </>
-      )}
+      <Label>Upload photo(s) of current flood light(s)</Label>
+      <View className="mb-4">
+        <UploadBox
+          label="Upload Current Flood Light Photos"
+          images={currentPhotos}
+          onAdd={(uri) => setCurrentPhotos((p) => [...p, uri])}
+        />
+      </View>
 
       <Label>How high will the flood light(s) be installed?</Label>
       <TextInput
@@ -688,13 +689,17 @@ const WallCoachSection = () => {
         />
       </View>
 
-      <Label>What type of surface will the lights be mounted to?</Label>
-      <TwoColGrid
-        items={surfaces}
-        selected={surface}
-        onSelect={(v) => setSurface(v as WallSurface)}
-      />
-      <View className="mb-4" />
+      {installType === "New Installation" && (
+        <View>
+          <Label>What type of surface will the lights be mounted to?</Label>
+          <TwoColGrid
+            items={surfaces}
+            selected={surface}
+            onSelect={(v) => setSurface(v as WallSurface)}
+          />
+          <View className="mb-4" />
+        </View>
+      )}
 
       <Label>Will you be providing the new light fixture(s)?</Label>
       <YesNoRow value={providing} onChange={setProviding} />
@@ -827,18 +832,14 @@ const DrivewaySection = () => {
         ))}
       </View>
 
-      {installType === "Replacement" && (
-        <>
-          <Label>Upload photo(s) of current lighting</Label>
-          <View className="mb-4">
-            <UploadBox
-              label="Upload Current Lighting Photos"
-              images={currentPhotos}
-              onAdd={(uri) => setCurrentPhotos((p) => [...p, uri])}
-            />
-          </View>
-        </>
-      )}
+      <Label>Upload photo(s) of current lighting</Label>
+      <View className="mb-4">
+        <UploadBox
+          label="Upload Current Lighting Photos"
+          images={currentPhotos}
+          onAdd={(uri) => setCurrentPhotos((p) => [...p, uri])}
+        />
+      </View>
 
       <Label>Will you be providing the new lighting?</Label>
       <YesNoRow value={providing} onChange={setProviding} />

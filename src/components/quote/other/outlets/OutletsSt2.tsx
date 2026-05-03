@@ -1,3 +1,4 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import React, { useRef, useState } from "react";
 import {
@@ -141,7 +142,11 @@ const OutletsSt2 = () => {
             </View>
           ) : (
             <>
-              <Text className="text-2xl text-gray-400 mb-2">⬆</Text>
+              <MaterialCommunityIcons
+                name="file-image-plus-outline"
+                size={24}
+                color="#4b5563"
+              />
               <Text className="font-Inter_Regular text-gray-500 text-sm text-center">
                 Please upload photos of where the outlet(s) will be installed
               </Text>
@@ -156,80 +161,84 @@ const OutletsSt2 = () => {
         </TouchableOpacity>
 
         {/* Amps */}
-        <Text className="font-Inter_SemiBold text-gray-800 text-sm mt-5 mb-3">
-          How many Amps?
-        </Text>
-        {AMPS.map((amp, index) => {
-          const isSelected = selectedAmp === amp;
-          return (
-            <Animated.View
-              key={amp}
-              style={{ transform: [{ scale: ampAnims[index] }] }}
-            >
-              <TouchableOpacity
-                onPress={() => {
-                  animatePressIn(ampAnims[index]);
-                  setSelectedAmp(amp);
-                }}
-                activeOpacity={0.85}
-                className="mb-2 rounded-xl border px-4 py-4"
-                style={{
-                  backgroundColor: isSelected ? "#06B6D4" : "#ffffff",
-                  borderColor: isSelected ? "#06B6D4" : "#E5E7EB",
-                }}
-              >
-                <Text
-                  className={`font-Inter_Medium text-sm ${
-                    isSelected ? "text-white" : "text-gray-700"
-                  }`}
+        {installType === "New install" && (
+          <>
+            <Text className="font-Inter_SemiBold text-gray-800 text-sm mt-5 mb-3">
+              How many Amps?
+            </Text>
+            {AMPS.map((amp, index) => {
+              const isSelected = selectedAmp === amp;
+              return (
+                <Animated.View
+                  key={amp}
+                  style={{ transform: [{ scale: ampAnims[index] }] }}
                 >
-                  {amp}
-                </Text>
-              </TouchableOpacity>
-            </Animated.View>
-          );
-        })}
+                  <TouchableOpacity
+                    onPress={() => {
+                      animatePressIn(ampAnims[index]);
+                      setSelectedAmp(amp);
+                    }}
+                    activeOpacity={0.85}
+                    className="mb-2 rounded-xl border px-4 py-4"
+                    style={{
+                      backgroundColor: isSelected ? "#06B6D4" : "#ffffff",
+                      borderColor: isSelected ? "#06B6D4" : "#E5E7EB",
+                    }}
+                  >
+                    <Text
+                      className={`font-Inter_Medium text-sm ${
+                        isSelected ? "text-white" : "text-gray-700"
+                      }`}
+                    >
+                      {amp}
+                    </Text>
+                  </TouchableOpacity>
+                </Animated.View>
+              );
+            })}
 
-        {/* Volts */}
-        <Text className="font-Inter_SemiBold text-gray-800 text-sm mt-5 mb-3">
-          How many amps/volts do you need?
-        </Text>
-        {VOLTS.map((volt, index) => {
-          const isSelected = selectedVolt === volt;
-          return (
-            <Animated.View
-              key={volt}
-              style={{ transform: [{ scale: voltAnims[index] }] }}
-            >
-              <TouchableOpacity
-                onPress={() => {
-                  animatePressIn(voltAnims[index]);
-                  setSelectedVolt(volt);
-                }}
-                activeOpacity={0.85}
-                className="mb-2 rounded-xl border px-4 py-4"
-                style={{
-                  backgroundColor: isSelected ? "#06B6D4" : "#ffffff",
-                  borderColor: isSelected ? "#06B6D4" : "#E5E7EB",
-                }}
-              >
-                <Text
-                  className={`font-Inter_Medium text-sm ${
-                    isSelected ? "text-white" : "text-gray-700"
-                  }`}
+            {/* Volts */}
+            <Text className="font-Inter_SemiBold text-gray-800 text-sm mt-5 mb-3">
+              How many amps/volts do you need?
+            </Text>
+            {VOLTS.map((volt, index) => {
+              const isSelected = selectedVolt === volt;
+              return (
+                <Animated.View
+                  key={volt}
+                  style={{ transform: [{ scale: voltAnims[index] }] }}
                 >
-                  {volt}
-                </Text>
-              </TouchableOpacity>
-            </Animated.View>
-          );
-        })}
+                  <TouchableOpacity
+                    onPress={() => {
+                      animatePressIn(voltAnims[index]);
+                      setSelectedVolt(volt);
+                    }}
+                    activeOpacity={0.85}
+                    className="mb-2 rounded-xl border px-4 py-4"
+                    style={{
+                      backgroundColor: isSelected ? "#06B6D4" : "#ffffff",
+                      borderColor: isSelected ? "#06B6D4" : "#E5E7EB",
+                    }}
+                  >
+                    <Text
+                      className={`font-Inter_Medium text-sm ${
+                        isSelected ? "text-white" : "text-gray-700"
+                      }`}
+                    >
+                      {volt}
+                    </Text>
+                  </TouchableOpacity>
+                </Animated.View>
+              );
+            })}
 
-        {/* NEMA */}
-        <Text className="font-Inter_SemiBold text-gray-800 text-sm mt-5 mb-4">
-          What is the NEMA configuration for the receptacle (if there will be
-          one)? <Text style={{ color: "#06B6D4" }}>ⓘ</Text>
-        </Text>
+            {/* NEMA */}
+            <Text className="font-Inter_SemiBold text-gray-800 text-sm mt-5 mb-4">
+              What is the NEMA configuration for the receptacle (if there will
+              be one)? <Text style={{ color: "#06B6D4" }}>ⓘ</Text>
+            </Text>
+          </>
+        )}
 
         <View className="mb-6" />
       </ScrollView>

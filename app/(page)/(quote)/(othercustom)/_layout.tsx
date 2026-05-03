@@ -12,6 +12,8 @@ export default function Layout() {
       >
         <Stack.Screen name="other-start" />
         <Stack.Screen name="other-form-progress" />
+        <Stack.Screen name="request-received" />
+        <Stack.Screen name="submit-quote-request" />
       </Stack>
     </SafeAreaProvider>
   );

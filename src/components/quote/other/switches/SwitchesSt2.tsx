@@ -1,3 +1,4 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import React, { useRef, useState } from "react";
 import {
@@ -96,7 +97,12 @@ const SwitchesSt2 = () => {
             </View>
           ) : (
             <>
-              <Text className="text-3xl text-gray-400 mb-3">⬆</Text>
+              <MaterialCommunityIcons
+                name="file-image-plus-outline"
+                size={24}
+                color="#06B6D4"
+              />
+
               <Text className="font-Inter_Regular text-gray-500 text-sm text-center mb-2">
                 Please upload a photo of where the switch(es) will be installed
               </Text>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
   ScrollView,
@@ -10,6 +10,9 @@ import {
 const DedicatedCircuitSt1 = () => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(24)).current;
+
+  const [selectedCircuit, setSelectedCircuit] = useState(null);
+  const [selectedPanel, setSelectedPanel] = useState(null);
 
   const circuitOptions = [
     "EV charger",
@@ -66,9 +69,50 @@ const DedicatedCircuitSt1 = () => {
         }),
       ]),
     );
-
     Animated.stagger(0, animations).start();
   }, []);
+
+  const renderOption = (
+    label: any,
+    index: any,
+    isSelected: any,
+    onPress: any,
+  ) => {
+    const anim = itemAnims[index];
+    return (
+      <Animated.View
+        key={label}
+        style={{
+          opacity: anim.opacity,
+          transform: [{ translateY: anim.translateY }],
+        }}
+      >
+        <TouchableOpacity
+          activeOpacity={0.75}
+          onPress={onPress}
+          className={`rounded-2xl px-4 py-4 mb-2 ${isSelected ? "bg-[#14B8A6]" : "bg-white"}`}
+          style={{
+            shadowColor: isSelected ? "#14B8A6" : "#0EA5E9",
+            shadowOpacity: isSelected ? 0.25 : 0.06,
+            shadowRadius: 6,
+            shadowOffset: { width: 0, height: 2 },
+            elevation: 2,
+            borderWidth: 2,
+            borderColor: isSelected ? "#0d9488" : "transparent",
+          }}
+        >
+          <Text
+            className={`text-[15px] ${isSelected ? "text-white" : "text-[#334155]"}`}
+            style={{
+              fontFamily: isSelected ? "Inter_SemiBold" : "Inter_Regular",
+            }}
+          >
+            {label}
+          </Text>
+        </TouchableOpacity>
+      </Animated.View>
+    );
+  };
 
   return (
     <View className="flex-1 bg-[#EFF6FF]">
@@ -82,17 +126,15 @@ const DedicatedCircuitSt1 = () => {
           style={{ opacity: fadeAnim, transform: [{ translateY: slideAnim }] }}
           className="px-4 pt-5 pb-1"
         >
-          <View className="self-start">
-            <Text
-              className="text-[#06B6D4] text-sm"
-              style={{ fontFamily: "Inter_Medium" }}
-            >
-              Dedicated Circuit
-            </Text>
-          </View>
+          <Text
+            className="text-[#06B6D4] text-sm"
+            style={{ fontFamily: "Inter_Medium" }}
+          >
+            Dedicated Circuit
+          </Text>
         </Animated.View>
 
-        {/* Intended use heading */}
+        {/* Heading */}
         <Animated.View
           style={{ opacity: fadeAnim, transform: [{ translateY: slideAnim }] }}
           className="px-4 pt-2 pb-4"
@@ -116,40 +158,11 @@ const DedicatedCircuitSt1 = () => {
           >
             What do you need a dedicated circuit for?
           </Text>
-
-          <View className="gap-y-2">
-            {circuitOptions.map((option, index) => {
-              const anim = itemAnims[index];
-              return (
-                <Animated.View
-                  key={option}
-                  style={{
-                    opacity: anim.opacity,
-                    transform: [{ translateY: anim.translateY }],
-                  }}
-                >
-                  <TouchableOpacity
-                    activeOpacity={0.75}
-                    className="bg-white rounded-2xl px-4 py-4 shadow-sm"
-                    style={{
-                      shadowColor: "#0EA5E9",
-                      shadowOpacity: 0.06,
-                      shadowRadius: 6,
-                      shadowOffset: { width: 0, height: 2 },
-                      elevation: 2,
-                    }}
-                  >
-                    <Text
-                      className="text-[#334155] text-[15px]"
-                      style={{ fontFamily: "Inter_Regular" }}
-                    >
-                      {option}
-                    </Text>
-                  </TouchableOpacity>
-                </Animated.View>
-              );
-            })}
-          </View>
+          {circuitOptions.map((option, index) =>
+            renderOption(option, index, selectedCircuit === option, () =>
+              setSelectedCircuit(option),
+            ),
+          )}
         </Animated.View>
 
         {/* Section 2 */}
@@ -163,40 +176,14 @@ const DedicatedCircuitSt1 = () => {
           >
             Where is your electrical panel located?
           </Text>
-
-          <View className="gap-y-2">
-            {panelLocations.map((location, index) => {
-              const anim = itemAnims[circuitOptions.length + index];
-              return (
-                <Animated.View
-                  key={location}
-                  style={{
-                    opacity: anim.opacity,
-                    transform: [{ translateY: anim.translateY }],
-                  }}
-                >
-                  <TouchableOpacity
-                    activeOpacity={0.75}
-                    className="bg-white rounded-2xl px-4 py-4 shadow-sm"
-                    style={{
-                      shadowColor: "#0EA5E9",
-                      shadowOpacity: 0.06,
-                      shadowRadius: 6,
-                      shadowOffset: { width: 0, height: 2 },
-                      elevation: 2,
-                    }}
-                  >
-                    <Text
-                      className="text-[#334155] text-[15px]"
-                      style={{ fontFamily: "Inter_Regular" }}
-                    >
-                      {location}
-                    </Text>
-                  </TouchableOpacity>
-                </Animated.View>
-              );
-            })}
-          </View>
+          {panelLocations.map((location, index) =>
+            renderOption(
+              location,
+              circuitOptions.length + index,
+              selectedPanel === location,
+              () => setSelectedPanel(location),
+            ),
+          )}
         </Animated.View>
       </ScrollView>
     </View>
