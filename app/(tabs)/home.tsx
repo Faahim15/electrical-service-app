@@ -21,6 +21,7 @@ function QuickActionCard({ item }: { item: QuickAction }) {
   return (
     <TouchableOpacity
       activeOpacity={0.8}
+      onPress={() => router.push(item.route)}
       className="bg-white rounded-2xl p-4 mb-3"
       style={{
         width: "48%",

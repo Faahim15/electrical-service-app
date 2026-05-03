@@ -1,6 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
+import { Href } from "expo-router";
 export type QuickAction = {
   id: string;
+  route: Href;
   icon: keyof typeof Ionicons.glyphMap;
   title: string;
   subtitle: string;

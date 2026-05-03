@@ -276,17 +276,16 @@ const Safety = () => {
             </Text>
           </Animated.View>
         </Animated.View>
+        {/* ── Main List ── */}
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 32 }}
+        >
+          {safetyItems.map((item, index) => (
+            <SafetyCard key={item.id} item={item} index={index} />
+          ))}
+        </ScrollView>
       </SafeAreaView>
-
-      {/* ── Main List ── */}
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 32, paddingTop: 4 }}
-      >
-        {safetyItems.map((item, index) => (
-          <SafetyCard key={item.id} item={item} index={index} />
-        ))}
-      </ScrollView>
     </ScreenWrapper>
   );
 };

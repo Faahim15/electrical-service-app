@@ -62,10 +62,10 @@ export const successfull = `<svg width="96" height="96" viewBox="0 0 96 96" fill
 export const requestsuccess = `<svg width="213" height="213" viewBox="0 0 213 213" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g opacity="0.341168">
 <path d="M0 106.165C0 47.5318 47.5318 0 106.165 0V0C164.798 0 212.33 47.5318 212.33 106.165V106.165C212.33 164.798 164.798 212.33 106.165 212.33V212.33C47.5318 212.33 0 164.798 0 106.165V106.165Z" fill="#10B981" fill-opacity="0.2"/>
+</g>
 <path d="M42 106C42 70.6538 70.6538 42 106 42V42C141.346 42 170 70.6538 170 106V106C170 141.346 141.346 170 106 170V170C70.6538 170 42 141.346 42 106V106Z" fill="url(#paint0_linear_36_156)"/>
 <path d="M132.136 100.667C133.354 106.643 132.486 112.857 129.677 118.271C126.868 123.686 122.288 127.973 116.7 130.419C111.113 132.866 104.855 133.322 98.9717 131.713C93.0882 130.104 87.9341 126.526 84.369 121.577C80.8039 116.628 79.0433 110.606 79.3807 104.516C79.7181 98.4254 82.1333 92.6349 86.2233 88.1098C90.3134 83.5846 95.8311 80.5985 101.856 79.6492C107.882 78.6999 114.05 79.8449 119.334 82.8933" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M98 103.335L106 111.335L132.667 84.668" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-</g>
 <defs>
 <linearGradient id="paint0_linear_36_156" x1="42" y1="42" x2="170" y2="170" gradientUnits="userSpaceOnUse">
 <stop stop-color="#10B981"/>
@@ -84,4 +84,5 @@ export const requestsuccess = `<svg width="213" height="213" viewBox="0 0 213 21
 </linearGradient>
 </defs>
 </svg>
+
 `;
