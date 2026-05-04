@@ -45,6 +45,21 @@ export default function ProjectBasics() {
     } else if (selectedCategory?.id === "5") {
       dispatch(selectCategory("5"));
       router.push("/quote/accessory-building/building-basics");
+    } else if (selectedCategory?.id === "6") {
+      dispatch(selectCategory("6"));
+      router.push("/quote/hot-tub/hot-tub-info");
+    } else if (selectedCategory?.id === "7") {
+      dispatch(selectCategory("7"));
+      router.push("/quote/dock-power/dock-basics");
+    } else if (selectedCategory?.id === "8") {
+      dispatch(selectCategory("8"));
+      router.push("/quote/electrical-inspection/inspection-type");
+    } else if (selectedCategory?.id === "9") {
+      dispatch(selectCategory("9"));
+      router.push("/quote/generator/generator-type");
+    } else if (selectedCategory?.id === "10") {
+      dispatch(selectCategory("10"));
+      router.push("/quote/new-construction/project-status");
     }
   };
 

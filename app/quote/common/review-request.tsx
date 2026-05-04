@@ -1,7 +1,12 @@
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import { AccessoryBuildingReview } from "@/src/components/quote/review/AccessoryBuildingReview";
 import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
+import { DockPowerReview } from "@/src/components/quote/review/DockPowerReview";
+import { ElectricalInspectionReview } from "@/src/components/quote/review/ElectricalInspectionReview";
 import { EVChargerReview } from "@/src/components/quote/review/EVChargerRow";
+import { GeneratorReview } from "@/src/components/quote/review/GeneratorReview";
+import { HotTubReview } from "@/src/components/quote/review/HotTubReview";
+import { NewConstructionReview } from "@/src/components/quote/review/NewConstructionReview";
 import { PanelUpgradeReview } from "@/src/components/quote/review/PanelUpgradeReview";
 import { RemodelingReview } from "@/src/components/quote/review/RemodelingReview";
 import { ReviewRow } from "@/src/components/quote/review/ReviewRow";
@@ -119,7 +124,21 @@ export default function ReviewRequest() {
           {categoryData?.categoryId === "5" && categoryData.details && (
             <AccessoryBuildingReview details={categoryData.details} />
           )}
-
+          {categoryData?.categoryId === "6" && categoryData.details && (
+            <HotTubReview details={categoryData.details} />
+          )}
+          {categoryData?.categoryId === "7" && categoryData.details && (
+            <DockPowerReview details={categoryData.details} />
+          )}
+          {categoryData?.categoryId === "8" && categoryData.details && (
+            <ElectricalInspectionReview details={categoryData.details} />
+          )}
+          {categoryData?.categoryId === "9" && categoryData.details && (
+            <GeneratorReview details={categoryData.details} />
+          )}
+          {categoryData?.categoryId === "10" && categoryData.details && (
+            <NewConstructionReview details={categoryData.details} />
+          )}
           <GradientButton
             label="Submit"
             onPress={() => router.push("/submit-success" as any)}

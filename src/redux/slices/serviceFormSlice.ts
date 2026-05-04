@@ -1,307 +1,38 @@
-// src/redux/slices/serviceFormSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-// ============================================
-// COMMON TYPES (id 1-10 shared)
-// ============================================
-interface ContactDetails {
-  fullName: string;
-  email: string;
-  phone: string;
-  preferredContact: "Call" | "Text" | "Email";
-}
+import {
+  initialAccessoryBuildingDetails,
+  initialDockPowerDetails,
+  initialElectricalInspectionDetails,
+  initialEVChargerDetails,
+  initialGeneratorDetails,
+  initialHotTubDetails,
+  initialNewConstructionDetails,
+  initialPanelUpgradeDetails,
+  initialRemodelingDetails,
+  initialServiceCallDetails,
+} from "@/src/types/serviceForm.initials";
 
-interface ServiceAddress {
-  streetAddress: string;
-  apartment: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  isHomeAddress: boolean;
-}
-
-interface ProjectBasics {
-  propertyType: "House" | "Condo" | "Apartment" | "Commercial" | "";
-  ownershipStatus: "Owner" | "Tenant" | "Property Manager" | "Other" | "";
-  timeline:
-    | "As soon as possible"
-    | "This week"
-    | "This month"
-    | "Flexible"
-    | "";
-}
-
-// ============================================
-// CATEGORY-SPECIFIC TYPES
-// ============================================
-
-// id: "1" - Service Call
-interface ServiceCallDetails {
-  projectDetails: string;
-  preferredTime: "AM (8-11)" | "PM (12-2)" | "";
-  schedulingDays: string[];
-  additionalNotes: string;
-  quickTags: string[];
-  panelPhotos: string[];
-  workAreaPhotos: string[];
-  referencePhotos: string[];
-}
-
-// id: "2" - EV Charger
-type ChargerType = "Plug-in" | "Hardwired" | "I want help deciding" | "";
-type ProvidingCharger = "Yes" | "No" | "";
-type ChargerStatus =
-  | "Currently have the charger"
-  | "Ordered and waiting on delivery"
-  | "Need to place order"
-  | "Need help choosing a charger"
-  | "";
-type InstallationLocation = "Garage" | "Carport" | "Driveway" | "Other" | "";
-type PanelLocation =
-  | "Basement (Finished)"
-  | "Basement (Unfinished)"
-  | "Garage (Finished)"
-  | "Garage (Unfinished)"
-  | "Other (please specify)"
-  | "";
-type PanelDistance =
-  | "Less than 25 ft"
-  | "25–50 ft"
-  | "50–100 ft"
-  | "More than 100 ft"
-  | "Unsure"
-  | "";
-
-interface EVChargerDetails {
-  chargerType: ChargerType;
-  nemaConfig: string;
-  providingCharger: ProvidingCharger;
-  chargerStatus: ChargerStatus;
-  installationLocation: InstallationLocation;
-  panelLocation: PanelLocation;
-  panelDistance: PanelDistance;
-  additionalInfo: string;
-  chargerAreaPhotos: string[];
-  panelPhotos: string[];
-}
-
-// id: "3" - Panel Upgrade
-type CurrentAmperage =
-  | "50"
-  | "60"
-  | "100"
-  | "150"
-  | "200"
-  | "Unsure"
-  | "Other"
-  | "";
-type ServiceType = "Replacement" | "Upgrade" | "";
-type PowerType = "Overhead" | "Underground" | "Unsure" | "";
-type PanelLocationUpgrade =
-  | "Basement (Finished)"
-  | "Basement (Unfinished)"
-  | "Garage (Finished)"
-  | "Garage (Unfinished)"
-  | "Other (please specify)"
-  | "";
-type UpgradeAmps = "100" | "150" | "200" | "300" | "350" | "400" | "";
-interface PanelUpgradeDetails {
-  serviceType: ServiceType;
-  upgradeAmps: UpgradeAmps;
-  // নতুন fields
-  currentAmperage: CurrentAmperage;
-  powerType: PowerType;
-  panelLocation: PanelLocationUpgrade;
-  additionalInfo: string;
-  meterPhotos: string[];
-  panelPhotos: string[];
-}
-
-const initialPanelUpgradeDetails: PanelUpgradeDetails = {
-  serviceType: "",
-  upgradeAmps: "",
-  currentAmperage: "",
-  powerType: "",
-  panelLocation: "",
-  additionalInfo: "",
-  meterPhotos: [],
-  panelPhotos: [],
-};
-
-type Remodeling_PanelLocation =
-  | "Basement (Finished)"
-  | "Basement (Unfinished)"
-  | "Garage (Finished)"
-  | "Garage (Unfinished)"
-  | "Other (please specify)"
-  | "";
-type HasPlans = "Yes" | "No" | "";
-
-interface RemodelingDetails {
-  panelLocation: Remodeling_PanelLocation;
-  remodlingArea: string;
-  hasPlans: HasPlans;
-  planPhotos: string[];
-  electricalNeeds: string;
-
-  hasPermit: "Yes" | "No" | "";
-  permitNumber: string;
-  additionalInfo: string;
-  existingSpacePhotos: string[];
-  panelPhotos: string[];
-}
-
-const initialRemodelingDetails: RemodelingDetails = {
-  panelLocation: "",
-  remodlingArea: "",
-  hasPlans: "",
-  planPhotos: [],
-  electricalNeeds: "",
-  hasPermit: "",
-  permitNumber: "",
-  additionalInfo: "",
-  existingSpacePhotos: [],
-  panelPhotos: [],
-};
-
-// id: "5" - Accessory Building / Shed Power
-type BuildingStatus = "Yes" | "No" | "Will be delivered / built soon" | "";
-type ConstructionType =
-  | "Metal/Steel"
-  | "Pole Barn"
-  | "Wood (Pre-fabricated)"
-  | "Wood (built on site)"
-  | "";
-type FloorType = "Dirt" | "Stone" | "Wood" | "Concrete" | "";
-type HeatingCooling = "Yes" | "No" | "";
-type ServiceType_5 =
-  | "New Service"
-  | "Sub-panel"
-  | "1-2 dedicated circuits"
-  | "";
-type NewServiceSize =
-  | "100 amp"
-  | "125 amp"
-  | "150 amp"
-  | "200 amp"
-  | "300 amp"
-  | "350 amp"
-  | "400 amp"
-  | "Unsure"
-  | "Other"
-  | "";
-type SubPanelSize =
-  | "30 amp"
-  | "50 amp"
-  | "60 amp"
-  | "100 amp"
-  | "125 amp"
-  | "Unsure"
-  | "Other"
-  | "";
-type CircuitCount = "1" | "2" | "";
-type AmpRating = "15" | "20" | "";
-type AccessoryPanelLocation =
-  | "Basement (Finished)"
-  | "Basement (Unfinished)"
-  | "Garage (Finished)"
-  | "Garage (Unfinished)"
-  | "Other (please specify)"
-  | "";
-
-interface AccessoryBuildingDetails {
-  squareFootage: string;
-  intendedUse: string;
-  buildingStatus: BuildingStatus;
-  constructionType: ConstructionType;
-  floorType: FloorType;
-  electricalNeeds: string;
-  hasHeatingCooling: HeatingCooling;
-  serviceType: ServiceType_5;
-  // New Service specific
-  newServiceSize: NewServiceSize;
-  // Sub-panel specific
-  subPanelSize: SubPanelSize;
-  // 1-2 circuits specific
-  circuitCount: CircuitCount;
-  ampRating: AmpRating;
-  // Common
-  panelLocation: AccessoryPanelLocation;
-  panelPhotos: string[];
-
-  privateUtilities: string;
-  routeDistance: string;
-  existingSpacePhotos: string[];
-  hasPlans: "Yes" | "No" | "";
-  planDrawingPhotos: string[];
-  hasPermit: "Yes" | "No" | "";
-  permitNumber: string;
-  additionalInfo: string;
-}
-
-const initialAccessoryBuildingDetails: AccessoryBuildingDetails = {
-  squareFootage: "",
-  intendedUse: "",
-  buildingStatus: "",
-  constructionType: "",
-  floorType: "",
-  electricalNeeds: "",
-  hasHeatingCooling: "",
-  serviceType: "",
-  newServiceSize: "",
-  subPanelSize: "",
-  circuitCount: "",
-  ampRating: "",
-  panelLocation: "",
-  panelPhotos: [],
-
-  privateUtilities: "",
-  routeDistance: "",
-  existingSpacePhotos: [],
-  hasPlans: "",
-  planDrawingPhotos: [],
-  hasPermit: "",
-  permitNumber: "",
-  additionalInfo: "",
-};
-
-// ============================================
-// CATEGORY DATA — আলাদা typed container
-// ============================================
-interface CategoryData_1 {
-  categoryId: "1";
-  details: ServiceCallDetails;
-}
-interface CategoryData_2 {
-  categoryId: "2";
-  details: EVChargerDetails;
-}
-interface CategoryData_Other {
-  categoryId: string;
-  details: null;
-}
-
-interface CategoryData_3 {
-  categoryId: "3";
-  details: PanelUpgradeDetails;
-}
-interface CategoryData_4 {
-  categoryId: "4";
-  details: RemodelingDetails;
-}
-
-interface CategoryData_5 {
-  categoryId: "5";
-  details: AccessoryBuildingDetails;
-}
-
-type CategorySpecificData =
-  | CategoryData_1
-  | CategoryData_2
-  | CategoryData_3
-  | CategoryData_4
-  | CategoryData_5 // ← নতুন
-  | CategoryData_Other;
+import {
+  AccessoryBuildingDetails,
+  CategoryData_1,
+  CategoryData_2,
+  CategorySpecificData,
+  ChargerType,
+  ContactDetails,
+  DockPowerDetails,
+  ElectricalInspectionDetails,
+  EVChargerDetails,
+  GeneratorDetails,
+  HotTubDetails,
+  NewConstructionDetails,
+  PanelUpgradeDetails,
+  ProjectBasics,
+  ProvidingCharger,
+  RemodelingDetails,
+  ServiceAddress,
+  ServiceCallDetails,
+} from "@/src/types/serviceForm.types";
 
 // ============================================
 // MAIN STATE
@@ -314,64 +45,6 @@ interface ServiceFormState {
   projectBasics: ProjectBasics;
   categoryData: CategorySpecificData | null;
 }
-
-// ============================================
-// INITIAL STATES
-// ============================================
-const initialContactDetails: ContactDetails = {
-  fullName: "",
-  email: "",
-  phone: "",
-  preferredContact: "Call",
-};
-
-const initialServiceAddress: ServiceAddress = {
-  streetAddress: "",
-  apartment: "",
-  city: "",
-  state: "",
-  zipCode: "",
-  isHomeAddress: false,
-};
-
-const initialProjectBasics: ProjectBasics = {
-  propertyType: "",
-  ownershipStatus: "",
-  timeline: "",
-};
-
-const initialServiceCallDetails: ServiceCallDetails = {
-  projectDetails: "",
-  preferredTime: "",
-  schedulingDays: [],
-  additionalNotes: "",
-  quickTags: [],
-  panelPhotos: [],
-  workAreaPhotos: [],
-  referencePhotos: [],
-};
-
-const initialEVChargerDetails: EVChargerDetails = {
-  chargerType: "",
-  nemaConfig: "",
-  providingCharger: "",
-  chargerStatus: "",
-  installationLocation: "",
-  panelLocation: "",
-  panelDistance: "",
-  additionalInfo: "",
-  chargerAreaPhotos: [],
-  panelPhotos: [],
-};
-
-const initialState: ServiceFormState = {
-  selectedCategoryId: null,
-  currentStep: 0,
-  contactDetails: initialContactDetails,
-  serviceAddress: initialServiceAddress,
-  projectBasics: initialProjectBasics,
-  categoryData: null,
-};
 
 // ============================================
 // HELPER
@@ -391,31 +64,68 @@ const getCategoryInitialData = (categoryId: string): CategorySpecificData => {
         categoryId: "5",
         details: { ...initialAccessoryBuildingDetails },
       };
+    case "6":
+      return { categoryId: "6", details: { ...initialHotTubDetails } };
+
+    case "7":
+      return { categoryId: "7", details: { ...initialDockPowerDetails } };
+
+    case "8":
+      return {
+        categoryId: "8",
+        details: { ...initialElectricalInspectionDetails },
+      };
+    case "9":
+      return { categoryId: "9", details: { ...initialGeneratorDetails } };
+
+    case "10":
+      return {
+        categoryId: "10",
+        details: { ...initialNewConstructionDetails },
+      };
+
     default:
       return { categoryId, details: null };
   }
 };
 
 // ============================================
-// TYPE GUARDS — এটাই মূল fix
+// TYPE GUARDS
 // ============================================
 function isServiceCall(data: CategorySpecificData): data is CategoryData_1 {
   return data.categoryId === "1";
 }
-
 function isEVCharger(data: CategorySpecificData): data is CategoryData_2 {
   return data.categoryId === "2";
 }
 
-function isRemodeling(data: CategorySpecificData): data is CategoryData_4 {
-  return data.categoryId === "4";
-}
-
-function isAccessoryBuilding(
-  data: CategorySpecificData,
-): data is CategoryData_5 {
-  return data.categoryId === "5";
-}
+// ============================================
+// INITIAL STATE
+// ============================================
+const initialState: ServiceFormState = {
+  selectedCategoryId: null,
+  currentStep: 0,
+  contactDetails: {
+    fullName: "",
+    email: "",
+    phone: "",
+    preferredContact: "Call",
+  },
+  serviceAddress: {
+    streetAddress: "",
+    apartment: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    isHomeAddress: false,
+  },
+  projectBasics: {
+    propertyType: "",
+    ownershipStatus: "",
+    timeline: "",
+  },
+  categoryData: null,
+};
 
 // ============================================
 // SLICE
@@ -460,7 +170,7 @@ const serviceFormSlice = createSlice({
       state.projectBasics = { ...state.projectBasics, ...action.payload };
     },
 
-    // --- Service Call (id: "1") ---
+    // --- id: "1" ---
     updateServiceCallDetails: (
       state,
       action: PayloadAction<Partial<ServiceCallDetails>>,
@@ -488,7 +198,7 @@ const serviceFormSlice = createSlice({
       }
     },
 
-    // --- EV Charger (id: "2") ---
+    // --- id: "2" ---
     updateEVChargerDetails: (
       state,
       action: PayloadAction<Partial<EVChargerDetails>>,
@@ -519,6 +229,7 @@ const serviceFormSlice = createSlice({
       }
     },
 
+    // --- id: "3" ---
     updatePanelUpgradeDetails: (
       state,
       action: PayloadAction<Partial<PanelUpgradeDetails>>,
@@ -530,6 +241,8 @@ const serviceFormSlice = createSlice({
         Object.assign(state.categoryData.details, action.payload);
       }
     },
+
+    // --- id: "4" ---
     updateRemodelingDetails: (
       state,
       action: PayloadAction<Partial<RemodelingDetails>>,
@@ -542,12 +255,73 @@ const serviceFormSlice = createSlice({
       }
     },
 
+    // --- id: "5" ---
     updateAccessoryBuildingDetails: (
       state,
       action: PayloadAction<Partial<AccessoryBuildingDetails>>,
     ) => {
       if (
         state.categoryData?.categoryId === "5" &&
+        state.categoryData.details
+      ) {
+        Object.assign(state.categoryData.details, action.payload);
+      }
+    },
+
+    updateHotTubDetails: (
+      state,
+      action: PayloadAction<Partial<HotTubDetails>>,
+    ) => {
+      if (
+        state.categoryData?.categoryId === "6" &&
+        state.categoryData.details
+      ) {
+        Object.assign(state.categoryData.details, action.payload);
+      }
+    },
+
+    updateDockPowerDetails: (
+      state,
+      action: PayloadAction<Partial<DockPowerDetails>>,
+    ) => {
+      if (
+        state.categoryData?.categoryId === "7" &&
+        state.categoryData.details
+      ) {
+        Object.assign(state.categoryData.details, action.payload);
+      }
+    },
+
+    updateElectricalInspectionDetails: (
+      state,
+      action: PayloadAction<Partial<ElectricalInspectionDetails>>,
+    ) => {
+      if (
+        state.categoryData?.categoryId === "8" &&
+        state.categoryData.details
+      ) {
+        Object.assign(state.categoryData.details, action.payload);
+      }
+    },
+
+    updateGeneratorDetails: (
+      state,
+      action: PayloadAction<Partial<GeneratorDetails>>,
+    ) => {
+      if (
+        state.categoryData?.categoryId === "9" &&
+        state.categoryData.details
+      ) {
+        Object.assign(state.categoryData.details, action.payload);
+      }
+    },
+
+    updateNewConstructionDetails: (
+      state,
+      action: PayloadAction<Partial<NewConstructionDetails>>,
+    ) => {
+      if (
+        state.categoryData?.categoryId === "10" &&
         state.categoryData.details
       ) {
         Object.assign(state.categoryData.details, action.payload);
@@ -577,12 +351,17 @@ export const {
   toggleSchedulingDay,
   updateEVChargerDetails,
   setEVChargerType,
-  updateRemodelingDetails,
   setEVProvidingCharger,
+  updatePanelUpgradeDetails,
+  updateRemodelingDetails,
+  updateAccessoryBuildingDetails,
   clearServiceForm,
   clearCategoryData,
-  updatePanelUpgradeDetails,
-  updateAccessoryBuildingDetails,
+  updateHotTubDetails,
+  updateDockPowerDetails,
+  updateElectricalInspectionDetails,
+  updateNewConstructionDetails,
+  updateGeneratorDetails,
 } = serviceFormSlice.actions;
 
 export default serviceFormSlice.reducer;
