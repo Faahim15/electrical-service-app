@@ -35,7 +35,7 @@ export default function AdditionalInformation() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={5} />
+          <StepProgressBar currentStep={5} totalSteps={6} />
           <CategoryTag title="Electrical Systems inspection" />
 
           <AuthHeading title="Additional information" subtitle="" />

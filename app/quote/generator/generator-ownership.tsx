@@ -112,7 +112,7 @@ export default function GeneratorOwnership() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={5} />
+          <StepProgressBar currentStep={5} totalSteps={7} />
           <CategoryTag title="Generator Installation" />
 
           <AuthHeading title="Generator ownership" subtitle="" />

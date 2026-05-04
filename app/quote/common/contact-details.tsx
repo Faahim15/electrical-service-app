@@ -8,6 +8,7 @@ import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
 import { updateContactDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
+import { CATEGORY_TOTAL_STEPS } from "@/src/utils/CategorySteps";
 import { router } from "expo-router";
 import React from "react";
 import { View } from "react-native";
@@ -21,15 +22,12 @@ export default function ContactDetails() {
   const selectedCategory = useSelector(
     (state: RootState) => state.categoryRoute.selectedCategory,
   );
-
+  const totalSteps = CATEGORY_TOTAL_STEPS[selectedCategory?.id ?? ""] ?? 8;
   return (
     <ScreenWrapper paddingHorizontal={20}>
       <BackButton />
       <View>
-        <StepProgressBar
-          currentStep={1}
-          totalSteps={selectedCategory?.id === "5" ? 10 : 8}
-        />
+        <StepProgressBar currentStep={1} totalSteps={totalSteps} />
         <AuthHeading
           title="Your contact details"
           subtitle="We'll use this to follow up on your request"

@@ -17,6 +17,7 @@ import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
 import { SERVICE_CATEGORIES } from "@/src/constants/tabs.home.constant";
 import { RootState } from "@/src/redux/store";
+import { CATEGORY_TOTAL_STEPS } from "@/src/utils/CategorySteps";
 import { router } from "expo-router";
 import React from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, Text } from "react-native";
@@ -43,6 +44,8 @@ export default function ReviewRequest() {
     (c) => c.id === selectedCategoryId,
   );
 
+  const totalSteps = CATEGORY_TOTAL_STEPS[selectedCategory?.id ?? ""] ?? 8;
+
   return (
     <ScreenWrapper paddingHorizontal={20}>
       <BackButton />
@@ -55,10 +58,7 @@ export default function ReviewRequest() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar
-            currentStep={selectedCategory?.id === "5" ? 10 : 8}
-            totalSteps={selectedCategory?.id === "5" ? 10 : 8}
-          />
+          <StepProgressBar currentStep={totalSteps} totalSteps={totalSteps} />
 
           {selectedCategory && <CategoryTag title={selectedCategory.title} />}
 

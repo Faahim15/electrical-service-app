@@ -75,7 +75,7 @@ export default function ProjectStatus() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={4} />
+          <StepProgressBar currentStep={4} totalSteps={5} />
           <CategoryTag title="New Construction" />
 
           {/* Project Status */}

@@ -9,6 +9,7 @@ import StepProgressBar from "@/src/components/shared/StepProgressBar";
 import { updateServiceAddress } from "@/src/redux/slices/serviceFormSlice";
 
 import { RootState } from "@/src/redux/store";
+import { CATEGORY_TOTAL_STEPS } from "@/src/utils/CategorySteps";
 import { router } from "expo-router";
 import React from "react";
 import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
@@ -21,7 +22,7 @@ export default function ServiceAddress() {
   const selectedCategory = useSelector(
     (state: RootState) => state.categoryRoute.selectedCategory,
   );
-
+  const totalSteps = CATEGORY_TOTAL_STEPS[selectedCategory?.id ?? ""] ?? 8;
   return (
     <ScreenWrapper paddingHorizontal={20}>
       <KeyboardAvoidingView
@@ -34,10 +35,7 @@ export default function ServiceAddress() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar
-            currentStep={2}
-            totalSteps={selectedCategory?.id === "5" ? 10 : 8}
-          />
+          <StepProgressBar currentStep={2} totalSteps={totalSteps} />
           <AuthHeading
             title="Your service address"
             subtitle="Where is the work needed?"

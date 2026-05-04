@@ -28,11 +28,12 @@ export default function CustomInput({
   const [showPassword, setShowPassword] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
+  // Updated border logic to use #E2E8F0
   const borderColor = error
     ? "border-red-500"
     : isFocused
       ? "border-[#12B7AB]"
-      : "border-[#E5E7EB]";
+      : "border-[#E2E8F0]";
 
   return (
     <View className="mb-2">
@@ -46,9 +47,9 @@ export default function CustomInput({
         </Text>
       ) : null}
 
-      {/* Input Wrapper */}
+      {/* Input Wrapper - Background changed to bg-white */}
       <View
-        className={`flex-row items-center border ${borderColor} bg-[#EEF3FB] rounded-2xl px-3`}
+        className={`flex-row items-center border ${borderColor} bg-white rounded-2xl px-3`}
         style={{ minHeight: verticalScale(58) }}
       >
         {/* Left Icon */}

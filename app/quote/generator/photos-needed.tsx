@@ -42,7 +42,7 @@ export default function GeneratorPhotosNeeded() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={6} />
+          <StepProgressBar currentStep={6} totalSteps={7} />
           <CategoryTag title="Generator Installation" />
 
           <AuthHeading title="Photos needed" subtitle="" />

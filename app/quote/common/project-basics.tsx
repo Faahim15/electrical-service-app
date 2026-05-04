@@ -12,6 +12,7 @@ import {
   updateProjectBasics,
 } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
+import { CATEGORY_TOTAL_STEPS } from "@/src/utils/CategorySteps";
 import { router } from "expo-router";
 import React from "react";
 import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
@@ -63,6 +64,9 @@ export default function ProjectBasics() {
     }
   };
 
+  // component এ use করো
+  const totalSteps = CATEGORY_TOTAL_STEPS[selectedCategory?.id ?? ""] ?? 8;
+
   return (
     <ScreenWrapper paddingHorizontal={20}>
       <KeyboardAvoidingView
@@ -75,10 +79,7 @@ export default function ProjectBasics() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar
-            currentStep={3}
-            totalSteps={selectedCategory?.id === "5" ? 10 : 8}
-          />
+          <StepProgressBar currentStep={3} totalSteps={totalSteps} />
           <AuthHeading
             title="Project basics"
             subtitle="A few details to help us understand the job"

@@ -74,7 +74,7 @@ export default function InspectionType() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={4} />
+          <StepProgressBar currentStep={4} totalSteps={6} />
           <CategoryTag title="Electrical Systems Inspection" />
 
           <AuthHeading title="Inspection type" subtitle="" />

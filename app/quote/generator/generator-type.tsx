@@ -45,7 +45,7 @@ export default function GeneratorType() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={4} />
+          <StepProgressBar currentStep={4} totalSteps={7} />
           <CategoryTag title="Generator Installation" />
 
           <AuthHeading title="Generator type" subtitle="" />
