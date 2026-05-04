@@ -55,6 +55,7 @@ function ActivityCard({ item }: { item: ActivityItem }) {
         shadowRadius: 6,
         elevation: 1,
       }}
+      onPress={() => router.push("/recent-activity/details")}
     >
       <View className="w-9 h-9 rounded-full bg-[#E0F2FE] items-center justify-center mr-3">
         <Ionicons name={item.icon} size={18} color="#00ABB0" />
@@ -112,6 +113,7 @@ export default function HomeScreen() {
                   shadowRadius: 4,
                   elevation: 2,
                 }}
+                onPress={() => router.push("/shared/notifications")}
               >
                 <Ionicons
                   name="notifications-outline"
@@ -168,7 +170,7 @@ export default function HomeScreen() {
             <Text className="font-Inter_Bold text-base text-gray-900">
               Recent Activity
             </Text>
-            <Pressable>
+            <Pressable onPress={() => router.push("/recent-activity")}>
               <Text className="font-Inter_Medium text-sm text-[#00ABB0]">
                 View All &rsaquo;
               </Text>
