@@ -32,6 +32,13 @@ export const quickActions: QuickAction[] = [
     title: "My Quotes",
     subtitle: "Get in touch quickly",
   },
+  {
+    id: "5",
+    route: "https://www.fourelementselectric.com/elemental-harmony" as any,
+    icon: "star-outline",
+    title: "Elemental Harmony",
+    subtitle: "Memberships for electrical system, EV charger & generator",
+  },
 ];
 
 export const recentActivity: ActivityItem[] = [

@@ -8,20 +8,30 @@ import { ActivityItem, QuickAction } from "@/src/types/tabs.home.types";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import {
-  FlatList,
+  Linking,
   Pressable,
   ScrollView,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 
 // ─── Sub-components ───────────────────────────────────────
+
 function QuickActionCard({ item }: { item: QuickAction }) {
+  const handlePress = () => {
+    const url = item.route as string;
+    if (url.startsWith("http")) {
+      Linking.openURL(url);
+    } else {
+      router.push(item.route);
+    }
+  };
+
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      onPress={() => router.push(item.route)}
+      onPress={handlePress}
       className="bg-white rounded-2xl p-4 mb-3"
       style={{
         width: "48%",
@@ -44,6 +54,43 @@ function QuickActionCard({ item }: { item: QuickAction }) {
   );
 }
 
+function QuickActionFullCard({ item }: { item: QuickAction }) {
+  const handlePress = () => {
+    const url = item.route as string;
+    if (url.startsWith("http")) {
+      Linking.openURL(url);
+    } else {
+      router.push(item.route);
+    }
+  };
+
+  return (
+    <TouchableOpacity
+      activeOpacity={0.8}
+      onPress={handlePress}
+      className="bg-white rounded-2xl p-4 mb-3 flex-row items-center gap-3"
+      style={{
+        shadowColor: "#000",
+        shadowOpacity: 0.05,
+        shadowRadius: 6,
+        elevation: 2,
+      }}
+    >
+      <View className="w-9 h-9 rounded-full bg-[#E0F2FE] items-center justify-center">
+        <Ionicons name={item.icon} size={18} color="#00ABB0" />
+      </View>
+      <View className="flex-1">
+        <Text className="font-Inter_SemiBold text-sm text-gray-800">
+          {item.title}
+        </Text>
+        <Text className="font-Inter_Regular text-xs text-gray-400">
+          {item.subtitle}
+        </Text>
+      </View>
+      <Ionicons name="chevron-forward" size={16} color="#D1D5DB" />
+    </TouchableOpacity>
+  );
+}
 function ActivityCard({ item }: { item: ActivityItem }) {
   return (
     <TouchableOpacity
@@ -156,14 +203,16 @@ export default function HomeScreen() {
           <Text className="font-Inter_Bold text-base text-gray-900 mb-3">
             Quick Actions
           </Text>
-          <FlatList
-            data={quickActions}
-            keyExtractor={(item) => item.id}
-            numColumns={2}
-            columnWrapperStyle={{ justifyContent: "space-between" }}
-            scrollEnabled={false}
-            renderItem={({ item }) => <QuickActionCard item={item} />}
-          />
+
+          {/* প্রথম ৪টা grid-এ */}
+          <View className="flex-row flex-wrap justify-between">
+            {quickActions.slice(0, 4).map((item) => (
+              <QuickActionCard key={item.id} item={item} />
+            ))}
+          </View>
+
+          {/* ৫ম টা full-width */}
+          {quickActions[4] && <QuickActionFullCard item={quickActions[4]} />}
 
           {/* ── Recent Activity ── */}
           <View className="flex-row items-center justify-between mb-3 mt-1">

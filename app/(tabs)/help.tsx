@@ -3,13 +3,12 @@ import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Href, router } from "expo-router";
 import React, { useEffect, useRef } from "react";
-import { Animated, Text, TouchableOpacity, View } from "react-native";
+import { Animated, Linking, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 // ── Help categories data ──
 interface HelpItem {
   id: string;
-  icon: "zap" | "shield";
+  icon: "zap" | "shield" | "star";
   title: string;
   description: string;
   route: Href;
@@ -17,17 +16,25 @@ interface HelpItem {
 const HELP_ITEMS: HelpItem[] = [
   {
     id: "1",
-    icon: "zap" as const,
+    icon: "zap",
     title: "Troubleshooting",
     description: "Step-by-step guides for common electrical issues",
     route: "/trobleshooting",
   },
   {
     id: "2",
-    icon: "shield" as const,
+    icon: "shield",
     title: "Safety & Maintenance",
     description: "Keep your home safe with regular maintenance",
     route: "/safety",
+  },
+  {
+    id: "3",
+    icon: "star",
+    title: "Elemental Harmony",
+    description:
+      "Maintenance Program memberships for your home electrical system, EV charger, and generator.",
+    route: "https://www.fourelementselectric.com/elemental-harmony" as any,
   },
 ];
 
@@ -69,7 +76,14 @@ const HelpCard = ({
     >
       <TouchableOpacity
         activeOpacity={0.82}
-        onPress={() => router.push(item.route as any)}
+        onPress={() => {
+          const url = item.route as string;
+          if (url.startsWith("http")) {
+            Linking.openURL(url);
+          } else {
+            router.push(item.route as any);
+          }
+        }}
       >
         <View
           className="bg-white rounded-2xl px-4 py-4 flex-row items-center gap-4"
