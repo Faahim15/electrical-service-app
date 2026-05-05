@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { View } from "react-native";
 import Animated, {
-    Easing,
-    useAnimatedStyle,
-    useSharedValue,
-    withTiming,
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
 } from "react-native-reanimated";
 
 interface DotsIndicatorProps {
@@ -45,7 +45,7 @@ const Dot = ({ isActive }: { isActive: boolean }) => {
 };
 
 export const DotsIndicator = ({ total, active }: DotsIndicatorProps) => (
-  <View className="flex-row items-center justify-center mt-4 mb-2">
+  <View className="flex-row items-center justify-center mt-[1%] mb-[10%]">
     {Array.from({ length: total }).map((_, i) => (
       <Dot key={i} isActive={i === active} />
     ))}

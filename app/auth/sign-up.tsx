@@ -1,7 +1,7 @@
 import {
-    appleIconXml,
-    createAccountIcon,
-    googleIconXml,
+  appleIconXml,
+  createAccountIcon,
+  googleIconXml,
 } from "@/assets/images/svg/auth-svg";
 import AuthHeading from "@/src/components/auth/AuthHeading";
 import Divider from "@/src/components/auth/Divider";
@@ -47,7 +47,7 @@ export default function SignUpScreen() {
               <CustomSvg
                 xml={createAccountIcon}
                 height={verticalScale(92)}
-                width={scale(158)}
+                width={scale(108)}
               />
             </View>
 
@@ -119,10 +119,17 @@ export default function SignUpScreen() {
             />
 
             {/* Terms & Privacy Policy */}
-            <TermsAndPolicy />
+            <TermsAndPolicy
+              onPressTerms={() =>
+                router.push("/(page)/(profile)/(setting)/terms")
+              }
+            />
 
             {/* Create Account Button */}
-            <GradientButton onPress={() => {}} label="Create Account" />
+            <GradientButton
+              onPress={() => router.push("/(tabs)/home")}
+              label="Create Account"
+            />
 
             {/* Divider */}
             <Divider title="or continue with" />

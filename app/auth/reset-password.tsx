@@ -2,6 +2,7 @@ import AuthHeading from "@/src/components/auth/AuthHeading";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import CustomInput from "@/src/components/shared/CustomInput";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import { View } from "react-native";
 
@@ -39,7 +40,10 @@ const ResetPassword = () => {
         </View>
 
         <View className="mt-[3%]">
-          <GradientButton label="Save" onPress={() => {}} />
+          <GradientButton
+            label="Save"
+            onPress={() => router.replace("/auth/sign-in")}
+          />
         </View>
       </View>
     </ScreenWrapper>

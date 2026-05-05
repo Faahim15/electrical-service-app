@@ -21,7 +21,7 @@ const VerifyAccount = () => {
             width={scale(144)}
           />
         </View>
-        <View className="">
+        <View className="items-center ml-[5%]">
           <AuthHeading
             title="Verify your account"
             subtitle="Enter the 6-digit code sent to your email to continue."

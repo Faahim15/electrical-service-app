@@ -87,7 +87,11 @@ export default function LoginScreen() {
             />
 
             {/* Remember Me + Forgot Password */}
-            <ForgotPassword title="Remember me" subtitle="Forgot Password?" />
+            <ForgotPassword
+              onPress={() => router.push("/auth/forgot-password")}
+              title="Remember me"
+              subtitle="Forgot Password?"
+            />
 
             {/* Sign In Button */}
             <GradientButton

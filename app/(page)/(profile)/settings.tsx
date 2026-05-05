@@ -342,6 +342,7 @@ const Settings = () => {
         onCancel={() => setShowLogoutModal(false)}
         onConfirm={() => {
           setShowLogoutModal(false);
+          router.replace("/auth/sign-in");
         }}
       />
     </ScreenWrapper>

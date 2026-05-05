@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import React, { useCallback, useState } from "react";
 import {
   Dimensions,
@@ -15,7 +16,6 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
-// আপনার কম্পোনেন্ট ইমপোর্টগুলো ঠিক রাখুন
 import { DotsIndicator } from "@/src/components/onboarding/DotsIndicator";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import { SlideContent } from "@/src/components/onboarding/SlideContent";
@@ -115,7 +115,7 @@ export default function OnboardingScreen() {
           <TouchableOpacity
             onPress={() => {
               if (currentIndex === 0) animateTo(TOTAL - 1);
-              else if (currentIndex === TOTAL - 1) console.log("Done");
+              else if (currentIndex === TOTAL - 1) router.push("/auth/sign-in");
               else animateTo(currentIndex - 1);
             }}
             activeOpacity={0.7}

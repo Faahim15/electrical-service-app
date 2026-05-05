@@ -9,7 +9,7 @@ interface AuthHeaderProps {
 const AuthHeading = ({ title, subtitle }: AuthHeaderProps) => {
   return (
     <View>
-      <Text className="font-Inter_Bold text-3xl mt-[3%] text-[#0F172A] mb-2">
+      <Text className="font-Inter_Bold text-3xl mt-[2%] text-[#0F172A] mb-2">
         {title}
       </Text>
 

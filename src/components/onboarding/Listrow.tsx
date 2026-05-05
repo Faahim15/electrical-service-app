@@ -10,7 +10,7 @@ export const ListRow = ({ item }: { item: ListItem }) => {
 
   return (
     <View
-      className="flex-row items-start rounded-2xl px-4 py-3.5 mb-3"
+      className="flex-row items-center rounded-2xl px-4 py-3.5 mb-3"
       style={{ backgroundColor: isHighlighted ? item.highlightBg : "#FFFFFF" }}
     >
       {/* Icon badge */}
