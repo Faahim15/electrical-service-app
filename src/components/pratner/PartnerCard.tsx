@@ -1,8 +1,10 @@
 import { setSelectedDetail } from "@/src/redux/slices/parnerDetailsSlice";
 import { Feather } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
 import { Animated, Linking, Text, TouchableOpacity, View } from "react-native";
+
 import { useDispatch } from "react-redux";
 
 interface PartnerItem {
@@ -123,13 +125,21 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
             </TouchableOpacity>
           )}
 
-          <TouchableOpacity
-            className="flex-1 bg-[#2DD4BF] rounded-xl py-2.5 items-center justify-center"
-            onPress={handleView}
-          >
-            <Text className="text-[13px] font-Inter_SemiBold text-white">
-              View Details
-            </Text>
+          <TouchableOpacity className="flex-1 " onPress={handleView}>
+            <LinearGradient
+              colors={["#0EA5E9", "#14B8A6"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={{ borderRadius: 16 }}
+              className="py-4 items-center"
+            >
+              <Text
+                className="font-Inter_SemiBold text-white"
+                style={{ fontSize: 16 }}
+              >
+                View Detais
+              </Text>
+            </LinearGradient>
           </TouchableOpacity>
         </View>
       </View>

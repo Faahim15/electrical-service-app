@@ -1,3 +1,4 @@
+import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import { RootState } from "@/src/redux/store";
 import { Feather } from "@expo/vector-icons";
@@ -426,7 +427,11 @@ const OtherStart = () => {
                 elevation: 2,
               }}
             >
-              <TouchableOpacity
+              <GradientButton
+                label="Start Quote"
+                onPress={() => router.push("/other-form-progress")}
+              />
+              {/* <TouchableOpacity
                 onPress={() => router.push("/other-form-progress")}
                 activeOpacity={0.85}
                 style={{
@@ -449,7 +454,7 @@ const OtherStart = () => {
                 >
                   Start Quote
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </Animated.View>
           </ScrollView>
         </View>

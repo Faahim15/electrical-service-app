@@ -1,4 +1,5 @@
 import { requestsuccess } from "@/assets/iocns/icon";
+import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
@@ -69,7 +70,7 @@ const RequestReceived = () => {
   return (
     <ScreenWrapper>
       <SafeAreaView className="flex-1">
-        <View className="flex-1  pb-6 justify-between">
+        <View className="flex-1 pb-6 justify-between">
           {/* Top Section */}
           <View className="items-center pt-10 pb-4">
             {/* Icon with glow ring */}
@@ -80,7 +81,6 @@ const RequestReceived = () => {
                 marginBottom: 20,
               }}
             >
-              {/* Outer glow ring */}
               <View
                 style={{
                   width: 100,
@@ -91,7 +91,6 @@ const RequestReceived = () => {
                   justifyContent: "center",
                 }}
               >
-                {/* Inner circle */}
                 <View>
                   <SvgXml xml={requestsuccess} width={88} height={88} />
                 </View>
@@ -103,9 +102,8 @@ const RequestReceived = () => {
               style={{
                 opacity: fadeAnim,
                 transform: [{ translateY: slideAnim }],
-                fontFamily: "Inter_Bold",
               }}
-              className="text-[#0F172A] text-2xl text-center mb-2"
+              className="font-Inter_Bold text-[#0F172A] text-2xl text-center mb-2"
             >
               Request received
             </Animated.Text>
@@ -113,9 +111,8 @@ const RequestReceived = () => {
               style={{
                 opacity: fadeAnim,
                 transform: [{ translateY: slideAnim }],
-                fontFamily: "Inter_Regular",
               }}
-              className="text-[#64748B] text-sm text-center px-6 leading-5"
+              className="font-Inter_Regular text-[#64748B] text-sm text-center px-6 leading-5"
             >
               Thanks! Our team will review your request and contact you soon.
             </Animated.Text>
@@ -150,16 +147,10 @@ const RequestReceived = () => {
                 key={row.label}
                 style={{ marginBottom: i < infoRows.length - 1 ? 16 : 14 }}
               >
-                <Text
-                  className="text-[#94A3B8] text-xs mb-0.5"
-                  style={{ fontFamily: "Inter_Regular" }}
-                >
+                <Text className="font-Inter_Regular text-[#94A3B8] text-xs mb-0.5">
                   {row.label}
                 </Text>
-                <Text
-                  className="text-[#0F172A] text-[15px]"
-                  style={{ fontFamily: "Inter_SemiBold" }}
-                >
+                <Text className="font-Inter_SemiBold text-[#0F172A] text-[15px]">
                   {row.value}
                 </Text>
               </View>
@@ -183,10 +174,7 @@ const RequestReceived = () => {
                 className="self-start rounded-full px-4 py-1.5 mt-1"
                 style={{ backgroundColor: "#FEF9C3" }}
               >
-                <Text
-                  className="text-[#92400E] text-sm"
-                  style={{ fontFamily: "Inter_Medium" }}
-                >
+                <Text className="font-Inter_Medium text-[#92400E] text-sm">
                   Reference ID: #QT-3GB22Y
                 </Text>
               </View>
@@ -196,26 +184,10 @@ const RequestReceived = () => {
           {/* Bottom Buttons */}
           <Animated.View style={{ opacity: btnAnim }}>
             {/* Return Home */}
-            <TouchableOpacity
-              onPress={() => router.replace("/")}
-              activeOpacity={0.85}
-              className="rounded-full py-4 items-center mb-3"
-              style={{
-                backgroundColor: "#06B6D4",
-                shadowColor: "#06B6D4",
-                shadowOpacity: 0.3,
-                shadowRadius: 10,
-                shadowOffset: { width: 0, height: 4 },
-                elevation: 4,
-              }}
-            >
-              <Text
-                className="text-white text-base"
-                style={{ fontFamily: "Inter_SemiBold" }}
-              >
-                Return Home
-              </Text>
-            </TouchableOpacity>
+            <GradientButton
+              label="Return Home"
+              onPress={() => router.push("/(tabs)/quotes")}
+            />
 
             {/* New Quote + My Quotes */}
             <View className="flex-row gap-x-3">
@@ -230,15 +202,13 @@ const RequestReceived = () => {
                   elevation: 1,
                 }}
               >
-                <Text
-                  className="text-[#0F172A] text-sm"
-                  style={{ fontFamily: "Inter_Medium" }}
-                >
+                <Text className="font-Inter_Medium text-[#0F172A] text-sm">
                   New Quote
                 </Text>
               </TouchableOpacity>
 
               <TouchableOpacity
+                onPress={() => router.push("/(tabs)/quotes")}
                 activeOpacity={0.8}
                 className="flex-1 rounded-full py-3.5 items-center bg-white"
                 style={{
@@ -249,10 +219,7 @@ const RequestReceived = () => {
                   elevation: 1,
                 }}
               >
-                <Text
-                  className="text-[#0F172A] text-sm"
-                  style={{ fontFamily: "Inter_Medium" }}
-                >
+                <Text className="font-Inter_Medium text-[#0F172A] text-sm">
                   My Quotes
                 </Text>
               </TouchableOpacity>

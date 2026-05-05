@@ -146,9 +146,9 @@ function QuoteCard({ item, index }: { item: Quote; index: number }) {
     >
       <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
         <Pressable
-          onPressIn={handlePressIn}
-          onPressOut={handlePressOut}
-          onPress={() => router.push("/my-quotedetais")}
+          // onPressIn={handlePressIn}
+          // onPressOut={handlePressOut}
+          // onPress={() => router.push("/my-quotedetais")}
           className="bg-white rounded-2xl p-4 shadow-md"
           style={{
             shadowColor: "#0000000D",

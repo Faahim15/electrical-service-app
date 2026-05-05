@@ -1,3 +1,4 @@
+import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import CeilingFanSt1 from "@/src/components/quote/other/cellingfan/CeilingFanSt1";
 import CeilingFanSt2 from "@/src/components/quote/other/cellingfan/CeilingFanSt2";
 import CeilingFanSt3 from "@/src/components/quote/other/cellingfan/CeilingFanSt3";
@@ -209,7 +210,11 @@ const OtherFormProgress = () => {
           </Animated.View>
 
           {/* ── Footer Buttons ── */}
-          <View className="pt-3 gap-2">
+          <GradientButton
+            label={currentStep === totalSteps - 1 ? "Submit" : "Continue"}
+            onPress={goNext}
+          />
+          {/* <View className="pt-3 gap-2">
             <TouchableOpacity
               onPress={goNext}
               className="bg-[#38BDF8] rounded-2xl py-4 items-center"
@@ -219,7 +224,7 @@ const OtherFormProgress = () => {
                 {currentStep === totalSteps - 1 ? "Submit" : "Continue"}
               </Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </ScrollView>
       </SafeAreaView>
     </ScreenWrapper>

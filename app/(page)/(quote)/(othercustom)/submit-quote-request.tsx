@@ -1,4 +1,5 @@
 import { successfull } from "@/assets/iocns/icon";
+import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import { router } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
@@ -97,9 +98,8 @@ const SubmitQuoteRequest = () => {
               style={{
                 opacity: fadeAnim,
                 transform: [{ translateY: slideAnim }],
-                fontFamily: "Inter_Bold",
               }}
-              className="text-[#0F172A] text-2xl text-center mb-1"
+              className="font-Inter_Bold text-[#0F172A] text-2xl text-center mb-1"
             >
               Submit quote request
             </Animated.Text>
@@ -107,9 +107,8 @@ const SubmitQuoteRequest = () => {
               style={{
                 opacity: fadeAnim,
                 transform: [{ translateY: slideAnim }],
-                fontFamily: "Inter_Regular",
               }}
-              className="text-[#64748B] text-sm text-center"
+              className="font-Inter_Regular text-[#64748B] text-sm text-center"
             >
               {` You're almost done`}
             </Animated.Text>
@@ -145,16 +144,10 @@ const SubmitQuoteRequest = () => {
                 key={row.label}
                 className={i < infoRows.length - 1 ? "mb-4" : ""}
               >
-                <Text
-                  className="text-[#94A3B8] text-xs mb-0.5"
-                  style={{ fontFamily: "Inter_Regular" }}
-                >
+                <Text className="font-Inter_Regular text-[#94A3B8] text-xs mb-0.5">
                   {row.label}
                 </Text>
-                <Text
-                  className="text-[#0F172A] text-[15px]"
-                  style={{ fontFamily: "Inter_SemiBold" }}
-                >
+                <Text className="font-Inter_SemiBold text-[#0F172A] text-[15px]">
                   {row.value}
                 </Text>
               </View>
@@ -182,21 +175,18 @@ const SubmitQuoteRequest = () => {
               }}
             >
               <Animated.Text
+                className="font-Inter_Bold"
                 style={{
                   transform: [{ scale: checkScale }],
                   color: "white",
                   fontSize: 12,
                   lineHeight: 14,
-                  fontFamily: "Inter_Bold",
                 }}
               >
                 ✓
               </Animated.Text>
             </TouchableOpacity>
-            <Text
-              className="text-[#334155] text-[13px] flex-1 leading-5"
-              style={{ fontFamily: "Inter_Regular" }}
-            >
+            <Text className="font-Inter_Regular text-[#334155] text-[13px] flex-1 leading-5">
               I confirm the information is correct and authorize Four Elements
               Electric to contact me about this request
             </Text>
@@ -204,32 +194,17 @@ const SubmitQuoteRequest = () => {
 
           {/* Bottom Buttons */}
           <Animated.View style={{ opacity: btnAnim }}>
-            <TouchableOpacity
+            <GradientButton
+              label="Submit Request"
               onPress={() => router.push("/request-received")}
-              activeOpacity={0.85}
-              className="rounded-full py-4 items-center mb-4"
-              style={{
-                backgroundColor: "#06B6D4",
-                shadowColor: "#06B6D4",
-                shadowOpacity: 0.3,
-                shadowRadius: 10,
-                shadowOffset: { width: 0, height: 4 },
-                elevation: 4,
-              }}
-            >
-              <Text
-                className="text-white text-base"
-                style={{ fontFamily: "Inter_SemiBold" }}
-              >
-                Submit Request
-              </Text>
-            </TouchableOpacity>
+            />
 
-            <TouchableOpacity activeOpacity={0.7} className="items-center py-1">
-              <Text
-                className="text-[#334155] text-sm"
-                style={{ fontFamily: "Inter_Medium" }}
-              >
+            <TouchableOpacity
+              onPress={() => router.back()}
+              activeOpacity={0.7}
+              className="items-center py-1"
+            >
+              <Text className="font-Inter_Medium text-[#334155] text-sm">
                 Back to Review
               </Text>
             </TouchableOpacity>

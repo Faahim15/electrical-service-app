@@ -241,20 +241,13 @@ const Safety = () => {
           <View />
         </Animated.View>
 
-        {/* ── Hero Banner ── */}
-        <Animated.View
-          style={{
-            transform: [{ translateY: heroBannerSlide }],
-            opacity: heroBannerOpacity,
-            backgroundColor: "#F0FDFA",
-            marginHorizontal: 16,
-            marginTop: 8,
-            marginBottom: 20,
-            borderRadius: 16,
-            padding: 16,
-          }}
+        {/* ── Main List ── */}
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 32 }}
         >
           <Animated.View
+            className={"mt-3"}
             style={{
               transform: [{ translateY: heroBannerTextSlide }],
               opacity: heroBannerTextOpacity,
@@ -272,15 +265,14 @@ const Safety = () => {
             </Text>
             <Text style={{ fontSize: 13, color: "#6B7280", lineHeight: 19 }}>
               Keep your home safe and your electrical system running
-              efficiently.
+              efficiently.{" "}
+              <Text style={{ color: "#14B8A6", fontWeight: "600" }}>
+                {`Toggle any item ON to set a yearly reminder — you'll receive a
+                notification alert after 1 year to keep up with your
+                maintenance.`}
+              </Text>
             </Text>
           </Animated.View>
-        </Animated.View>
-        {/* ── Main List ── */}
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 32 }}
-        >
           {safetyItems.map((item, index) => (
             <SafetyCard key={item.id} item={item} index={index} />
           ))}

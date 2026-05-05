@@ -1,6 +1,7 @@
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import { RootState } from "@/src/redux/store";
 import { Feather } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
 import {
@@ -278,15 +279,24 @@ const Partnerdetails = () => {
             }}
             className="mt-4 gap-3"
           >
-            <TouchableOpacity
-              onPress={handleCall}
-              activeOpacity={0.85}
-              className="bg-[#2ED4BF] rounded-2xl py-4 flex-row items-center justify-center gap-2"
-            >
-              <Feather name="phone-call" size={18} color="white" />
-              <Text className="text-white font-Inter_Bold text-base">
-                Call Now
-              </Text>
+            <TouchableOpacity onPress={handleCall} activeOpacity={0.85}>
+              <LinearGradient
+                colors={["#0EA5E9", "#14B8A6"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={{
+                  borderRadius: 16,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                className="py-4  flex-row gap-2"
+              >
+                <Feather name="phone-call" size={18} color="white" />
+                <Text className="text-white font-Inter_Bold text-base">
+                  Call Now
+                </Text>
+              </LinearGradient>
             </TouchableOpacity>
 
             {/* Visit Website — outlined */}
