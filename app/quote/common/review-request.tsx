@@ -141,7 +141,7 @@ export default function ReviewRequest() {
           )}
           <GradientButton
             label="Submit"
-            onPress={() => router.push("/submit-success" as any)}
+            onPress={() => router.push("/quote/common/submit-quote")}
           />
         </ScrollView>
       </KeyboardAvoidingView>

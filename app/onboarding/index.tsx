@@ -108,7 +108,13 @@ export default function OnboardingScreen() {
       <View className="px-[5%] pt-[5%] bg-[#F0F9FF]">
         <GradientButton
           label={slide.primaryBtn}
-          onPress={() => animateTo(currentIndex + 1)}
+          onPress={() => {
+            if (currentIndex === TOTAL - 1) {
+              router.push("/auth/sign-in");
+            } else {
+              animateTo(currentIndex + 1);
+            }
+          }}
         />
 
         {slide.secondaryBtn && (
