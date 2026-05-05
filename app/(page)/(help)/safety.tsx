@@ -247,7 +247,7 @@ const Safety = () => {
           contentContainerStyle={{ paddingBottom: 32 }}
         >
           <Animated.View
-            className={"mt-3"}
+            className={"mt-3 mb-2"}
             style={{
               transform: [{ translateY: heroBannerTextSlide }],
               opacity: heroBannerTextOpacity,
@@ -265,12 +265,9 @@ const Safety = () => {
             </Text>
             <Text style={{ fontSize: 13, color: "#6B7280", lineHeight: 19 }}>
               Keep your home safe and your electrical system running
-              efficiently.{" "}
-              <Text style={{ color: "#14B8A6", fontWeight: "600" }}>
-                {`Toggle any item ON to set a yearly reminder — you'll receive a
-                notification alert after 1 year to keep up with your
-                maintenance.`}
-              </Text>
+              efficiently. Toggle any item ON to set a yearly reminder — you
+              will receive a notification alert after 1 year to keep up with
+              your maintenance.
             </Text>
           </Animated.View>
           {safetyItems.map((item, index) => (

@@ -74,6 +74,97 @@ const ProfileEditForm: React.FC = () => {
               autoCapitalize="none"
             />
           </View>
+          {/* service address */}
+          <View className="bg-white rounded-[20px] px-5 py-5 gap-1 shadow-md">
+            <View className="flex-row items-center gap-[6px] mb-2">
+              <EvilIcons name="location" size={24} color="#6B7280" />
+              <Text className="text-[16px] font-Inter_SemiBold text-[#111827] tracking-[-0.3px]">
+                Service Address
+              </Text>
+            </View>
+
+            <InputField
+              label="Street Address"
+              value={""}
+              onChangeText={setCurrentPassword}
+              placeholder="123 Main Street"
+              autoCapitalize="none"
+            />
+            <InputField
+              label="City"
+              value={""}
+              onChangeText={setNewPassword}
+              placeholder=""
+              autoCapitalize="none"
+            />
+
+            <View className="flex-row gap-2 items-center justify-between">
+              <View className="w-[45%]">
+                <InputField
+                  label="State"
+                  value={""}
+                  onChangeText={setNewPassword}
+                  placeholder="CA"
+                  autoCapitalize="none"
+                />
+              </View>
+              <View className="w-[45%]">
+                <InputField
+                  label="ZIP Code"
+                  value={confirmPassword}
+                  onChangeText={setConfirmPassword}
+                  placeholder="255852"
+                  autoCapitalize="none"
+                />
+              </View>
+            </View>
+          </View>
+
+          {/* billing address */}
+          <View className="bg-white rounded-[20px] px-5 py-5 gap-1 shadow-md">
+            <View className="flex-row items-center gap-[6px] mb-2">
+              <EvilIcons name="location" size={24} color="#6B7280" />
+              <Text className="text-[16px] font-Inter_SemiBold text-[#111827] tracking-[-0.3px]">
+                Billing Address
+              </Text>
+            </View>
+
+            <InputField
+              label="Street Address"
+              value={""}
+              onChangeText={setCurrentPassword}
+              placeholder="123 Main Street"
+              autoCapitalize="none"
+            />
+            <InputField
+              label="City"
+              value={""}
+              onChangeText={setNewPassword}
+              placeholder=""
+              autoCapitalize="none"
+            />
+
+            <View className="flex-row gap-2 items-center justify-between">
+              <View className="w-[45%]">
+                <InputField
+                  label="State"
+                  value={""}
+                  onChangeText={setNewPassword}
+                  placeholder="CA"
+                  autoCapitalize="none"
+                />
+              </View>
+              <View className="w-[45%]">
+                <InputField
+                  label="ZIP Code"
+                  value={confirmPassword}
+                  onChangeText={setConfirmPassword}
+                  placeholder="255852"
+                  autoCapitalize="none"
+                />
+              </View>
+            </View>
+          </View>
 
           {/* Change Password Card */}
           <View className="bg-white rounded-[20px] px-5 py-5 gap-1 shadow-md">
