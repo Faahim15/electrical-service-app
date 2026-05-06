@@ -1,9 +1,12 @@
+import { getPartnersByCategory } from "@/data/Partnersdatabase";
 import PartnerCard from "@/src/components/pratner/PartnerCard";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
+
 import { RootState } from "@/src/redux/store";
 import { Feather } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import {
   Animated,
   ScrollView,
@@ -13,23 +16,6 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
-
-const PARTNERS = [
-  {
-    id: "1",
-    name: "JSM INDUSTRIAL",
-    category: "Accessory Building / Structure",
-    phone: "(540) 446-8919",
-    website: null,
-  },
-  {
-    id: "2",
-    name: "Superior Building",
-    category: "Accessory Building / Structure",
-    phone: "(540) 269-2696",
-    website: "https://www.superiorbuildings.net/",
-  },
-];
 
 const Partnercategorie = () => {
   const headerSlide = useRef(new Animated.Value(-30)).current;
@@ -68,7 +54,14 @@ const Partnercategorie = () => {
     (state: RootState) => state.partners.selectedCategory,
   );
 
-  //   console.log("Selected Category in PartnerCard:", category);
+  // ── Filter partners from database by selected category ──────
+  const categoryPartners = useMemo(() => {
+    if (!category?.title) return [];
+    return getPartnersByCategory(category.title as any);
+  }, [category?.title]);
+
+  console.log("Selected Category in PartnerCard:", category);
+  console.log("Selected Category in PartnerCard:", categoryPartners);
 
   return (
     <ScreenWrapper>
@@ -112,9 +105,21 @@ const Partnercategorie = () => {
             ]}
           >
             <View className="flex-row items-center gap-3 mb-2">
-              <View className="w-12 h-12 bg-amber-50 rounded-xl items-center justify-center">
+              <LinearGradient
+                colors={["#06B6D4", "#14B8A6"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: 12,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 <Text style={{ fontSize: 26 }}>{category?.emoji}</Text>
-              </View>
+              </LinearGradient>
+
               <Text className="text-[17px] font-Inter_Bold text-[#0F172A] flex-1 leading-snug">
                 {category?.title}
               </Text>
@@ -125,9 +130,10 @@ const Partnercategorie = () => {
           </Animated.View>
 
           {/* ── Partner Cards ── */}
-          {PARTNERS.map((item, index) => (
+          {categoryPartners.map((item, index) => (
             <PartnerCard key={item.id} item={item} index={index} />
           ))}
+          <View className="h-40" />
         </ScrollView>
       </SafeAreaView>
     </ScreenWrapper>

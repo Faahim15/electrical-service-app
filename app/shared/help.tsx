@@ -194,6 +194,7 @@ const NeedHelpScreen = () => {
                 </View>
               </View>
             </View>
+            <View className="h-40" />
           </ScrollView>
         </View>
       </ScreenWrapper>

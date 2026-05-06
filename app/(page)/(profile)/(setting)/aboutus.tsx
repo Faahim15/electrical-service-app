@@ -209,7 +209,7 @@ const Aboutus = () => {
               Phone: 540-623-7599
             </Text>
             <Text className="text-sm text-gray-500 font-Inter_Regular">
-              Website: www.fourelementelectric.com
+              Website: www.feecva.com
             </Text>
           </Animated.View>
         </ScrollView>

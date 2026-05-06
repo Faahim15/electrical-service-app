@@ -226,7 +226,10 @@ const Troubleshootingguides = () => {
             </Text>
 
             {/* Contact Us */}
-            <TouchableOpacity activeOpacity={0.85}>
+            <TouchableOpacity
+              onPress={() => router.push("/shared/help")}
+              activeOpacity={0.85}
+            >
               <LinearGradient
                 colors={["#06B6D4", "#14B8A6"]}
                 start={{ x: 0, y: 0 }}
@@ -247,6 +250,7 @@ const Troubleshootingguides = () => {
             {/* Request Service */}
             {category?.title === "Outlet Not Working" && (
               <TouchableOpacity
+                onPress={() => router.replace("/trobleshooting")}
                 activeOpacity={0.85}
                 className="rounded-2xl py-4 items-center border border-[#14B8A6]"
               >
@@ -259,6 +263,7 @@ const Troubleshootingguides = () => {
               </TouchableOpacity>
             )}
           </Animated.View>
+          <View className="h-40" />
         </ScrollView>
       </SafeAreaView>
     </ScreenWrapper>

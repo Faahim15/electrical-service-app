@@ -112,13 +112,9 @@ const Partnerdetails = () => {
     category: details?.category || "",
     description: "Natural gas services",
     badge: "Trusted partner verified by Four Elements Electric",
-    phone: details?.phone || "",
-    website: details?.website || "",
-    reasons: [
-      "Trusted partner with proven track record",
-      "Licensed, insured, and verified",
-      "Excellent customer service and support",
-    ],
+    phone: details?.contact?.phone || "",
+    website: details?.contact?.website || "",
+    reasons: details?.whyWeRecommendThem || [],
     emoji: category?.emoji,
   };
 
@@ -165,11 +161,23 @@ const Partnerdetails = () => {
           >
             <View className="flex-row items-center justify-between">
               <View className="flex-row items-center gap-3">
-                <View className="w-14 h-14 rounded-2xl bg-[#00D5BE] items-center justify-center">
-                  <Text className="text-2xl">{PARTNER.emoji}</Text>
-                </View>
+                <LinearGradient
+                  colors={["#06B6D4", "#14B8A6"]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  style={{
+                    width: 44,
+                    height: 44,
+                    borderRadius: 12,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text style={{ fontSize: 26 }}>{PARTNER.emoji}</Text>
+                </LinearGradient>
+
                 <View>
-                  <Text className="text-lg font-Inter_Bold text-[#111827]">
+                  <Text className="text-lg font-Inter_Bold text-[#111827] w-[80%]">
                     {PARTNER.name}
                   </Text>
                   <Text className="text-sm text-gray-500 font-Inter_Regular">
@@ -324,6 +332,8 @@ const Partnerdetails = () => {
               </Text>
             </TouchableOpacity>
           </Animated.View>
+
+          <View className="h-40" />
         </ScrollView>
       </SafeAreaView>
     </ScreenWrapper>

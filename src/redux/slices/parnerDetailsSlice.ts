@@ -4,8 +4,14 @@ interface details {
   id: string;
   name: string;
   category: string;
-  phone: string;
-  website: string | null;
+  shortDescription: string;
+  tagline: string;
+  trustedPartnerVerified: boolean;
+  whyWeRecommendThem: string[];
+  contact: {
+    phone?: string;
+    website?: string;
+  };
 }
 
 interface PartnersState {

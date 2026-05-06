@@ -248,8 +248,8 @@ const Trobleshooting = () => {
                 </Text>
               </View>
               <Text className="text-[13px] font-Inter_Regular text-[#64748B] leading-5 mb-3">
-                Stop and call a professional if you notice sparks, burning
-                smells, heat, or visible damage.
+                Stop and call our trained professionals if you notice sparks,
+                burning smells, heat, or visible damage.
               </Text>
               <TouchableOpacity
                 onPress={() => router.push("/safety-warning")}
@@ -291,7 +291,10 @@ const Trobleshooting = () => {
               <Text className="text-[13px] font-Inter_Regular text-[#64748B] leading-5 mb-4">
                 Contact us or request service if your issue is not resolved.
               </Text>
-              <TouchableOpacity activeOpacity={0.85}>
+              <TouchableOpacity
+                onPress={() => router.push("/shared/help")}
+                activeOpacity={0.85}
+              >
                 <LinearGradient
                   colors={["#06B6D4", "#14B8A6"]}
                   start={{ x: 0, y: 0 }}
@@ -310,6 +313,7 @@ const Trobleshooting = () => {
               </TouchableOpacity>
             </View>
           </Animated.View>
+          <View className="h-40" />
         </ScrollView>
       </SafeAreaView>
     </ScreenWrapper>

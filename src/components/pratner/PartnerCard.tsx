@@ -11,8 +11,14 @@ interface PartnerItem {
   id: string;
   name: string;
   category: string;
-  phone: string;
-  website: string | null;
+  shortDescription: string;
+  tagline: string;
+  trustedPartnerVerified: boolean;
+  whyWeRecommendThem: string[];
+  contact: {
+    phone?: string;
+    website?: string;
+  };
 }
 
 const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
@@ -74,26 +80,26 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
         {/* Phone */}
         <TouchableOpacity
           className="flex-row items-center mb-1.5"
-          onPress={() => Linking.openURL(`tel:${item.phone}`)}
+          onPress={() => Linking.openURL(`tel:${item.contact.phone}`)}
         >
           <Feather name="phone" size={14} color="#64748B" />
           <Text className="text-[13px] font-Inter_Regular text-[#0F172A] ml-2">
-            {item.phone}
+            {item.contact.phone}
           </Text>
         </TouchableOpacity>
 
         {/* Website (conditional) */}
-        {item.website && (
+        {item?.contact?.website && (
           <TouchableOpacity
             className="flex-row items-center mb-3"
-            onPress={() => Linking.openURL(item.website!)}
+            onPress={() => Linking.openURL(item?.contact?.website!)}
           >
             <Feather name="globe" size={14} color="#64748B" />
             <Text
               className="text-[13px] font-Inter_Regular text-[#0F172A] ml-2"
               numberOfLines={1}
             >
-              {item.website}
+              {item?.contact?.website}
             </Text>
           </TouchableOpacity>
         )}
@@ -104,26 +110,14 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
         {/* Action buttons */}
         <View className="flex-row gap-2">
           <TouchableOpacity
-            className="flex-row items-center justify-center border border-slate-200 rounded-xl px-4 py-2.5 gap-1.5"
-            onPress={() => Linking.openURL(`tel:${item.phone}`)}
+            className="flex-row items-center justify-center border border-slate-200 rounded-xl px-4 py-4 gap-1.5"
+            onPress={() => Linking.openURL(`tel:${item.contact.phone}`)}
           >
             <Feather name="phone" size={14} color="#0F172A" />
             <Text className="text-[13px] font-Inter_SemiBold text-[#0F172A]">
               Call
             </Text>
           </TouchableOpacity>
-
-          {item.website && (
-            <TouchableOpacity
-              className="flex-row items-center justify-center border border-slate-200 rounded-xl px-4 py-2.5 gap-1.5"
-              onPress={() => Linking.openURL(item.website!)}
-            >
-              <Feather name="globe" size={14} color="#0F172A" />
-              <Text className="text-[13px] font-Inter_SemiBold text-[#0F172A]">
-                Website
-              </Text>
-            </TouchableOpacity>
-          )}
 
           <TouchableOpacity className="flex-1 " onPress={handleView}>
             <LinearGradient
@@ -142,6 +136,14 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
             </LinearGradient>
           </TouchableOpacity>
         </View>
+        {item?.contact?.website && (
+          <TouchableOpacity className="flex-row items-center justify-center border border-slate-200 rounded-xl px-4 py-4 gap-1.5 mt-3">
+            <Feather name="globe" size={14} color="#0F172A" />
+            <Text className="text-[13px] font-Inter_SemiBold text-[#0F172A]">
+              Website
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
     </Animated.View>
   );

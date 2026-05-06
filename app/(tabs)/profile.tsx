@@ -146,6 +146,7 @@ const Profile = () => {
               Grounded in Excellence
             </Text>
           </View>
+          <View className="h-40" />
         </ScrollView>
       </SafeAreaView>
     </ScreenWrapper>

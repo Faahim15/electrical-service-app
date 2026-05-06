@@ -107,7 +107,7 @@ const SafetyCard = ({
           opacity: opacityAnim,
           backgroundColor: "#fff",
           borderRadius: 16,
-          marginHorizontal: 16,
+
           marginBottom: 12,
           paddingHorizontal: 16,
           paddingVertical: 16,
@@ -119,7 +119,7 @@ const SafetyCard = ({
           shadowRadius: 4,
           elevation: 2,
         }}
-        className="bg-white rounded-2xl mx-4 mb-3 px-4 py-4 flex-row items-center shadow-sm"
+        className="bg-white rounded-2xl  mb-3 px-4 py-4 flex-row items-center shadow-sm"
       >
         {/* Icon */}
         <LinearGradient
@@ -247,10 +247,22 @@ const Safety = () => {
           contentContainerStyle={{ paddingBottom: 32 }}
         >
           <Animated.View
-            className={"mt-3 mb-2"}
+            className={"mt-3 mb-2 bg-white px-4"}
             style={{
               transform: [{ translateY: heroBannerTextSlide }],
               opacity: heroBannerTextOpacity,
+              backgroundColor: "#fff",
+              borderRadius: 16,
+
+              marginBottom: 12,
+              paddingHorizontal: 16,
+              paddingVertical: 16,
+
+              shadowColor: "#06B6D4",
+              shadowOffset: { width: 0, height: 1 },
+              shadowOpacity: 0.06,
+              shadowRadius: 4,
+              elevation: 2,
             }}
           >
             <Text
@@ -265,14 +277,18 @@ const Safety = () => {
             </Text>
             <Text style={{ fontSize: 13, color: "#6B7280", lineHeight: 19 }}>
               Keep your home safe and your electrical system running
-              efficiently. Toggle any item ON to set a yearly reminder — you
-              will receive a notification alert after 1 year to keep up with
-              your maintenance.
+              efficiently. Toggle any item ON to set an automatic reminder - you
+              will receive a notification alert when it is time for maintenance.
+              {"\n"}* Update Test GFCI Outlets to monthly{"\n"}* Update Carbon
+              Monoxide Detector maintenance from 6 months to annually{"\n"}* ADD
+              (every 3-4 months) after seasonally in Inspect Electrical Cords
+              {"\n"}* Update Septic System Alarm to monthly
             </Text>
           </Animated.View>
           {safetyItems.map((item, index) => (
             <SafetyCard key={item.id} item={item} index={index} />
           ))}
+          <View className="h-40" />
         </ScrollView>
       </SafeAreaView>
     </ScreenWrapper>
