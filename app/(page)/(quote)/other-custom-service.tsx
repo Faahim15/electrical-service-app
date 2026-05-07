@@ -189,7 +189,7 @@ const OtherCustomService = () => {
               transform: [{ translateY: headerSlide }],
               flexDirection: "row",
               alignItems: "center",
-              paddingHorizontal: 16,
+
               paddingTop: 12,
               paddingBottom: 16,
             }}
@@ -212,7 +212,7 @@ const OtherCustomService = () => {
           {/* List */}
           <ScrollView
             style={{ flex: 1 }}
-            contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 24 }}
+            contentContainerStyle={{ paddingBottom: 24 }}
             showsVerticalScrollIndicator={false}
           >
             {services.map((item, index) => (

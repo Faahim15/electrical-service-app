@@ -1,7 +1,7 @@
+import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
-import { Feather, Fontisto } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
 import { Animated, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -96,15 +96,7 @@ const SolarInstallation = () => {
         {/* Background gradient feel */}
         <View className="flex-1 ">
           {/* Back Button */}
-          <View className="px-4 pt-2">
-            <TouchableOpacity
-              onPress={() => router.back()}
-              className="w-10 h-10 rounded-full bg-white items-center justify-center shadow-sm"
-              style={{ elevation: 2 }}
-            >
-              <Fontisto name="arrow-left-l" size={16} color="#4b5563" />
-            </TouchableOpacity>
-          </View>
+          <BackButton />
 
           {/* Header Section */}
           <View className="items-center px-6 pt-6 pb-4">
