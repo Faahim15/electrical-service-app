@@ -1,11 +1,10 @@
-// src/app/quote/dock-power/route-details.tsx
 import AuthHeading from "@/src/components/auth/AuthHeading";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
+import PhotoUploadSection from "@/src/components/quote/PhotoUploadSection";
 import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
-import TextAreaInput from "@/src/components/shared/TextAreaInput";
 import { updateDockPowerDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
@@ -13,22 +12,8 @@ import React from "react";
 import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function DockRouteDetails() {
+export default function DockPhotosNeeded() {
   const dispatch = useDispatch();
-
-  const privateUtilities = useSelector((state: RootState) => {
-    const data = state.serviceForm.categoryData;
-    if (data?.categoryId === "7" && data.details)
-      return data.details.privateUtilities;
-    return "";
-  });
-
-  const routeDistance = useSelector((state: RootState) => {
-    const data = state.serviceForm.categoryData;
-    if (data?.categoryId === "7" && data.details)
-      return data.details.routeDistance;
-    return "";
-  });
 
   const existingSpacePhotos = useSelector((state: RootState) => {
     const data = state.serviceForm.categoryData;
@@ -49,41 +34,19 @@ export default function DockRouteDetails() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={6} totalSteps={9} />
+          <StepProgressBar currentStep={8} totalSteps={9} />
           <CategoryTag title="Dock Power" />
-
-          <AuthHeading title="Route Details" subtitle="" />
-
-          <TextAreaInput
-            label="Please list any known private utilities between the house and Dock power"
-            placeholder="Irrigation, private sewer/well, water, propane, etc."
-            value={privateUtilities}
-            onChangeText={(text) =>
-              dispatch(updateDockPowerDetails({ privateUtilities: text }))
-            }
-            minHeight={100}
-          />
-
-          <TextAreaInput
-            label="Distance & route to the dock"
-            placeholder="E.g., Panel is in the garage, dock is 75 ft away along the left side of the yard to the waterfront"
-            value={routeDistance}
-            onChangeText={(text) =>
-              dispatch(updateDockPowerDetails({ routeDistance: text }))
-            }
-            minHeight={100}
-          />
-          {/* <PhotoUploadSection
-            label="Upload photos of the existing space"
+          <AuthHeading title="Photos needed" subtitle="" />
+          <PhotoUploadSection
+            label="Upload photos of the dock and surrounding area"
             photos={existingSpacePhotos}
             onPhotosChange={(p) =>
               dispatch(updateDockPowerDetails({ existingSpacePhotos: p }))
             }
-          /> */}
-
+          />
           <GradientButton
             label="Continue"
-            onPress={() => router.push("/quote/dock-power/plans-permit")}
+            onPress={() => router.push("/quote/common/review-request")}
           />
         </ScrollView>
       </KeyboardAvoidingView>

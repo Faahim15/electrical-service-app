@@ -64,7 +64,7 @@ export default function DockPlansPermit() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={7} />
+          <StepProgressBar currentStep={7} totalSteps={9} />
           <CategoryTag title="Dock Power" />
 
           <AuthHeading title="Plans, Permit & Timeline" subtitle="" />
@@ -133,7 +133,7 @@ export default function DockPlansPermit() {
 
           <GradientButton
             label="Submit"
-            onPress={() => router.push("/quote/common/review-request" as any)}
+            onPress={() => router.push("/quote/dock-power/photos-needed")}
           />
         </ScrollView>
       </KeyboardAvoidingView>

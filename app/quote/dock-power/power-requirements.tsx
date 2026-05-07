@@ -136,7 +136,7 @@ export default function PowerRequirements() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={5} />
+          <StepProgressBar currentStep={5} totalSteps={9} />
           <CategoryTag title="Dock Power" />
 
           <AuthHeading title="Power requirements" subtitle="" />

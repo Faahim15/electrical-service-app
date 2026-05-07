@@ -5,7 +5,7 @@ export const CATEGORY_TOTAL_STEPS: Record<string, number> = {
   "4": 8,
   "5": 11,
   "6": 8,
-  "7": 8,
+  "7": 9,
   "8": 6,
   "9": 7,
   "10": 5,

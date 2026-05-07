@@ -50,7 +50,7 @@ export default function BackupNeeds() {
 
           <TextAreaInput
             label="What circuits would you like backed up?"
-            placeholder=""
+            placeholder="Type here"
             value={backedUpCircuits}
             onChangeText={(text) =>
               dispatch(updateGeneratorDetails({ backedUpCircuits: text }))
