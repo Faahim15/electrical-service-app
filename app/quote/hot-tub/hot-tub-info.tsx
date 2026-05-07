@@ -97,7 +97,7 @@ export default function HotTubInfo() {
               <CustomInput
                 label="Hot tub manufacturer"
                 textInputConfig={{
-                  placeholder: "",
+                  placeholder: "Type here",
                   value: manufacturer,
                   onChangeText: (text) =>
                     dispatch(updateHotTubDetails({ manufacturer: text })),
@@ -106,7 +106,7 @@ export default function HotTubInfo() {
               <CustomInput
                 label="Hot tub model number"
                 textInputConfig={{
-                  placeholder: "",
+                  placeholder: "Type here",
                   value: modelNumber,
                   onChangeText: (text) =>
                     dispatch(updateHotTubDetails({ modelNumber: text })),

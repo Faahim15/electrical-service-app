@@ -78,7 +78,7 @@ export default function DockBasics() {
           <CustomInput
             label="How many receptacles do you need at the dock?"
             textInputConfig={{
-              placeholder: "",
+              placeholder: "Type here",
               keyboardType: "number-pad",
               value: receptacleCount,
               onChangeText: (text) =>

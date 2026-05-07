@@ -10,11 +10,11 @@ import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
 import {
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    Text,
-    View,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -42,7 +42,12 @@ export default function PanelLocationScreen() {
       return data.details.additionalInfo;
     return "";
   });
-
+  const panelLocationOther = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "3" && data.details)
+      return data.details.panelLocationOther;
+    return "";
+  });
   return (
     <ScreenWrapper paddingHorizontal={20}>
       <KeyboardAvoidingView
@@ -87,7 +92,18 @@ export default function PanelLocationScreen() {
             }
             numColumns={1}
           />
-
+          {panelLocation === "Other (please specify)" && (
+            <TextAreaInput
+              label="Please specify"
+              placeholder="Describe your panel location"
+              value={panelLocationOther ?? ""}
+              onChangeText={(text) =>
+                dispatch(
+                  updatePanelUpgradeDetails({ panelLocationOther: text }),
+                )
+              }
+            />
+          )}
           <TextAreaInput
             label="Additional Information"
             placeholder="Any additional information you feel we should know..."

@@ -123,6 +123,7 @@ const initialState: ServiceFormState = {
     propertyType: "",
     ownershipStatus: "",
     timeline: "",
+    ownershipStatusOther: "",
   },
   categoryData: null,
 };

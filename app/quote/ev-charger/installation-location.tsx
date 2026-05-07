@@ -5,6 +5,7 @@ import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
 import { updateEVChargerDetails } from "@/src/redux/slices/serviceFormSlice";
 
+import TextAreaInput from "@/src/components/shared/TextAreaInput";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
@@ -17,7 +18,6 @@ import {
   View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-
 const LOCATIONS = ["Garage", "Carport", "Driveway", "Other"];
 
 const SelectOption = ({
@@ -62,6 +62,12 @@ export default function InstallationLocation() {
     const data = state.serviceForm.categoryData;
     if (data?.categoryId === "2") return data?.details?.installationLocation;
     return "" as const;
+  });
+  const installationLocationOther = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "2")
+      return data?.details?.installationLocationOther;
+    return "";
   });
   return (
     <ScreenWrapper paddingHorizontal={20}>
@@ -116,6 +122,18 @@ export default function InstallationLocation() {
                 }
               />
             ))}
+            {installationLocation === "Other" && (
+              <TextAreaInput
+                label="Please specify"
+                placeholder="Describe your installation location"
+                value={installationLocationOther ?? ""}
+                onChangeText={(text) =>
+                  dispatch(
+                    updateEVChargerDetails({ installationLocationOther: text }),
+                  )
+                }
+              />
+            )}
           </View>
 
           <GradientButton

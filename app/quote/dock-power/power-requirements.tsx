@@ -7,6 +7,7 @@ import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
+import TextAreaInput from "@/src/components/shared/TextAreaInput";
 import { updateDockPowerDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
@@ -96,6 +97,28 @@ export default function PowerRequirements() {
     return [];
   });
 
+  // selectors add করো
+  const panelLocationOther = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "7" && data.details)
+      return data.details.panelLocationOther;
+    return "";
+  });
+
+  const newServiceSizeOther = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "7" && data.details)
+      return data.details.newServiceSizeOther;
+    return "";
+  });
+
+  const subPanelSizeOther = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "7" && data.details)
+      return data.details.subPanelSizeOther;
+    return "";
+  });
+
   const isNewService = serviceType === "New service";
   const isSubPanel = serviceType === "Sub-panel";
   const isDedicatedCircuits = serviceType === "1-2 dedicated circuits";
@@ -136,30 +159,58 @@ export default function PowerRequirements() {
             numColumns={1}
           />
 
-          {/* New Service */}
           {isNewService && (
-            <OptionGrid
-              label="What size service do you need?"
-              options={NEW_SERVICE_SIZES}
-              selected={newServiceSize}
-              onSelect={(val) =>
-                dispatch(updateDockPowerDetails({ newServiceSize: val as any }))
-              }
-              numColumns={1}
-            />
+            <>
+              <OptionGrid
+                label="What size service do you need?"
+                options={NEW_SERVICE_SIZES}
+                selected={newServiceSize}
+                onSelect={(val) =>
+                  dispatch(
+                    updateDockPowerDetails({ newServiceSize: val as any }),
+                  )
+                }
+                numColumns={1}
+              />
+              {newServiceSize === "Other" && (
+                <TextAreaInput
+                  label="Please specify"
+                  placeholder="Describe your service size"
+                  value={newServiceSizeOther ?? ""}
+                  onChangeText={(text) =>
+                    dispatch(
+                      updateDockPowerDetails({ newServiceSizeOther: text }),
+                    )
+                  }
+                />
+              )}
+            </>
           )}
 
-          {/* Sub-panel */}
           {isSubPanel && (
-            <OptionGrid
-              label="What size sub-panel do you need?"
-              options={SUB_PANEL_SIZES}
-              selected={subPanelSize}
-              onSelect={(val) =>
-                dispatch(updateDockPowerDetails({ subPanelSize: val as any }))
-              }
-              numColumns={1}
-            />
+            <>
+              <OptionGrid
+                label="What size sub-panel do you need?"
+                options={SUB_PANEL_SIZES}
+                selected={subPanelSize}
+                onSelect={(val) =>
+                  dispatch(updateDockPowerDetails({ subPanelSize: val as any }))
+                }
+                numColumns={1}
+              />
+              {subPanelSize === "Other" && (
+                <TextAreaInput
+                  label="Please specify"
+                  placeholder="Describe your sub-panel size"
+                  value={subPanelSizeOther ?? ""}
+                  onChangeText={(text) =>
+                    dispatch(
+                      updateDockPowerDetails({ subPanelSizeOther: text }),
+                    )
+                  }
+                />
+              )}
+            </>
           )}
 
           {/* 1-2 dedicated circuits */}
@@ -187,6 +238,7 @@ export default function PowerRequirements() {
           )}
 
           {/* Panel location + photo — সব service type এ */}
+          {/* Panel location */}
           {showPanelSection && (
             <>
               <OptionGrid
@@ -200,6 +252,18 @@ export default function PowerRequirements() {
                 }
                 numColumns={1}
               />
+              {panelLocation === "Other (please specify)" && (
+                <TextAreaInput
+                  label="Please specify"
+                  placeholder="Describe your panel location"
+                  value={panelLocationOther ?? ""}
+                  onChangeText={(text) =>
+                    dispatch(
+                      updateDockPowerDetails({ panelLocationOther: text }),
+                    )
+                  }
+                />
+              )}
 
               <PhotoUploadSection
                 label="Please upload clear photo of electrical panel up close so we can see the numbers and about 10 ft away."
@@ -210,7 +274,13 @@ export default function PowerRequirements() {
               />
             </>
           )}
-
+          {/* <PhotoUploadSection
+                label="Please upload clear photo of electrical panel up close so we can see the numbers and about 10 ft away."
+                photos={panelPhotos}
+                onPhotosChange={(p) =>
+                  dispatch(updateDockPowerDetails({ panelPhotos: p }))
+                }
+              /> */}
           <GradientButton
             label="Continue"
             onPress={() =>

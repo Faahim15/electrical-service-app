@@ -4,6 +4,7 @@ import OptionGrid from "@/src/components/quote/OptionGrid";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
+import TextAreaInput from "@/src/components/shared/TextAreaInput";
 import { updateEVChargerDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
@@ -45,7 +46,13 @@ export default function PanelLocation() {
     if (data?.categoryId === "2") return data?.details?.panelDistance;
     return "" as const;
   });
+  const panelLocationOther = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "2") return data?.details?.panelLocationOther;
+    return "";
+  });
 
+  console.log("panelLocatio", panelLocation);
   return (
     <ScreenWrapper paddingHorizontal={20}>
       <KeyboardAvoidingView
@@ -90,6 +97,16 @@ export default function PanelLocation() {
             }
             numColumns={1}
           />
+          {panelLocation === "Other (please specify)" && (
+            <TextAreaInput
+              label="Please specify"
+              placeholder="Describe your panel location"
+              value={panelLocationOther ?? ""}
+              onChangeText={(text) =>
+                dispatch(updateEVChargerDetails({ panelLocationOther: text }))
+              }
+            />
+          )}
 
           <View className="mb-2">
             <OptionGrid
@@ -101,7 +118,8 @@ export default function PanelLocation() {
               }
               numColumns={1}
             />
-            <Text className="text-[#94A3B8] text-[12px] font-Inter_Regular -mt-3 mb-3">
+
+            <Text className="text-[#94A3B8] text-sm font-Inter_Regular -mt-3 mb-3">
               Measured along walls and ceiling in right angles
             </Text>
           </View>

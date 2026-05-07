@@ -6,16 +6,17 @@ import BackButton from "@/src/components/shared/BackButton";
 import CustomInput from "@/src/components/shared/CustomInput";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
+import TextAreaInput from "@/src/components/shared/TextAreaInput";
 import { updateRemodelingDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
 import {
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    Text,
-    View,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -41,6 +42,12 @@ export default function RemodelingProjectBasics() {
     const data = state.serviceForm.categoryData;
     if (data?.categoryId === "4" && data.details)
       return data.details.remodlingArea;
+    return "";
+  });
+  const panelLocationOther = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "4" && data.details)
+      return data.details.panelLocationOther;
     return "";
   });
 
@@ -88,7 +95,16 @@ export default function RemodelingProjectBasics() {
             }
             numColumns={1}
           />
-
+          {panelLocation === "Other (please specify)" && (
+            <TextAreaInput
+              label="Please specify"
+              placeholder="Describe your panel location"
+              value={panelLocationOther ?? ""}
+              onChangeText={(text) =>
+                dispatch(updateRemodelingDetails({ panelLocationOther: text }))
+              }
+            />
+          )}
           <CustomInput
             label="What area are you remodeling?"
             textInputConfig={{

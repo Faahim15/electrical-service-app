@@ -7,9 +7,10 @@ import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
 import { updateAccessoryBuildingDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
+import { verticalScale } from "@/src/utils/Scaling";
 import { router } from "expo-router";
 import React from "react";
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 const BUILDING_STATUS = ["Yes", "No", "Will be delivered / built soon"];
@@ -54,7 +55,7 @@ export default function ConstructionDetails() {
         <ScrollView
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
-          contentContainerStyle={{ paddingBottom: 32 }}
+          contentContainerStyle={{ paddingBottom: verticalScale(30) }}
         >
           <StepProgressBar currentStep={5} totalSteps={10} />
           <CategoryTag title="Accessory Building Power" />
@@ -98,13 +99,14 @@ export default function ConstructionDetails() {
             }
             numColumns={1}
           />
-
-          <GradientButton
-            label="Continue"
-            onPress={() =>
-              router.push("/quote/accessory-building/electrical-needs" as any)
-            }
-          />
+          <View className="mt-[3%]">
+            <GradientButton
+              label="Continue"
+              onPress={() =>
+                router.push("/quote/accessory-building/electrical-needs" as any)
+              }
+            />
+          </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

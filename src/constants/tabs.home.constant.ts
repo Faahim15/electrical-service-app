@@ -37,7 +37,8 @@ export const quickActions: QuickAction[] = [
     route: "https://www.fourelementselectric.com/elemental-harmony" as any,
     icon: "star-outline",
     title: "Elemental Harmony",
-    subtitle: "Memberships for electrical system, EV charger & generator",
+    subtitle:
+      "Memberships for electrical system, EV charger, & generator maintenance",
   },
 ];
 

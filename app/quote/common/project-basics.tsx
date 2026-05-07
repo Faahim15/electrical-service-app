@@ -6,7 +6,7 @@ import TimelineOption from "@/src/components/quote/TimelineOption";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
-
+import TextAreaInput from "@/src/components/shared/TextAreaInput";
 import {
   selectCategory,
   updateProjectBasics,
@@ -20,10 +20,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function ProjectBasics() {
   const dispatch = useDispatch();
-  const { propertyType, ownershipStatus, timeline } = useSelector(
-    (state: RootState) => state.serviceForm.projectBasics,
-  );
-
+  // const { propertyType, ownershipStatus, timeline } = useSelector(
+  //   (state: RootState) => state.serviceForm.projectBasics,
+  // );
+  const { propertyType, ownershipStatus, timeline, ownershipStatusOther } =
+    useSelector((state: RootState) => state.serviceForm.projectBasics);
   const selectedCategory = useSelector(
     (state: RootState) => state.categoryRoute.selectedCategory,
   );
@@ -106,7 +107,16 @@ export default function ProjectBasics() {
             }
             numColumns={1}
           />
-
+          {ownershipStatus === "Other" && (
+            <TextAreaInput
+              label="Please specify"
+              placeholder="Describe your ownership status"
+              value={ownershipStatusOther ?? ""}
+              onChangeText={(text) =>
+                dispatch(updateProjectBasics({ ownershipStatusOther: text }))
+              }
+            />
+          )}
           <TimelineOption
             selected={timeline}
             onSelect={(val) =>

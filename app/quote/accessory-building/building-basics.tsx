@@ -63,7 +63,7 @@ export default function BuildingBasics() {
 
           <TextAreaInput
             label="Intended Use"
-            placeholder=""
+            placeholder="Type here"
             value={intendedUse}
             onChangeText={(text) =>
               dispatch(updateAccessoryBuildingDetails({ intendedUse: text }))

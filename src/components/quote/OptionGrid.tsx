@@ -22,12 +22,16 @@ const OptionGrid = ({
 
   return (
     <View className="mb-[1%]">
-      <View className="flex-row items-center mb-2">
-        <Text className="text-[#1E293B] text-[13.5px] font-Inter_SemiBold">
-          {label}
-        </Text>
-        {required && <Text className="text-red-500 ml-1 text-[13.5px]">*</Text>}
-      </View>
+      {label !== "" && (
+        <View className="flex-row items-center mb-2">
+          <Text className="text-[#1E293B] text-sm font-Inter_SemiBold">
+            {label}
+          </Text>
+          {required && (
+            <Text className="text-red-500 ml-1 text-[13.5px]">*</Text>
+          )}
+        </View>
+      )}
 
       <View className="flex-row flex-wrap" style={{ gap: 10 }}>
         {options.map((option) => {
@@ -42,7 +46,7 @@ const OptionGrid = ({
                 paddingVertical: 13,
                 paddingHorizontal: verticalScale(18),
                 borderRadius: 12,
-                backgroundColor: isSelected ? "#EEF9FF" : "#FFFFFF",
+                backgroundColor: isSelected ? "#0EA5E9" : "#FFFFFF",
                 borderWidth: 1.5,
                 borderColor: isSelected ? "#0EA5E9" : "#E2E8F0",
                 shadowColor: "#94A3B8",
@@ -54,7 +58,7 @@ const OptionGrid = ({
             >
               <Text
                 className="text-[13.5px] font-Inter_Medium"
-                style={{ color: isSelected ? "#0EA5E9" : "#475569" }}
+                style={{ color: isSelected ? "#FFFFFF" : "#475569" }}
               >
                 {option}
               </Text>

@@ -33,6 +33,8 @@ export const initialEVChargerDetails: EVChargerDetails = {
   additionalInfo: "",
   chargerAreaPhotos: [],
   panelPhotos: [],
+  panelLocationOther: "",
+  installationLocationOther: "",
 };
 
 export const initialPanelUpgradeDetails: PanelUpgradeDetails = {
@@ -44,6 +46,8 @@ export const initialPanelUpgradeDetails: PanelUpgradeDetails = {
   additionalInfo: "",
   meterPhotos: [],
   panelPhotos: [],
+  currentAmperageOther: "",
+  panelLocationOther: "",
 };
 
 export const initialRemodelingDetails: RemodelingDetails = {
@@ -57,6 +61,7 @@ export const initialRemodelingDetails: RemodelingDetails = {
   additionalInfo: "",
   existingSpacePhotos: [],
   panelPhotos: [],
+  panelLocationOther: "",
 };
 
 export const initialAccessoryBuildingDetails: AccessoryBuildingDetails = {
@@ -118,6 +123,9 @@ export const initialDockPowerDetails: DockPowerDetails = {
   hasPermit: "",
   permitNumber: "",
   additionalInfo: "",
+  panelLocationOther: "", // add করো
+  newServiceSizeOther: "", // add করো
+  subPanelSizeOther: "", // add করো
 };
 
 export const initialElectricalInspectionDetails: ElectricalInspectionDetails = {

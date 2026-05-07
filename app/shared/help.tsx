@@ -186,7 +186,7 @@ const NeedHelpScreen = () => {
                     Business Hours
                   </Text>
                   <Text className="text-[#64748B] text-[13px] font-Inter_Regular leading-[19px]">
-                    Mon-Fri: 8:00 AM - 6:00 PM
+                    Mon-Fri: 8:00 AM - 5:00 PM
                   </Text>
                   <Text className="text-[#64748B] text-[13px] font-Inter_Regular">
                     Sat-Sun: Closed

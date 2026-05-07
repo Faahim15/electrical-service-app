@@ -26,6 +26,7 @@ export interface ProjectBasics {
     | "This month"
     | "Flexible"
     | "";
+  ownershipStatusOther: string; // এটা add করো
 }
 
 // ============================================
@@ -85,6 +86,8 @@ export interface EVChargerDetails {
   additionalInfo: string;
   chargerAreaPhotos: string[];
   panelPhotos: string[];
+  panelLocationOther: string;
+  installationLocationOther: string;
 }
 
 // ============================================
@@ -119,6 +122,8 @@ export interface PanelUpgradeDetails {
   additionalInfo: string;
   meterPhotos: string[];
   panelPhotos: string[];
+  currentAmperageOther: string;
+  panelLocationOther: string;
 }
 
 // ============================================
@@ -144,6 +149,7 @@ export interface RemodelingDetails {
   additionalInfo: string;
   existingSpacePhotos: string[];
   panelPhotos: string[];
+  panelLocationOther: string;
 }
 
 // ============================================

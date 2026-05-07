@@ -4,16 +4,17 @@ import OptionGrid from "@/src/components/quote/OptionGrid";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
+import TextAreaInput from "@/src/components/shared/TextAreaInput";
 import { updatePanelUpgradeDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
 import {
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    Text,
-    View,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -35,7 +36,12 @@ export default function CurrentPanelDetails() {
     if (data?.categoryId === "3" && data.details) return data.details.powerType;
     return "" as const;
   });
-
+  const currentAmperageOther = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "3" && data.details)
+      return data.details.currentAmperageOther;
+    return "";
+  });
   return (
     <ScreenWrapper paddingHorizontal={20}>
       <KeyboardAvoidingView
@@ -82,14 +88,25 @@ export default function CurrentPanelDetails() {
             }
             numColumns={1}
           />
-
+          {currentAmperage === "Other" && (
+            <TextAreaInput
+              label="Please specify"
+              placeholder="Describe your current amperage"
+              value={currentAmperageOther ?? ""}
+              onChangeText={(text) =>
+                dispatch(
+                  updatePanelUpgradeDetails({ currentAmperageOther: text }),
+                )
+              }
+            />
+          )}
           {/* Power Type with description */}
           <View className="mb-[3%]">
-            <Text className="text-[#1E293B] text-[13.5px] font-Inter_SemiBold mb-1">
+            <Text className="text-[#1E293B] text-base font-Inter_SemiBold mb-1">
               Is your existing power overhead or underground to your electrical
               meter?
             </Text>
-            <Text className="text-[#94A3B8] text-[12px] font-Inter_Regular mb-3">
+            <Text className="text-[#94A3B8] text-sm font-Inter_Regular mb-[1%]">
               Overhead = cable runs from utility pole to house in the air{"\n"}
               Underground = cable runs from utility pole/transformer to the
               house underground

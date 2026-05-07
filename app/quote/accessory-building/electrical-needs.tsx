@@ -10,7 +10,7 @@ import { updateAccessoryBuildingDetails } from "@/src/redux/slices/serviceFormSl
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function ElectricalNeeds() {
@@ -72,13 +72,14 @@ export default function ElectricalNeeds() {
             }
             numColumns={1}
           />
-
-          <GradientButton
-            label="Continue"
-            onPress={() =>
-              router.push("/quote/accessory-building/service-type")
-            }
-          />
+          <View className="mt-[3%]">
+            <GradientButton
+              label="Continue"
+              onPress={() =>
+                router.push("/quote/accessory-building/service-type")
+              }
+            />
+          </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>
