@@ -67,6 +67,21 @@ export default function LocationDetails() {
     return "";
   });
 
+  // selectors add করো
+  const placementOther = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "6" && data.details)
+      return data.details.placementOther;
+    return "";
+  });
+
+  const panelLocationOther = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "6" && data.details)
+      return data.details.panelLocationOther;
+    return "";
+  });
+
   return (
     <ScreenWrapper paddingHorizontal={20}>
       <KeyboardAvoidingView
@@ -93,7 +108,16 @@ export default function LocationDetails() {
             }
             numColumns={1}
           />
-
+          {placement === "Other" && (
+            <TextAreaInput
+              label="Please specify"
+              placeholder="Describe where the hot tub will be placed"
+              value={placementOther ?? ""}
+              onChangeText={(text) =>
+                dispatch(updateHotTubDetails({ placementOther: text }))
+              }
+            />
+          )}
           <OptionGrid
             label="Where is your electrical panel located?"
             options={PANEL_LOCATIONS}
@@ -103,7 +127,16 @@ export default function LocationDetails() {
             }
             numColumns={1}
           />
-
+          {panelLocation === "Other (please specify)" && (
+            <TextAreaInput
+              label="Please specify"
+              placeholder="Describe your panel location"
+              value={panelLocationOther ?? ""}
+              onChangeText={(text) =>
+                dispatch(updateHotTubDetails({ panelLocationOther: text }))
+              }
+            />
+          )}
           <OptionGrid
             label="What is the approximate distance of the electrical panel from hot tub location?"
             options={PANEL_DISTANCES}

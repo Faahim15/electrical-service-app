@@ -87,6 +87,10 @@ export const initialAccessoryBuildingDetails: AccessoryBuildingDetails = {
   hasPermit: "",
   permitNumber: "",
   additionalInfo: "",
+
+  panelLocationOther: "", // add করো
+  newServiceSizeOther: "", // add করো
+  subPanelSizeOther: "", // add করো
 };
 
 export const initialHotTubDetails: HotTubDetails = {
@@ -102,6 +106,9 @@ export const initialHotTubDetails: HotTubDetails = {
   panelPhotos: [],
   installLocationPhotos: [],
   receptaclePhotos: [],
+
+  placementOther: "", // add করো
+  panelLocationOther: "", // add করো
 };
 
 export const initialDockPowerDetails: DockPowerDetails = {

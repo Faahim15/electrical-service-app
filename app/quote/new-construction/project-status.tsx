@@ -11,7 +11,13 @@ import { updateNewConstructionDetails } from "@/src/redux/slices/serviceFormSlic
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
-import { KeyboardAvoidingView, Platform, ScrollView, Text } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 const CONSTRUCTION_STAGES = [
@@ -169,11 +175,12 @@ export default function ProjectStatus() {
               {/* Building plans No — upload section দেখাবে না */}
             </>
           )}
-
-          <GradientButton
-            label="Continue"
-            onPress={() => router.push("/quote/common/review-request" as any)}
-          />
+          <View className="mt-[3%]">
+            <GradientButton
+              label="Continue"
+              onPress={() => router.push("/quote/common/review-request" as any)}
+            />
+          </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

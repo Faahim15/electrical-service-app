@@ -5,11 +5,12 @@ import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
+import TextAreaInput from "@/src/components/shared/TextAreaInput"; // import add করো
 import { updateAccessoryBuildingDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 const SERVICE_TYPES = ["New Service", "Sub-panel", "1-2 dedicated circuits"];
@@ -94,6 +95,27 @@ export default function AccessoryServiceType() {
     return [];
   });
 
+  // selectors add করো
+  const panelLocationOther = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "5" && data.details)
+      return data.details.panelLocationOther;
+    return "";
+  });
+
+  const newServiceSizeOther = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "5" && data.details)
+      return data.details.newServiceSizeOther;
+    return "";
+  });
+
+  const subPanelSizeOther = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "5" && data.details)
+      return data.details.subPanelSizeOther;
+    return "";
+  });
   const isNewService = serviceType === "New Service";
   const isSubPanel = serviceType === "Sub-panel";
   const isDedicatedCircuits = serviceType === "1-2 dedicated circuits";
@@ -111,7 +133,7 @@ export default function AccessoryServiceType() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={7} totalSteps={10} />
+          <StepProgressBar currentStep={7} totalSteps={11} />
           <CategoryTag title="Accessory Building Power" />
 
           {/* Service Type */}
@@ -134,36 +156,70 @@ export default function AccessoryServiceType() {
             numColumns={1}
           />
 
-          {/* New Service — size */}
+          {/* New Service */}
           {isNewService && (
-            <OptionGrid
-              label="What size service do you need?"
-              options={NEW_SERVICE_SIZES}
-              selected={newServiceSize}
-              onSelect={(val) =>
-                dispatch(
-                  updateAccessoryBuildingDetails({
-                    newServiceSize: val as any,
-                  }),
-                )
-              }
-              numColumns={1}
-            />
+            <>
+              <OptionGrid
+                label="What size service do you need?"
+                options={NEW_SERVICE_SIZES}
+                selected={newServiceSize}
+                onSelect={(val) =>
+                  dispatch(
+                    updateAccessoryBuildingDetails({
+                      newServiceSize: val as any,
+                    }),
+                  )
+                }
+                numColumns={1}
+              />
+              {newServiceSize === "Other" && (
+                <TextAreaInput
+                  label="Please specify"
+                  placeholder="Describe your service size"
+                  value={newServiceSizeOther ?? ""}
+                  onChangeText={(text) =>
+                    dispatch(
+                      updateAccessoryBuildingDetails({
+                        newServiceSizeOther: text,
+                      }),
+                    )
+                  }
+                />
+              )}
+            </>
           )}
 
-          {/* Sub-panel — size */}
+          {/* Sub-panel */}
           {isSubPanel && (
-            <OptionGrid
-              label="What size sub-panel do you need?"
-              options={SUB_PANEL_SIZES}
-              selected={subPanelSize}
-              onSelect={(val) =>
-                dispatch(
-                  updateAccessoryBuildingDetails({ subPanelSize: val as any }),
-                )
-              }
-              numColumns={1}
-            />
+            <>
+              <OptionGrid
+                label="What size sub-panel do you need?"
+                options={SUB_PANEL_SIZES}
+                selected={subPanelSize}
+                onSelect={(val) =>
+                  dispatch(
+                    updateAccessoryBuildingDetails({
+                      subPanelSize: val as any,
+                    }),
+                  )
+                }
+                numColumns={1}
+              />
+              {subPanelSize === "Other" && (
+                <TextAreaInput
+                  label="Please specify"
+                  placeholder="Describe your sub-panel size"
+                  value={subPanelSizeOther ?? ""}
+                  onChangeText={(text) =>
+                    dispatch(
+                      updateAccessoryBuildingDetails({
+                        subPanelSizeOther: text,
+                      }),
+                    )
+                  }
+                />
+              )}
+            </>
           )}
 
           {/* 1-2 dedicated circuits */}
@@ -196,7 +252,7 @@ export default function AccessoryServiceType() {
             </>
           )}
 
-          {/* Panel location + photo — সব service type এ দেখাবে */}
+          {/* Panel location */}
           {showPanelSection && (
             <>
               <OptionGrid
@@ -212,23 +268,40 @@ export default function AccessoryServiceType() {
                 }
                 numColumns={1}
               />
+              {panelLocation === "Other (please specify)" && (
+                <TextAreaInput
+                  label="Please specify"
+                  placeholder="Describe your panel location"
+                  value={panelLocationOther ?? ""}
+                  onChangeText={(text) =>
+                    dispatch(
+                      updateAccessoryBuildingDetails({
+                        panelLocationOther: text,
+                      }),
+                    )
+                  }
+                />
+              )}
 
-              <PhotoUploadSection
-                label="Please upload clear photo of electrical panel up close so we can see the numbers and about 10 ft away."
-                photos={panelPhotos}
-                onPhotosChange={(p) =>
-                  dispatch(updateAccessoryBuildingDetails({ panelPhotos: p }))
-                }
-              />
+              <View className="mt-1">
+                <PhotoUploadSection
+                  label="Please upload clear photo of electrical panel up close so we can see the numbers and about 10 ft away."
+                  photos={panelPhotos}
+                  onPhotosChange={(p) =>
+                    dispatch(updateAccessoryBuildingDetails({ panelPhotos: p }))
+                  }
+                />
+              </View>
             </>
           )}
-
-          <GradientButton
-            label="Continue"
-            onPress={() =>
-              router.push("/quote/accessory-building/route-details")
-            }
-          />
+          <View className="mt-1">
+            <GradientButton
+              label="Continue"
+              onPress={() =>
+                router.push("/quote/accessory-building/route-details")
+              }
+            />
+          </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

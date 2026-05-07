@@ -7,6 +7,7 @@ interface OptionGridProps {
   options: string[];
   selected: string;
   onSelect: (val: string) => void;
+  sublabel?: boolean;
   numColumns?: 2 | 1;
 }
 
@@ -15,6 +16,7 @@ const OptionGrid = ({
   required = false,
   options,
   selected,
+  sublabel = false,
   onSelect,
   numColumns = 2,
 }: OptionGridProps) => {
@@ -23,7 +25,7 @@ const OptionGrid = ({
   return (
     <View className="mb-[1%]">
       {label !== "" && (
-        <View className="flex-row items-center mb-2">
+        <View className="flex-row items-center mb-1">
           <Text className="text-[#1E293B] text-sm font-Inter_SemiBold">
             {label}
           </Text>
@@ -31,6 +33,12 @@ const OptionGrid = ({
             <Text className="text-red-500 ml-1 text-[13.5px]">*</Text>
           )}
         </View>
+      )}
+
+      {sublabel && (
+        <Text className="text-[#94A3B8] text-sm font-Inter_Regular  mb-2">
+          Measured along walls and ceiling in right angles
+        </Text>
       )}
 
       <View className="flex-row flex-wrap" style={{ gap: 10 }}>

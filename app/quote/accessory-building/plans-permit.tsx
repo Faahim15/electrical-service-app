@@ -63,7 +63,7 @@ export default function PlansPermit() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={9} totalSteps={10} />
+          <StepProgressBar currentStep={9} totalSteps={11} />
           <CategoryTag title="Accessory Building Power" />
 
           <AuthHeading title="Plans, Permit & Timeline" subtitle="" />
@@ -141,7 +141,9 @@ export default function PlansPermit() {
 
           <GradientButton
             label="Submit"
-            onPress={() => router.push("/quote/common/review-request")}
+            onPress={() =>
+              router.push("/quote/accessory-building/photos-needed")
+            }
           />
         </ScrollView>
       </KeyboardAvoidingView>

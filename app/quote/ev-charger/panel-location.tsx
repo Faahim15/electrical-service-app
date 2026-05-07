@@ -111,6 +111,7 @@ export default function PanelLocation() {
           <View className="mb-2">
             <OptionGrid
               label="What is the approximate distance of the electrical panel from charger install location?"
+              sublabel={true}
               options={PANEL_DISTANCES}
               selected={panelDistance || ""}
               onSelect={(val) =>
@@ -118,10 +119,6 @@ export default function PanelLocation() {
               }
               numColumns={1}
             />
-
-            <Text className="text-[#94A3B8] text-sm font-Inter_Regular -mt-3 mb-3">
-              Measured along walls and ceiling in right angles
-            </Text>
           </View>
 
           <GradientButton

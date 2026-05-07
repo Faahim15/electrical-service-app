@@ -42,7 +42,7 @@ export default function ElectricalNeeds() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={6} totalSteps={10} />
+          <StepProgressBar currentStep={6} totalSteps={11} />
           <CategoryTag title="Accessory Building Power" />
 
           <AuthHeading title="Electrical needs" subtitle="" />

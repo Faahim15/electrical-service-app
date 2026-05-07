@@ -101,7 +101,7 @@ export default function InspectionType() {
             <CustomInput
               label="What is the square footage of the building?"
               textInputConfig={{
-                placeholder: "",
+                placeholder: "Type here",
                 keyboardType: "number-pad",
                 value: squareFootage,
                 onChangeText: (text) =>
@@ -118,7 +118,7 @@ export default function InspectionType() {
               <CustomInput
                 label="How many panels will be inspected?"
                 textInputConfig={{
-                  placeholder: "",
+                  placeholder: "Type here",
                   keyboardType: "number-pad",
                   value: panelCount,
                   onChangeText: (text) =>

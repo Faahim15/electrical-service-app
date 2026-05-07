@@ -1,6 +1,5 @@
 import AuthHeading from "@/src/components/auth/AuthHeading";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
-import PhotoUploadSection from "@/src/components/quote/PhotoUploadSection";
 import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
@@ -49,7 +48,7 @@ export default function RouteDetails() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={8} totalSteps={10} />
+          <StepProgressBar currentStep={8} totalSteps={11} />
           <CategoryTag title="Accessory Building Power" />
 
           <AuthHeading title="Route Details" subtitle="" />
@@ -67,8 +66,8 @@ export default function RouteDetails() {
           />
 
           <TextAreaInput
-            label=""
-            placeholder="Please provide a general idea of the distance and route between the main electrical panel and the accessory building location"
+            label="Please provide a general idea of the distance and route between the main electrical panel and the accessory building location"
+            placeholder="E.g., Panel is in the basement, building is 50 ft away across the backyard"
             value={routeDistance}
             onChangeText={(text) =>
               dispatch(updateAccessoryBuildingDetails({ routeDistance: text }))
@@ -76,7 +75,7 @@ export default function RouteDetails() {
             minHeight={100}
           />
 
-          <PhotoUploadSection
+          {/* <PhotoUploadSection
             label="Upload photos of the existing space"
             photos={existingSpacePhotos}
             onPhotosChange={(p) =>
@@ -84,7 +83,7 @@ export default function RouteDetails() {
                 updateAccessoryBuildingDetails({ existingSpacePhotos: p }),
               )
             }
-          />
+          /> */}
 
           <GradientButton
             label="Continue"

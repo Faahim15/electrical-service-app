@@ -226,6 +226,10 @@ export interface AccessoryBuildingDetails {
   hasPermit: "Yes" | "No" | "";
   permitNumber: string;
   additionalInfo: string;
+
+  panelLocationOther: string; // add করো
+  newServiceSizeOther: string; // add করো
+  subPanelSizeOther: string; // add করো
 }
 
 // ============================================
@@ -276,6 +280,9 @@ export interface HotTubDetails {
   panelPhotos: string[];
   installLocationPhotos: string[];
   receptaclePhotos: string[];
+
+  placementOther: string; // add করো
+  panelLocationOther: string; // add করো
 }
 
 // ============================================
@@ -336,6 +343,9 @@ export interface DockPowerDetails {
   hasPermit: "Yes" | "No" | "";
   permitNumber: string;
   additionalInfo: string;
+  panelLocationOther: string; // add করো
+  newServiceSizeOther: string; // add করো
+  subPanelSizeOther: string; // add করো
 }
 
 // ============================================
