@@ -128,9 +128,8 @@ export default function PlansPermit() {
             />
           )}
 
-          {/* Additional Info — সবসময় দেখাবে */}
           <TextAreaInput
-            label=""
+            label="Additional Information"
             placeholder="any additional information you feel we should know for your quote"
             value={additionalInfo}
             onChangeText={(text) =>

@@ -102,7 +102,7 @@ export default function UploadPhotos() {
           {/* Camera / Gallery buttons */}
 
           <PhotoUploadSection
-            label="Panel Photos"
+            label="Please upload clear photos of your electrical panel up close so we can see the breakers/panel label and about 10 ft away"
             photos={panelPhotos || []}
             onPhotosChange={(p) =>
               dispatch(updateServiceCallDetails({ panelPhotos: p }))

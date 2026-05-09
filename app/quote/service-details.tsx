@@ -40,7 +40,7 @@ const SERVICE_DETAIL_DATA: Record<
   },
   "2": {
     subtitle:
-      "Professional EV charger installation with safe wiring and code compliance.",
+      "Professional EV charger installation with safe wiring and code compliance. We are a Certified Tesla Installer and are partnered with Qmerit! We install all Electric Vehicle charging configurations, including bi-directional chargers for GM and Tesla",
     bestForItems: [
       { id: "1", text: "Level 2 home charger setup" },
       { id: "2", text: "Garage or driveway wiring" },
@@ -89,8 +89,8 @@ const SERVICE_DETAIL_DATA: Record<
       "Electrical work tailored for home remodel and renovation projects.",
     bestForItems: [
       { id: "1", text: "Kitchen or bathroom remodels" },
-      { id: "2", text: "Adding outlets or lighting" },
-      { id: "3", text: "Relocating electrical fixtures" },
+      // { id: "2", text: "Adding outlets or lighting" },
+      // { id: "3", text: "Relocating electrical fixtures" },
       { id: "4", text: "Open wall wiring work" },
     ],
     provideItems: [

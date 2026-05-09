@@ -86,7 +86,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
   },
   {
     id: "3",
-    title: "Panel Upgrade",
+    title: "Panel Upgrade/Replacement",
     description: "Upgrade your panel\nFor safer, stronger power",
     iconName: "cube-outline",
     iconBg: "#F0EDFB",
