@@ -3,6 +3,7 @@ import CustomHeader from "@/src/components/shared/CustomHeader";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import { SERVICE_CATEGORIES } from "@/src/constants/tabs.home.constant";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import {
   FlatList,
@@ -60,6 +61,7 @@ const ListFooter = () => (
     </Text>
     <TouchableOpacity
       activeOpacity={0.8}
+      onPress={() => router.push("/shared/help")}
       className="border border-gray-300 bg-white rounded-xl px-6 py-3 self-start"
     >
       <Text className="font-Inter_Medium text-sm text-[#4C51BF]">

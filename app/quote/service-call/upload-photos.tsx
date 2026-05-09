@@ -60,7 +60,7 @@ export default function UploadPhotos() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={6} />
+          <StepProgressBar currentStep={7} />
 
           <AuthHeading
             title="Upload photos"
@@ -127,7 +127,7 @@ export default function UploadPhotos() {
 
           <GradientButton
             label="Continue"
-            onPress={() => router.push("/quote/service-call/additional-notes")}
+            onPress={() => router.push("/quote/common/review-request")}
           />
         </ScrollView>
       </KeyboardAvoidingView>

@@ -75,6 +75,7 @@ export default function ContactDetails() {
         <TermsAndPolicy
           title="I agree to be"
           subtitle="contacted about this request"
+          subtitleColor="#6b7280"
         />
 
         <GradientButton

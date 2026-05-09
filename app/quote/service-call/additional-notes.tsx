@@ -50,7 +50,7 @@ export default function AdditionalNotes() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={7} />
+          <StepProgressBar currentStep={6} />
 
           <AuthHeading
             title="Additional notes"
@@ -77,7 +77,7 @@ export default function AdditionalNotes() {
 
           <GradientButton
             label="Continue"
-            onPress={() => router.push("/quote/common/review-request")}
+            onPress={() => router.push("/quote/service-call/upload-photos")}
           />
         </ScrollView>
       </KeyboardAvoidingView>

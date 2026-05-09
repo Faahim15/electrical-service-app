@@ -9,6 +9,7 @@ interface TermsAndPolicyProps {
   shouldShowTitle?: boolean;
   value?: boolean;
   onToggle?: (val: boolean) => void;
+  subtitleColor?: string;
 }
 
 const TermsAndPolicy = ({
@@ -18,6 +19,7 @@ const TermsAndPolicy = ({
   onPressTerms,
   value,
   onToggle,
+  subtitleColor = "#0EA5E9",
 }: TermsAndPolicyProps) => {
   const [internalAgreed, setInternalAgreed] = useState(false);
 
@@ -52,7 +54,10 @@ const TermsAndPolicy = ({
         </Text>
       )}
       <Pressable onPress={onPressTerms}>
-        <Text className="font-Inter_Medium text-sm text-[#0EA5E9]">
+        <Text
+          style={{ color: subtitleColor }}
+          className="font-Inter_Medium text-sm"
+        >
           {subtitle}
         </Text>
       </Pressable>

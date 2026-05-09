@@ -13,7 +13,7 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 
 // ─── Sub-components ───────────────────────────────────────
@@ -168,9 +168,14 @@ export default function HomeScreen() {
                   color="#374151"
                 />
               </TouchableOpacity>
-              <View className="w-10 h-10 rounded-full bg-[#00ABB0] items-center justify-center">
-                <Text className="font-Inter_Bold text-sm text-white">AM</Text>
-              </View>
+
+              <TouchableOpacity
+                onPress={() => router.push("/(page)/(profile)/editprofile")}
+              >
+                <View className="w-10 h-10 rounded-full bg-[#00ABB0] items-center justify-center">
+                  <Text className="font-Inter_Bold text-sm text-white">AM</Text>
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
 

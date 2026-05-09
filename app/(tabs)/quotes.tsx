@@ -207,7 +207,10 @@ export default function QuotesScreen() {
               <Text className="text-[#64748B] text-[13px] font-Inter_Regular mb-4">
                 Contact us and find the right option for your project
               </Text>
-              <TouchableOpacity className="bg-white rounded-2xl py-[3.5%] items-center shadow-sm">
+              <TouchableOpacity
+                onPress={() => router.push("/shared/help")}
+                className="bg-white rounded-2xl py-[3.5%] items-center shadow-sm"
+              >
                 <Text className="text-[#1E293B] text-[13.5px] font-Inter_SemiBold">
                   Contact for Services
                 </Text>

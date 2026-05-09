@@ -5,6 +5,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import {
   FlatList,
+  Linking,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -17,7 +18,7 @@ const contactItems = [
     type: "emergency",
     icon: "call-outline",
     title: "Emergency Line",
-    subtitle: "540-623-7599 opt. 1",
+    subtitle: "540-623-7599",
   },
   {
     id: "2",
@@ -44,6 +45,14 @@ const contactItems = [
 ];
 
 const NeedHelpScreen = () => {
+  const handlePress = (item: (typeof contactItems)[0]) => {
+    if (item.type === "emergency") {
+      Linking.openURL(`tel:${item.subtitle.replace(/-/g, "")}`);
+    } else if (item.type === "email") {
+      Linking.openURL(`mailto:${item.subtitle}`);
+    }
+  };
+
   const renderContactItem = ({ item }: { item: (typeof contactItems)[0] }) => {
     const isEmergency = item.type === "emergency";
     const isSafety = item.type === "safety";
@@ -59,6 +68,7 @@ const NeedHelpScreen = () => {
           <TouchableOpacity
             activeOpacity={0.85}
             className="flex-row items-center px-[5%] py-[4.5%]"
+            onPress={() => handlePress(item)}
           >
             <View className="w-10 h-10 rounded-full bg-[#FFFFFF30] items-center justify-center mr-4">
               <Ionicons name="call-outline" size={20} color="white" />
@@ -115,6 +125,7 @@ const NeedHelpScreen = () => {
           shadowRadius: 6,
           elevation: 3,
         }}
+        onPress={() => handlePress(item)}
       >
         <View className="w-9 h-9 rounded-full bg-sky-50 items-center justify-center mr-3">
           <Ionicons name={item.icon as any} size={18} color={iconColor} />

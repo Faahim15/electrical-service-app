@@ -34,8 +34,6 @@ export default function FinalProjectQuestions() {
   const schedulingDays = useSelector((state: RootState) => {
     const data = state.serviceForm.categoryData;
 
-    console.log({ data });
-
     if (
       selectedCategory?.id === "1" &&
       data?.categoryId === "1" &&
@@ -115,7 +113,7 @@ export default function FinalProjectQuestions() {
 
           <GradientButton
             label="Continue"
-            onPress={() => router.push("/quote/service-call/upload-photos")}
+            onPress={() => router.push("/quote/service-call/additional-notes")}
           />
         </ScrollView>
       </KeyboardAvoidingView>

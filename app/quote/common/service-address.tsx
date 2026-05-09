@@ -108,6 +108,7 @@ export default function ServiceAddress() {
           <TermsAndPolicy
             shouldShowTitle={false}
             subtitle="This is my home address"
+            subtitleColor="#6b7280"
             value={isHomeAddress}
             onToggle={(val) =>
               dispatch(updateServiceAddress({ isHomeAddress: val }))
