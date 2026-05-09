@@ -1,8 +1,8 @@
 import { setSelectedDetail } from "@/src/redux/slices/parnerDetailsSlice";
-import { Feather } from "@expo/vector-icons";
+import { AntDesign, Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Animated, Linking, Text, TouchableOpacity, View } from "react-native";
 
 import { useDispatch } from "react-redux";
@@ -24,7 +24,7 @@ interface PartnerItem {
 const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
   const slideAnim = useRef(new Animated.Value(40)).current;
   const opacityAnim = useRef(new Animated.Value(0)).current;
-
+  const [islove, setIslove] = useState(false);
   useEffect(() => {
     Animated.parallel([
       Animated.timing(slideAnim, {
@@ -47,6 +47,14 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
     router.push("/partner-details");
   };
 
+  const handleWebsite = (url: string | undefined) => {
+    if (!url) return;
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+      url = "https://www." + url;
+    }
+    Linking.openURL(url);
+  };
+
   return (
     <Animated.View
       style={{ transform: [{ translateY: slideAnim }], opacity: opacityAnim }}
@@ -67,8 +75,15 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
           <Text className="text-[15px] font-Inter_Bold text-[#0F172A] flex-1 mr-2">
             {item.name}
           </Text>
-          <TouchableOpacity hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
-            <Feather name="heart" size={20} color="#94A3B8" />
+          <TouchableOpacity
+            onPress={() => setIslove(!islove)}
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+          >
+            {islove ? (
+              <AntDesign name="heart" size={22} color="#991b1b" />
+            ) : (
+              <Feather name="heart" size={22} color="#9CA3AF" />
+            )}
           </TouchableOpacity>
         </View>
 
@@ -137,7 +152,10 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
           </TouchableOpacity>
         </View>
         {item?.contact?.website && (
-          <TouchableOpacity className="flex-row items-center justify-center border border-slate-200 rounded-xl px-4 py-4 gap-1.5 mt-3">
+          <TouchableOpacity
+            onPress={() => handleWebsite(item?.contact?.website)}
+            className="flex-row items-center justify-center border border-slate-200 rounded-xl px-4 py-4 gap-1.5 mt-3"
+          >
             <Feather name="globe" size={14} color="#0F172A" />
             <Text className="text-[13px] font-Inter_SemiBold text-[#0F172A]">
               Website

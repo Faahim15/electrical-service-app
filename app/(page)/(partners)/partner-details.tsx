@@ -1,9 +1,9 @@
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import { RootState } from "@/src/redux/store";
-import { Feather } from "@expo/vector-icons";
+import { AntDesign, Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
   Linking,
@@ -105,12 +105,13 @@ const Partnerdetails = () => {
   const details = useSelector(
     (state: RootState) => state.partnerDetails.selectedDetail,
   );
+  const [islove, setIslove] = useState(false);
 
   console.log("Selected Detail in PartnerDetails Screen:", details);
   const PARTNER = {
     name: details?.name || "",
     category: details?.category || "",
-    description: "Natural gas services",
+    description: details?.shortDescription || "",
     badge: "Trusted partner verified by Four Elements Electric",
     phone: details?.contact?.phone || "",
     website: details?.contact?.website || "",
@@ -123,7 +124,12 @@ const Partnerdetails = () => {
   };
 
   const handleWebsite = () => {
-    Linking.openURL(PARTNER.website);
+    let url = PARTNER.website;
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+      url = "https://www." + url;
+    }
+    console.log(url);
+    Linking.openURL(url);
   };
 
   return (
@@ -176,8 +182,8 @@ const Partnerdetails = () => {
                   <Text style={{ fontSize: 26 }}>{PARTNER.emoji}</Text>
                 </LinearGradient>
 
-                <View>
-                  <Text className="text-lg font-Inter_Bold text-[#111827] w-[80%]">
+                <View className="w-[70%]">
+                  <Text className="text-lg font-Inter_Bold text-[#111827]  ">
                     {PARTNER.name}
                   </Text>
                   <Text className="text-sm text-gray-500 font-Inter_Regular">
@@ -185,8 +191,15 @@ const Partnerdetails = () => {
                   </Text>
                 </View>
               </View>
-              <TouchableOpacity className="p-1">
-                <Feather name="heart" size={22} color="#9CA3AF" />
+              <TouchableOpacity
+                onPress={() => setIslove(!islove)}
+                className="p-1 "
+              >
+                {islove ? (
+                  <AntDesign name="heart" size={24} color="#991b1b" />
+                ) : (
+                  <Feather name="heart" size={22} color="#9CA3AF" />
+                )}
               </TouchableOpacity>
             </View>
 

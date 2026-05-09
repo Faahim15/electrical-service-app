@@ -52,7 +52,7 @@ const CATEGORIES: Category[] = [
   {
     id: "5",
     title: "Graphic Design / Printing",
-    description: "Contact our trusted partners for your HVAC needs.",
+    description: "Graphic Design needs.",
     partners: 2,
     emoji: "🖨️",
   },
@@ -113,7 +113,7 @@ const CATEGORIES: Category[] = [
     id: "13",
 
     title: "Solar",
-    description: "Contact our trusted partners for your HVAC needs.",
+    description: "Solar needs",
     partners: 1,
     emoji: "☀️",
   },

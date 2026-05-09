@@ -65,8 +65,7 @@ export const partnerCategories: PartnerCategory[] = [
   },
   {
     name: "Graphic Design / Printing",
-    description:
-      "Contact our trusted partners for your Graphic Design / Printing needs.",
+    description: "Graphic Design needs.",
     partnerCount: 2,
   },
   {
@@ -109,7 +108,7 @@ export const partnerCategories: PartnerCategory[] = [
   },
   {
     name: "Solar",
-    description: "Contact our trusted partners for your HVAC needs.",
+    description: "Solar needs & Graphic Design needs",
     partnerCount: 1,
   },
 ];
@@ -144,7 +143,7 @@ export const partners: Partner[] = [
     trustedPartnerVerified: true,
     contact: {
       phone: "(540) 269-2696",
-      website: "superiorbuildings.net/",
+      website: "superiorbuildings.net",
     },
     whyWeRecommendThem: [
       "Trusted partner with proven track record",
@@ -178,8 +177,8 @@ export const partners: Partner[] = [
     tagline: "Automotive",
     trustedPartnerVerified: true,
     contact: {
-      phone: "(540) 693-3331",
-      website: "carrollsautomotive.com/",
+      phone: "(540) 663-3331",
+      website: "carrollsautomotive.com",
     },
     whyWeRecommendThem: [
       "Trusted partner with proven track record",
@@ -196,7 +195,7 @@ export const partners: Partner[] = [
     trustedPartnerVerified: true,
     contact: {
       phone: "(540) 775-4050",
-      website: "https://mytireguykg.com/",
+      website: "mytireguykg.com",
     },
     whyWeRecommendThem: [
       "Trusted partner with proven track record",
@@ -207,8 +206,8 @@ export const partners: Partner[] = [
 
   // ── EXCAVATION ───────────────────────────────────────────────
   {
-    id: "king-george-mechanical",
-    name: "King George Mechanical",
+    id: "James F Mullen",
+    name: "James F Mullen",
     category: "Excavation",
     shortDescription: "Excavation and site preparation",
     tagline: "Excavation",
@@ -233,7 +232,7 @@ export const partners: Partner[] = [
     trustedPartnerVerified: true,
     contact: {
       phone: "(540) 548-0254",
-      website: "blossmangas.com/",
+      website: "blossmangas.com",
     },
     whyWeRecommendThem: [
       "Trusted partner with proven track record",
@@ -268,7 +267,7 @@ export const partners: Partner[] = [
     trustedPartnerVerified: true,
     contact: {
       phone: "(540) 775-7446",
-      website: "printingva.com/",
+      website: "printingva.com",
     },
     whyWeRecommendThem: [
       "Trusted partner with proven track record",
@@ -285,7 +284,7 @@ export const partners: Partner[] = [
     trustedPartnerVerified: true,
     contact: {
       phone: "(540) 775-3117",
-      website: "https://r-signs.com/",
+      website: "lr-signs.com",
     },
     whyWeRecommendThem: [
       "Trusted partner with proven track record",
@@ -304,7 +303,7 @@ export const partners: Partner[] = [
     trustedPartnerVerified: true,
     contact: {
       phone: "(804) 214-9108",
-      website: "grayconstructioninc.net/",
+      website: "grayconstructioninc.net",
     },
     whyWeRecommendThem: [
       "Trusted partner with proven track record",
@@ -320,8 +319,8 @@ export const partners: Partner[] = [
     tagline: "Home Builders",
     trustedPartnerVerified: true,
     contact: {
-      phone: "(540) 775-5880",
-      website: "westonhomesinc.com/",
+      phone: "(540) 775-5680",
+      website: "westonhomesinc.com",
     },
     whyWeRecommendThem: [
       "Trusted partner with proven track record",
@@ -356,7 +355,7 @@ export const partners: Partner[] = [
     trustedPartnerVerified: true,
     contact: {
       phone: "(540) 254-4663",
-      website: "integrityconstructionva.com/",
+      website: "integrityconstructionva.com",
     },
     whyWeRecommendThem: [
       "Trusted partner with proven track record",
@@ -373,7 +372,7 @@ export const partners: Partner[] = [
     trustedPartnerVerified: true,
     contact: {
       phone: "(540) 775-4211",
-      website: "potomacdesigns.org/",
+      website: "potomacdesigns.org",
     },
     whyWeRecommendThem: [
       "Trusted partner with proven track record",
@@ -390,7 +389,7 @@ export const partners: Partner[] = [
     trustedPartnerVerified: true,
     contact: {
       phone: "(703) 930-5099",
-      website: "rnrcontractinginc.com/",
+      website: "rnrcontractinginc.com",
     },
     whyWeRecommendThem: [
       "Trusted partner with proven track record",
@@ -425,7 +424,7 @@ export const partners: Partner[] = [
     trustedPartnerVerified: true,
     contact: {
       phone: "(540) 663-3509",
-      website: "https://kgmheatingandair.com/",
+      website: "kgmheatingandair.com",
     },
     whyWeRecommendThem: [
       "Trusted partner with proven track record",
@@ -442,7 +441,7 @@ export const partners: Partner[] = [
     trustedPartnerVerified: true,
     contact: {
       phone: "(540) 709-5009",
-      website: "rkpaynehvac.com/",
+      website: "rkpaynehvac.com",
     },
     whyWeRecommendThem: [
       "Trusted partner with proven track record",
@@ -461,7 +460,7 @@ export const partners: Partner[] = [
     trustedPartnerVerified: true,
     contact: {
       phone: "(540) 645-2292",
-      website: "allthewaypaintingllc.com/",
+      website: "allthewaypaintingllc.com",
     },
     whyWeRecommendThem: [
       "Trusted partner with proven track record",
@@ -480,7 +479,7 @@ export const partners: Partner[] = [
     trustedPartnerVerified: true,
     contact: {
       phone: "(540) 413-6575",
-      website: "https://cusicksplumbing.weebly.com/",
+      website: "cusicksplumbing.weebly.com",
     },
     whyWeRecommendThem: [
       "Trusted partner with proven track record",
@@ -497,7 +496,7 @@ export const partners: Partner[] = [
     trustedPartnerVerified: true,
     contact: {
       phone: "(540) 295-3771",
-      website: "sureflowplumbingkg.com/",
+      website: "sureflowplumbingkg.com",
     },
     whyWeRecommendThem: [
       "Trusted partner with proven track record",
@@ -515,8 +514,8 @@ export const partners: Partner[] = [
     tagline: "Property Management",
     trustedPartnerVerified: true,
     contact: {
-      phone: "(540) 322-3804",
-      website: "rentalhomesinvirginia.com/",
+      phone: "(540) 322-3004",
+      website: "rentalhomesinvirginia.com",
     },
     whyWeRecommendThem: [
       "Trusted partner with proven track record",
@@ -533,7 +532,7 @@ export const partners: Partner[] = [
     trustedPartnerVerified: true,
     contact: {
       phone: "(540) 709-1011",
-      website: "https://realtymg.managebuilding.com/Resident/public/home",
+      website: "realtymg.managebuilding.com/Resident/public/home",
     },
     whyWeRecommendThem: [
       "Trusted partner with proven track record",
@@ -552,7 +551,7 @@ export const partners: Partner[] = [
     trustedPartnerVerified: true,
     contact: {
       phone: "(540) 695-4019",
-      website: "https://patriotsepticandwater.com/",
+      website: "patriotsepticandwater.com",
     },
     whyWeRecommendThem: [
       "Trusted partner with proven track record",
@@ -571,7 +570,7 @@ export const partners: Partner[] = [
     trustedPartnerVerified: true,
     contact: {
       phone: "(910) 250-9973",
-      website: "ovanova.co/",
+      website: "ovanova.co",
     },
     whyWeRecommendThem: [
       "Trusted partner with proven track record",
@@ -614,7 +613,7 @@ export function getCategorySummary(): Record<Category, number> {
 //
 //  Accessory Building / Structure  →  2  (JSM Industrial, Superior Building)
 //  Automotive                      →  3  (C&S Auto, Carroll's Automotive, My Tire Guy)
-//  Excavation                      →  1  (King George Mechanical)
+//  Excavation                      →  1  (James F Mullen Excavation)
 //  Gas                             →  2  (Blossman Gas, D&D Gas Services)
 //  Graphic Design / Printing       →  2  (American Printing and Signs, SignWorks)
 //  Home Builders                   →  2  (Gray Construction, Weston Homes Inc.)
