@@ -114,7 +114,7 @@ const ServiceCard = ({ item, index }: { item: Service; index: number }) => {
           paddingVertical: 14,
           flexDirection: "row",
           alignItems: "center",
-          shadowColor: "#000",
+          shadowColor: "#06B6D4",
           shadowOffset: { width: 0, height: 1 },
           shadowOpacity: 0.06,
           shadowRadius: 6,

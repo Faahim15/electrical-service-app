@@ -1,10 +1,14 @@
+import { partners } from "@/data/Partnersdatabase";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
+import { setSelectedDetail } from "@/src/redux/slices/parnerDetailsSlice";
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
 import { Animated, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useDispatch } from "react-redux";
 
 const SolarInstallation = () => {
   const sunScale = useRef(new Animated.Value(0)).current;
@@ -89,6 +93,13 @@ const SolarInstallation = () => {
     inputRange: [0, 1],
     outputRange: ["0deg", "360deg"],
   });
+  const categoryPartners = partners.filter((p) => p.id === "ovanova");
+  console.log(categoryPartners[0]);
+  const dispatch = useDispatch();
+  const handleView = () => {
+    dispatch(setSelectedDetail(categoryPartners[0]));
+    router.push("/partner-details");
+  };
 
   return (
     <ScreenWrapper>
@@ -183,7 +194,7 @@ const SolarInstallation = () => {
                 borderRadius: 20,
                 padding: 28,
                 alignItems: "center",
-                shadowColor: "#000",
+                shadowColor: "#06B6D4",
                 shadowOffset: { width: 0, height: 4 },
                 shadowOpacity: 0.08,
                 shadowRadius: 20,
@@ -206,9 +217,9 @@ const SolarInstallation = () => {
                 }}
               >
                 <Text
-                  style={{ fontSize: 22, fontWeight: "700", color: "#3B82F6" }}
+                  style={{ fontSize: 22, fontWeight: "700", color: "#60A5FA" }}
                 >
-                  O
+                  0
                 </Text>
               </Animated.View>
 
@@ -235,9 +246,13 @@ const SolarInstallation = () => {
               </Text>
 
               {/* Contact Partner Button */}
-              <TouchableOpacity activeOpacity={0.85} className="w-full">
+              <TouchableOpacity
+                onPress={handleView}
+                activeOpacity={0.85}
+                className="w-full"
+              >
                 <LinearGradient
-                  colors={["#06B6D4", "#14B8A6"]}
+                  colors={["#0EA5E9", "#14B8A6"]}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 1 }}
                   style={{
@@ -272,7 +287,10 @@ const SolarInstallation = () => {
               </TouchableOpacity>
 
               {/* Visit Support */}
-              <TouchableOpacity activeOpacity={0.7}>
+              <TouchableOpacity
+                onPress={() => router.push("/shared/help")}
+                activeOpacity={0.7}
+              >
                 <Text
                   style={{
                     fontSize: 14,
@@ -294,7 +312,7 @@ const SolarInstallation = () => {
               marginTop: 28,
             }}
           >
-            <TouchableOpacity activeOpacity={0.7}>
+            <TouchableOpacity onPress={() => router.back()} activeOpacity={0.7}>
               <Text
                 style={{
                   fontSize: 14,

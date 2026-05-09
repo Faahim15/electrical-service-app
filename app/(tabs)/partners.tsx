@@ -172,7 +172,7 @@ const CategoryCard = ({
         activeOpacity={0.75}
         className="bg-white rounded-2xl  px-4 py-4 flex-row items-center shadow-sm"
         style={{
-          shadowColor: "#000b",
+          shadowColor: "#06B6D4",
           shadowOffset: { width: 0, height: 1 },
           shadowOpacity: 0.06,
           shadowRadius: 4,
