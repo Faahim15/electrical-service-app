@@ -2,6 +2,7 @@ import { partners } from "@/data/Partnersdatabase";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import { setSelectedDetail } from "@/src/redux/slices/parnerDetailsSlice";
+import { setSelectedCategory } from "@/src/redux/slices/partnersRouterSlice";
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
@@ -97,6 +98,15 @@ const SolarInstallation = () => {
   console.log(categoryPartners[0]);
   const dispatch = useDispatch();
   const handleView = () => {
+    dispatch(
+      setSelectedCategory({
+        id: "13",
+        title: "Solar",
+        description: "Solar needs",
+        partners: 1,
+        emoji: "☀️",
+      }),
+    );
     dispatch(setSelectedDetail(categoryPartners[0]));
     router.push("/partner-details");
   };
