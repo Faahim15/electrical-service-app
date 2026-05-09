@@ -278,11 +278,7 @@ const Safety = () => {
             <Text style={{ fontSize: 13, color: "#6B7280", lineHeight: 19 }}>
               Keep your home safe and your electrical system running
               efficiently. Toggle any item ON to set an automatic reminder - you
-              will receive a notification alert when it is time for maintenance.
-              {"\n"}* Update Test GFCI Outlets to monthly{"\n"}* Update Carbon
-              Monoxide Detector maintenance from 6 months to annually{"\n"}* ADD
-              (every 3-4 months) after seasonally in Inspect Electrical Cords
-              {"\n"}* Update Septic System Alarm to monthly
+              will receive a notification alert when it is time for maintenance
             </Text>
           </Animated.View>
           {safetyItems.map((item, index) => (
