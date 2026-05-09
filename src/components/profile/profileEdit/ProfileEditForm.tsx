@@ -13,6 +13,7 @@ import LinearButton from "../../shared/LinearButton";
 
 interface ServiceAddress {
   id: number;
+  locationnickname: string;
   street: string;
   city: string;
   state: string;
@@ -28,13 +29,20 @@ const ProfileEditForm: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const [serviceAddresses, setServiceAddresses] = useState<ServiceAddress[]>([
-    { id: 1, street: "", city: "", state: "", zip: "" },
+    { id: 1, locationnickname: "", street: "", city: "", state: "", zip: "" },
   ]);
 
   const handleNewLocation = () => {
     setServiceAddresses((prev) => [
       ...prev,
-      { id: Date.now(), street: "", city: "", state: "", zip: "" },
+      {
+        id: Date.now(),
+        locationnickname: "",
+        street: "",
+        city: "",
+        state: "",
+        zip: "",
+      },
     ]);
   };
 
@@ -138,6 +146,15 @@ const ProfileEditForm: React.FC = () => {
                   </TouchableOpacity>
                 )}
               </View>
+              <InputField
+                label="Location NickName"
+                value={addr.locationnickname}
+                onChangeText={(val) =>
+                  handleAddressChange(addr.id, "locationnickname", val)
+                }
+                placeholder=""
+                autoCapitalize="none"
+              />
 
               <InputField
                 label="Street Address"
