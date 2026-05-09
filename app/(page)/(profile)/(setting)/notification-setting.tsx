@@ -20,12 +20,12 @@ const notificationItems = [
     description: "Get notified about upcoming maintenance reminders",
     defaultValue: true,
   },
-  {
-    id: 2,
-    title: "Maintenance Notices",
-    description: "Safety and maintenance",
-    defaultValue: false,
-  },
+  // {
+  //   id: 2,
+  //   title: "Maintenance Notices",
+  //   description: "Safety and maintenance",
+  //   defaultValue: false,
+  // },
   {
     id: 3,
     title: "App Notifications",
@@ -74,7 +74,7 @@ const NotificationCard = ({
       <View
         className="bg-white rounded-2xl px-4 py-4 flex-row items-center justify-between"
         style={{
-          shadowColor: "#000",
+          shadowColor: "#06B6D4",
           shadowOffset: { width: 0, height: 1 },
           shadowOpacity: 0.06,
           shadowRadius: 6,
