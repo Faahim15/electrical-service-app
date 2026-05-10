@@ -29,7 +29,7 @@ const OptionRow = ({
 
   const bg = bgAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: ["#ffffff", "#3B82F6"],
+    outputRange: ["#ffffff", "#60A5FA"],
   });
   const textColor = bgAnim.interpolate({
     inputRange: [0, 1],
@@ -43,7 +43,7 @@ const OptionRow = ({
           backgroundColor: bg,
           borderRadius: 10,
           borderWidth: 1,
-          borderColor: selected ? "#3B82F6" : "#E5E7EB",
+          borderColor: selected ? "#60A5FA" : "#E5E7EB",
           paddingVertical: 14,
           paddingHorizontal: 16,
           marginBottom: 10,
@@ -88,13 +88,16 @@ const StarlinkSt1 = () => {
   return (
     <View className="flex-1">
       <View>
-        <Text className="text-xs font-Inter_Medium text-cyan-500 mb-1">
-          Starlink
-        </Text>
-        <Text className="text-2xl font-Inter_Bold text-gray-900 mb-2">
+        <View className="bg-[#EFF6FF] px-2 py-1.5 justify-center items-center rounded-full w-24">
+          <Text className="text-sm font-Inter_Medium text-[#60A5FA] ">
+            Starlink
+          </Text>
+        </View>
+
+        <Text className="text-2xl font-Inter_Bold text-[#1F2937] mb-2">
           Equipment status
         </Text>
-        <Text className="text-sm font-Inter_Regular text-gray-600 mb-5">
+        <Text className="text-sm font-Inter_Medium text-[#1F2937] mb-5">
           Do you have the Starlink equipment?
         </Text>
 
@@ -130,9 +133,9 @@ const StarlinkSt1 = () => {
               <TextInput
                 value={expectedDate}
                 onChangeText={setExpectedDate}
-                placeholder="MM/DD/YYYY"
+                placeholder=""
                 placeholderTextColor="#9CA3AF"
-                className="border border-gray-200 rounded-xl px-4 py-3 font-Inter_Regular text-sm text-gray-800 bg-white"
+                className="border border-gray-200 rounded-xl mb-4 px-4 py-4 font-Inter_Regular text-sm text-gray-800 bg-white"
               />
             </View>
           )}

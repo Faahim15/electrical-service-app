@@ -3,16 +3,24 @@ import {
   Animated,
   ScrollView,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
 
 const DedicatedCircuitSt1 = () => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
-  const slideAnim = useRef(new Animated.Value(24)).current;
+
+  const inputHeight = useRef(new Animated.Value(0)).current;
+  const inputOpacity = useRef(new Animated.Value(0)).current;
+
+  const inputHeight2 = useRef(new Animated.Value(0)).current;
+  const inputOpacity2 = useRef(new Animated.Value(0)).current;
 
   const [selectedCircuit, setSelectedCircuit] = useState(null);
   const [selectedPanel, setSelectedPanel] = useState(null);
+  const [otherText, setOtherText] = useState("");
+  const [otherPanelText, setOtherPanelText] = useState("");
 
   const circuitOptions = [
     "EV charger",
@@ -32,158 +40,202 @@ const DedicatedCircuitSt1 = () => {
     "Other (please specify)",
   ];
 
-  const itemAnims = useRef(
-    [...circuitOptions, ...panelLocations].map(() => ({
-      opacity: new Animated.Value(0),
-      translateY: new Animated.Value(16),
-    })),
-  ).current;
-
   useEffect(() => {
-    Animated.parallel([
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 400,
-        useNativeDriver: true,
-      }),
-      Animated.timing(slideAnim, {
-        toValue: 0,
-        duration: 400,
-        useNativeDriver: true,
-      }),
-    ]).start();
-
-    const animations = itemAnims.map((anim, i) =>
-      Animated.parallel([
-        Animated.timing(anim.opacity, {
-          toValue: 1,
-          duration: 350,
-          delay: 100 + i * 55,
-          useNativeDriver: true,
-        }),
-        Animated.timing(anim.translateY, {
-          toValue: 0,
-          duration: 350,
-          delay: 100 + i * 55,
-          useNativeDriver: true,
-        }),
-      ]),
-    );
-    Animated.stagger(0, animations).start();
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 350,
+      useNativeDriver: true,
+    }).start();
   }, []);
 
-  const renderOption = (
-    label: any,
-    index: any,
-    isSelected: any,
-    onPress: any,
-  ) => {
-    const anim = itemAnims[index];
-    return (
-      <Animated.View
-        key={label}
-        style={{
-          opacity: anim.opacity,
-          transform: [{ translateY: anim.translateY }],
-        }}
-      >
-        <TouchableOpacity
-          activeOpacity={0.75}
-          onPress={onPress}
-          className={`rounded-2xl px-4 py-4 mb-2 ${isSelected ? "bg-[#14B8A6]" : "bg-white"}`}
-          style={{
-            shadowColor: isSelected ? "#14B8A6" : "#0EA5E9",
-            shadowOpacity: isSelected ? 0.25 : 0.06,
-            shadowRadius: 6,
-            shadowOffset: { width: 0, height: 2 },
-            elevation: 2,
-            borderWidth: 2,
-            borderColor: isSelected ? "#0d9488" : "transparent",
-          }}
-        >
-          <Text
-            className={`text-[15px] ${isSelected ? "text-white" : "text-[#334155]"}`}
-            style={{
-              fontFamily: isSelected ? "Inter_SemiBold" : "Inter_Regular",
-            }}
-          >
-            {label}
-          </Text>
-        </TouchableOpacity>
-      </Animated.View>
-    );
+  const handleCircuitSelect = (option: string) => {
+    setSelectedCircuit(option);
+
+    if (option === "Other") {
+      Animated.parallel([
+        Animated.timing(inputHeight, {
+          toValue: 120,
+          duration: 250,
+          useNativeDriver: false,
+        }),
+        Animated.timing(inputOpacity, {
+          toValue: 1,
+          duration: 250,
+          useNativeDriver: false,
+        }),
+      ]).start();
+    } else {
+      Animated.parallel([
+        Animated.timing(inputHeight, {
+          toValue: 0,
+          duration: 200,
+          useNativeDriver: false,
+        }),
+        Animated.timing(inputOpacity, {
+          toValue: 0,
+          duration: 200,
+          useNativeDriver: false,
+        }),
+      ]).start();
+    }
   };
 
+  const handlePanelSelect = (location: string) => {
+    setSelectedPanel(location);
+
+    if (location === "Other (please specify)") {
+      Animated.parallel([
+        Animated.timing(inputHeight2, {
+          toValue: 120,
+          duration: 250,
+          useNativeDriver: false,
+        }),
+        Animated.timing(inputOpacity2, {
+          toValue: 1,
+          duration: 250,
+          useNativeDriver: false,
+        }),
+      ]).start();
+    } else {
+      Animated.parallel([
+        Animated.timing(inputHeight2, {
+          toValue: 0,
+          duration: 200,
+          useNativeDriver: false,
+        }),
+        Animated.timing(inputOpacity2, {
+          toValue: 0,
+          duration: 200,
+          useNativeDriver: false,
+        }),
+      ]).start();
+    }
+  };
+
+  const renderOption = (
+    label: string,
+    isSelected: boolean,
+    onPress: () => void,
+  ) => (
+    <TouchableOpacity
+      key={label}
+      activeOpacity={0.75}
+      onPress={onPress}
+      className={`rounded-2xl px-4 py-4 mb-2 ${isSelected ? "bg-[#60A5FA]" : "bg-white"}`}
+      style={{
+        shadowColor: isSelected ? "#14B8A6" : "#0EA5E9",
+        shadowOpacity: isSelected ? 0.25 : 0.06,
+        shadowRadius: 6,
+        shadowOffset: { width: 0, height: 2 },
+        elevation: 2,
+        borderWidth: 2,
+        borderColor: isSelected ? "#60A5FA" : "transparent",
+      }}
+    >
+      <Text
+        className={`font-Inter_Regular text-sm ${isSelected ? "text-white" : "text-[#334155]"}`}
+      >
+        {label}
+      </Text>
+    </TouchableOpacity>
+  );
+
   return (
-    <View className="flex-1 bg-[#EFF6FF]">
+    <View className="flex-1">
       <ScrollView
         className="flex-1"
         contentContainerStyle={{ paddingBottom: 32 }}
         showsVerticalScrollIndicator={false}
       >
         {/* Header tag */}
-        <Animated.View
-          style={{ opacity: fadeAnim, transform: [{ translateY: slideAnim }] }}
-          className="px-4 pt-5 pb-1"
-        >
-          <Text
-            className="text-[#06B6D4] text-sm"
-            style={{ fontFamily: "Inter_Medium" }}
-          >
+        <View className="self-start bg-[#EFF6FF] rounded-full px-3 py-1 mb-5">
+          <Text className="text-[#60A5FA] text-[11px] font-Inter_SemiBold tracking-wide ">
             Dedicated Circuit
           </Text>
-        </Animated.View>
+        </View>
 
         {/* Heading */}
-        <Animated.View
-          style={{ opacity: fadeAnim, transform: [{ translateY: slideAnim }] }}
-          className="px-4 pt-2 pb-4"
-        >
-          <Text
-            className="text-[#0F172A] text-2xl"
-            style={{ fontFamily: "Inter_Bold" }}
-          >
+        <Animated.View style={{ opacity: fadeAnim }} className="pt-2 pb-4">
+          <Text className="text-[#0F172A] text-2xl font-Inter_Bold">
             Intended use
           </Text>
         </Animated.View>
 
         {/* Section 1 */}
-        <Animated.View
-          style={{ opacity: fadeAnim, transform: [{ translateY: slideAnim }] }}
-          className="px-4 pb-3"
-        >
-          <Text
-            className="text-[#0F172A] text-[15px] mb-3"
-            style={{ fontFamily: "Inter_SemiBold" }}
-          >
+        <Animated.View style={{ opacity: fadeAnim }} className="pb-3">
+          <Text className="text-[#0F172A] text-base mb-3 font-Inter_Medium">
             What do you need a dedicated circuit for?
           </Text>
-          {circuitOptions.map((option, index) =>
-            renderOption(option, index, selectedCircuit === option, () =>
-              setSelectedCircuit(option),
+          {circuitOptions.map((option) =>
+            renderOption(option, selectedCircuit === option, () =>
+              handleCircuitSelect(option),
             ),
           )}
+
+          {/* Animated "Other" input */}
+          <Animated.View
+            style={{
+              height: inputHeight,
+              opacity: inputOpacity,
+              overflow: "hidden",
+            }}
+          >
+            <TextInput
+              value={otherText}
+              onChangeText={setOtherText}
+              placeholder="Please describe your intended use..."
+              placeholderTextColor="#94A3B8"
+              multiline
+              numberOfLines={5}
+              textAlignVertical="top"
+              className="bg-white rounded-2xl px-4 py-3 text-sm font-Inter_Regular text-[#334155] mt-2"
+              style={{
+                borderWidth: 2,
+                borderColor: "#60A5FA",
+                height: 112,
+              }}
+            />
+          </Animated.View>
         </Animated.View>
 
         {/* Section 2 */}
-        <Animated.View
-          style={{ opacity: fadeAnim, transform: [{ translateY: slideAnim }] }}
-          className="px-4 pt-4 pb-3"
-        >
+        <Animated.View style={{ opacity: fadeAnim }} className="pt-4 pb-3">
           <Text
             className="text-[#0F172A] text-[15px] mb-3"
             style={{ fontFamily: "Inter_SemiBold" }}
           >
             Where is your electrical panel located?
           </Text>
-          {panelLocations.map((location, index) =>
-            renderOption(
-              location,
-              circuitOptions.length + index,
-              selectedPanel === location,
-              () => setSelectedPanel(location),
+          {panelLocations.map((location) =>
+            renderOption(location, selectedPanel === location, () =>
+              handlePanelSelect(location),
             ),
           )}
+
+          {/* Animated "Other" input */}
+          <Animated.View
+            style={{
+              height: inputHeight2,
+              opacity: inputOpacity2,
+              overflow: "hidden",
+            }}
+          >
+            <TextInput
+              value={otherPanelText}
+              onChangeText={setOtherPanelText}
+              placeholder="Please describe panel location..."
+              placeholderTextColor="#94A3B8"
+              multiline
+              numberOfLines={5}
+              textAlignVertical="top"
+              className="bg-white rounded-2xl px-4 py-3 text-sm font-Inter_Regular text-[#334155] mt-2"
+              style={{
+                borderWidth: 2,
+                borderColor: "#60A5FA",
+                height: 112,
+              }}
+            />
+          </Animated.View>
         </Animated.View>
       </ScrollView>
     </View>

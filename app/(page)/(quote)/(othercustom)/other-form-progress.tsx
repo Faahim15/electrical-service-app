@@ -9,7 +9,9 @@ import DedicatedCircuitSt1 from "@/src/components/quote/other/DedicatedCircuit/D
 import DedicatedCircuitSt2 from "@/src/components/quote/other/DedicatedCircuit/DedicatedCircuitSt2";
 import DedicatedCircuitSt3 from "@/src/components/quote/other/DedicatedCircuit/DedicatedCircuitSt3";
 import DedicatedCircuitSt4 from "@/src/components/quote/other/DedicatedCircuit/DedicatedCircuitSt4";
+import DedicatedCircuitSt5 from "@/src/components/quote/other/DedicatedCircuit/DedicatedCircuitSt5";
 import ExhaustFanSt1 from "@/src/components/quote/other/exhaustfan/ExhaustFanSt1";
+import ExhaustFanSt2 from "@/src/components/quote/other/exhaustfan/ExhaustFanSt2";
 import LightingSt1 from "@/src/components/quote/other/lighting/LightingSt1";
 import OutletsSt1 from "@/src/components/quote/other/outlets/OutletsSt1";
 import OutletsSt2 from "@/src/components/quote/other/outlets/OutletsSt2";
@@ -22,9 +24,11 @@ import SwitchesSt1 from "@/src/components/quote/other/switches/SwitchesSt1";
 import SwitchesSt2 from "@/src/components/quote/other/switches/SwitchesSt2";
 import SwitchesSt3 from "@/src/components/quote/other/switches/SwitchesSt3";
 import WholeHomeSt1 from "@/src/components/quote/other/WholeHome/WholeHomeSt1";
+import WholeHomeSt2 from "@/src/components/quote/other/WholeHome/WholeHomeSt2";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import { RootState } from "@/src/redux/store";
 import { Feather } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React, { useRef, useState } from "react";
 import {
@@ -54,6 +58,7 @@ const COMMON_STEPS: StepConfig[] = [
 const CATEGORY_STEP_MAP: Record<string, StepConfig[]> = {
   "Whole Home Surge Protection": [
     { component: WholeHomeSt1, title: "Whole Home Surge Protection" },
+    { component: WholeHomeSt2, title: "Whole Home Surge Protection" },
   ],
   "Starlink Installation": [
     { component: StarlinkSt1, title: "Starlink Installation" },
@@ -66,8 +71,12 @@ const CATEGORY_STEP_MAP: Record<string, StepConfig[]> = {
     { component: DedicatedCircuitSt2, title: "Dedicated Circuit" },
     { component: DedicatedCircuitSt3, title: "Dedicated Circuit" },
     { component: DedicatedCircuitSt4, title: "Dedicated Circuit" },
+    { component: DedicatedCircuitSt5, title: "Dedicated Circuit" },
   ],
-  "Exhaust Fan": [{ component: ExhaustFanSt1, title: "Exhaust Fan" }],
+  "Exhaust Fan": [
+    { component: ExhaustFanSt1, title: "Exhaust Fan" },
+    { component: ExhaustFanSt2, title: "Exhaust Fan" },
+  ],
   Outlets: [
     { component: OutletsSt1, title: "Outlets" },
     { component: OutletsSt2, title: "Outlets" },
@@ -86,19 +95,34 @@ const CATEGORY_STEP_MAP: Record<string, StepConfig[]> = {
     { component: CeilingFanSt3, title: "Ceiling Fan" },
   ],
 };
+// ─── Category-specific steps ──────────────────────────────────────────────────
+
+const getStarlinkSteps = (dishLocation: string | null): StepConfig[] => [
+  { component: StarlinkSt1, title: "Starlink Installation" },
+  { component: StarlinkSt2, title: "Starlink Installation" },
+  ...(dishLocation === "roof"
+    ? [{ component: StarlinkSt3, title: "Starlink Installation" }]
+    : []),
+  { component: StarlinkSt4, title: "Starlink Installation" },
+];
 
 // ─── Main Screen ──────────────────────────────────────────────────────────────
 
 const OtherFormProgress = () => {
   const category = useSelector((state: RootState) => state.openCategoryRoute);
+  const { dishLocation, hasMounting, images } = useSelector(
+    (state: RootState) => state.starlinkRoute,
+  );
 
   const selectedTitle = category.selectedOtherCategory?.title ?? "";
 
   // Spread category-specific steps after common steps
-  const STEPS: StepConfig[] = [
-    ...COMMON_STEPS,
-    ...(CATEGORY_STEP_MAP[selectedTitle] ?? []),
-  ];
+  const STEPS: StepConfig[] =
+    selectedTitle === "Whole Home Surge Protection"
+      ? CATEGORY_STEP_MAP["Whole Home Surge Protection"]
+      : selectedTitle === "Starlink Installation"
+        ? [...COMMON_STEPS, ...getStarlinkSteps(dishLocation)]
+        : [...COMMON_STEPS, ...(CATEGORY_STEP_MAP[selectedTitle] ?? [])];
 
   const [currentStep, setCurrentStep] = useState(0);
   const progressAnim = useRef(new Animated.Value(0)).current;
@@ -135,6 +159,7 @@ const OtherFormProgress = () => {
     "resolved steps ==============",
     STEPS.map((s) => s.title),
   );
+  console.log(dishLocation);
 
   const goNext = () => {
     if (currentStep < totalSteps - 1) {
@@ -176,26 +201,33 @@ const OtherFormProgress = () => {
           <TouchableOpacity onPress={goBack}>
             <Feather name="arrow-left" size={24} color="#111827" />
           </TouchableOpacity>
-          <Text className="text-2xl text-[#111827] font-Inter_Bold">Other</Text>
+          <Text className="text-2xl text-[#111827] font-Inter_Bold"></Text>
           <View />
         </View>
 
         {/* ── Progress Bar ── */}
         <View className="mb-5">
           <View className="flex-row justify-between items-center mb-2">
-            <Text className="text-xs text-[#6B7280] font-Inter_Medium">
+            <Text className="text-sm text-[#64748B] font-Inter_Medium">
               Step {currentStep + 1} of {totalSteps}
             </Text>
-            <Text className="text-xs font-Inter_Bold text-[#38BDF8]">
+            <Text className="text-sm font-Inter_Medium text-[#0EA5E9]">
               {progressPercent}%
             </Text>
           </View>
 
-          <View className="h-1.5 bg-[#E5E7EB] rounded-full overflow-hidden">
+          <View className="h-2 bg-[#E5E7EB] rounded-full overflow-hidden">
             <Animated.View
               style={{ width: progressWidth }}
-              className="h-full bg-[#38BDF8] rounded-full"
-            />
+              className="h-full rounded-full overflow-hidden"
+            >
+              <LinearGradient
+                colors={["#0EA5E9", "#14B8A6"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={{ flex: 1 }}
+              />
+            </Animated.View>
           </View>
         </View>
 
@@ -214,17 +246,6 @@ const OtherFormProgress = () => {
             label={currentStep === totalSteps - 1 ? "Submit" : "Continue"}
             onPress={goNext}
           />
-          {/* <View className="pt-3 gap-2">
-            <TouchableOpacity
-              onPress={goNext}
-              className="bg-[#38BDF8] rounded-2xl py-4 items-center"
-              activeOpacity={0.85}
-            >
-              <Text className="text-white font-Inter_Bold text-base">
-                {currentStep === totalSteps - 1 ? "Submit" : "Continue"}
-              </Text>
-            </TouchableOpacity>
-          </View> */}
         </ScrollView>
       </SafeAreaView>
     </ScreenWrapper>

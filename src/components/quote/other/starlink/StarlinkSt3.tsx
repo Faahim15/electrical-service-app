@@ -1,30 +1,17 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  addImages,
+  removeImage,
+} from "@/src/redux/slices/starlinkTheRouteSlice";
+import { AppDispatch, RootState } from "@/src/redux/store";
+import * as ImagePicker from "expo-image-picker";
 import React, { useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
-const UploadArea = ({ label }: { label: string }) => (
-  <View className="border border-dashed border-gray-300 rounded-xl p-5 items-center mt-2 mb-4 bg-gray-50">
-    <MaterialCommunityIcons
-      name="file-image-plus-outline"
-      size={24}
-      color="#4b5563"
-    />
-    <Text className="text-gray-500 font-Inter_Regular text-xs text-center mb-3">
-      {label}
-    </Text>
-    <TouchableOpacity
-      className="border border-gray-300 rounded-full px-5 py-1.5"
-      activeOpacity={0.7}
-    >
-      <Text className="text-gray-500 font-Inter_Regular text-xs">
-        Choose File
-      </Text>
-    </TouchableOpacity>
-  </View>
-);
+import { useDispatch, useSelector } from "react-redux";
+import UploadArea from "../share/UploadArea";
 const StarlinkSt3 = () => {
   const [room, setRoom] = useState("");
   const [above, setAbove] = useState<string[]>([]);
-
+  const dispatch = useDispatch<AppDispatch>();
   const aboveOptions = [
     "Attic above",
     "Occupied space above",
@@ -39,16 +26,35 @@ const StarlinkSt3 = () => {
       prev.includes(opt) ? prev.filter((o) => o !== opt) : [...prev, opt],
     );
   };
+  const images = useSelector((state: RootState) => state.starlinkRoute.images);
+
+  const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsMultipleSelection: true,
+      quality: 0.8,
+    });
+    if (!result.canceled) {
+      const uris = result.assets.map((a) => a.uri);
+      dispatch(addImages(uris));
+    }
+  };
+
+  const handleRemoveImage = (uri: string) => {
+    dispatch(removeImage(uri));
+  };
 
   return (
     <View className="flex-1">
-      <Text className="text-xs font-Inter_Medium text-cyan-500 mb-1">
-        Starlink
-      </Text>
+      <View className="bg-[#EFF6FF] px-2 py-1.5 justify-center items-center rounded-full w-24">
+        <Text className="text-sm font-Inter_Medium text-[#60A5FA] ">
+          Starlink
+        </Text>
+      </View>
       <Text className="text-2xl font-Inter_Bold text-gray-900 mb-2">
         Router location
       </Text>
-      <Text className="text-sm font-Inter_Regular text-gray-600 mb-5">
+      <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-3">
         What room do you want the WiFi router in?
       </Text>
 
@@ -57,10 +63,10 @@ const StarlinkSt3 = () => {
         onChangeText={setRoom}
         placeholder="Room name"
         placeholderTextColor="#9CA3AF"
-        className="border border-gray-200 rounded-xl px-4 py-3 font-Inter_Regular text-sm text-gray-800 bg-white mb-5"
+        className="border border-gray-200 rounded-xl px-4 py-4 font-Inter_Regular text-sm text-gray-900 bg-white mb-5"
       />
 
-      <Text className="text-sm font-Inter_Medium text-gray-700 mb-3">
+      <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-3">
         What is above / below the room?
       </Text>
 
@@ -73,17 +79,18 @@ const StarlinkSt3 = () => {
               onPress={() => toggleAbove(opt)}
               activeOpacity={0.8}
               style={{
-                backgroundColor: sel ? "#3B82F6" : "#F3F4F6",
-                borderRadius: 8,
+                backgroundColor: sel ? "#3B82F6" : "#FFFFFF",
+                borderRadius: 50,
                 paddingVertical: 8,
                 paddingHorizontal: 12,
                 marginBottom: 6,
               }}
+              className="border border-[#E5E7EB]"
             >
               <Text
+                className="font-Inter_Regular"
                 style={{
-                  color: sel ? "#fff" : "#374151",
-                  fontFamily: "Inter_Regular",
+                  color: sel ? "#fff" : "#1F2937",
                   fontSize: 13,
                 }}
               >
@@ -93,8 +100,12 @@ const StarlinkSt3 = () => {
           );
         })}
       </View>
-
-      <UploadArea label="Upload photo of room to install WiFi router" />
+      <UploadArea
+        tittle="Upload photo of room to install WiFi router"
+        images={images}
+        pickImage={pickImage}
+        onRemove={handleRemoveImage}
+      />
     </View>
   );
 };

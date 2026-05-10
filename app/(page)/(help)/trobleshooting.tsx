@@ -278,7 +278,7 @@ const Trobleshooting = () => {
             <View
               className="bg-white rounded-2xl px-4 py-4"
               style={{
-                shadowColor: "#000",
+                shadowColor: "#06B6D4",
                 shadowOffset: { width: 0, height: 1 },
                 shadowOpacity: 0.05,
                 shadowRadius: 6,

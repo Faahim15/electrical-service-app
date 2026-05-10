@@ -58,27 +58,23 @@ type KitchenFanType =
 // ─── Image Picker Hook ────────────────────────────────────────────────────────
 const useImagePicker = () => {
   const pickImage = async (onPicked: (uri: string) => void) => {
-    // Request permission
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== "granted") {
       Alert.alert(
         "Permission Required",
-        "Please allow access to your photo library to upload images.",
+        "Please allow access to your photo library.",
         [{ text: "OK" }],
       );
       return;
     }
-
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: false,
       quality: 0.85,
       allowsMultipleSelection: false,
     });
-
-    if (!result.canceled && result.assets.length > 0) {
+    if (!result.canceled && result.assets.length > 0)
       onPicked(result.assets[0].uri);
-    }
   };
 
   const takePhoto = async (onPicked: (uri: string) => void) => {
@@ -91,15 +87,12 @@ const useImagePicker = () => {
       );
       return;
     }
-
     const result = await ImagePicker.launchCameraAsync({
       allowsEditing: false,
       quality: 0.85,
     });
-
-    if (!result.canceled && result.assets.length > 0) {
+    if (!result.canceled && result.assets.length > 0)
       onPicked(result.assets[0].uri);
-    }
   };
 
   const showOptions = (onPicked: (uri: string) => void) => {
@@ -113,7 +106,7 @@ const useImagePicker = () => {
   return { showOptions };
 };
 
-// ─── UploadButton with Preview ────────────────────────────────────────────────
+// ─── UploadButton ─────────────────────────────────────────────────────────────
 const UploadButton = ({
   label,
   imageUri,
@@ -146,49 +139,21 @@ const UploadButton = ({
 
   if (imageUri) {
     return (
-      <Pressable onPress={handlePress} style={{ marginBottom: 12 }}>
-        <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
-          {/* Preview */}
-          <View
-            style={{
-              borderRadius: 12,
-              overflow: "hidden",
-              borderWidth: 1.5,
-              borderColor: "#06B6D4",
-              backgroundColor: "#F0FDFF",
-            }}
-          >
-            <Image
-              source={{ uri: imageUri }}
-              style={{ width: "100%", height: 160 }}
-              resizeMode="cover"
-            />
-            {/* Replace overlay */}
-            <View
-              style={{
-                position: "absolute",
-                bottom: 0,
-                left: 0,
-                right: 0,
-                backgroundColor: "rgba(6,182,212,0.85)",
-                paddingVertical: 8,
-                alignItems: "center",
-                flexDirection: "row",
-                justifyContent: "center",
-                gap: 6,
-              }}
-            >
-              <Text style={{ fontSize: 14, color: "#FFFFFF" }}>🔄</Text>
-              <Text
-                style={{
-                  fontFamily: "Inter_SemiBold",
-                  fontSize: 12,
-                  color: "#FFFFFF",
-                }}
-              >
-                Tap to replace
-              </Text>
-            </View>
+      <Pressable onPress={handlePress} className="mb-3">
+        <Animated.View
+          style={{ transform: [{ scale: scaleAnim }] }}
+          className="rounded-xl overflow-hidden border-[1.5px] border-[#60A5FA] bg-blue-50"
+        >
+          <Image
+            source={{ uri: imageUri }}
+            style={{ width: "100%", height: 160 }}
+            resizeMode="cover"
+          />
+          <View className="absolute bottom-0 left-0 right-0 bg-[#60A5FA] py-2 flex-row items-center justify-center gap-1.5">
+            <Text className="text-white text-sm">🔄</Text>
+            <Text className="font-Inter_SemiBold text-xs text-white">
+              Tap to replace
+            </Text>
           </View>
         </Animated.View>
       </Pressable>
@@ -196,27 +161,18 @@ const UploadButton = ({
   }
 
   return (
-    <Pressable onPress={handlePress} style={{ marginBottom: 12 }}>
+    <Pressable onPress={handlePress} className="mb-3">
       <Animated.View
         style={{
           transform: [{ scale: scaleAnim }],
           borderWidth: 1.5,
           borderColor: "#CBD5E1",
-          borderRadius: 10,
           borderStyle: "dashed",
-          paddingVertical: 14,
-          paddingHorizontal: 16,
-          alignItems: "center",
-          flexDirection: "row",
-          justifyContent: "center",
-          gap: 8,
-          backgroundColor: "#F8FAFC",
         }}
+        className="rounded-xl py-3.5 px-4 flex-row items-center justify-center gap-2 bg-slate-50"
       >
-        <Text style={{ fontSize: 16, color: "#94A3B8" }}>↑</Text>
-        <Text
-          style={{ fontFamily: "Inter_Medium", fontSize: 13, color: "#06B6D4" }}
-        >
+        <Text className="text-slate-400 text-base">↑</Text>
+        <Text className="font-Inter_Medium text-[13px] text-[#60A5FA]">
           {label}
         </Text>
       </Animated.View>
@@ -266,11 +222,11 @@ const AnimatedOption = ({
 
   const backgroundColor = bgAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: ["#FFFFFF", "#38BDF8"],
+    outputRange: ["#FFFFFF", "#60A5FA"],
   });
   const borderColor = bgAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: ["#E2E8F0", "#38BDF8"],
+    outputRange: ["#E2E8F0", "#60A5FA"],
   });
 
   return (
@@ -285,21 +241,11 @@ const AnimatedOption = ({
         }}
       >
         <Animated.View
-          style={{
-            transform: [{ scale: scaleAnim }],
-            paddingVertical: 12,
-            paddingHorizontal: 16,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
+          style={{ transform: [{ scale: scaleAnim }] }}
+          className="py-3 px-4 items-center justify-center"
         >
           <Text
-            style={{
-              fontFamily: selected ? "Inter_SemiBold" : "Inter_Medium",
-              fontSize: 13,
-              textAlign: "center",
-              color: selected ? "#FFFFFF" : "#374151",
-            }}
+            className={`text-[13px] text-center ${selected ? "font-Inter_SemiBold text-white" : "font-Inter_Medium text-gray-700"}`}
           >
             {label}
           </Text>
@@ -351,15 +297,15 @@ const RowOption = ({
 
   const backgroundColor = bgAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: ["#FFFFFF", "#38BDF8"],
+    outputRange: ["#FFFFFF", "#60A5FA"],
   });
   const borderColor = bgAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: ["#E2E8F0", "#38BDF8"],
+    outputRange: ["#E2E8F0", "#60A5FA"],
   });
 
   return (
-    <Pressable onPress={handlePress} style={{ marginBottom: 8 }}>
+    <Pressable onPress={handlePress} className="mb-2">
       <Animated.View
         style={{
           backgroundColor,
@@ -370,18 +316,11 @@ const RowOption = ({
         }}
       >
         <Animated.View
-          style={{
-            transform: [{ scale: scaleAnim }],
-            paddingVertical: 14,
-            paddingHorizontal: 16,
-          }}
+          style={{ transform: [{ scale: scaleAnim }] }}
+          className="py-3.5 px-4"
         >
           <Text
-            style={{
-              fontFamily: selected ? "Inter_SemiBold" : "Inter_Regular",
-              fontSize: 13,
-              color: selected ? "#FFFFFF" : "#374151",
-            }}
+            className={`text-[13px] ${selected ? "font-Inter_SemiBold text-white" : "font-Inter_Regular text-gray-700"}`}
           >
             {label}
           </Text>
@@ -433,81 +372,36 @@ const ChipOption = ({
 
   const backgroundColor = bgAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: ["#FFFFFF", "#38BDF8"],
+    outputRange: ["#FFFFFF", "#60A5FA"],
   });
   const borderColor = bgAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: ["#E2E8F0", "#38BDF8"],
+    outputRange: ["#E2E8F0", "#60A5FA"],
   });
 
   return (
-    <Pressable
-      onPress={handlePress}
-      style={{ marginRight: 8, marginBottom: 8 }}
-    >
+    <Pressable onPress={handlePress} className="mr-2 mb-2">
       <Animated.View
         style={{
           backgroundColor,
           borderColor,
           borderWidth: 1.5,
-          borderRadius: 8,
+          borderRadius: 50,
           overflow: "hidden",
         }}
       >
         <Animated.View
-          style={{
-            transform: [{ scale: scaleAnim }],
-            paddingVertical: 8,
-            paddingHorizontal: 14,
-          }}
+          style={{ transform: [{ scale: scaleAnim }] }}
+          className="py-2 px-3.5"
         >
           <Text
-            style={{
-              fontFamily: selected ? "Inter_SemiBold" : "Inter_Regular",
-              fontSize: 12,
-              color: selected ? "#FFFFFF" : "#374151",
-            }}
+            className={`text-[12px] ${selected ? "font-Inter_SemiBold text-white" : "font-Inter_Regular text-gray-700"}`}
           >
             {label}
           </Text>
         </Animated.View>
       </Animated.View>
     </Pressable>
-  );
-};
-
-// ─── ProgressBar ──────────────────────────────────────────────────────────────
-const ProgressBar = ({ step, total }: { step: number; total: number }) => {
-  const widthAnim = useRef(new Animated.Value(0)).current;
-  useEffect(() => {
-    Animated.timing(widthAnim, {
-      toValue: (step / total) * 100,
-      duration: 700,
-      useNativeDriver: false,
-    }).start();
-  }, []);
-  const widthInterp = widthAnim.interpolate({
-    inputRange: [0, 100],
-    outputRange: ["0%", "100%"],
-  });
-  return (
-    <View
-      style={{
-        height: 4,
-        backgroundColor: "#E2E8F0",
-        borderRadius: 99,
-        marginBottom: 20,
-      }}
-    >
-      <Animated.View
-        style={{
-          width: widthInterp,
-          height: 4,
-          borderRadius: 99,
-          backgroundColor: "#06B6D4",
-        }}
-      />
-    </View>
   );
 };
 
@@ -519,28 +413,9 @@ const SectionCard = ({
   title?: string;
   children: React.ReactNode;
 }) => (
-  <View
-    style={{
-      backgroundColor: "#FFFFFF",
-      borderRadius: 16,
-      padding: 16,
-      marginBottom: 16,
-      shadowColor: "#000",
-      shadowOffset: { width: 0, height: 1 },
-      shadowOpacity: 0.06,
-      shadowRadius: 4,
-      elevation: 2,
-    }}
-  >
+  <View className="bg-white rounded-2xl p-4 mb-4 shadow-sm">
     {title ? (
-      <Text
-        style={{
-          fontFamily: "Inter_Bold",
-          fontSize: 15,
-          color: "#111827",
-          marginBottom: 12,
-        }}
-      >
+      <Text className="font-Inter_Bold text-[15px] text-gray-900 mb-3">
         {title}
       </Text>
     ) : null}
@@ -548,68 +423,153 @@ const SectionCard = ({
   </View>
 );
 
+// ─── Label ────────────────────────────────────────────────────────────────────
 const Label = ({ text, sub }: { text: string; sub?: string }) => (
-  <View style={{ marginBottom: 10 }}>
-    <Text
-      style={{ fontFamily: "Inter_SemiBold", fontSize: 13, color: "#1E293B" }}
-    >
+  <View className="mb-2.5">
+    <Text className="font-Inter_SemiBold text-[13px] text-slate-800">
       {text}
     </Text>
     {sub ? (
-      <Text
-        style={{
-          fontFamily: "Inter_Regular",
-          fontSize: 11,
-          color: "#64748B",
-          marginTop: 2,
-        }}
-      >
+      <Text className="font-Inter_Regular text-[11px] text-slate-500 mt-0.5">
         {sub}
       </Text>
     ) : null}
   </View>
 );
 
-const Divider = () => (
-  <View style={{ height: 1, backgroundColor: "#F1F5F9", marginVertical: 12 }} />
+// ─── Divider ──────────────────────────────────────────────────────────────────
+const Divider = () => <View className="h-px bg-slate-100 my-3" />;
+
+// ─── SubLabel ─────────────────────────────────────────────────────────────────
+const SubLabel = ({ text }: { text: string }) => (
+  <Text className="font-Inter_SemiBold text-[11px] text-[#60A5FA] uppercase tracking-wide mb-2">
+    {text}
+  </Text>
 );
+
+// ─── StyledInput ──────────────────────────────────────────────────────────────
+const StyledInput = ({
+  placeholder,
+  value,
+  onChangeText,
+  multiline = false,
+}: {
+  placeholder: string;
+  value: string;
+  onChangeText: (text: string) => void;
+  multiline?: boolean;
+}) => {
+  const [focused, setFocused] = useState(false);
+  return (
+    <TextInput
+      placeholder={placeholder}
+      placeholderTextColor="#94A3B8"
+      value={value}
+      onChangeText={onChangeText}
+      multiline={multiline}
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
+      className="font-Inter_Regular text-[13px] text-slate-800"
+      style={{
+        borderWidth: 1.5,
+        borderColor: focused ? "#60A5FA" : "#E2E8F0",
+        borderRadius: 10,
+        paddingVertical: 12,
+        paddingHorizontal: 14,
+        marginBottom: 16,
+        minHeight: multiline ? 80 : undefined,
+        textAlignVertical: multiline ? "top" : undefined,
+      }}
+    />
+  );
+};
+
+// ─── OtherInput ───────────────────────────────────────────────────────────────
+const OtherInput = ({
+  visible,
+  placeholder,
+  value,
+  onChangeText,
+}: {
+  visible: boolean;
+  placeholder: string;
+  value: string;
+  onChangeText: (t: string) => void;
+}) => {
+  const heightAnim = useRef(new Animated.Value(0)).current;
+  const opacityAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(heightAnim, {
+        toValue: visible ? 1 : 0,
+        duration: 250,
+        useNativeDriver: false,
+      }),
+      Animated.timing(opacityAnim, {
+        toValue: visible ? 1 : 0,
+        duration: 200,
+        useNativeDriver: false,
+      }),
+    ]).start();
+  }, [visible]);
+
+  const maxHeight = heightAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 80],
+  });
+
+  return (
+    <Animated.View
+      style={{ maxHeight, opacity: opacityAnim, overflow: "hidden" }}
+    >
+      <StyledInput
+        placeholder={placeholder}
+        value={value}
+        onChangeText={onChangeText}
+      />
+    </Animated.View>
+  );
+};
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 const ExhaustFanSt1 = () => {
   const [installType, setInstallType] = useState<InstallType>("Replacement");
   const [fanLocation, setFanLocation] = useState<FanLocation>("Bathroom");
 
-  // Attic state
   const [atticFanType, setAtticFanType] =
     useState<AtticFanType>("Gable (wall) fan");
   const [supplyingAtticFan, setSupplyingAtticFan] = useState<YesNo>("Yes");
   const [atticStories, setAtticStories] = useState<Stories>("1");
 
-  // Bathroom state
   const [bathroomYesNo, setBathroomYesNo] = useState<YesNo>("Yes");
   const [bathroomFanType, setBathroomFanType] =
-    useState<BathroomFanType | null>("Heater/light fan combo");
+    useState<BathroomFanType | null>(null);
   const [specialtyControl, setSpecialtyControl] = useState<SpecialtyControl>(
     "No specialty control",
   );
   const [bathroomAreas, setBathroomAreas] = useState<AreaOption[]>([]);
+  const [bathroomAreaOther, setBathroomAreaOther] = useState("");
   const [bathroomDist, setBathroomDist] = useState<Distance | null>(null);
+  const [bathroomDuctInfo, setBathroomDuctInfo] = useState("");
 
-  // Kitchen state
   const [kitchenYesNo, setKitchenYesNo] = useState<YesNo>("No");
   const [kitchenFanType, setKitchenFanType] = useState<KitchenFanType | null>(
     null,
   );
   const [kitchenAreas, setKitchenAreas] = useState<AreaOption[]>([]);
+  const [kitchenAreaOther, setKitchenAreaOther] = useState("");
   const [kitchenDist, setKitchenDist] = useState<Distance | null>(null);
+  const [kitchenDuctInfo, setKitchenDuctInfo] = useState("");
 
-  // Shared
   const [panelLocation, setPanelLocation] = useState<PanelLocation>(
     "Basement (Finished)",
   );
-  const [additionalInfo, setAdditionalInfo] = useState("");
+  const [panelLocationOther, setPanelLocationOther] = useState("");
 
-  // ── Image URIs (one per upload slot) ──────────────────────────────────────
+  const [additionalInfo, setAdditionalInfo] = useState("");
+  const [additionalFocused, setAdditionalFocused] = useState(false);
+
   const [imgCurrentFan, setImgCurrentFan] = useState<string | null>(null);
   const [imgNewFan, setImgNewFan] = useState<string | null>(null);
   const [imgInstallLocation, setImgInstallLocation] = useState<string | null>(
@@ -618,7 +578,6 @@ const ExhaustFanSt1 = () => {
   const [imgPanelClose, setImgPanelClose] = useState<string | null>(null);
   const [imgPanelWide, setImgPanelWide] = useState<string | null>(null);
 
-  // Fade animation for section switch
   const fadeAnim = useRef(new Animated.Value(1)).current;
 
   const switchLocation = (loc: FanLocation) => {
@@ -628,7 +587,6 @@ const ExhaustFanSt1 = () => {
       useNativeDriver: true,
     }).start(() => {
       setFanLocation(loc);
-      // Reset per-location images when switching
       setImgCurrentFan(null);
       setImgNewFan(null);
       setImgInstallLocation(null);
@@ -673,13 +631,13 @@ const ExhaustFanSt1 = () => {
     "Unsure",
   ];
 
-  // ── Render location-specific details ──────────────────────────────────────
   const renderDetails = () => {
+    // ── Attic ──────────────────────────────────────────────────────────────
     if (fanLocation === "Attic") {
       return (
         <SectionCard title="Attic Fan Details">
           <Label text="Is it a roof or gable (wall) fan?" />
-          <View style={{ flexDirection: "row", gap: 10, marginBottom: 16 }}>
+          <View className="flex-row gap-2.5 mb-4">
             {(["Roof fan", "Gable (wall) fan"] as AtticFanType[]).map((t) => (
               <AnimatedOption
                 key={t}
@@ -691,7 +649,7 @@ const ExhaustFanSt1 = () => {
           </View>
 
           <Label text="Will you be supplying the attic fan?" />
-          <View style={{ flexDirection: "row", gap: 10, marginBottom: 16 }}>
+          <View className="flex-row gap-2.5 mb-4">
             {(["Yes", "No"] as YesNo[]).map((v) => (
               <AnimatedOption
                 key={v}
@@ -714,7 +672,7 @@ const ExhaustFanSt1 = () => {
           )}
 
           <Label text="How many stories is your home?" />
-          <View style={{ flexDirection: "row", gap: 10, marginBottom: 16 }}>
+          <View className="flex-row gap-2.5 mb-4">
             {(["1", "2"] as Stories[]).map((s) => (
               <AnimatedOption
                 key={s}
@@ -731,34 +689,18 @@ const ExhaustFanSt1 = () => {
             imageUri={imgInstallLocation}
             onImagePicked={setImgInstallLocation}
           />
-          <Text
-            style={{
-              fontFamily: "Inter_Regular",
-              fontSize: 11,
-              color: "#64748B",
-            }}
-          >
+          <Text className="font-Inter_Regular text-[11px] text-slate-500">
             This photo helps us understand access and installation conditions.
           </Text>
         </SectionCard>
       );
     }
 
+    // ── Kitchen ────────────────────────────────────────────────────────────
     if (fanLocation === "Kitchen") {
       return (
         <SectionCard title="Kitchen Exhaust Fan Details">
-          <Text
-            style={{
-              fontFamily: "Inter_SemiBold",
-              fontSize: 11,
-              color: "#06B6D4",
-              textTransform: "uppercase",
-              letterSpacing: 0.5,
-              marginBottom: 8,
-            }}
-          >
-            Current Kitchen Fan
-          </Text>
+          <SubLabel text="Current Kitchen Fan" />
           <Label text="Upload photo of current exhaust fan" />
           <UploadButton
             label="Upload Current Fan Photo"
@@ -767,24 +709,14 @@ const ExhaustFanSt1 = () => {
           />
 
           <Label text="Existing duct diameter and vent location if known" />
-          <TextInput
+          <StyledInput
             placeholder="e.g., 6 in duct venting through exterior"
-            placeholderTextColor="#94A3B8"
-            style={{
-              borderWidth: 1.5,
-              borderColor: "#E2E8F0",
-              borderRadius: 10,
-              paddingVertical: 12,
-              paddingHorizontal: 14,
-              fontFamily: "Inter_Regular",
-              fontSize: 13,
-              color: "#1E293B",
-              marginBottom: 16,
-            }}
+            value={kitchenDuctInfo}
+            onChangeText={setKitchenDuctInfo}
           />
 
           <Label text="Will you be providing the new kitchen exhaust fan?" />
-          <View style={{ flexDirection: "row", gap: 10, marginBottom: 16 }}>
+          <View className="flex-row gap-2.5 mb-4">
             {(["Yes", "No"] as YesNo[]).map((v) => (
               <AnimatedOption
                 key={v}
@@ -827,10 +759,9 @@ const ExhaustFanSt1 = () => {
             </>
           )}
 
+          <Divider />
           <Label text="What is above / below the area the exhaust fan will be installed? (Select all that apply)" />
-          <View
-            style={{ flexDirection: "row", flexWrap: "wrap", marginBottom: 8 }}
-          >
+          <View className="flex-row flex-wrap mb-1">
             {areaOptions.map((a) => (
               <ChipOption
                 key={a}
@@ -840,9 +771,16 @@ const ExhaustFanSt1 = () => {
               />
             ))}
           </View>
+          <OtherInput
+            visible={kitchenAreas.includes("Other")}
+            placeholder='Please describe "Other" area...'
+            value={kitchenAreaOther}
+            onChangeText={setKitchenAreaOther}
+          />
 
+          <Divider />
           <Label
-            text="What is the approximate distance of the electrical panel from dedicated circuit install location?"
+            text="What is the approximate distance of the electrical panel from the install location?"
             sub="Measured along walls and ceiling in right angles."
           />
           {distanceOptions.map((d) => (
@@ -857,21 +795,10 @@ const ExhaustFanSt1 = () => {
       );
     }
 
-    // Bathroom (default)
+    // ── Bathroom ───────────────────────────────────────────────────────────
     return (
       <SectionCard title="Bathroom Exhaust Fan Details">
-        <Text
-          style={{
-            fontFamily: "Inter_SemiBold",
-            fontSize: 11,
-            color: "#06B6D4",
-            textTransform: "uppercase",
-            letterSpacing: 0.5,
-            marginBottom: 8,
-          }}
-        >
-          Current Bathroom Fan
-        </Text>
+        <SubLabel text="Current Bathroom Fan" />
         <Label text="Upload photo of current exhaust fan" />
         <UploadButton
           label="Upload Current Fan Photo"
@@ -880,24 +807,14 @@ const ExhaustFanSt1 = () => {
         />
 
         <Label text="Existing duct diameter and vent location if known" />
-        <TextInput
+        <StyledInput
           placeholder="e.g., 6 in duct venting through exterior"
-          placeholderTextColor="#94A3B8"
-          style={{
-            borderWidth: 1.5,
-            borderColor: "#E2E8F0",
-            borderRadius: 10,
-            paddingVertical: 12,
-            paddingHorizontal: 14,
-            fontFamily: "Inter_Regular",
-            fontSize: 13,
-            color: "#1E293B",
-            marginBottom: 16,
-          }}
+          value={bathroomDuctInfo}
+          onChangeText={setBathroomDuctInfo}
         />
 
         <Label text="Will you be providing the new bathroom exhaust fan?" />
-        <View style={{ flexDirection: "row", gap: 10, marginBottom: 16 }}>
+        <View className="flex-row gap-2.5 mb-4">
           {(["Yes", "No"] as YesNo[]).map((v) => (
             <AnimatedOption
               key={v}
@@ -959,10 +876,9 @@ const ExhaustFanSt1 = () => {
           </>
         )}
 
+        <Divider />
         <Label text="What is above / below the area the exhaust fan will be installed? (Select all that apply)" />
-        <View
-          style={{ flexDirection: "row", flexWrap: "wrap", marginBottom: 8 }}
-        >
+        <View className="flex-row flex-wrap mb-1">
           {areaOptions.map((a) => (
             <ChipOption
               key={a}
@@ -972,9 +888,16 @@ const ExhaustFanSt1 = () => {
             />
           ))}
         </View>
+        <OtherInput
+          visible={bathroomAreas.includes("Other")}
+          placeholder='Please describe "Other" area...'
+          value={bathroomAreaOther}
+          onChangeText={setBathroomAreaOther}
+        />
 
+        <Divider />
         <Label
-          text="What is the approximate distance of the electrical panel from dedicated circuit install location?"
+          text="What is the approximate distance of the electrical panel from the install location?"
           sub="Measured along walls and ceiling in right angles."
         />
         {distanceOptions.map((d) => (
@@ -990,52 +913,27 @@ const ExhaustFanSt1 = () => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View className="flex-1 bg-[#EFF6FF]">
       <ScrollView
-        contentContainerStyle={{ padding: 16, paddingBottom: 40 }}
+        contentContainerStyle={{
+          paddingTop: 24,
+          paddingBottom: 40,
+        }}
         showsVerticalScrollIndicator={false}
       >
-        {/* Tag */}
-        <View
-          style={{
-            alignSelf: "flex-start",
-            backgroundColor: "#E0F2FE",
-            borderRadius: 99,
-            paddingVertical: 4,
-            paddingHorizontal: 12,
-            marginBottom: 12,
-          }}
-        >
-          <Text
-            style={{
-              fontFamily: "Inter_Medium",
-              fontSize: 12,
-              color: "#0284C7",
-            }}
-          >
+        {/* Badge */}
+        <View className="self-start bg-blue-50 rounded-full px-3 py-1 mb-5 border border-blue-100">
+          <Text className="font-Inter_SemiBold text-[11px] text-[#60A5FA] tracking-wide">
             Exhaust Fans
           </Text>
         </View>
 
-        {/* Title */}
+        {/* Header */}
         <SectionCard>
-          <Text
-            style={{
-              fontFamily: "Inter_Bold",
-              fontSize: 20,
-              color: "#111827",
-              marginBottom: 4,
-            }}
-          >
+          <Text className="font-Inter_Bold text-[20px] text-gray-900 mb-1">
             Exhaust Fans
           </Text>
-          <Text
-            style={{
-              fontFamily: "Inter_Regular",
-              fontSize: 13,
-              color: "#64748B",
-            }}
-          >
+          <Text className="font-Inter_Regular text-[13px] text-slate-500">
             Answer these exhaust-fan-specific questions so we can estimate
             accurately.
           </Text>
@@ -1043,17 +941,10 @@ const ExhaustFanSt1 = () => {
 
         {/* New or Replacement */}
         <SectionCard title="New or Replacement?">
-          <Text
-            style={{
-              fontFamily: "Inter_Regular",
-              fontSize: 13,
-              color: "#64748B",
-              marginBottom: 12,
-            }}
-          >
+          <Text className="font-Inter_Regular text-[13px] text-slate-500 mb-3">
             Is this a new installation or a replacement?
           </Text>
-          <View style={{ flexDirection: "row", gap: 10 }}>
+          <View className="flex-row gap-2.5">
             {(["New Installation", "Replacement"] as InstallType[]).map((t) => (
               <AnimatedOption
                 key={t}
@@ -1077,7 +968,7 @@ const ExhaustFanSt1 = () => {
           ))}
         </SectionCard>
 
-        {/* Dynamic section with fade */}
+        {/* Dynamic section */}
         <Animated.View style={{ opacity: fadeAnim }}>
           {renderDetails()}
         </Animated.View>
@@ -1093,15 +984,15 @@ const ExhaustFanSt1 = () => {
               onPress={() => setPanelLocation(p)}
             />
           ))}
+          <OtherInput
+            visible={panelLocation === "Other"}
+            placeholder="Describe panel location..."
+            value={panelLocationOther}
+            onChangeText={setPanelLocationOther}
+          />
+
           <Divider />
-          <Text
-            style={{
-              fontFamily: "Inter_Regular",
-              fontSize: 13,
-              color: "#374151",
-              marginBottom: 12,
-            }}
-          >
+          <Text className="font-Inter_Regular text-[13px] text-gray-700 mb-3">
             Upload photos of your electrical panel up close so we can see the
             breakers / panel label and about 10 ft away.
           </Text>
@@ -1115,50 +1006,9 @@ const ExhaustFanSt1 = () => {
             imageUri={imgPanelWide}
             onImagePicked={setImgPanelWide}
           />
-          <Text
-            style={{
-              fontFamily: "Inter_Regular",
-              fontSize: 11,
-              color: "#64748B",
-            }}
-          >
+          <Text className="font-Inter_Regular text-[11px] text-slate-500">
             These photos help us estimate routing and installation requirements
             more accurately.
-          </Text>
-        </SectionCard>
-
-        {/* Additional Info */}
-        <SectionCard title="Additional Information">
-          <Label text="Additional information" />
-          <TextInput
-            placeholder="Anything else we should know about"
-            placeholderTextColor="#94A3B8"
-            multiline
-            numberOfLines={4}
-            value={additionalInfo}
-            onChangeText={setAdditionalInfo}
-            style={{
-              borderWidth: 1.5,
-              borderColor: "#E2E8F0",
-              borderRadius: 10,
-              paddingVertical: 12,
-              paddingHorizontal: 14,
-              fontFamily: "Inter_Regular",
-              fontSize: 13,
-              color: "#1E293B",
-              minHeight: 90,
-              textAlignVertical: "top",
-            }}
-          />
-          <Text
-            style={{
-              fontFamily: "Inter_Regular",
-              fontSize: 11,
-              color: "#64748B",
-              marginTop: 8,
-            }}
-          >
-            The more details you share, the more accurate your estimate will be.
           </Text>
         </SectionCard>
       </ScrollView>

@@ -63,11 +63,13 @@ const ChipButton = ({
       onPress={handlePress}
       style={{ transform: [{ scale: scaleAnim }] }}
       className={`rounded-full px-4 py-2 border mb-2 mr-2 ${
-        selected ? "border-transparent bg-cyan-500" : "border-gray-300 bg-white"
+        selected
+          ? "border-transparent bg-[#60A5FA]"
+          : "border-gray-300 bg-white"
       }`}
     >
       <Text
-        className={`text-sm font-Inter_Medium ${
+        className={`text-sm font-Inter_Regular ${
           selected ? "text-white" : "text-gray-700"
         }`}
       >
@@ -104,19 +106,12 @@ const DistanceCard = ({
       onPress={handlePress}
       style={{ transform: [{ translateX }] }}
       className={`w-full rounded-2xl px-4 py-4 mb-2.5 border flex-row items-center ${
-        selected ? "border-cyan-400 bg-cyan-50" : "border-gray-200 bg-white"
+        selected ? "bg-[#60A5FA] border-[#60A5FA]" : "border-gray-200 bg-white"
       }`}
     >
-      <View
-        className={`w-5 h-5 rounded-full border-2 mr-3 items-center justify-center ${
-          selected ? "border-cyan-500 bg-cyan-500" : "border-gray-300"
-        }`}
-      >
-        {selected && <View className="w-2 h-2 rounded-full bg-white" />}
-      </View>
       <Text
         className={`text-[15px] font-Inter_Medium ${
-          selected ? "text-cyan-700" : "text-gray-800"
+          selected ? "text-white" : "text-gray-800"
         }`}
       >
         {label}
@@ -130,8 +125,10 @@ const DedicatedCircuitSt2 = () => {
   const [selectedAboveBelow, setSelectedAboveBelow] = useState<string[]>([]);
   const [selectedDistance, setSelectedDistance] = useState<string | null>(null);
   const [inputFocused, setInputFocused] = useState(false);
+  const [otherDistanceText, setOtherDistanceText] = useState("");
 
-  const btnScale = useRef(new Animated.Value(1)).current;
+  const inputHeight = useRef(new Animated.Value(0)).current;
+  const inputOpacity = useRef(new Animated.Value(0)).current;
 
   const toggleAboveBelow = (option: string) => {
     setSelectedAboveBelow((prev) =>
@@ -141,36 +138,69 @@ const DedicatedCircuitSt2 = () => {
     );
   };
 
+  const handleDistanceSelect = (opt: string) => {
+    setSelectedDistance(opt);
+
+    if (opt === "Other") {
+      Animated.parallel([
+        Animated.timing(inputHeight, {
+          toValue: 120,
+          duration: 250,
+          useNativeDriver: false,
+        }),
+        Animated.timing(inputOpacity, {
+          toValue: 1,
+          duration: 250,
+          useNativeDriver: false,
+        }),
+      ]).start();
+    } else {
+      Animated.parallel([
+        Animated.timing(inputHeight, {
+          toValue: 0,
+          duration: 200,
+          useNativeDriver: false,
+        }),
+        Animated.timing(inputOpacity, {
+          toValue: 0,
+          duration: 200,
+          useNativeDriver: false,
+        }),
+      ]).start();
+    }
+  };
+
   return (
     <ScrollView
       className="flex-1 "
       contentContainerStyle={{
-        paddingHorizontal: 16,
         paddingTop: 24,
         paddingBottom: 40,
       }}
       showsVerticalScrollIndicator={false}
     >
       {/* Badge */}
-      <View className="self-start bg-cyan-500 rounded-full px-3 py-1 mb-5">
-        <Text className="text-white text-[11px] font-Inter_SemiBold tracking-wide uppercase">
+      <View className="self-start bg-[#EFF6FF] rounded-full px-3 py-1 mb-5">
+        <Text className="text-[#60A5FA] text-[11px] font-Inter_SemiBold tracking-wide">
           Dedicated Circuit
         </Text>
       </View>
 
       {/* Title */}
-      <Text className="text-[26px] font-Inter_Bold text-gray-900 mb-6">
-        Panel and location
-      </Text>
+      <View className="pt-2 pb-4">
+        <Text className="text-[#0F172A] text-2xl font-Inter_Bold">
+          Panel and location
+        </Text>
+      </View>
 
       {/* Q1: Location */}
       <View className="mb-7">
-        <Text className="text-[15px] font-Inter_Bold text-gray-900 mb-3 leading-5">
+        <Text className="text-[#0F172A] text-base mb-3 font-Inter_Medium">
           Where will the dedicated circuit be installed?
         </Text>
         <TextInput
-          className={`bg-white rounded-2xl px-4 py-3.5 text-[15px] font-Inter_Regular text-gray-800 border ${
-            inputFocused ? "border-cyan-400" : "border-gray-200"
+          className={`bg-white rounded-2xl px-4 py-3.5 text-base font-Inter_Regular text-gray-800 border ${
+            inputFocused ? "border-[#60A5FA]" : "border-gray-200"
           }`}
           placeholder="Kitchen, garage, bedroom, etc."
           placeholderTextColor="#9CA3AF"
@@ -183,7 +213,7 @@ const DedicatedCircuitSt2 = () => {
 
       {/* Q2: Above / Below */}
       <View className="mb-7">
-        <Text className="text-[15px] font-Inter_Bold text-gray-900 mb-3">
+        <Text className="text-[#0F172A] text-base mb-3 font-Inter_Medium">
           What is above / below the area?
         </Text>
         <View className="flex-row flex-wrap">
@@ -200,7 +230,7 @@ const DedicatedCircuitSt2 = () => {
 
       {/* Q3: Distance */}
       <View className="mb-7">
-        <Text className="text-[15px] font-Inter_Bold text-gray-900 mb-3 leading-5">
+        <Text className="text-[#0F172A] text-base mb-3 font-Inter_Medium">
           What is the approximate distance of the electrical panel from
           dedicated circuit install location?
         </Text>
@@ -209,9 +239,34 @@ const DedicatedCircuitSt2 = () => {
             key={opt}
             label={opt}
             selected={selectedDistance === opt}
-            onPress={() => setSelectedDistance(opt)}
+            onPress={() => handleDistanceSelect(opt)}
           />
         ))}
+
+        {/* Animated "Other" input */}
+        <Animated.View
+          style={{
+            height: inputHeight,
+            opacity: inputOpacity,
+            overflow: "hidden",
+          }}
+        >
+          <TextInput
+            value={otherDistanceText}
+            onChangeText={setOtherDistanceText}
+            placeholder="Please describe the distance..."
+            placeholderTextColor="#94A3B8"
+            multiline
+            numberOfLines={5}
+            textAlignVertical="top"
+            className="bg-white rounded-2xl px-4 py-3 text-sm font-Inter_Regular text-gray-800 mt-2"
+            style={{
+              borderWidth: 2,
+              borderColor: "#60A5FA",
+              height: 112,
+            }}
+          />
+        </Animated.View>
       </View>
     </ScrollView>
   );

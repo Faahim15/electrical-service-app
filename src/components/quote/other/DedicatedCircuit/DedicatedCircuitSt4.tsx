@@ -1,4 +1,4 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import React, { useRef, useState } from "react";
 import {
@@ -8,27 +8,26 @@ import {
   Platform,
   ScrollView,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
 
-const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
-
+// ─── Upload Card ───────────────────────────────────────────────────────────────
 const UploadCard = ({
   description,
-  image,
+  images,
   onPickImage,
+  onRemove,
   delay = 0,
 }: {
   description: string;
-  image: string | null;
+  images: string[];
   onPickImage: () => void;
+  onRemove: (uri: string) => void;
   delay?: number;
 }) => {
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
   const opacityAnim = useRef(new Animated.Value(0)).current;
-  const btnScale = useRef(new Animated.Value(1)).current;
 
   React.useEffect(() => {
     Animated.parallel([
@@ -48,149 +47,71 @@ const UploadCard = ({
     ]).start();
   }, []);
 
-  const handlePress = () => {
-    Animated.sequence([
-      Animated.spring(btnScale, {
-        toValue: 0.94,
-        useNativeDriver: true,
-        speed: 50,
-        bounciness: 0,
-      }),
-      Animated.spring(btnScale, {
-        toValue: 1,
-        useNativeDriver: true,
-        speed: 30,
-        bounciness: 8,
-      }),
-    ]).start();
-    onPickImage();
-  };
-
   return (
     <Animated.View
-      className="bg-white rounded-2xl p-4 mb-3 border border-gray-100"
-      style={{
-        opacity: opacityAnim,
-        transform: [{ scale: scaleAnim }],
-        shadowColor: "#06B6D4",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.07,
-        shadowRadius: 8,
-        elevation: 2,
-        backgroundColor: "white",
-        borderRadius: 16,
-        padding: 16,
-        marginBottom: 12,
-      }}
+      style={{ opacity: opacityAnim, transform: [{ scale: scaleAnim }] }}
+      className="bg-white rounded-2xl p-6 mb-5 shadow-sm"
     >
-      {image ? (
-        <View className="items-center">
-          <Image
-            source={{ uri: image }}
-            style={{
-              width: "100%",
-              height: 180,
-              borderRadius: 12,
-              marginBottom: 12,
-            }}
-            resizeMode="cover"
-          />
-          <Text
-            className="text-center text-gray-600 text-sm font-Inter_Regular mb-3"
-            style={{ paddingHorizontal: 8 }}
-          >
-            {description}
-          </Text>
-          <AnimatedTouchable
-            activeOpacity={0.8}
-            onPress={handlePress}
-            style={{ transform: [{ scale: btnScale }] }}
-          >
-            <View
-              style={{
-                backgroundColor: "#EFF6FF",
-                borderRadius: 999,
-                paddingHorizontal: 24,
-                paddingVertical: 8,
-                borderWidth: 1,
-                borderColor: "#06B6D4",
-              }}
-            >
-              <Text
-                style={{ color: "#06B6D4", fontSize: 14 }}
-                className="font-Inter_Medium"
-              >
-                Change File
-              </Text>
-            </View>
-          </AnimatedTouchable>
+      <View className="items-center mb-4">
+        {/* Icon */}
+        <View className="w-12 h-12 bg-[#EFF6FF] rounded-full items-center justify-center mb-4">
+          <Feather name="upload" size={22} color="#60A5FA" />
         </View>
-      ) : (
-        <View className="items-center py-4">
-          {/* Upload icon */}
-          <View
-            style={{
-              width: 48,
-              height: 48,
-              borderRadius: 999,
-              backgroundColor: "#EFF6FF",
-              alignItems: "center",
-              justifyContent: "center",
-              marginBottom: 12,
-            }}
-          >
-            <MaterialCommunityIcons
-              name="file-image-plus-outline"
-              size={24}
-              color="#4b5563"
-            />
-          </View>
 
-          <Text
-            className="text-center text-gray-700 text-sm font-Inter_Regular mb-4"
-            style={{ paddingHorizontal: 12, lineHeight: 20 }}
-          >
-            {description}
+        {/* Description */}
+        <Text className="text-[#1F2937] text-sm font-Inter_Regular text-center leading-5 mb-4">
+          {description}
+        </Text>
+
+        {/* Choose File Button */}
+        <TouchableOpacity
+          activeOpacity={0.85}
+          onPress={onPickImage}
+          className="bg-[#EFF6FF] rounded-2xl px-7 py-2.5"
+        >
+          <Text className="text-[#60A5FA] text-sm font-Inter_SemiBold">
+            Choose File
           </Text>
+        </TouchableOpacity>
+      </View>
 
-          <AnimatedTouchable
-            activeOpacity={0.8}
-            onPress={handlePress}
-            style={{ transform: [{ scale: btnScale }] }}
-          >
+      {/* Preview Grid */}
+      {images.length > 0 && (
+        <View className="flex-row flex-wrap gap-2 mt-2">
+          {images.map((uri) => (
             <View
-              style={{
-                backgroundColor: "#EFF6FF",
-                borderRadius: 999,
-                paddingHorizontal: 24,
-                paddingVertical: 8,
-                borderWidth: 1,
-                borderColor: "#BAE6FD",
-              }}
+              key={uri}
+              className="relative w-[88px] h-[88px] rounded-xl overflow-hidden"
             >
-              <Text
-                style={{ color: "#06B6D4", fontSize: 14 }}
-                className="font-Inter_Medium"
+              <Image
+                source={{ uri }}
+                className="w-full h-full"
+                resizeMode="cover"
+              />
+              <TouchableOpacity
+                onPress={() => onRemove(uri)}
+                activeOpacity={0.8}
+                className="absolute top-1 right-1 w-5 h-5 bg-black/60 rounded-full items-center justify-center"
               >
-                Choose File
-              </Text>
+                <Feather name="x" size={11} color="#fff" />
+              </TouchableOpacity>
             </View>
-          </AnimatedTouchable>
+          ))}
         </View>
       )}
     </Animated.View>
   );
 };
 
+// ─── Main Screen ───────────────────────────────────────────────────────────────
 const DedicatedCircuitSt4 = () => {
   const [notes, setNotes] = useState("");
   const [inputFocused, setInputFocused] = useState(false);
-  const [meterImage, setMeterImage] = useState<string | null>(null);
-  const [pathImage, setPathImage] = useState<string | null>(null);
+  const [meterImages, setMeterImages] = useState<string[]>([]);
+  const [pathImages, setPathImages] = useState<string[]>([]);
 
   const titleAnim = useRef(new Animated.Value(0)).current;
   const titleY = useRef(new Animated.Value(-12)).current;
-  const btnScale = useRef(new Animated.Value(1)).current;
 
   React.useEffect(() => {
     Animated.parallel([
@@ -208,7 +129,9 @@ const DedicatedCircuitSt4 = () => {
     ]).start();
   }, []);
 
-  const pickImage = async (setter: (uri: string | null) => void) => {
+  const pickImage = async (
+    setter: React.Dispatch<React.SetStateAction<string[]>>,
+  ) => {
     if (Platform.OS !== "web") {
       const { status } =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -223,18 +146,26 @@ const DedicatedCircuitSt4 = () => {
 
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
+      allowsMultipleSelection: true,
       quality: 0.85,
     });
 
     if (!result.canceled && result.assets.length > 0) {
-      setter(result.assets[0].uri);
+      const uris = result.assets.map((a) => a.uri);
+      setter((prev) => [...prev, ...uris]);
     }
+  };
+
+  const removeImage = (
+    setter: React.Dispatch<React.SetStateAction<string[]>>,
+    uri: string,
+  ) => {
+    setter((prev) => prev.filter((u) => u !== uri));
   };
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: "#EFF6FF" }}
+      style={{ flex: 1 }}
       contentContainerStyle={{
         paddingHorizontal: 16,
         paddingTop: 24,
@@ -242,89 +173,39 @@ const DedicatedCircuitSt4 = () => {
       }}
       showsVerticalScrollIndicator={false}
     >
-      {/* Badge */}
+      {/* Badge + Title */}
       <Animated.View
         style={{ opacity: titleAnim, transform: [{ translateY: titleY }] }}
       >
-        <View
-          style={{
-            alignSelf: "flex-start",
-            backgroundColor: "#E0F2FE",
-            borderRadius: 999,
-            paddingHorizontal: 12,
-            paddingVertical: 4,
-            marginBottom: 16,
-            borderWidth: 1,
-            borderColor: "#BAE6FD",
-          }}
-        >
-          <Text
-            style={{ color: "#06B6D4", fontSize: 12 }}
-            className="font-Inter_Medium"
-          >
+        <View className="self-start bg-[#EFF6FF] rounded-full px-3 py-1 mb-5">
+          <Text className="text-[#60A5FA] text-[11px] font-Inter_SemiBold tracking-wide ">
             Dedicated Circuit
           </Text>
         </View>
 
-        {/* Title */}
         <Text
           style={{ fontSize: 26, color: "#111827", marginBottom: 24 }}
           className="font-Inter_Bold"
         >
-          Photos and notes
+          Photos Upload
         </Text>
-      </Animated.View>
-
-      {/* Additional Information */}
-      <Animated.View style={{ opacity: titleAnim }}>
-        <Text
-          style={{ fontSize: 15, color: "#111827", marginBottom: 10 }}
-          className="font-Inter_Bold"
-        >
-          Additional Information
-        </Text>
-
-        <TextInput
-          multiline
-          numberOfLines={5}
-          value={notes}
-          onChangeText={setNotes}
-          onFocus={() => setInputFocused(true)}
-          onBlur={() => setInputFocused(false)}
-          style={{
-            backgroundColor: "white",
-            borderRadius: 16,
-            padding: 14,
-            minHeight: 110,
-            textAlignVertical: "top",
-            fontSize: 15,
-            color: "#1F2937",
-            borderWidth: 1.5,
-            borderColor: inputFocused ? "#06B6D4" : "#E5E7EB",
-            marginBottom: 16,
-            shadowColor: "#06B6D4",
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: inputFocused ? 0.1 : 0.04,
-            shadowRadius: 6,
-            elevation: inputFocused ? 2 : 1,
-          }}
-          className="font-Inter_Regular"
-        />
       </Animated.View>
 
       {/* Upload Card 1 – Meter */}
       <UploadCard
         description="Upload photos of your electrical meter (up close so we can see the numbers and about 10 ft away.)"
-        image={meterImage}
-        onPickImage={() => pickImage(setMeterImage)}
+        images={meterImages}
+        onPickImage={() => pickImage(setMeterImages)}
+        onRemove={(uri) => removeImage(setMeterImages, uri)}
         delay={150}
       />
 
       {/* Upload Card 2 – Path */}
       <UploadCard
         description="Upload a photo showing path from panel to install location"
-        image={pathImage}
-        onPickImage={() => pickImage(setPathImage)}
+        images={pathImages}
+        onPickImage={() => pickImage(setPathImages)}
+        onRemove={(uri) => removeImage(setPathImages, uri)}
         delay={260}
       />
     </ScrollView>

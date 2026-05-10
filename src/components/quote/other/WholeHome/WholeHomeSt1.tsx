@@ -8,7 +8,6 @@ import {
   Image,
   ScrollView,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -88,15 +87,15 @@ const WholeHomeSt1 = () => {
   return (
     <ScrollView
       className="flex-1 "
-      contentContainerStyle={{ padding: 16, paddingTop: 24 }}
+      contentContainerStyle={{ paddingTop: 24 }}
       showsVerticalScrollIndicator={false}
     >
       {/* Breadcrumb */}
       <Animated.View
         style={fadeSlideDown(breadcrumbAnim)}
-        className="self-start bg-[#E0F2FE] px-3 py-1 rounded-full mb-4"
+        className="self-start bg-[#EFF6FF] px-3 py-2 rounded-full mb-4"
       >
-        <Text className="text-[#0891B2] text-xs font-Inter_Medium">
+        <Text className="text-[#60A5FA] text-sm font-Inter_Medium">
           Whole Home Surge Protection
         </Text>
       </Animated.View>
@@ -124,21 +123,22 @@ const WholeHomeSt1 = () => {
       >
         {/* Upload prompt area */}
         <View className="items-center mb-4">
-          <View className="w-12 h-12 bg-[#E0F2FE] rounded-full items-center justify-center mb-4">
-            <Feather name="upload" size={22} color="#06B6D4" />
+          <View className="w-12 h-12 bg-[#EFF6FF] rounded-full items-center justify-center mb-4">
+            <Feather name="upload" size={22} color="#60A5FA" />
           </View>
-          <Text className="text-[#4B5563] text-sm font-Inter_Regular text-center leading-5 mb-4">
+          <Text className="text-[#1F2937] text-sm font-Inter_Regular text-center leading-5 mb-4">
             Upload photos of your electrical panel up close so we can see the
             breakers/panel label and about 10 ft away
           </Text>
           <TouchableOpacity activeOpacity={0.85} onPress={pickImage}>
             <LinearGradient
-              colors={["#06B6D4", "#14B8A6"]}
+              colors={["#EFF6FF", "#EFF6FF"]}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 0 }}
+              style={{ borderRadius: 16 }}
               className="rounded-full px-7 py-2.5"
             >
-              <Text className="text-white text-sm font-Inter_SemiBold">
+              <Text className="text-[#60A5FA] text-sm font-Inter_SemiBold">
                 Choose File
               </Text>
             </LinearGradient>
@@ -169,20 +169,6 @@ const WholeHomeSt1 = () => {
             ))}
           </View>
         )}
-      </Animated.View>
-
-      {/* Additional Notes */}
-      <Animated.View style={fadeSlideDown(notesAnim)}>
-        <Text className="text-[#1F2937] text-base font-Inter_Bold mb-2.5">
-          Additional notes (optional)
-        </Text>
-        <TextInput
-          className="bg-white border border-[#E5E7EB] rounded-xl p-3 text-sm font-Inter_Regular text-[#9CA3AF] min-h-[80px]"
-          placeholder="Any additional information you'd like to sh..."
-          placeholderTextColor="#9CA3AF"
-          multiline
-          textAlignVertical="top"
-        />
       </Animated.View>
     </ScrollView>
   );

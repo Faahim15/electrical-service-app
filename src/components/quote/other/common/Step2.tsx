@@ -1,3 +1,6 @@
+import AuthHeading from "@/src/components/auth/AuthHeading";
+import TermsAndPolicy from "@/src/components/auth/TermsAndPolicy";
+import CustomInput from "@/src/components/shared/CustomInput";
 import React, { useRef, useState } from "react";
 import {
   Animated,
@@ -6,9 +9,9 @@ import {
   ScrollView,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
+import InfoBanner from "../../InfoBanner";
 
 const AnimatedTextInput = ({
   label,
@@ -114,117 +117,73 @@ const Step2 = () => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      className="flex-1"
+      style={{ flex: 1 }}
     >
       <ScrollView
-        className="flex-1"
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
+        contentContainerStyle={{ paddingBottom: 32 }}
       >
-        <View className="flex-1 pb-6">
-          <Text className="text-2xl font-Inter_Bold text-[#111827] mb-1">
-            Service address
-          </Text>
-          <Text className="text-sm text-[#6B7280] mb-6 font-Inter_Regular">
-            Where is the work needed?
-          </Text>
+        <AuthHeading
+          title="Your service address"
+          subtitle="Where is the work needed?"
+        />
 
-          <AnimatedTextInput
-            label="Street Address"
-            placeholder="123 Main Street"
-            required
-            value={streetAddress}
-            onChangeText={setStreetAddress}
-            style={{ marginBottom: 16 }}
-          />
+        <CustomInput
+          label="Street Address *"
+          leftIcon="location-outline"
+          textInputConfig={{
+            placeholder: "Enter your street address",
+            autoCapitalize: "words",
+          }}
+        />
 
-          <AnimatedTextInput
-            label="Apartment / Unit"
-            placeholder="Apt 4B (optional)"
-            value={apartment}
-            onChangeText={setApartment}
-            style={{ marginBottom: 16 }}
-          />
+        <CustomInput
+          label="Apartment / Unit"
+          leftIcon="business-outline"
+          textInputConfig={{
+            placeholder: "Apt, suite, unit (optional)",
+            keyboardType: "default",
+            autoCapitalize: "none",
+          }}
+        />
 
-          <AnimatedTextInput
-            label="City"
-            placeholder="San Francisco"
-            required
-            value={city}
-            onChangeText={setCity}
-            style={{ marginBottom: 16 }}
-          />
+        <CustomInput
+          label="City *"
+          leftIcon="map-outline"
+          textInputConfig={{
+            placeholder: "Enter your city",
+            keyboardType: "default",
+            autoCapitalize: "words",
+          }}
+        />
 
-          <View className="flex-row gap-3 mb-4">
-            <AnimatedTextInput
-              label="State"
-              placeholder="CA"
-              required
-              value={state}
-              onChangeText={(t) => setState(t.toUpperCase().slice(0, 2))}
-              maxLength={2}
-              style={{ flex: 1 }}
-            />
-            <AnimatedTextInput
-              label="ZIP Code"
-              placeholder="94102"
-              required
-              value={zip}
-              onChangeText={setZip}
-              keyboardType="numeric"
-              maxLength={5}
-              style={{ flex: 1 }}
-            />
-          </View>
+        <CustomInput
+          label="State *"
+          leftIcon="flag-outline"
+          textInputConfig={{
+            placeholder: "Enter your state",
+            keyboardType: "default",
+            autoCapitalize: "characters",
+          }}
+        />
 
-          {/* Checkbox row */}
-          <TouchableOpacity
-            onPress={toggleHomeAddress}
-            activeOpacity={0.8}
-            className="flex-row items-center gap-2 mb-4"
-          >
-            <View
-              style={{
-                width: 18,
-                height: 18,
-                borderRadius: 4,
-                borderWidth: 1.5,
-                borderColor: isHomeAddress ? "#06B6D4" : "#D1D5DB",
-                backgroundColor: isHomeAddress ? "#06B6D4" : "white",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Animated.Text
-                style={{
-                  color: "white",
-                  fontSize: 11,
-                  fontWeight: "bold",
-                  transform: [{ scale: checkScale }],
-                  opacity: checkOpacity,
-                }}
-              >
-                ✓
-              </Animated.Text>
-            </View>
-            <Text className="text-sm text-[#374151] font-Inter_Regular">
-              This is my home address
-            </Text>
-          </TouchableOpacity>
+        <CustomInput
+          label="Zip Code *"
+          leftIcon="mail-open-outline"
+          textInputConfig={{
+            placeholder: "Enter your zip code",
+            keyboardType: "number-pad",
+            autoCapitalize: "none",
+          }}
+        />
 
-          {/* Info banner */}
-          <View className="bg-[#EFF6FF] rounded-xl py-3 mb-6 flex-row items-start gap-2">
-            <Text style={{ fontSize: 13 }}>📍</Text>
-            <Text className="text-xs text-[#3B82F6] font-Inter_Regular flex-1">
-              {`We'll use this address to schedule your service and provide accurate estimates`}
-            </Text>
-          </View>
-
-          {/* Continue Button */}
-          <Animated.View
-            style={{ transform: [{ scale: buttonScaleAnim }] }}
-          ></Animated.View>
-        </View>
+        <TermsAndPolicy
+          shouldShowTitle={false}
+          subtitle="This is my home address"
+          subtitleColor="#6b7280"
+        />
+        <InfoBanner />
       </ScrollView>
     </KeyboardAvoidingView>
   );

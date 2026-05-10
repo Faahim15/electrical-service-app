@@ -6,9 +6,11 @@ const StarlinkSt4 = () => {
   return (
     <View className="flex-1">
       <View>
-        <Text className="text-xs font-Inter_Medium text-cyan-500 mb-1">
-          Starlink
-        </Text>
+        <View className="bg-[#EFF6FF] px-2 py-1.5 justify-center items-center rounded-full w-24">
+          <Text className="text-sm font-Inter_Medium text-[#60A5FA] ">
+            Starlink
+          </Text>
+        </View>
         <Text className="text-2xl font-Inter_Bold text-gray-900 mb-5">
           Additional information
         </Text>

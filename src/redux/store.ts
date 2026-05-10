@@ -5,8 +5,8 @@ import partnerDetailsReducer from "./slices/parnerDetailsSlice";
 import partnersReducer from "./slices/partnersRouterSlice";
 import safetyMaintenanceReducer from "./slices/seftymaintanceSlice";
 import serviceFormReducer from "./slices/serviceFormSlice";
+import starlinkRouteReducer from "./slices/starlinkTheRouteSlice";
 import troubleshootRouteReducer from "./slices/troubleshootRouteSlice";
-
 export const store = configureStore({
   reducer: {
     partners: partnersReducer,
@@ -16,6 +16,7 @@ export const store = configureStore({
     safetyMaintenance: safetyMaintenanceReducer,
     serviceForm: serviceFormReducer,
     openCategoryRoute: otherRouteRecucer,
+    starlinkRoute: starlinkRouteReducer,
   },
 });
 

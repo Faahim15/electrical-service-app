@@ -1,6 +1,6 @@
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import { setSelectedRouteCategory } from "@/src/redux/slices/otherRouteSlice";
-import { Feather } from "@expo/vector-icons";
+import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
 import {
@@ -133,7 +133,11 @@ const ServiceCard = ({ item, index }: { item: Service; index: number }) => {
             marginRight: 14,
           }}
         >
-          <Feather name={item.icon as any} size={18} color="#06B6D4" />
+          {item.title === "Ceiling Fan" ? (
+            <FontAwesome5 name="fan" size={18} color="#06B6D4" />
+          ) : (
+            <Feather name={item.icon as any} size={18} color="#06B6D4" />
+          )}
         </View>
 
         {/* Text */}

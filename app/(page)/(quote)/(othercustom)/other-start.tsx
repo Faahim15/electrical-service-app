@@ -1,7 +1,9 @@
+import { getCategoryData } from "@/data/otherCategoryData";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import { RootState } from "@/src/redux/store";
-import { Feather } from "@expo/vector-icons";
+import { Feather, FontAwesome5 } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
 import {
@@ -13,20 +15,6 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
-
-const bestForItems = [
-  "Whole-home surge devices",
-  "Panel-based surge protection",
-  "Extra protection for electronics and appliances",
-];
-
-const provideItems = ["Panel photos", "Basic project notes"];
-
-const steps = [
-  { id: 1, label: "Upload panel photos" },
-  { id: 2, label: "Add notes" },
-  { id: 3, label: "Review & submit" },
-];
 
 const OtherStart = () => {
   const iconScale = useRef(new Animated.Value(0)).current;
@@ -129,6 +117,12 @@ const OtherStart = () => {
   const oipencategory = useSelector(
     (state: RootState) => state.openCategoryRoute.selectedOtherCategory,
   );
+
+  // ✅ Fetch dynamic data based on selected category title
+  const categoryData = getCategoryData(oipencategory?.title);
+  const { titleofSub, bestForItems, provideItems, timeEstimate, steps } =
+    categoryData;
+
   console.log("Selected Other Category:", oipencategory);
   return (
     <ScreenWrapper>
@@ -163,7 +157,8 @@ const OtherStart = () => {
                 marginBottom: 16,
               }}
             >
-              <View
+              <LinearGradient
+                colors={["#DBEAFE", "#CEFAFE"]}
                 style={{
                   width: 72,
                   height: 72,
@@ -171,18 +166,27 @@ const OtherStart = () => {
                   backgroundColor: "#DBEAFE",
                   alignItems: "center",
                   justifyContent: "center",
+                  shadowColor: "#06B6D4",
+                  shadowOffset: { width: 0, height: 1 },
+                  shadowOpacity: 0.06,
+                  shadowRadius: 6,
+                  elevation: 2,
                 }}
               >
-                <Feather
-                  name={
-                    oipencategory?.icon as React.ComponentProps<
-                      typeof Feather
-                    >["name"]
-                  }
-                  size={32}
-                  color="#06B6D4"
-                />
-              </View>
+                {oipencategory?.title === "Ceiling Fan" ? (
+                  <FontAwesome5 name="fan" size={32} color="#155DFC" />
+                ) : (
+                  <Feather
+                    name={
+                      oipencategory?.icon as React.ComponentProps<
+                        typeof Feather
+                      >["name"]
+                    }
+                    size={32}
+                    color="#155DFC"
+                  />
+                )}
+              </LinearGradient>
             </Animated.View>
 
             {/* Title & Subtitle */}
@@ -206,7 +210,7 @@ const OtherStart = () => {
                 {oipencategory?.title}
               </Text>
               <Text
-                className="font-Inter_Regular"
+                className="font-Inter_Regular w-[80%]"
                 style={{
                   fontSize: 13,
                   color: "#6B7280",
@@ -214,7 +218,7 @@ const OtherStart = () => {
                   lineHeight: 20,
                 }}
               >
-                {oipencategory?.subtitle}
+                {titleofSub}
               </Text>
             </Animated.View>
 
@@ -227,7 +231,7 @@ const OtherStart = () => {
                 borderRadius: 16,
                 padding: 16,
                 marginBottom: 12,
-                shadowColor: "#000",
+                shadowColor: "#06B6D4",
                 shadowOffset: { width: 0, height: 1 },
                 shadowOpacity: 0.06,
                 shadowRadius: 6,
@@ -249,12 +253,10 @@ const OtherStart = () => {
                     marginBottom: i < bestForItems.length - 1 ? 10 : 0,
                   }}
                 >
-                  <Feather
-                    name="check"
-                    size={15}
-                    color="#06B6D4"
-                    style={{ marginTop: 1, marginRight: 10 }}
-                  />
+                  <View className="h-6 w-6 mr-1 rounded-full justify-center items-center bg-[#EFF6FF]">
+                    <Feather name="check" size={12} color="#155DFC" />
+                  </View>
+
                   <Text
                     className="font-Inter_Regular"
                     style={{
@@ -279,7 +281,7 @@ const OtherStart = () => {
                 borderRadius: 16,
                 padding: 16,
                 marginBottom: 12,
-                shadowColor: "#000",
+                shadowColor: "#06B6D4",
                 shadowOffset: { width: 0, height: 1 },
                 shadowOpacity: 0.06,
                 shadowRadius: 6,
@@ -306,7 +308,7 @@ const OtherStart = () => {
                       width: 7,
                       height: 7,
                       borderRadius: 4,
-                      backgroundColor: "#06B6D4",
+                      backgroundColor: "#2B7FFF",
                       marginRight: 10,
                     }}
                   />
@@ -333,7 +335,7 @@ const OtherStart = () => {
                 flexDirection: "row",
                 alignItems: "center",
                 justifyContent: "space-between",
-                shadowColor: "#000",
+                shadowColor: "#06B6D4",
                 shadowOffset: { width: 0, height: 1 },
                 shadowOpacity: 0.06,
                 shadowRadius: 6,
@@ -345,16 +347,16 @@ const OtherStart = () => {
                   className="font-Inter_SemiBold"
                   style={{ fontSize: 13, color: "#111827", marginBottom: 3 }}
                 >
-                  Takes about 1–2 minutes
+                  {timeEstimate.label}
                 </Text>
                 <Text
                   className="font-Inter_Regular"
                   style={{ fontSize: 12, color: "#9CA3AF" }}
                 >
-                  Simple and quick protection request
+                  {timeEstimate.sublabel}
                 </Text>
               </View>
-              <Feather name="clock" size={20} color="#06B6D4" />
+              <Feather name="clock" size={20} color="#155DFC" />
             </Animated.View>
 
             {/* Simple 3-Step Card */}
@@ -366,7 +368,7 @@ const OtherStart = () => {
                 borderRadius: 16,
                 padding: 16,
                 marginBottom: 24,
-                shadowColor: "#000",
+                shadowColor: "#06B6D4",
                 shadowOffset: { width: 0, height: 1 },
                 shadowOpacity: 0.06,
                 shadowRadius: 6,
@@ -388,7 +390,8 @@ const OtherStart = () => {
                     marginBottom: i < steps.length - 1 ? 12 : 0,
                   }}
                 >
-                  <View
+                  <LinearGradient
+                    colors={["#2B7FFF", "#00B8DB"]}
                     style={{
                       width: 26,
                       height: 26,
@@ -405,7 +408,8 @@ const OtherStart = () => {
                     >
                       {step.id}
                     </Text>
-                  </View>
+                  </LinearGradient>
+
                   <Text
                     className="font-Inter_Regular"
                     style={{ fontSize: 13, color: "#374151" }}
@@ -431,30 +435,6 @@ const OtherStart = () => {
                 label="Start Quote"
                 onPress={() => router.push("/other-form-progress")}
               />
-              {/* <TouchableOpacity
-                onPress={() => router.push("/other-form-progress")}
-                activeOpacity={0.85}
-                style={{
-                  height: 52,
-                  borderRadius: 14,
-                  backgroundColor: "#06B6D4",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginBottom: 14,
-                  shadowColor: "#06B6D4",
-                  shadowOffset: { width: 0, height: 4 },
-                  shadowOpacity: 0.35,
-                  shadowRadius: 10,
-                  elevation: 6,
-                }}
-              >
-                <Text
-                  className="font-Inter_SemiBold"
-                  style={{ fontSize: 15, color: "#FFFFFF", letterSpacing: 0.3 }}
-                >
-                  Start Quote
-                </Text>
-              </TouchableOpacity> */}
             </Animated.View>
           </ScrollView>
         </View>

@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+import NEMAModal from "./NEMAModal";
 
 const ampOptions = [15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100, 125, 150];
 const voltOptions = ["110 or 120", "220 or 240", "110/220 or 120/240"];
@@ -18,7 +19,7 @@ const DedicatedCircuitSt3 = () => {
   const [selectedVolt, setSelectedVolt] = useState<string | null>(null);
   const [nemaConfig, setNemaConfig] = useState("");
   const [nemaFocused, setNemaFocused] = useState(false);
-
+  const [isvisiable, setIsVisiable] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(20)).current;
 
@@ -94,11 +95,9 @@ const DedicatedCircuitSt3 = () => {
     const scale = pressScales[index];
 
     return (
-      <Animated.View
+      <View
         key={label}
         style={{
-          opacity: anim.opacity,
-          transform: [{ translateY: anim.translateY }, { scale }],
           marginBottom: 8,
         }}
       >
@@ -108,12 +107,12 @@ const DedicatedCircuitSt3 = () => {
           onPressOut={() => animatePressOut(index)}
           onPress={onPress}
           style={{
-            backgroundColor: isSelected ? "#F0FDFE" : "#FFFFFF",
+            backgroundColor: isSelected ? "#60A5FA" : "#FFFFFF",
             borderRadius: 14,
             paddingHorizontal: 16,
             paddingVertical: 14,
             borderWidth: isSelected ? 1.5 : 1,
-            borderColor: isSelected ? "#06B6D4" : "transparent",
+            borderColor: isSelected ? "#60A5FA" : "transparent",
             shadowColor: isSelected ? "#06B6D4" : "#0EA5E9",
             shadowOpacity: isSelected ? 0.12 : 0.05,
             shadowRadius: isSelected ? 8 : 5,
@@ -122,46 +121,31 @@ const DedicatedCircuitSt3 = () => {
           }}
         >
           <Text
-            style={{
-              fontFamily: "Inter_Regular",
-              fontSize: 15,
-              color: isSelected ? "#06B6D4" : "#334155",
-            }}
+            className={`text-sm font-Inter_Regular ${
+              isSelected ? "text-white" : "text-gray-700"
+            }`}
           >
             {label}
           </Text>
         </TouchableOpacity>
-      </Animated.View>
+      </View>
     );
   };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View className="flex-1 bg-[#EFF6FF]">
+      <View className="flex-1 ">
         <ScrollView
           className="flex-1"
           contentContainerStyle={{ paddingBottom: 40, paddingHorizontal: 16 }}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
-          {/* Tag */}
-          <Animated.View
-            style={{
-              opacity: fadeAnim,
-              transform: [{ translateY: slideAnim }],
-            }}
-            className="pt-5 pb-1"
-          >
-            <Text
-              style={{
-                fontFamily: "Inter_Medium",
-                color: "#06B6D4",
-                fontSize: 13,
-              }}
-            >
+          <View className="self-start bg-[#EFF6FF] rounded-full px-3 py-1 mb-5">
+            <Text className="text-[#60A5FA] text-[11px] font-Inter_SemiBold tracking-wide">
               Dedicated Circuit
             </Text>
-          </Animated.View>
+          </View>
 
           {/* Title */}
           <Animated.View
@@ -171,14 +155,7 @@ const DedicatedCircuitSt3 = () => {
             }}
             className="pt-2 pb-5"
           >
-            <Text
-              style={{
-                fontFamily: "Inter_Bold",
-                fontSize: 24,
-                color: "#0F172A",
-                lineHeight: 30,
-              }}
-            >
+            <Text className="text-[#0F172A] text-2xl font-Inter_Bold">
               Electrical specifications
             </Text>
           </Animated.View>
@@ -191,14 +168,7 @@ const DedicatedCircuitSt3 = () => {
             }}
             className="mb-3"
           >
-            <Text
-              style={{
-                fontFamily: "Inter_SemiBold",
-                fontSize: 15,
-                color: "#0F172A",
-                marginBottom: 12,
-              }}
-            >
+            <Text className="text-[#0F172A] text-base mb-3 font-Inter_Medium">
               How many amps do you need?
             </Text>
           </Animated.View>
@@ -217,14 +187,7 @@ const DedicatedCircuitSt3 = () => {
             }}
             className="mt-4 mb-3"
           >
-            <Text
-              style={{
-                fontFamily: "Inter_SemiBold",
-                fontSize: 15,
-                color: "#0F172A",
-                marginBottom: 12,
-              }}
-            >
+            <Text className="text-[#0F172A] text-base mb-3 font-Inter_Medium">
               How many volts do you need?
             </Text>
           </Animated.View>
@@ -250,42 +213,24 @@ const DedicatedCircuitSt3 = () => {
                   marginTop: 20,
                 }}
               >
-                <View className="flex-row items-center mb-1">
-                  <Text
-                    style={{
-                      fontFamily: "Inter_SemiBold",
-                      fontSize: 15,
-                      color: "#0F172A",
-                      marginRight: 4,
-                    }}
-                  >
-                    What is the NEMA configuration?
-                  </Text>
-                  <View
-                    style={{
-                      width: 16,
-                      height: 16,
-                      borderRadius: 8,
-                      backgroundColor: "#E0F2FE",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontFamily: "Inter_Bold",
-                        fontSize: 10,
-                        color: "#06B6D4",
-                      }}
-                    >
-                      i
+                <View className=" flex-row items-center mb-1">
+                  <View>
+                    <Text className="text-[#0F172A] text-base font-Inter_Medium">
+                      What is the NEMA configuration?
                     </Text>
                   </View>
+
+                  <TouchableOpacity
+                    onPress={() => setIsVisiable(true)}
+                    className="h-4 w-4 rounded-full border border-[#60A5FA] justify-center items-center"
+                  >
+                    <Text className="text-[#60A5FA] font-Inter_Bold">i</Text>
+                  </TouchableOpacity>
                 </View>
 
                 <Text
+                  className="font-Inter_Regular"
                   style={{
-                    fontFamily: "Inter_Regular",
                     fontSize: 12,
                     color: "#94A3B8",
                     marginBottom: 10,
@@ -329,6 +274,7 @@ const DedicatedCircuitSt3 = () => {
             );
           })()}
         </ScrollView>
+        <NEMAModal visible={isvisiable} onClose={() => setIsVisiable(false)} />
       </View>
     </TouchableWithoutFeedback>
   );
