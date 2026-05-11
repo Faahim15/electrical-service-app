@@ -1,6 +1,7 @@
 import AuthHeading from "@/src/components/auth/AuthHeading";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import OptionGrid from "@/src/components/quote/OptionGrid";
+import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
@@ -9,13 +10,7 @@ import { updateEVChargerDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 const PANEL_LOCATIONS = [
@@ -52,7 +47,6 @@ export default function PanelLocation() {
     return "";
   });
 
-  console.log("panelLocatio", panelLocation);
   return (
     <ScreenWrapper paddingHorizontal={20}>
       <KeyboardAvoidingView
@@ -65,23 +59,11 @@ export default function PanelLocation() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={6} />
+          <StepProgressBar currentStep={6} totalSteps={9} />
 
           {/* Category Tag */}
-          <View className="self-start mb-4">
-            <View
-              className="px-3 py-[6px] rounded-full"
-              style={{
-                backgroundColor: "#EEF9FF",
-                borderWidth: 1,
-                borderColor: "#BAE6FD",
-              }}
-            >
-              <Text className="text-[#0EA5E9] text-[12.5px] font-Inter_Medium">
-                EV Charger Installation
-              </Text>
-            </View>
-          </View>
+
+          <CategoryTag title="EV Charger Installation" />
 
           <AuthHeading
             title="Panel location"
@@ -123,7 +105,7 @@ export default function PanelLocation() {
 
           <GradientButton
             label="Continue"
-            onPress={() => router.push("/quote/ev-charger/additional-info")}
+            onPress={() => router.push("/quote/ev-charger/photos-needed")}
           />
         </ScrollView>
       </KeyboardAvoidingView>

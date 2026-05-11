@@ -58,7 +58,7 @@ export default function HotTubInfo() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={4} />
+          <StepProgressBar currentStep={4} totalSteps={9} />
           <CategoryTag title="Hot Tub Installation" />
 
           <AuthHeading title="Hot tub information" subtitle="" />

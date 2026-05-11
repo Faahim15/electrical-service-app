@@ -9,11 +9,11 @@ import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
 import {
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    Text,
-    View,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -46,7 +46,7 @@ export default function PanelUploadPhotos() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={7} />
+          <StepProgressBar currentStep={7} totalSteps={9} />
 
           {/* Category Tag */}
           <View className="self-start mb-4">
@@ -87,7 +87,7 @@ export default function PanelUploadPhotos() {
 
           <GradientButton
             label="Continue"
-            onPress={() => router.push("/quote/common/review-request")}
+            onPress={() => router.push("/quote/panel-upgrade/additional-info")}
           />
         </ScrollView>
       </KeyboardAvoidingView>

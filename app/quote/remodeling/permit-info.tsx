@@ -6,17 +6,16 @@ import BackButton from "@/src/components/shared/BackButton";
 import CustomInput from "@/src/components/shared/CustomInput";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
-import TextAreaInput from "@/src/components/shared/TextAreaInput";
 import { updateRemodelingDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
 import {
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    Text,
-    View,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -36,13 +35,6 @@ export default function PermitInfo() {
     return "";
   });
 
-  const additionalInfo = useSelector((state: RootState) => {
-    const data = state.serviceForm.categoryData;
-    if (data?.categoryId === "4" && data.details)
-      return data.details.additionalInfo;
-    return "";
-  });
-
   return (
     <ScreenWrapper paddingHorizontal={20}>
       <KeyboardAvoidingView
@@ -55,7 +47,7 @@ export default function PermitInfo() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={6} />
+          <StepProgressBar currentStep={6} totalSteps={9} />
 
           {/* Category Tag */}
           <View className="self-start mb-4">
@@ -73,10 +65,7 @@ export default function PermitInfo() {
             </View>
           </View>
 
-          <AuthHeading
-            title="Permit and additional info"
-            subtitle="Final details"
-          />
+          <AuthHeading title="Permit" subtitle="Final details" />
 
           <OptionGrid
             label="Has a permit been applied for?"
@@ -101,21 +90,9 @@ export default function PermitInfo() {
             />
           )}
 
-          <TextAreaInput
-            label="Additional Information"
-            placeholder="Any additional information you feel we should know..."
-            value={additionalInfo}
-            onChangeText={(text) =>
-              dispatch(updateRemodelingDetails({ additionalInfo: text }))
-            }
-            minHeight={120}
-          />
-
           <GradientButton
             label="Continue"
-            onPress={() =>
-              router.push("/quote/remodeling/upload-photos" as any)
-            }
+            onPress={() => router.push("/quote/remodeling/upload-photos")}
           />
         </ScrollView>
       </KeyboardAvoidingView>

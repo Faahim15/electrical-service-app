@@ -128,7 +128,7 @@ export default function InspectionType() {
                 }}
               />
               <PhotoUploadSection
-                label="Upload photos of electrical panels"
+                label="Please upload clear photos of your electrical panel up close so we can see the breakers/panel label and about 10 ft away."
                 photos={panelPhotos}
                 onPhotosChange={(p) =>
                   dispatch(

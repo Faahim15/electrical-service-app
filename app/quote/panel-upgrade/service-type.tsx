@@ -62,7 +62,6 @@ const SelectOption = ({
 export default function PanelServiceType() {
   const dispatch = useDispatch();
 
-  // Screen mount হলে category "3" initialize করো
   useEffect(() => {
     dispatch(selectCategory("3"));
   }, []);
@@ -95,7 +94,7 @@ export default function PanelServiceType() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={4} />
+          <StepProgressBar currentStep={4} totalSteps={9} />
 
           {/* Category Tag */}
           <View className="self-start mb-4">

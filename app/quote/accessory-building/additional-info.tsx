@@ -5,7 +5,7 @@ import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
 import TextAreaInput from "@/src/components/shared/TextAreaInput";
-import { updateEVChargerDetails } from "@/src/redux/slices/serviceFormSlice";
+import { updateAccessoryBuildingDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
@@ -17,10 +17,10 @@ export default function AdditionalInfo() {
 
   const additionalInfo = useSelector((state: RootState) => {
     const data = state.serviceForm.categoryData;
-    if (data?.categoryId === "2") return data?.details?.additionalInfo;
+    if (data?.categoryId === "5" && data.details)
+      return data.details.additionalInfo;
     return "";
   });
-
   return (
     <ScreenWrapper paddingHorizontal={20}>
       <KeyboardAvoidingView
@@ -33,11 +33,11 @@ export default function AdditionalInfo() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={8} totalSteps={9} />
+          <StepProgressBar currentStep={11} totalSteps={12} />
 
           {/* Category Tag */}
 
-          <CategoryTag title="EV Charger Installation" />
+          <CategoryTag title="Accessory Building Power" />
 
           <AuthHeading
             title="Additional information"
@@ -46,13 +46,13 @@ export default function AdditionalInfo() {
 
           {/* Text Area */}
           <TextAreaInput
-            label="Additional information"
-            placeholder="Any additional information you feel we should know..."
+            label="Additional Information"
+            placeholder="any additional information you feel we should know for your quote"
             value={additionalInfo}
             onChangeText={(text) =>
-              dispatch(updateEVChargerDetails({ additionalInfo: text }))
+              dispatch(updateAccessoryBuildingDetails({ additionalInfo: text }))
             }
-            minHeight={120}
+            minHeight={100}
           />
 
           <GradientButton

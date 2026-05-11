@@ -21,7 +21,12 @@ export default function DockPhotosNeeded() {
       return data.details.existingSpacePhotos;
     return [];
   });
-
+  const panelPhotos = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "7" && data.details)
+      return data.details.panelPhotos;
+    return [];
+  });
   return (
     <ScreenWrapper paddingHorizontal={20}>
       <KeyboardAvoidingView
@@ -34,7 +39,7 @@ export default function DockPhotosNeeded() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={8} totalSteps={9} />
+          <StepProgressBar currentStep={8} totalSteps={10} />
           <CategoryTag title="Dock Power" />
           <AuthHeading title="Photos needed" subtitle="" />
           <PhotoUploadSection
@@ -44,9 +49,16 @@ export default function DockPhotosNeeded() {
               dispatch(updateDockPowerDetails({ existingSpacePhotos: p }))
             }
           />
+          <PhotoUploadSection
+            label="Please upload clear photo of electrical panel up close so we can see the numbers and about 10 ft away."
+            photos={panelPhotos}
+            onPhotosChange={(p) =>
+              dispatch(updateDockPowerDetails({ panelPhotos: p }))
+            }
+          />
           <GradientButton
             label="Continue"
-            onPress={() => router.push("/quote/common/review-request")}
+            onPress={() => router.push("/quote/dock-power/addtional-info")}
           />
         </ScrollView>
       </KeyboardAvoidingView>

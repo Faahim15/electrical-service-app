@@ -10,11 +10,11 @@ import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
 import {
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    Text,
-    View,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -47,7 +47,7 @@ export default function RemodelingUploadPhotos() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={7} />
+          <StepProgressBar currentStep={7} totalSteps={9} />
 
           {/* Category Tag */}
           <View className="self-start mb-4">
@@ -88,7 +88,7 @@ export default function RemodelingUploadPhotos() {
 
           <GradientButton
             label="Submit Quote Request"
-            onPress={() => router.push("/quote/common/review-request" as any)}
+            onPress={() => router.push("/quote/remodeling/additional-info")}
           />
         </ScrollView>
       </KeyboardAvoidingView>

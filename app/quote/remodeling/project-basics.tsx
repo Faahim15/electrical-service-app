@@ -63,7 +63,7 @@ export default function RemodelingProjectBasics() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={4} />
+          <StepProgressBar currentStep={4} totalSteps={9} />
 
           {/* Category Tag */}
           <View className="self-start mb-4">

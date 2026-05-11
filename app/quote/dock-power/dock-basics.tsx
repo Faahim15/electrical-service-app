@@ -50,7 +50,7 @@ export default function DockBasics() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={4} totalSteps={9} />
+          <StepProgressBar currentStep={4} totalSteps={10} />
           <CategoryTag title="Dock Power" />
 
           <AuthHeading title="Dock basics" subtitle="" />

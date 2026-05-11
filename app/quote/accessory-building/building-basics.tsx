@@ -43,7 +43,7 @@ export default function BuildingBasics() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={4} totalSteps={11} />
+          <StepProgressBar currentStep={4} totalSteps={12} />
           <CategoryTag title="Accessory Building Power" />
 
           <AuthHeading title="Building basics" subtitle="" />

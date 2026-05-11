@@ -16,15 +16,15 @@ import { router } from "expo-router";
 import React, { useState } from "react";
 import {
   KeyboardAvoidingView,
-  Modal,
   Platform,
-  Pressable,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
+  useWindowDimensions,
 } from "react-native";
+
 import { useDispatch, useSelector } from "react-redux";
 
 const CHARGER_TYPES = ["Plug-in", "Hardwired", "I want help deciding"];
@@ -35,75 +35,6 @@ const CHARGER_STATUS_OPTIONS = [
   "Need to place order",
   "Need help choosing a charger",
 ];
-
-// ─── NEMAInfoModal ────────────────────────────────────────────────────────────
-
-const NEMAInfoModal = ({
-  visible,
-  onClose,
-}: {
-  visible: boolean;
-  onClose: () => void;
-}) => (
-  <Modal
-    visible={visible}
-    transparent
-    animationType="fade"
-    statusBarTranslucent
-    onRequestClose={onClose}
-  >
-    {/* Backdrop */}
-    <Pressable
-      className="flex-1 justify-center items-center px-6"
-      style={{ backgroundColor: "rgba(15,23,42,0.55)" }}
-      onPress={onClose}
-    >
-      {/* Sheet — stop propagation so inner taps don't close modal */}
-      <Pressable
-        className="bg-white rounded-[20px] px-5 pt-5 pb-5 w-full"
-        style={{ maxHeight: "82%" }}
-        onPress={(e) => e.stopPropagation()}
-      >
-        {/* Header */}
-        <View className="flex-row items-center justify-between mb-3">
-          <Text className="text-[15px] font-Inter_SemiBold text-[#0F172A]">
-            NEMA Configuration Chart
-          </Text>
-          <TouchableOpacity
-            onPress={onClose}
-            className="w-[30px] h-[30px] rounded-full bg-[#F1F5F9] items-center justify-center"
-          >
-            <Ionicons name="close" size={18} color="#64748B" />
-          </TouchableOpacity>
-        </View>
-
-        {/* Divider */}
-        <View className="h-[1px] bg-[#F1F5F9] mb-[14px]" />
-
-        {/* SVG Chart — scrollable for small screens */}
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          bounces={false}
-          contentContainerStyle={{ alignItems: "center" }}
-        >
-          <CustomSvg xml={nemaChart} width={320} height={480} />
-        </ScrollView>
-
-        {/* CTA */}
-        <TouchableOpacity
-          onPress={onClose}
-          className="mt-4 bg-[#0EA5E9] py-[13px] rounded-xl items-center"
-        >
-          <Text className="text-white text-[14px] font-Inter_SemiBold">
-            Got it
-          </Text>
-        </TouchableOpacity>
-      </Pressable>
-    </Pressable>
-  </Modal>
-);
-
-// ─── SectionLabel ─────────────────────────────────────────────────────────────
 
 const SectionLabel = ({
   label,
@@ -133,8 +64,6 @@ const SectionLabel = ({
     )}
   </View>
 );
-
-// ─── SelectOption ─────────────────────────────────────────────────────────────
 
 const SelectOption = ({
   label,
@@ -172,12 +101,10 @@ const SelectOption = ({
   </TouchableOpacity>
 );
 
-// ─── Main Screen ──────────────────────────────────────────────────────────────
-
 export default function EVChargerDetails() {
   const dispatch = useDispatch();
-  const [nemaModalVisible, setNemaModalVisible] = useState(false);
-
+  const [showNemaChart, setShowNemaChart] = useState(false);
+  const { width: screenWidth } = useWindowDimensions();
   const chargerType = useSelector((state: RootState) => {
     const data = state.serviceForm.categoryData;
     if (data?.categoryId === "2") return data?.details?.chargerType;
@@ -206,11 +133,6 @@ export default function EVChargerDetails() {
 
   return (
     <ScreenWrapper paddingHorizontal={20}>
-      <NEMAInfoModal
-        visible={nemaModalVisible}
-        onClose={() => setNemaModalVisible(false)}
-      />
-
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
@@ -221,7 +143,7 @@ export default function EVChargerDetails() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={4} />
+          <StepProgressBar currentStep={4} totalSteps={9} />
 
           {/* Category Tag */}
           <View className="self-start mb-4">
@@ -257,7 +179,6 @@ export default function EVChargerDetails() {
             ))}
           </View>
 
-          {/* Conditional fields — only show when Plug-in or Hardwired selected */}
           {showConditionalFields && (
             <>
               {/* NEMA Config - only for Plug-in */}
@@ -266,8 +187,9 @@ export default function EVChargerDetails() {
                   <SectionLabel
                     label="What NEMA configuration do you need?"
                     hasInfo
-                    onInfoPress={() => setNemaModalVisible(true)}
+                    onInfoPress={() => setShowNemaChart((prev) => !prev)}
                   />
+
                   <TextInput
                     placeholder="14-50, 6-50, 14-30, unsure, etc."
                     placeholderTextColor="#AABCD0"
@@ -292,6 +214,52 @@ export default function EVChargerDetails() {
                       elevation: 1,
                     }}
                   />
+
+                  {/* NEMA Chart — inline toggle */}
+                  {showNemaChart && (
+                    <View
+                      className="mt-3 rounded-2xl overflow-hidden"
+                      style={{
+                        borderWidth: 1,
+                        borderColor: "#BAE6FD",
+                        shadowColor: "#0EA5E9",
+                        shadowOffset: { width: 0, height: 2 },
+                        shadowOpacity: 0.1,
+                        shadowRadius: 8,
+                        elevation: 3,
+                      }}
+                    >
+                      {/* Header */}
+                      <View
+                        className="flex-row items-center justify-between px-4 py-3"
+                        style={{ backgroundColor: "#EEF9FF" }}
+                      >
+                        <Text className="text-lg font-Inter_SemiBold text-[#0369A1]">
+                          {/* NEMA Configuration Chart */}
+                        </Text>
+                        <TouchableOpacity
+                          onPress={() => setShowNemaChart(false)}
+                          className="w-[26px] h-[26px] rounded-full items-center justify-center"
+                          style={{ backgroundColor: "#BAE6FD" }}
+                        >
+                          <Ionicons name="close" size={14} color="#0369A1" />
+                        </TouchableOpacity>
+                      </View>
+
+                      {/* SVG — full width, scrollable vertically */}
+                      <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        bounces={false}
+                        style={{ backgroundColor: "#F0F9FF", maxHeight: 900 }}
+                      >
+                        <CustomSvg
+                          xml={nemaChart}
+                          width={screenWidth - 48}
+                          height={800}
+                        />
+                      </ScrollView>
+                    </View>
+                  )}
                 </View>
               )}
 
@@ -310,7 +278,7 @@ export default function EVChargerDetails() {
                 ))}
               </View>
 
-              {/* Charger Status - only when Yes */}
+              {/* Charger Status */}
               {showChargerStatus && (
                 <View className="mb-4">
                   <SectionLabel label="What is the status of the charger?" />

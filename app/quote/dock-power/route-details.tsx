@@ -49,7 +49,7 @@ export default function DockRouteDetails() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={6} totalSteps={9} />
+          <StepProgressBar currentStep={6} totalSteps={10} />
           <CategoryTag title="Dock Power" />
 
           <AuthHeading title="Route Details" subtitle="" />
