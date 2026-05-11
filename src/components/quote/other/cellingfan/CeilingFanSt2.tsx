@@ -115,7 +115,7 @@ const CeilingFanSt2 = () => {
         <Text className="text-xl font-Inter_Bold text-gray-900 mb-1">
           Fan details
         </Text>
-        <Text className="text-base text-[#1F2937] font-Inter_Mediummb-4">
+        <Text className="text-base text-[#1F2937] font-Inter_Medium mb-4">
           Will you be providing the new ceiling fan?
         </Text>
 

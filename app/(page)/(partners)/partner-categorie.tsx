@@ -89,7 +89,7 @@ const Partnercategorie = () => {
         >
           {/* ── Hero Banner ── */}
           <Animated.View
-            className="mx-4 mb-4 bg-white rounded-2xl px-4 py-4 mt-3"
+            className=" mb-4 bg-white rounded-2xl px-4 py-4 mt-3"
             style={[
               {
                 transform: [{ translateY: heroBannerSlide }],

@@ -3,7 +3,6 @@ import {
   Animated,
   ScrollView,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -77,17 +76,17 @@ const CeilingFanSt3 = () => {
         onPress={() => animatePress(animKey, onPress)}
         className={`py-3 px-3 rounded-lg border ${
           isSelected
-            ? "bg-cyan-500 border-cyan-500"
+            ? "bg-[#60A5FA] border-[#60A5FA]"
             : "bg-white border-gray-200"
         }`}
         style={{ marginBottom: flex ? 0 : 8 }}
         activeOpacity={0.85}
       >
         <Text
-          className={`text-xs text-center ${
+          className={`text-sm text-center ${
             isSelected
               ? "text-white font-Inter_SemiBold"
-              : "text-gray-700 font-Inter_Regular"
+              : "text-gray-700 font-Inter_Medium"
           }`}
         >
           {label}
@@ -99,22 +98,24 @@ const CeilingFanSt3 = () => {
   return (
     <View className="flex-1 ">
       <ScrollView
-        className="flex-1 px-4"
+        className="flex-1"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 100 }}
       >
         {/* Category tag */}
-        <View className="mt-3 mb-4">
-          <Text className="text-xs text-cyan-500 font-Inter_Medium">
-            Ceiling Fans
-          </Text>
+        <View className=" ">
+          <View className="self-start bg-blue-50 rounded-full px-3 py-1 mb-5 border border-blue-100">
+            <Text className="font-Inter_SemiBold text-[11px] text-[#60A5FA] tracking-wide">
+              Ceiling Fans
+            </Text>
+          </View>
         </View>
 
         {/* Title */}
         <Text className="text-xl font-Inter_Bold text-gray-900 mb-1">
           Switch details
         </Text>
-        <Text className="text-sm text-gray-500 font-Inter_Regular mb-4">
+        <Text className="text-base text-[#1F2937] font-Inter_Medium mb-4">
           Will the fan be connected to a new or existing switch?
         </Text>
 
@@ -140,7 +141,7 @@ const CeilingFanSt3 = () => {
         {/* Switch type grid for "new" selection */}
         {switchConnection === "new" && (
           <View className="mt-4">
-            <Text className="text-sm text-gray-500 font-Inter_Regular mb-3">
+            <Text className="text-base text-[#1F2937] font-Inter_Medium mb-3">
               What kind of switch do you want installed?
             </Text>
             <View className="flex-row mb-2">
@@ -296,22 +297,6 @@ const CeilingFanSt3 = () => {
             </View>
           </View>
         )}
-
-        {/* Additional Information */}
-        <Text className="text-sm text-gray-500 font-Inter_Regular mb-2 mt-2">
-          Additional Information
-        </Text>
-        <TextInput
-          value={additionalInfo}
-          onChangeText={setAdditionalInfo}
-          placeholder=""
-          placeholderTextColor="#9CA3AF"
-          className="bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-700 font-Inter_Regular"
-          multiline
-          numberOfLines={4}
-          textAlignVertical="top"
-          style={{ minHeight: 80 }}
-        />
       </ScrollView>
     </View>
   );

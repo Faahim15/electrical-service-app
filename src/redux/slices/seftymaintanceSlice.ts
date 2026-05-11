@@ -74,7 +74,7 @@ const initialState: SafetyMaintenanceState = {
         },
         {
           title: "Recommended Frequency",
-          body: "Annually",
+          body: "Monthly",
           icon: "calendar",
         },
         {
@@ -99,12 +99,12 @@ const initialState: SafetyMaintenanceState = {
         },
         {
           title: "Instructions",
-          body: "Test the detector monthly using the test button. Replace batteries every 6 months. Replace the unit every 5–7 years.",
+          body: "Test the detector monthly using the test button. Replace batteries annually. Replace the unit every 5–7 years.",
           icon: "tool",
         },
         {
           title: "Recommended Frequency",
-          body: "Every 6 months",
+          body: "annually",
           icon: "calendar",
         },
         {
@@ -129,12 +129,12 @@ const initialState: SafetyMaintenanceState = {
         },
         {
           title: "Instructions",
-          body: "Check that the alarm is powered. Test the alarm if it has a test button. Replace battery annually.",
+          body: "Check that the alarm is powered. Test the alarm if it has a test button. Replace battery monthly.",
           icon: "tool",
         },
         {
           title: "Recommended Frequency",
-          body: "Annually",
+          body: "monthly",
           icon: "calendar",
         },
         {
@@ -164,7 +164,7 @@ const initialState: SafetyMaintenanceState = {
         },
         {
           title: "Recommended Frequency",
-          body: "Seasonally (every 3–4 months)",
+          body: "Seasonally",
           icon: "calendar",
         },
         {

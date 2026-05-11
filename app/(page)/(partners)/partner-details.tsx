@@ -153,7 +153,7 @@ const Partnerdetails = () => {
         </Animated.View>
 
         <ScrollView
-          className="flex-1 px-4"
+          className="flex-1 "
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 32 }}
         >
@@ -183,7 +183,7 @@ const Partnerdetails = () => {
                 </LinearGradient>
 
                 <View className="w-[70%]">
-                  <Text className="text-lg font-Inter_Bold text-[#111827]  ">
+                  <Text className="text-base font-Inter_Bold text-[#111827]  ">
                     {PARTNER.name}
                   </Text>
                   <Text className="text-sm text-gray-500 font-Inter_Regular">
@@ -210,7 +210,7 @@ const Partnerdetails = () => {
 
             {/* Badge */}
             <View className="mt-3 bg-[#EFF6FF] rounded-xl px-3 py-2">
-              <Text className="text-sm text-[#2563EB] font-Inter_Regular leading-5">
+              <Text className="text-sm text-[#155DFC] font-Inter_Regular leading-5">
                 {PARTNER.badge}
               </Text>
             </View>
@@ -230,8 +230,8 @@ const Partnerdetails = () => {
 
             {/* Phone row */}
             <View className="flex-row items-center gap-3 mb-3">
-              <View className="w-9 h-9 rounded-full bg-[#F0FDFA] items-center justify-center">
-                <Feather name="phone" size={16} color="#0D9488" />
+              <View className="w-9 h-9 rounded-full bg-[#EFF6FF] items-center justify-center">
+                <Feather name="phone" size={16} color="#155DFC" />
               </View>
               <View>
                 <Text className="text-xs text-gray-400 font-Inter_Regular">
@@ -247,8 +247,8 @@ const Partnerdetails = () => {
               <View>
                 <View className="h-px bg-gray-100 mb-3" />
                 <View className="flex-row items-center gap-3">
-                  <View className="w-9 h-9 rounded-full bg-[#F0FDFA] items-center justify-center">
-                    <Feather name="globe" size={16} color="#0D9488" />
+                  <View className="w-9 h-9 rounded-full bg-[#EFF6FF] items-center justify-center">
+                    <Feather name="globe" size={16} color="#155DFC" />
                   </View>
                   <View className="flex-1">
                     <Text className="text-xs text-gray-400 font-Inter_Regular">

@@ -250,7 +250,7 @@ const Troubleshootingguides = () => {
             {/* Request Service */}
             {category?.title === "Outlet Not Working" && (
               <TouchableOpacity
-                onPress={() => router.replace("/trobleshooting")}
+                onPress={() => router.replace("/quote/choose-category")}
                 activeOpacity={0.85}
                 className="rounded-2xl py-4 items-center border border-[#14B8A6]"
               >

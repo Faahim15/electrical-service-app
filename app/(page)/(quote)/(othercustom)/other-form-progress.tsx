@@ -2,6 +2,7 @@ import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import CeilingFanSt1 from "@/src/components/quote/other/cellingfan/CeilingFanSt1";
 import CeilingFanSt2 from "@/src/components/quote/other/cellingfan/CeilingFanSt2";
 import CeilingFanSt3 from "@/src/components/quote/other/cellingfan/CeilingFanSt3";
+import CeilingFanSt4 from "@/src/components/quote/other/cellingfan/CeilingFanSt4";
 import Step1 from "@/src/components/quote/other/common/Step1";
 import Step2 from "@/src/components/quote/other/common/Step2";
 import Step3 from "@/src/components/quote/other/common/Step3";
@@ -101,6 +102,7 @@ const CATEGORY_STEP_MAP: Record<string, StepConfig[]> = {
     { component: CeilingFanSt1, title: "Ceiling Fan" },
     { component: CeilingFanSt2, title: "Ceiling Fan" },
     { component: CeilingFanSt3, title: "Ceiling Fan" },
+    { component: CeilingFanSt4, title: "Ceiling Fan" },
   ],
 };
 // ─── Category-specific steps ──────────────────────────────────────────────────

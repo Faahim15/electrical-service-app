@@ -102,7 +102,7 @@ const MaintenanceDetails = () => {
         >
           <Text className="text-[#6B7280] text-sm">No item selected.</Text>
           <TouchableOpacity onPress={() => router.back()} className="mt-4">
-            <Text className="text-[#06B6D4] font-Inter_SemiBold">Go Back</Text>
+            <Text className="text-[#155DFC] font-Inter_SemiBold">Go Back</Text>
           </TouchableOpacity>
         </SafeAreaView>
       </ScreenWrapper>
@@ -118,7 +118,7 @@ const MaintenanceDetails = () => {
             transform: [{ translateY: headerSlide }],
             opacity: headerOpacity,
           }}
-          className="flex-row justify-between items-center pb-2 px-4"
+          className="flex-row justify-between items-center pb-2 "
         >
           <TouchableOpacity onPress={() => router.back()}>
             <Feather name="arrow-left" size={24} color="#111827" />
@@ -140,7 +140,7 @@ const MaintenanceDetails = () => {
               transform: [{ translateY: heroBannerSlide }],
               opacity: heroBannerOpacity,
             }}
-            className="px-4 pt-2 pb-4"
+            className=" pt-2 pb-4"
           >
             <Text className="text-xl font-Inter_Bold text-[#111827]">
               {selectedItem.pageTitle}
@@ -148,7 +148,7 @@ const MaintenanceDetails = () => {
           </Animated.View>
 
           {/* ── Detail Cards ── */}
-          <View className="px-4 gap-y-3">
+          <View className="gap-y-3">
             {selectedItem.details.map((detail, index) => (
               <Animated.View
                 key={detail.title}
@@ -161,7 +161,7 @@ const MaintenanceDetails = () => {
                 <View className="flex-row items-center gap-x-2 mb-1">
                   <Feather
                     name={detail.icon as any}
-                    size={16}
+                    size={20}
                     color="#06B6D4"
                   />
                   <Text className="text-[15px] font-Inter_SemiBold text-[#111827]">

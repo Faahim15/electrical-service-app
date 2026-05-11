@@ -58,7 +58,7 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
   return (
     <Animated.View
       style={{ transform: [{ translateY: slideAnim }], opacity: opacityAnim }}
-      className="mb-3 mx-4"
+      className="mb-3"
     >
       <View
         className="bg-white rounded-2xl px-4 py-4"
