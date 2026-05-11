@@ -9,6 +9,24 @@ import {
 
 type SwitchConnection = "new" | "existing" | "remote" | null;
 type YesNo = "yes" | "no" | null;
+const SWITCH_TYPES = [
+  "Standard (Toggle)",
+  "Standard (Rocker/Decorator)",
+  "Dimmer (Toggle)",
+  "Dimmer (Rocker/Decorator)",
+  "Smart",
+  "Motion",
+  "Timer",
+  "I'll provide my own",
+];
+const CHIP_ROWS: string[][] = [
+  ["Standard (Toggle)"],
+  ["Standard (Rocker/Decorator)"],
+  ["Dimmer (Toggle)"],
+  ["Dimmer (Rocker/Decorator)", "Smart"],
+  ["Motion", "Timer", "I'll provide my own"],
+];
+
 type SwitchType =
   | "standard_toggle"
   | "smart"
@@ -26,8 +44,34 @@ const CeilingFanSt3 = () => {
   const [upgradeSwitch, setUpgradeSwitch] = useState<YesNo>(null);
   const [switchType, setSwitchType] = useState<SwitchType>(null);
   const [additionalInfo, setAdditionalInfo] = useState("");
-
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const scaleAnims = useRef<{ [key: string]: Animated.Value }>({}).current;
+  const chipAnims = useRef(
+    SWITCH_TYPES.map(() => new Animated.Value(1)),
+  ).current;
+
+  const animatePressIn = (anim: Animated.Value) => {
+    Animated.sequence([
+      Animated.timing(anim, {
+        toValue: 0.93,
+        duration: 80,
+        useNativeDriver: true,
+      }),
+      Animated.timing(anim, {
+        toValue: 1,
+        duration: 120,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
+
+  const handleToggleType = (type: string) => {
+    const index = SWITCH_TYPES.indexOf(type);
+    if (index !== -1) animatePressIn(chipAnims[index]);
+    setSelectedTypes((prev) =>
+      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type],
+    );
+  };
 
   const getAnim = (key: string) => {
     if (!scaleAnims[key]) {
@@ -144,69 +188,43 @@ const CeilingFanSt3 = () => {
             <Text className="text-base text-[#1F2937] font-Inter_Medium mb-3">
               What kind of switch do you want installed?
             </Text>
-            <View className="flex-row mb-2">
-              <SelectButton
-                label="Standard (Toggle)"
-                isSelected={switchType === "standard_toggle"}
-                onPress={() => setSwitchType("standard_toggle")}
-                animKey="st_toggle"
-                flex
-              />
-              <SelectButton
-                label="Smart"
-                isSelected={switchType === "smart"}
-                onPress={() => setSwitchType("smart")}
-                animKey="st_smart"
-                flex
-              />
-            </View>
-            <View className="flex-row mb-2">
-              <SelectButton
-                label={"Standard (Rocker/\nDecorator)"}
-                isSelected={switchType === "standard_rocker"}
-                onPress={() => setSwitchType("standard_rocker")}
-                animKey="st_rocker"
-                flex
-              />
-              <SelectButton
-                label={"Dimmer\n(Rocker/Decorator)"}
-                isSelected={switchType === "dimmer_rocker"}
-                onPress={() => setSwitchType("dimmer_rocker")}
-                animKey="st_drock"
-                flex
-              />
-            </View>
-            <View className="flex-row mb-2">
-              <SelectButton
-                label="Dimmer (Toggle)"
-                isSelected={switchType === "dimmer_toggle"}
-                onPress={() => setSwitchType("dimmer_toggle")}
-                animKey="st_dtog"
-                flex
-              />
-              <SelectButton
-                label="Motion"
-                isSelected={switchType === "motion"}
-                onPress={() => setSwitchType("motion")}
-                animKey="st_motion"
-                flex
-              />
-            </View>
-            <View className="flex-row mb-4">
-              <SelectButton
-                label="Timer"
-                isSelected={switchType === "timer"}
-                onPress={() => setSwitchType("timer")}
-                animKey="st_timer"
-                flex
-              />
-              <SelectButton
-                label="I'll provide my own"
-                isSelected={switchType === "provide_own"}
-                onPress={() => setSwitchType("provide_own")}
-                animKey="st_own"
-                flex
-              />
+            <View className="mb-6">
+              {CHIP_ROWS.map((row, rowIdx) => (
+                <View key={rowIdx} className="flex-row flex-wrap mb-2">
+                  {row.map((chip) => {
+                    const index = SWITCH_TYPES.indexOf(chip);
+                    const isSelected = selectedTypes.includes(chip);
+                    return (
+                      <Animated.View
+                        key={chip}
+                        style={{
+                          transform: [{ scale: chipAnims[index] }],
+                          marginRight: 8,
+                          marginBottom: 4,
+                        }}
+                      >
+                        <TouchableOpacity
+                          onPress={() => handleToggleType(chip)}
+                          activeOpacity={0.8}
+                          className="px-4 py-2 rounded-full border"
+                          style={{
+                            backgroundColor: isSelected ? "#60A5FA" : "#ffffff",
+                            borderColor: isSelected ? "#60A5FA" : "#D1D5DB",
+                          }}
+                        >
+                          <Text
+                            className={`font-Inter_Medium text-sm ${
+                              isSelected ? "text-white" : "text-gray-700"
+                            }`}
+                          >
+                            {chip}
+                          </Text>
+                        </TouchableOpacity>
+                      </Animated.View>
+                    );
+                  })}
+                </View>
+              ))}
             </View>
           </View>
         )}
@@ -214,7 +232,7 @@ const CeilingFanSt3 = () => {
         {/* Upgrade switch for "existing" selection */}
         {switchConnection === "existing" && (
           <View className="mt-4">
-            <Text className="text-sm text-gray-500 font-Inter_Regular mb-3">
+            <Text className="text-base text-[#1F2937] font-Inter_Medium mb-3">
               Do you want to upgrade your switch?
             </Text>
             <SelectButton
@@ -235,65 +253,47 @@ const CeilingFanSt3 = () => {
         {/* Switch type grid when upgrading */}
         {switchConnection === "existing" && upgradeSwitch === "yes" && (
           <View className="mt-4">
-            <Text className="text-sm text-gray-500 font-Inter_Regular mb-3">
+            <Text className="text-base text-[#1F2937] font-Inter_Medium mb-3">
               What kind of switch do you want installed?
             </Text>
-            <SelectButton
-              label="Standard (Toggle)"
-              isSelected={switchType === "standard_toggle"}
-              onPress={() => setSwitchType("standard_toggle")}
-              animKey="up_st_toggle"
-            />
-            <SelectButton
-              label="Standard (Rocker/Decorator)"
-              isSelected={switchType === "standard_rocker"}
-              onPress={() => setSwitchType("standard_rocker")}
-              animKey="up_st_rocker"
-            />
-            <SelectButton
-              label="Dimmer (Toggle)"
-              isSelected={switchType === "dimmer_toggle"}
-              onPress={() => setSwitchType("dimmer_toggle")}
-              animKey="up_st_dtog"
-            />
-            <View className="flex-row mb-2">
-              <SelectButton
-                label="Dimmer (Rocker/Decorator)"
-                isSelected={switchType === "dimmer_rocker"}
-                onPress={() => setSwitchType("dimmer_rocker")}
-                animKey="up_st_drock"
-                flex
-              />
-              <SelectButton
-                label="Smart"
-                isSelected={switchType === "smart"}
-                onPress={() => setSwitchType("smart")}
-                animKey="up_st_smart"
-                flex
-              />
-            </View>
-            <View className="flex-row mb-4">
-              <SelectButton
-                label="Motion"
-                isSelected={switchType === "motion"}
-                onPress={() => setSwitchType("motion")}
-                animKey="up_st_motion"
-                flex
-              />
-              <SelectButton
-                label="Timer"
-                isSelected={switchType === "timer"}
-                onPress={() => setSwitchType("timer")}
-                animKey="up_st_timer"
-                flex
-              />
-              <SelectButton
-                label="I'll provide my own"
-                isSelected={switchType === "provide_own"}
-                onPress={() => setSwitchType("provide_own")}
-                animKey="up_st_own"
-                flex
-              />
+
+            <View className="mb-6">
+              {CHIP_ROWS.map((row, rowIdx) => (
+                <View key={rowIdx} className="flex-row flex-wrap mb-2">
+                  {row.map((chip) => {
+                    const index = SWITCH_TYPES.indexOf(chip);
+                    const isSelected = selectedTypes.includes(chip);
+                    return (
+                      <Animated.View
+                        key={chip}
+                        style={{
+                          transform: [{ scale: chipAnims[index] }],
+                          marginRight: 8,
+                          marginBottom: 4,
+                        }}
+                      >
+                        <TouchableOpacity
+                          onPress={() => handleToggleType(chip)}
+                          activeOpacity={0.8}
+                          className="px-4 py-2 rounded-full border"
+                          style={{
+                            backgroundColor: isSelected ? "#60A5FA" : "#ffffff",
+                            borderColor: isSelected ? "#60A5FA" : "#D1D5DB",
+                          }}
+                        >
+                          <Text
+                            className={`font-Inter_Medium text-sm ${
+                              isSelected ? "text-white" : "text-gray-700"
+                            }`}
+                          >
+                            {chip}
+                          </Text>
+                        </TouchableOpacity>
+                      </Animated.View>
+                    );
+                  })}
+                </View>
+              ))}
             </View>
           </View>
         )}
