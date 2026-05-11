@@ -1,15 +1,15 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useImagePicker } from "@/src/hook/useImagePicker";
 import * as ImagePicker from "expo-image-picker";
 import React, { useRef, useState } from "react";
 import {
   Animated,
-  Image,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
+import UploadArea from "../share/UploadArea";
 
 type YesNo = "yes" | "no" | null;
 
@@ -18,6 +18,7 @@ const CeilingFanSt2 = () => {
   const [fanDescription, setFanDescription] = useState("");
   const [ceilingHeight, setCeilingHeight] = useState("");
   const [photoUri, setPhotoUri] = useState<string | null>(null);
+  const CellingImages1 = useImagePicker();
 
   const scaleAnims = useRef<{ [key: string]: Animated.Value }>({}).current;
 
@@ -76,7 +77,7 @@ const CeilingFanSt2 = () => {
         onPress={() => animatePress(animKey, onPress)}
         className={`w-full py-3 px-4 rounded-lg mb-2 border ${
           isSelected
-            ? "bg-cyan-500 border-cyan-500"
+            ? "bg-[#60A5FA] border-[#60A5FA]"
             : "bg-white border-gray-200"
         }`}
         activeOpacity={0.85}
@@ -102,17 +103,19 @@ const CeilingFanSt2 = () => {
         contentContainerStyle={{ paddingBottom: 100 }}
       >
         {/* Category tag */}
-        <View className="mt-3 mb-4">
-          <Text className="text-xs text-cyan-500 font-Inter_Medium">
-            Ceiling Fans
-          </Text>
+        <View className=" ">
+          <View className="self-start bg-blue-50 rounded-full px-3 py-1 mb-5 border border-blue-100">
+            <Text className="font-Inter_SemiBold text-[11px] text-[#60A5FA] tracking-wide">
+              Ceiling Fans
+            </Text>
+          </View>
         </View>
 
         {/* Title */}
         <Text className="text-xl font-Inter_Bold text-gray-900 mb-1">
           Fan details
         </Text>
-        <Text className="text-sm text-gray-500 font-Inter_Regular mb-4">
+        <Text className="text-base text-[#1F2937] font-Inter_Mediummb-4">
           Will you be providing the new ceiling fan?
         </Text>
 
@@ -131,47 +134,18 @@ const CeilingFanSt2 = () => {
 
         {/* Photo Upload */}
         {providingFan === "yes" && (
-          <View className=" p-6 rounded-xl border border-gray-100 items-center bg-white justify-center items-center">
-            <TouchableOpacity
-              onPress={pickImage}
-              activeOpacity={0.8}
-              className=" justify-center items-center"
-            >
-              {photoUri ? (
-                <Image
-                  source={{ uri: photoUri }}
-                  className="w-28 h-28 rounded-xl mb-2"
-                  resizeMode="cover"
-                />
-              ) : (
-                <View className=" items-center justify-center">
-                  <MaterialCommunityIcons
-                    name="file-image-plus-outline"
-                    size={24}
-                    color="#4b5563"
-                  />
-                </View>
-              )}
-              <Text className="text-xs text-gray-400 font-Inter_Regular text-center mb-3">
-                Please upload a photo of your new{"\n"}ceiling fan
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={pickImage}
-              className="border border-gray-300 rounded-lg px-6 py-2"
-              activeOpacity={0.8}
-            >
-              <Text className="text-sm text-gray-600 font-Inter_Medium">
-                Choose File
-              </Text>
-            </TouchableOpacity>
-          </View>
+          <UploadArea
+            tittle="Please upload a photo of your new ceiling fan"
+            images={CellingImages1.images}
+            pickImage={CellingImages1.pickImage}
+            onRemove={CellingImages1.onRemove}
+          />
         )}
 
         {/* Fan description */}
         {providingFan !== "yes" && (
           <View>
-            <Text className="text-sm text-gray-500 font-Inter_Regular  mt-4">
+            <Text className="text-base text-[#1F2937] font-Inter_Medium  mt-4">
               Please describe the fan you want
             </Text>
             <TextInput
@@ -188,7 +162,7 @@ const CeilingFanSt2 = () => {
         )}
 
         {/* Ceiling height */}
-        <Text className="text-sm text-gray-500 font-Inter_Regular my-2">
+        <Text className="text-base text-[#1F2937] font-Inter_Medium my-2">
           How tall is the ceiling where the fan will be installed?
         </Text>
         <TextInput

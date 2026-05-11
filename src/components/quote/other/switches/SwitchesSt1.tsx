@@ -34,17 +34,11 @@ const SwitchesSt1 = () => {
 
   return (
     <View className="flex-1 ">
-      <ScrollView className="flex-1 px-4" showsVerticalScrollIndicator={false}>
+      <ScrollView className="flex-1 " showsVerticalScrollIndicator={false}>
         {/* Breadcrumb */}
         <View className="mt-4 mb-3">
-          <View
-            className="self-start px-3 py-1 rounded-full border"
-            style={{ borderColor: "#06B6D4" }}
-          >
-            <Text
-              className="font-Inter_Medium text-xs"
-              style={{ color: "#06B6D4" }}
-            >
+          <View className="self-start bg-blue-50 rounded-full px-3 py-1 mb-5 border border-blue-100">
+            <Text className="font-Inter_SemiBold text-[11px] text-[#60A5FA] tracking-wide">
               Switches
             </Text>
           </View>
@@ -86,8 +80,8 @@ const SwitchesSt1 = () => {
                 activeOpacity={0.85}
                 className="mb-2 rounded-xl border px-4 py-4"
                 style={{
-                  backgroundColor: isSelected ? "#06B6D4" : "#ffffff",
-                  borderColor: isSelected ? "#06B6D4" : "#E5E7EB",
+                  backgroundColor: isSelected ? "#60A5FA" : "#ffffff",
+                  borderColor: isSelected ? "#60A5FA" : "#E5E7EB",
                 }}
               >
                 <Text

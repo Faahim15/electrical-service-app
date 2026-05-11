@@ -1,17 +1,14 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import * as ImagePicker from "expo-image-picker";
+import { useImagePicker } from "@/src/hook/useImagePicker";
 import React, { useRef, useState } from "react";
 import {
-  Alert,
   Animated,
-  Image,
-  Platform,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
+import UploadArea from "../share/UploadArea";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type LightingType =
@@ -124,7 +121,7 @@ const OptionButton = ({
         className={`text-sm text-center ${
           selected
             ? "text-white font-Inter_SemiBold"
-            : "text-gray-800 font-Inter_Regular"
+            : "text-[#0A0A0A] font-Inter_Medium"
         }`}
       >
         {label}
@@ -177,78 +174,6 @@ const YesNoRow = ({
   </View>
 );
 
-// ─── UploadBox ────────────────────────────────────────────────────────────────
-const UploadBox = ({
-  label,
-  images,
-  onAdd,
-}: {
-  label: string;
-  images: string[];
-  onAdd: (uri: string) => void;
-}) => {
-  const pickImage = async () => {
-    if (Platform.OS !== "web") {
-      const { status } =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== "granted") {
-        Alert.alert(
-          "Permission needed",
-          "Please allow photo access to upload images.",
-        );
-        return;
-      }
-    }
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsMultipleSelection: true,
-      quality: 0.8,
-    });
-    if (!result.canceled && result.assets.length > 0) {
-      result.assets.forEach((asset) => onAdd(asset.uri));
-    }
-  };
-
-  return (
-    <View>
-      <AnimatedTouchable onPress={pickImage}>
-        <View className="border border-gray-200 rounded-xl p-4 items-center bg-white">
-          <MaterialCommunityIcons
-            name="file-image-plus-outline"
-            size={24}
-            color="#4b5563"
-          />
-          <Text className="text-gray-500 font-Inter_Regular text-sm">
-            {label}
-          </Text>
-        </View>
-      </AnimatedTouchable>
-      {images.length > 0 && (
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          className="mt-2"
-        >
-          <View className="flex-row gap-2">
-            {images.map((uri, i) => (
-              <Image
-                key={i}
-                source={{ uri }}
-                style={{
-                  width: 72,
-                  height: 72,
-                  borderRadius: 10,
-                  backgroundColor: "#eee",
-                }}
-              />
-            ))}
-          </View>
-        </ScrollView>
-      )}
-    </View>
-  );
-};
-
 // ─── SectionCard ──────────────────────────────────────────────────────────────
 const SectionCard = ({
   children,
@@ -263,13 +188,13 @@ const SectionCard = ({
 );
 
 const Label = ({ children }: { children: React.ReactNode }) => (
-  <Text className="text-gray-800 font-Inter_Regular text-sm mb-3 leading-5">
+  <Text className="text-[#364153] font-Inter_Regular text-sm mb-3 leading-5">
     {children}
   </Text>
 );
 
 const SubHeading = ({ children }: { children: React.ReactNode }) => (
-  <Text className="text-gray-400 font-Inter_Regular text-xs mb-1">
+  <Text className="text-[#364153] font-Inter_Regular text-xs mb-1">
     {children}
   </Text>
 );
@@ -287,7 +212,9 @@ const InteriorSection = () => {
   const [upgradeSwitch, setUpgradeSwitch] = useState<YesNo>(null);
   const [switchKind, setSwitchKind] = useState<SwitchType>(null);
   const [multiSwitch, setMultiSwitch] = useState<YesNo>(null);
-
+  const outletImages = useImagePicker();
+  const fixedImages = useImagePicker();
+  const fixtureImage = useImagePicker();
   const [areaPhotos, setAreaPhotos] = useState<string[]>([]);
   const [currentPhotos, setCurrentPhotos] = useState<string[]>([]);
   const [newPhotos, setNewPhotos] = useState<string[]>([]);
@@ -315,7 +242,7 @@ const InteriorSection = () => {
 
   return (
     <SectionCard>
-      <Text className="text-gray-900 font-Inter_SemiBold text-base mb-4">
+      <Text className="text-[#0A0A0A] font-Inter_SemiBold text-base mb-4">
         Interior Lighting Details
       </Text>
 
@@ -371,10 +298,11 @@ const InteriorSection = () => {
             Upload photos of the area where you want light fixture(s) installed
           </Label>
           <View className="mb-4">
-            <UploadBox
-              label="Upload Area Photos"
-              images={areaPhotos}
-              onAdd={(uri) => setAreaPhotos((p) => [...p, uri])}
+            <UploadArea
+              tittle="Upload Area Photos"
+              images={outletImages.images}
+              pickImage={outletImages.pickImage}
+              onRemove={outletImages.onRemove}
             />
           </View>
         </>
@@ -384,10 +312,11 @@ const InteriorSection = () => {
         <>
           <Label>Upload photos of current light fixture(s)</Label>
           <View className="mb-4">
-            <UploadBox
-              label="Upload Current Fixture Photos"
-              images={currentPhotos}
-              onAdd={(uri) => setCurrentPhotos((p) => [...p, uri])}
+            <UploadArea
+              tittle="Upload Current Fixture Photos"
+              images={fixedImages.images}
+              pickImage={fixedImages.pickImage}
+              onRemove={fixedImages.onRemove}
             />
           </View>
         </>
@@ -412,10 +341,11 @@ const InteriorSection = () => {
         <>
           <Label>Upload photo(s) of your new light fixture(s)</Label>
           <View className="mb-4">
-            <UploadBox
-              label="Upload New Fixture Photos"
-              images={newPhotos}
-              onAdd={(uri) => setNewPhotos((p) => [...p, uri])}
+            <UploadArea
+              tittle="Upload New Fixture Photos"
+              images={fixtureImage.images}
+              pickImage={fixtureImage.pickImage}
+              onRemove={fixtureImage.onRemove}
             />
           </View>
         </>
@@ -490,7 +420,8 @@ const FloodLightsSection = () => {
   const [switchType, setSwitchType] = useState<SwitchNewExisting>(null);
   const [switchKind, setSwitchKind] = useState<SwitchType>(null);
   const [multiSwitch, setMultiSwitch] = useState<YesNo>(null);
-
+  const CurrentFloodLightImages = useImagePicker();
+  const CurrentFloodLightImages2 = useImagePicker();
   const [currentPhotos, setCurrentPhotos] = useState<string[]>([]);
   const [newPhotos, setNewPhotos] = useState<string[]>([]);
 
@@ -504,7 +435,7 @@ const FloodLightsSection = () => {
 
   return (
     <SectionCard>
-      <Text className="text-gray-900 font-Inter_SemiBold text-base mb-4">
+      <Text className="text-[#0A0A0A] font-Inter_SemiBold text-base mb-4">
         Flood Lights Details
       </Text>
 
@@ -523,10 +454,11 @@ const FloodLightsSection = () => {
 
       <Label>Upload photo(s) of current flood light(s)</Label>
       <View className="mb-4">
-        <UploadBox
-          label="Upload Current Flood Light Photos"
-          images={currentPhotos}
-          onAdd={(uri) => setCurrentPhotos((p) => [...p, uri])}
+        <UploadArea
+          tittle="Upload Current Flood Light Photos"
+          images={CurrentFloodLightImages.images}
+          pickImage={CurrentFloodLightImages.pickImage}
+          onRemove={CurrentFloodLightImages.onRemove}
         />
       </View>
 
@@ -547,10 +479,11 @@ const FloodLightsSection = () => {
         <>
           <Label>Upload photo(s) of new fixture(s)</Label>
           <View className="mb-4">
-            <UploadBox
-              label="Upload New Flood Light Photos"
-              images={newPhotos}
-              onAdd={(uri) => setNewPhotos((p) => [...p, uri])}
+            <UploadArea
+              tittle="Upload New Flood Light Photos"
+              images={CurrentFloodLightImages2.images}
+              pickImage={CurrentFloodLightImages2.pickImage}
+              onRemove={CurrentFloodLightImages2.onRemove}
             />
           </View>
         </>
@@ -643,7 +576,8 @@ const WallCoachSection = () => {
   const [upgradeSwitch, setUpgradeSwitch] = useState<YesNo>(null);
   const [switchKind, setSwitchKind] = useState<SwitchType>(null);
   const [multiSwitch, setMultiSwitch] = useState<YesNo>(null);
-
+  const CoachLightsImage = useImagePicker();
+  const CoachLightsImage2 = useImagePicker();
   const [areaPhotos, setAreaPhotos] = useState<string[]>([]);
   const [newPhotos, setNewPhotos] = useState<string[]>([]);
 
@@ -661,7 +595,7 @@ const WallCoachSection = () => {
 
   return (
     <SectionCard>
-      <Text className="text-gray-900 font-Inter_SemiBold text-base mb-4">
+      <Text className="text-[#0A0A0A] font-Inter_SemiBold text-base mb-4">
         Wall / Coach Lights Details
       </Text>
 
@@ -682,10 +616,11 @@ const WallCoachSection = () => {
         Upload photo(s) of the area(s) you want light fixture(s) installed
       </Label>
       <View className="mb-4">
-        <UploadBox
-          label="Upload Area Photos"
-          images={areaPhotos}
-          onAdd={(uri) => setAreaPhotos((p) => [...p, uri])}
+        <UploadArea
+          tittle="Upload Area Photos"
+          images={CoachLightsImage.images}
+          pickImage={CoachLightsImage.pickImage}
+          onRemove={CoachLightsImage.onRemove}
         />
       </View>
 
@@ -709,10 +644,11 @@ const WallCoachSection = () => {
         <>
           <Label>Upload photo(s) of your new light fixture(s)</Label>
           <View className="mb-4">
-            <UploadBox
-              label="Upload New Fixture Photos"
-              images={newPhotos}
-              onAdd={(uri) => setNewPhotos((p) => [...p, uri])}
+            <UploadArea
+              tittle="Upload New Fixture Photos"
+              images={CoachLightsImage2.images}
+              pickImage={CoachLightsImage2.pickImage}
+              onRemove={CoachLightsImage2.onRemove}
             />
           </View>
         </>
@@ -807,7 +743,8 @@ const DrivewaySection = () => {
   const [switchType, setSwitchType] = useState<SwitchNewExisting>(null);
   const [switchKind, setSwitchKind] = useState<SwitchType>(null);
   const [multiSwitch, setMultiSwitch] = useState<YesNo>(null);
-
+  const DrivewayLighting = useImagePicker();
+  const DrivewayLighting2 = useImagePicker();
   const [currentPhotos, setCurrentPhotos] = useState<string[]>([]);
   const [newPhotos, setNewPhotos] = useState<string[]>([]);
 
@@ -815,7 +752,7 @@ const DrivewaySection = () => {
 
   return (
     <SectionCard>
-      <Text className="text-gray-900 font-Inter_SemiBold text-base mb-4">
+      <Text className="text-[#0A0A0A] font-Inter_SemiBold text-base mb-4">
         Driveway Lighting Details
       </Text>
 
@@ -834,10 +771,11 @@ const DrivewaySection = () => {
 
       <Label>Upload photo(s) of current lighting</Label>
       <View className="mb-4">
-        <UploadBox
-          label="Upload Current Lighting Photos"
-          images={currentPhotos}
-          onAdd={(uri) => setCurrentPhotos((p) => [...p, uri])}
+        <UploadArea
+          tittle="Upload Current Lighting Photos"
+          images={DrivewayLighting.images}
+          pickImage={DrivewayLighting.pickImage}
+          onRemove={DrivewayLighting.onRemove}
         />
       </View>
 
@@ -849,10 +787,11 @@ const DrivewaySection = () => {
         <>
           <Label>Upload photo(s) of new lights</Label>
           <View className="mb-4">
-            <UploadBox
-              label="Upload New Lighting Photos"
-              images={newPhotos}
-              onAdd={(uri) => setNewPhotos((p) => [...p, uri])}
+            <UploadArea
+              tittle="Upload Current Lighting Photos"
+              images={DrivewayLighting2.images}
+              pickImage={DrivewayLighting2.pickImage}
+              onRemove={DrivewayLighting2.onRemove}
             />
           </View>
         </>
@@ -946,7 +885,9 @@ const PoleAreaSection = () => {
   const [upgradeSwitch, setUpgradeSwitch] = useState<YesNo>(null);
   const [switchKind, setSwitchKind] = useState<SwitchType>(null);
   const [multiSwitch, setMultiSwitch] = useState<YesNo>(null);
-
+  const PoleAreaLighting = useImagePicker();
+  const PoleAreaLighting2 = useImagePicker();
+  const PoleAreaLighting3 = useImagePicker();
   const [areaPhotos, setAreaPhotos] = useState<string[]>([]);
   const [currentPhotos, setCurrentPhotos] = useState<string[]>([]);
   const [newPhotos, setNewPhotos] = useState<string[]>([]);
@@ -955,7 +896,7 @@ const PoleAreaSection = () => {
 
   return (
     <SectionCard>
-      <Text className="text-gray-900 font-Inter_SemiBold text-base mb-4">
+      <Text className="text-[#0A0A0A] font-Inter_SemiBold text-base mb-4">
         Pole / Area Lighting Details
       </Text>
 
@@ -976,10 +917,11 @@ const PoleAreaSection = () => {
         <>
           <Label>Upload photo(s) of where the lighting will be installed</Label>
           <View className="mb-4">
-            <UploadBox
-              label="Upload Area Photos"
-              images={areaPhotos}
-              onAdd={(uri) => setAreaPhotos((p) => [...p, uri])}
+            <UploadArea
+              tittle="Upload Area Photos"
+              images={PoleAreaLighting.images}
+              pickImage={PoleAreaLighting.pickImage}
+              onRemove={PoleAreaLighting.onRemove}
             />
           </View>
         </>
@@ -989,10 +931,11 @@ const PoleAreaSection = () => {
         <>
           <Label>Upload photo(s) of current lighting</Label>
           <View className="mb-4">
-            <UploadBox
-              label="Upload Current Lighting Photos"
-              images={currentPhotos}
-              onAdd={(uri) => setCurrentPhotos((p) => [...p, uri])}
+            <UploadArea
+              tittle="Upload Current Lighting Photos"
+              images={PoleAreaLighting2.images}
+              pickImage={PoleAreaLighting2.pickImage}
+              onRemove={PoleAreaLighting2.onRemove}
             />
           </View>
         </>
@@ -1006,10 +949,11 @@ const PoleAreaSection = () => {
         <>
           <Label>Upload photo(s) of new lights</Label>
           <View className="mb-4">
-            <UploadBox
-              label="Upload New Lighting Photos"
-              images={newPhotos}
-              onAdd={(uri) => setNewPhotos((p) => [...p, uri])}
+            <UploadArea
+              tittle="Upload New Lighting Photos"
+              images={PoleAreaLighting3.images}
+              pickImage={PoleAreaLighting3.pickImage}
+              onRemove={PoleAreaLighting3.onRemove}
             />
           </View>
         </>
@@ -1123,7 +1067,7 @@ const LandscapeSection = () => {
 
   return (
     <SectionCard>
-      <Text className="text-gray-900 font-Inter_SemiBold text-base mb-4">
+      <Text className="text-[#0A0A0A] font-Inter_SemiBold text-base mb-4">
         Landscape Lighting Details
       </Text>
 
@@ -1141,18 +1085,6 @@ const LandscapeSection = () => {
           />
         ))}
       </View>
-
-      <Label>Information about your project</Label>
-      <TextInput
-        className="border border-gray-200 rounded-xl px-4 py-3 mb-4 text-gray-800 font-Inter_Regular"
-        placeholder="Any information you feel we should know for your quote"
-        placeholderTextColor="#aaa"
-        multiline
-        numberOfLines={5}
-        style={{ minHeight: 110, textAlignVertical: "top" }}
-        value={info}
-        onChangeText={setInfo}
-      />
 
       <View className="border border-[#4AA9F5] rounded-xl p-4 bg-blue-50">
         <Text className="text-[#4AA9F5] font-Inter_Regular text-sm leading-5">
@@ -1208,24 +1140,6 @@ const LightingSt1 = () => {
         {lightingType === "Driveway Lighting" && <DrivewaySection />}
         {lightingType === "Pole / Area Lighting" && <PoleAreaSection />}
         {lightingType === "Landscape" && <LandscapeSection />}
-
-        {lightingType !== "Landscape" && (
-          <SectionCard>
-            <Text className="text-gray-800 font-Inter_Medium text-sm mb-2">
-              Additional Information
-            </Text>
-            <TextInput
-              className="border border-gray-200 rounded-xl px-4 py-3 text-gray-800 font-Inter_Regular"
-              placeholder="Any additional information you feel we should know for your quote"
-              placeholderTextColor="#aaa"
-              multiline
-              numberOfLines={4}
-              style={{ minHeight: 100, textAlignVertical: "top" }}
-              value={additionalInfo}
-              onChangeText={setAdditionalInfo}
-            />
-          </SectionCard>
-        )}
       </Animated.View>
     );
   };
@@ -1234,15 +1148,15 @@ const LightingSt1 = () => {
     <View className="flex-1 ">
       <ScrollView
         className="flex-1"
-        contentContainerStyle={{ padding: 16, paddingBottom: 120 }}
+        contentContainerStyle={{ paddingBottom: 120 }}
         showsVerticalScrollIndicator={false}
       >
         {/* Intro Card */}
         <SectionCard>
-          <Text className="text-gray-900 font-Inter_Bold text-base mb-1">
+          <Text className="text-[#0A0A0A] font-Inter_Bold text-lg mb-1">
             Lighting
           </Text>
-          <Text className="text-gray-500 font-Inter_Regular text-sm leading-5">
+          <Text className="text-[#364153] font-Inter_Regular text-sm leading-5">
             Answer these lighting-specific questions so we can estimate
             accurately.
           </Text>
@@ -1250,10 +1164,10 @@ const LightingSt1 = () => {
 
         {/* Lighting Type */}
         <SectionCard>
-          <Text className="text-gray-900 font-Inter_SemiBold text-base mb-1">
+          <Text className="text-[#0A0A0A] font-Inter_SemiBold text-base mb-1">
             Lighting Type
           </Text>
-          <Text className="text-gray-500 font-Inter_Regular text-sm mb-4">
+          <Text className="text-[#364153] font-Inter_Regular text-sm mb-4">
             What type of lighting do you need?
           </Text>
           <TwoColGrid

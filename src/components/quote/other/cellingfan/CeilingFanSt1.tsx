@@ -1,37 +1,44 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import * as ImagePicker from "expo-image-picker";
+import { useImagePicker } from "@/src/hook/useImagePicker";
 import React, { useRef, useState } from "react";
 import {
   Animated,
-  Image,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import UploadArea from "../share/UploadArea";
 
 type InstallationType = "replacement" | "new_install" | null;
-type SpaceType =
-  | "attic_above"
-  | "occupied_above"
-  | "crawlspace_unfinished"
-  | "crawlspace_encapsulated"
-  | "basement_unfinished"
-  | "basement_finished"
-  | null;
+type AreaOption =
+  | "Attic above"
+  | "Occupied space above"
+  | "Crawlspace (unfinished)"
+  | "Crawlspace (encapsulated)"
+  | "Basement (unfinished)"
+  | "Basement (finished)";
+
+const AREA_OPTIONS: AreaOption[] = [
+  "Attic above",
+  "Occupied space above",
+  "Crawlspace (unfinished)",
+  "Crawlspace (encapsulated)",
+  "Basement (unfinished)",
+  "Basement (finished)",
+];
 type YesNo = "yes" | "no" | null;
 type YesNoUnsure = "yes" | "no" | "unsure" | null;
 
 const CeilingFanSt1 = () => {
   const [installationType, setInstallationType] =
     useState<InstallationType>(null);
-  const [spaceType, setSpaceType] = useState<SpaceType>(null);
+
   const [hasLightFixture, setHasLightFixture] = useState<YesNo>(null);
   const [preWired, setPreWired] = useState<YesNoUnsure>(null);
   const [photoUri, setPhotoUri] = useState<string | null>(null);
-
+  const cellingimage = useImagePicker();
   const scaleAnims = useRef<{ [key: string]: Animated.Value }>({}).current;
-
+  const [selectedAreas, setSelectedAreas] = useState<AreaOption[]>([]);
   const getAnim = (key: string) => {
     if (!scaleAnims[key]) {
       scaleAnims[key] = new Animated.Value(1);
@@ -54,21 +61,10 @@ const CeilingFanSt1 = () => {
       }),
     ]).start(callback);
   };
-
-  const pickImage = async () => {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== "granted") {
-      alert("Permission to access photos is required.");
-      return;
-    }
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      quality: 0.8,
-    });
-    if (!result.canceled && result.assets.length > 0) {
-      setPhotoUri(result.assets[0].uri);
-    }
+  const toggleArea = (area: AreaOption) => {
+    setSelectedAreas((prev) =>
+      prev.includes(area) ? prev.filter((a) => a !== area) : [...prev, area],
+    );
   };
 
   const SelectButton = ({
@@ -87,9 +83,9 @@ const CeilingFanSt1 = () => {
         onPress={() => {
           animatePress(animKey, onPress);
         }}
-        className={`w-full py-3 px-4 rounded-lg mb-2 border ${
+        className={`w-full py-4 px-4 rounded-lg mb-2 border ${
           isSelected
-            ? "bg-cyan-500 border-cyan-500"
+            ? "bg-[#60A5FA] border-[#60A5FA]"
             : "bg-white border-gray-200"
         }`}
         activeOpacity={0.85}
@@ -98,7 +94,7 @@ const CeilingFanSt1 = () => {
           className={`text-sm text-center ${
             isSelected
               ? "text-white font-Inter_SemiBold"
-              : "text-gray-700 font-Inter_Regular"
+              : "text-[#1F2937] font-Inter_Medium"
           }`}
         >
           {label}
@@ -110,22 +106,24 @@ const CeilingFanSt1 = () => {
   return (
     <View className="flex-1 ">
       <ScrollView
-        className="flex-1 px-4"
+        className="flex-1 "
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 100 }}
       >
         {/* Category tag */}
-        <View className="mt-3 mb-4">
-          <Text className="text-xs text-cyan-500 font-Inter_Medium">
-            Ceiling Fans
-          </Text>
+        <View className="mt-4 mb-3">
+          <View className="self-start bg-blue-50 rounded-full px-3 py-1 mb-5 border border-blue-100">
+            <Text className="font-Inter_SemiBold text-[11px] text-[#60A5FA] tracking-wide">
+              Ceiling Fans
+            </Text>
+          </View>
         </View>
 
         {/* Title */}
         <Text className="text-xl font-Inter_Bold text-gray-900 mb-1">
           Installation type
         </Text>
-        <Text className="text-sm text-gray-500 font-Inter_Regular mb-4">
+        <Text className="text-base text-[#1F2937] font-Inter_Medium mb-4">
           Is this a replacement or new install?
         </Text>
 
@@ -144,76 +142,55 @@ const CeilingFanSt1 = () => {
 
         {/* Photo Upload */}
         {installationType === "replacement" && (
-          <View className="bg-white border border-gray-200   p-6 rounded-xl  items-center">
-            <TouchableOpacity
-              onPress={pickImage}
-              className="items-center"
-              activeOpacity={0.8}
-            >
-              {photoUri ? (
-                <Image
-                  source={{ uri: photoUri }}
-                  className="w-28 h-28 rounded-xl mb-2"
-                  resizeMode="cover"
-                />
-              ) : (
-                <View className="w-16 h-16 items-center justify-center mb-2">
-                  <MaterialCommunityIcons
-                    name="file-image-plus-outline"
-                    size={24}
-                    color="#9ca3af"
-                  />
-                </View>
-              )}
-              <Text className="text-xs text-gray-400 font-Inter_Regular text-center mb-3">
-                Please upload a photo of your{"\n"}current ceiling fan
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={pickImage}
-              className="border border-gray-300 rounded-lg px-6 py-2"
-              activeOpacity={0.8}
-            >
-              <Text className="text-sm text-gray-600 font-Inter_Medium">
-                Choose File
-              </Text>
-            </TouchableOpacity>
-          </View>
+          <UploadArea
+            tittle="Please upload photos of your current fan"
+            images={cellingimage.images}
+            pickImage={cellingimage.pickImage}
+            onRemove={cellingimage.onRemove}
+          />
         )}
         {installationType === "new_install" && (
           <View>
             {/* Space above */}
-            <Text className="text-sm text-gray-500 font-Inter_Regular mb-3 mt-2">
+            <Text className="text-base text-[#1F2937] font-Inter_Medium mb-3 mt-2">
               What is above / below the area the ceiling fan will be installed?
             </Text>
 
-            {(
-              [
-                { key: "attic_above", label: "Attic above" },
-                { key: "occupied_above", label: "Occupied space above" },
-                {
-                  key: "crawlspace_unfinished",
-                  label: "Crawlspace (unfinished)",
-                },
-                {
-                  key: "crawlspace_encapsulated",
-                  label: "Crawlspace (encapsulated)",
-                },
-                { key: "basement_unfinished", label: "Basement (unfinished)" },
-                { key: "basement_finished", label: "Basement (finished)" },
-              ] as { key: SpaceType; label: string }[]
-            ).map((item) => (
-              <SelectButton
-                key={item.key!}
-                label={item.label}
-                isSelected={spaceType === item.key}
-                onPress={() => setSpaceType(item.key)}
-                animKey={`space_${item.key}`}
-              />
-            ))}
+            <View className="flex-row flex-wrap gap-2 mb-4">
+              {AREA_OPTIONS.map((area) => {
+                const isSelected = selectedAreas.includes(area);
+                return (
+                  <TouchableOpacity
+                    key={area}
+                    onPress={() => toggleArea(area)}
+                    activeOpacity={0.8}
+                    style={{
+                      paddingHorizontal: 16,
+                      paddingVertical: 10,
+                      borderRadius: 999,
+                      backgroundColor: isSelected ? "#60A5FA" : "#ffffff",
+                      borderWidth: 1,
+                      borderColor: isSelected ? "#60A5FA" : "#E5E7EB",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        color: isSelected ? "#ffffff" : "#1F2937",
+                        fontFamily: isSelected
+                          ? "Inter_SemiBold"
+                          : "Inter_Medium",
+                      }}
+                    >
+                      {area}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
 
             {/* Light fixture */}
-            <Text className="text-sm text-gray-500 font-Inter_Regular mb-3 mt-4">
+            <Text className="text-base text-[#1F2937] font-Inter_Medium mb-3 mt-4">
               Is there a current light fixture where you want the fan installed?
             </Text>
             <SelectButton
@@ -230,7 +207,7 @@ const CeilingFanSt1 = () => {
             />
 
             {/* Pre-wired */}
-            <Text className="text-sm text-gray-500 font-Inter_Regular mb-3 mt-4">
+            <Text className="text-base text-[#1F2937] font-Inter_Medium mb-3 mt-4">
               Was the area prewired for a ceiling fan?
             </Text>
             <SelectButton

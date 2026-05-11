@@ -101,7 +101,7 @@ const OutletsSt1 = () => {
   };
 
   return (
-    <View className="flex-1 bg-[#EFF6FF]">
+    <View className="flex-1 ">
       <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}
@@ -112,8 +112,8 @@ const OutletsSt1 = () => {
         }}
       >
         {/* Badge */}
-        <View className="self-start bg-blue-50 rounded-full px-3 py-1 mb-5 border border-blue-100">
-          <Text className="font-Inter_SemiBold text-[11px] text-[#60A5FA] tracking-wide">
+        <View className="self-start bg-[#EFF6FF] rounded-full px-3 py-1 mb-5">
+          <Text className="text-[#60A5FA] text-[11px] font-Inter_SemiBold tracking-wide">
             Outlets
           </Text>
         </View>

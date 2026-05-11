@@ -1,26 +1,29 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useImagePicker } from "@/src/hook/useImagePicker";
 import * as ImagePicker from "expo-image-picker";
 import React, { useRef, useState } from "react";
 import {
   Alert,
   Animated,
-  Image,
   Platform,
+  Pressable,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import NEMAModal from "../DedicatedCircuit/NEMAModal";
+import UploadArea from "../share/UploadArea";
 
 const AMPS = ["15", "20", "30", "50"];
 const VOLTS = ["110 or 120", "220 or 240", "110/220 or 120/240"];
 
 const OutletsSt2 = () => {
+  const outletImages = useImagePicker();
   const [installType, setInstallType] = useState("New install");
   const [selectedAmp, setSelectedAmp] = useState("15");
   const [selectedVolt, setSelectedVolt] = useState("110 or 120");
   const [pickedImage, setPickedImage] = useState<string | null>(null);
-
+  const [isvisiable, setIsVisiable] = useState(false);
   const installAnims = useRef(
     ["New install", "Replacement"].map(() => new Animated.Value(1)),
   ).current;
@@ -67,20 +70,13 @@ const OutletsSt2 = () => {
 
   return (
     <View className="flex-1">
-      <ScrollView className="flex-1 px-4" showsVerticalScrollIndicator={false}>
+      <ScrollView className="flex-1 " showsVerticalScrollIndicator={false}>
         {/* Breadcrumb */}
-        <View className="mt-4 mb-2">
-          <View
-            className="self-start px-3 py-1 rounded-full border"
-            style={{ borderColor: "#06B6D4" }}
-          >
-            <Text
-              className="font-Inter_Medium text-xs"
-              style={{ color: "#06B6D4" }}
-            >
-              Outlets
-            </Text>
-          </View>
+
+        <View className="self-start bg-[#EFF6FF] rounded-full px-3 py-1 mb-5">
+          <Text className="text-[#60A5FA] text-[11px] font-Inter_SemiBold tracking-wide">
+            Outlets
+          </Text>
         </View>
 
         <Text className="font-Inter_Bold text-2xl text-gray-900 mb-5">
@@ -107,8 +103,8 @@ const OutletsSt2 = () => {
                 activeOpacity={0.85}
                 className="mb-2 rounded-xl border px-4 py-4"
                 style={{
-                  backgroundColor: isSelected ? "#06B6D4" : "#ffffff",
-                  borderColor: isSelected ? "#06B6D4" : "#E5E7EB",
+                  backgroundColor: isSelected ? "#60A5FA" : "#ffffff",
+                  borderColor: isSelected ? "#60A5FA" : "#E5E7EB",
                 }}
               >
                 <Text
@@ -124,41 +120,12 @@ const OutletsSt2 = () => {
         })}
 
         {/* Photo Upload */}
-        <TouchableOpacity
-          onPress={handlePickImage}
-          activeOpacity={0.8}
-          className="mt-4 rounded-2xl border border-dashed border-gray-300 bg-gray-50 items-center justify-center py-6 px-4"
-        >
-          {pickedImage ? (
-            <View className="items-center w-full">
-              <Image
-                source={{ uri: pickedImage }}
-                className="w-full rounded-xl"
-                style={{ height: 160, resizeMode: "cover" }}
-              />
-              <Text className="font-Inter_Medium text-cyan-500 text-sm mt-2">
-                Tap to change photo
-              </Text>
-            </View>
-          ) : (
-            <>
-              <MaterialCommunityIcons
-                name="file-image-plus-outline"
-                size={24}
-                color="#4b5563"
-              />
-              <Text className="font-Inter_Regular text-gray-500 text-sm text-center">
-                Please upload photos of where the outlet(s) will be installed
-              </Text>
-              <Text
-                className="font-Inter_Medium text-sm mt-2"
-                style={{ color: "#06B6D4" }}
-              >
-                Choose File
-              </Text>
-            </>
-          )}
-        </TouchableOpacity>
+        <UploadArea
+          tittle="Please upload photos of where the outlet(s) will be installed."
+          images={outletImages.images}
+          pickImage={outletImages.pickImage}
+          onRemove={outletImages.onRemove}
+        />
 
         {/* Amps */}
         {installType === "New install" && (
@@ -181,8 +148,8 @@ const OutletsSt2 = () => {
                     activeOpacity={0.85}
                     className="mb-2 rounded-xl border px-4 py-4"
                     style={{
-                      backgroundColor: isSelected ? "#06B6D4" : "#ffffff",
-                      borderColor: isSelected ? "#06B6D4" : "#E5E7EB",
+                      backgroundColor: isSelected ? "#60A5FA" : "#ffffff",
+                      borderColor: isSelected ? "#60A5FA" : "#E5E7EB",
                     }}
                   >
                     <Text
@@ -216,8 +183,8 @@ const OutletsSt2 = () => {
                     activeOpacity={0.85}
                     className="mb-2 rounded-xl border px-4 py-4"
                     style={{
-                      backgroundColor: isSelected ? "#06B6D4" : "#ffffff",
-                      borderColor: isSelected ? "#06B6D4" : "#E5E7EB",
+                      backgroundColor: isSelected ? "#60A5FA" : "#ffffff",
+                      borderColor: isSelected ? "#60A5FA" : "#E5E7EB",
                     }}
                   >
                     <Text
@@ -233,15 +200,19 @@ const OutletsSt2 = () => {
             })}
 
             {/* NEMA */}
-            <Text className="font-Inter_SemiBold text-gray-800 text-sm mt-5 mb-4">
-              What is the NEMA configuration for the receptacle (if there will
-              be one)? <Text style={{ color: "#06B6D4" }}>ⓘ</Text>
-            </Text>
+
+            <Pressable onPress={() => setIsVisiable(true)}>
+              <Text className="font-Inter_SemiBold text-gray-800 text-sm mt-5 mb-4">
+                What is the NEMA configuration for the receptacle (if there will
+                be one)? <Text style={{ color: "#60A5FA" }}>ⓘ</Text>
+              </Text>
+            </Pressable>
           </>
         )}
 
         <View className="mb-6" />
       </ScrollView>
+      <NEMAModal visible={isvisiable} onClose={() => setIsVisiable(false)} />
     </View>
   );
 };

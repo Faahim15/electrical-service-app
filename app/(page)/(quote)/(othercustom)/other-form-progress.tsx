@@ -13,9 +13,11 @@ import DedicatedCircuitSt5 from "@/src/components/quote/other/DedicatedCircuit/D
 import ExhaustFanSt1 from "@/src/components/quote/other/exhaustfan/ExhaustFanSt1";
 import ExhaustFanSt2 from "@/src/components/quote/other/exhaustfan/ExhaustFanSt2";
 import LightingSt1 from "@/src/components/quote/other/lighting/LightingSt1";
+import LightingSt2 from "@/src/components/quote/other/lighting/LightingSt2";
 import OutletsSt1 from "@/src/components/quote/other/outlets/OutletsSt1";
 import OutletsSt2 from "@/src/components/quote/other/outlets/OutletsSt2";
 import OutletsSt4 from "@/src/components/quote/other/outlets/OutletsSt4";
+import OutletsSt5 from "@/src/components/quote/other/outlets/OutletsSt5";
 import StarlinkSt1 from "@/src/components/quote/other/starlink/StarlinkSt1";
 import StarlinkSt2 from "@/src/components/quote/other/starlink/StarlinkSt2";
 import StarlinkSt3 from "@/src/components/quote/other/starlink/StarlinkSt3";
@@ -23,6 +25,7 @@ import StarlinkSt4 from "@/src/components/quote/other/starlink/StarlinkSt4";
 import SwitchesSt1 from "@/src/components/quote/other/switches/SwitchesSt1";
 import SwitchesSt2 from "@/src/components/quote/other/switches/SwitchesSt2";
 import SwitchesSt3 from "@/src/components/quote/other/switches/SwitchesSt3";
+import SwitchesSt4 from "@/src/components/quote/other/switches/SwitchesSt4";
 import WholeHomeSt1 from "@/src/components/quote/other/WholeHome/WholeHomeSt1";
 import WholeHomeSt2 from "@/src/components/quote/other/WholeHome/WholeHomeSt2";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
@@ -82,13 +85,18 @@ const CATEGORY_STEP_MAP: Record<string, StepConfig[]> = {
     { component: OutletsSt2, title: "Outlets" },
     // { component: OutletsSt3, title: "Outlets" },
     { component: OutletsSt4, title: "Outlets" },
+    { component: OutletsSt5, title: "Outlets" },
   ],
   Switches: [
     { component: SwitchesSt1, title: "Switches" },
     { component: SwitchesSt2, title: "Switches" },
     { component: SwitchesSt3, title: "Switches" },
+    { component: SwitchesSt4, title: "Switches" },
   ],
-  Lighting: [{ component: LightingSt1, title: "Lighting" }],
+  Lighting: [
+    { component: LightingSt1, title: "Lighting" },
+    { component: LightingSt2, title: "Lighting" },
+  ],
   "Ceiling Fan": [
     { component: CeilingFanSt1, title: "Ceiling Fan" },
     { component: CeilingFanSt2, title: "Ceiling Fan" },

@@ -3,7 +3,6 @@ import {
   Animated,
   ScrollView,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -62,17 +61,11 @@ const SwitchesSt3 = () => {
 
   return (
     <View className="flex-1 ">
-      <ScrollView className="flex-1 px-4" showsVerticalScrollIndicator={false}>
+      <ScrollView className="flex-1 " showsVerticalScrollIndicator={false}>
         {/* Breadcrumb */}
         <View className="mt-4 mb-3">
-          <View
-            className="self-start px-3 py-1 rounded-full border"
-            style={{ borderColor: "#06B6D4" }}
-          >
-            <Text
-              className="font-Inter_Medium text-xs"
-              style={{ color: "#06B6D4" }}
-            >
+          <View className="self-start bg-blue-50 rounded-full px-3 py-1 mb-5 border border-blue-100">
+            <Text className="font-Inter_SemiBold text-[11px] text-[#60A5FA] tracking-wide">
               Switches
             </Text>
           </View>
@@ -107,8 +100,8 @@ const SwitchesSt3 = () => {
                       activeOpacity={0.8}
                       className="px-4 py-2 rounded-full border"
                       style={{
-                        backgroundColor: isSelected ? "#06B6D4" : "#ffffff",
-                        borderColor: isSelected ? "#06B6D4" : "#D1D5DB",
+                        backgroundColor: isSelected ? "#60A5FA" : "#ffffff",
+                        borderColor: isSelected ? "#60A5FA" : "#D1D5DB",
                       }}
                     >
                       <Text
@@ -125,21 +118,6 @@ const SwitchesSt3 = () => {
             </View>
           ))}
         </View>
-
-        {/* Additional Info */}
-        <Text className="font-Inter_SemiBold text-gray-800 text-sm mb-2">
-          Additional Information
-        </Text>
-        <TextInput
-          className="border border-gray-200 rounded-xl px-4 py-3 font-Inter_Regular text-gray-800 text-sm bg-white"
-          value={additionalInfo}
-          onChangeText={setAdditionalInfo}
-          multiline
-          numberOfLines={5}
-          textAlignVertical="top"
-          style={{ minHeight: 110 }}
-          placeholderTextColor="#9CA3AF"
-        />
 
         <View className="mb-6" />
       </ScrollView>
