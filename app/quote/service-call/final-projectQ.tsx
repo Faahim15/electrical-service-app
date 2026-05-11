@@ -113,7 +113,7 @@ export default function FinalProjectQuestions() {
 
           <GradientButton
             label="Continue"
-            onPress={() => router.push("/quote/service-call/additional-notes")}
+            onPress={() => router.push("/quote/service-call/upload-photos")}
           />
         </ScrollView>
       </KeyboardAvoidingView>

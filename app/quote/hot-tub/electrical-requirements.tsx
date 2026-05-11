@@ -43,7 +43,7 @@ export default function ElectricalRequirements() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={5} />
+          <StepProgressBar currentStep={5} totalSteps={9} />
           <CategoryTag title="Hot Tub Installation" />
 
           <AuthHeading title="Electrical requirements" subtitle="" />

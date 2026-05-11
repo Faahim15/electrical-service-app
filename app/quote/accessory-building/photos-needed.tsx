@@ -9,7 +9,7 @@ import { updateAccessoryBuildingDetails } from "@/src/redux/slices/serviceFormSl
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function GeneratorPhotosNeeded() {
@@ -21,7 +21,12 @@ export default function GeneratorPhotosNeeded() {
       return data.details.existingSpacePhotos;
     return [];
   });
-
+  const panelPhotos = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "5" && data.details)
+      return data.details.panelPhotos;
+    return [];
+  });
   return (
     <ScreenWrapper paddingHorizontal={20}>
       <KeyboardAvoidingView
@@ -34,7 +39,7 @@ export default function GeneratorPhotosNeeded() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={10} totalSteps={11} />
+          <StepProgressBar currentStep={10} totalSteps={12} />
           <CategoryTag title="Accessory Building Power" />
 
           <AuthHeading title="Photos needed" subtitle="" />
@@ -48,10 +53,20 @@ export default function GeneratorPhotosNeeded() {
               )
             }
           />
-
+          <View className="mt-1">
+            <PhotoUploadSection
+              label="Please upload clear photo of electrical panel up close so we can see the numbers and about 10 ft away."
+              photos={panelPhotos}
+              onPhotosChange={(p) =>
+                dispatch(updateAccessoryBuildingDetails({ panelPhotos: p }))
+              }
+            />
+          </View>
           <GradientButton
             label="Continue"
-            onPress={() => router.push("/quote/common/review-request")}
+            onPress={() =>
+              router.push("/quote/accessory-building/additional-info")
+            }
           />
         </ScrollView>
       </KeyboardAvoidingView>

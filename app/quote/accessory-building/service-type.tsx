@@ -1,6 +1,5 @@
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import OptionGrid from "@/src/components/quote/OptionGrid";
-import PhotoUploadSection from "@/src/components/quote/PhotoUploadSection";
 import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
@@ -88,13 +87,6 @@ export default function AccessoryServiceType() {
     return "" as const;
   });
 
-  const panelPhotos = useSelector((state: RootState) => {
-    const data = state.serviceForm.categoryData;
-    if (data?.categoryId === "5" && data.details)
-      return data.details.panelPhotos;
-    return [];
-  });
-
   // selectors add করো
   const panelLocationOther = useSelector((state: RootState) => {
     const data = state.serviceForm.categoryData;
@@ -133,7 +125,7 @@ export default function AccessoryServiceType() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={7} totalSteps={11} />
+          <StepProgressBar currentStep={7} totalSteps={12} />
           <CategoryTag title="Accessory Building Power" />
 
           {/* Service Type */}
@@ -282,16 +274,6 @@ export default function AccessoryServiceType() {
                   }
                 />
               )}
-
-              <View className="mt-1">
-                <PhotoUploadSection
-                  label="Please upload clear photo of electrical panel up close so we can see the numbers and about 10 ft away."
-                  photos={panelPhotos}
-                  onPhotosChange={(p) =>
-                    dispatch(updateAccessoryBuildingDetails({ panelPhotos: p }))
-                  }
-                />
-              </View>
             </>
           )}
           <View className="mt-1">

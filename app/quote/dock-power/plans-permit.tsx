@@ -1,4 +1,3 @@
-// src/app/quote/dock-power/plans-permit.tsx
 import AuthHeading from "@/src/components/auth/AuthHeading";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import OptionGrid from "@/src/components/quote/OptionGrid";
@@ -8,7 +7,6 @@ import BackButton from "@/src/components/shared/BackButton";
 import CustomInput from "@/src/components/shared/CustomInput";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
-import TextAreaInput from "@/src/components/shared/TextAreaInput";
 import { updateDockPowerDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
@@ -45,13 +43,6 @@ export default function DockPlansPermit() {
     return "";
   });
 
-  const additionalInfo = useSelector((state: RootState) => {
-    const data = state.serviceForm.categoryData;
-    if (data?.categoryId === "7" && data.details)
-      return data.details.additionalInfo;
-    return "";
-  });
-
   return (
     <ScreenWrapper paddingHorizontal={20}>
       <KeyboardAvoidingView
@@ -64,7 +55,7 @@ export default function DockPlansPermit() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={7} totalSteps={9} />
+          <StepProgressBar currentStep={7} totalSteps={10} />
           <CategoryTag title="Dock Power" />
 
           <AuthHeading title="Plans, Permit & Timeline" subtitle="" />
@@ -120,16 +111,6 @@ export default function DockPlansPermit() {
               }}
             />
           )}
-
-          <TextAreaInput
-            label="Additional Information"
-            placeholder="any additional information you feel we should know for your quote"
-            value={additionalInfo}
-            onChangeText={(text) =>
-              dispatch(updateDockPowerDetails({ additionalInfo: text }))
-            }
-            minHeight={100}
-          />
 
           <GradientButton
             label="Submit"

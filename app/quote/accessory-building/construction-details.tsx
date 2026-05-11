@@ -57,7 +57,7 @@ export default function ConstructionDetails() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: verticalScale(30) }}
         >
-          <StepProgressBar currentStep={5} totalSteps={11} />
+          <StepProgressBar currentStep={5} totalSteps={12} />
           <CategoryTag title="Accessory Building Power" />
 
           <AuthHeading title="Construction details" subtitle="" />

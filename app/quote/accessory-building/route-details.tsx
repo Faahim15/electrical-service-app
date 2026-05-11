@@ -48,7 +48,7 @@ export default function RouteDetails() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={8} totalSteps={11} />
+          <StepProgressBar currentStep={8} totalSteps={12} />
           <CategoryTag title="Accessory Building Power" />
 
           <AuthHeading title="Route Details" subtitle="" />

@@ -60,13 +60,6 @@ export default function LocationDetails() {
     return "" as const;
   });
 
-  const additionalInfo = useSelector((state: RootState) => {
-    const data = state.serviceForm.categoryData;
-    if (data?.categoryId === "6" && data.details)
-      return data.details.additionalInfo;
-    return "";
-  });
-
   // selectors add করো
   const placementOther = useSelector((state: RootState) => {
     const data = state.serviceForm.categoryData;
@@ -94,7 +87,7 @@ export default function LocationDetails() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={6} />
+          <StepProgressBar currentStep={6} totalSteps={9} />
           <CategoryTag title="Hot Tub Installation" />
 
           <AuthHeading title="Location details" subtitle="" />
@@ -147,19 +140,9 @@ export default function LocationDetails() {
             numColumns={1}
           />
 
-          <TextAreaInput
-            label="Additional Information"
-            placeholder="any additional information you feel we should know for your quote"
-            value={additionalInfo}
-            onChangeText={(text) =>
-              dispatch(updateHotTubDetails({ additionalInfo: text }))
-            }
-            minHeight={100}
-          />
-
           <GradientButton
             label="Continue"
-            onPress={() => router.push("/quote/hot-tub/photos-needed" as any)}
+            onPress={() => router.push("/quote/hot-tub/photos-needed")}
           />
         </ScrollView>
       </KeyboardAvoidingView>

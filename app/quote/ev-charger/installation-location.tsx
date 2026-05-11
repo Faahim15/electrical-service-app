@@ -81,7 +81,7 @@ export default function InstallationLocation() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={5} />
+          <StepProgressBar currentStep={5} totalSteps={9} />
 
           {/* Category Tag */}
           <View className="self-start mb-4">

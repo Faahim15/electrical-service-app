@@ -7,7 +7,6 @@ import BackButton from "@/src/components/shared/BackButton";
 import CustomInput from "@/src/components/shared/CustomInput";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
-import TextAreaInput from "@/src/components/shared/TextAreaInput";
 import { updateAccessoryBuildingDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
@@ -44,13 +43,6 @@ export default function PlansPermit() {
     return "";
   });
 
-  const additionalInfo = useSelector((state: RootState) => {
-    const data = state.serviceForm.categoryData;
-    if (data?.categoryId === "5" && data.details)
-      return data.details.additionalInfo;
-    return "";
-  });
-
   return (
     <ScreenWrapper paddingHorizontal={20}>
       <KeyboardAvoidingView
@@ -63,7 +55,7 @@ export default function PlansPermit() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
-          <StepProgressBar currentStep={9} totalSteps={11} />
+          <StepProgressBar currentStep={9} totalSteps={12} />
           <CategoryTag title="Accessory Building Power" />
 
           <AuthHeading title="Plans, Permit & Timeline" subtitle="" />
@@ -127,16 +119,6 @@ export default function PlansPermit() {
               }}
             />
           )}
-
-          <TextAreaInput
-            label="Additional Information"
-            placeholder="any additional information you feel we should know for your quote"
-            value={additionalInfo}
-            onChangeText={(text) =>
-              dispatch(updateAccessoryBuildingDetails({ additionalInfo: text }))
-            }
-            minHeight={100}
-          />
 
           <GradientButton
             label="Submit"

@@ -5,7 +5,7 @@ import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
 import TextAreaInput from "@/src/components/shared/TextAreaInput";
-import { updateEVChargerDetails } from "@/src/redux/slices/serviceFormSlice";
+import { updatePanelUpgradeDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
@@ -17,10 +17,10 @@ export default function AdditionalInfo() {
 
   const additionalInfo = useSelector((state: RootState) => {
     const data = state.serviceForm.categoryData;
-    if (data?.categoryId === "2") return data?.details?.additionalInfo;
+    if (data?.categoryId === "3" && data.details)
+      return data.details.additionalInfo;
     return "";
   });
-
   return (
     <ScreenWrapper paddingHorizontal={20}>
       <KeyboardAvoidingView
@@ -37,7 +37,7 @@ export default function AdditionalInfo() {
 
           {/* Category Tag */}
 
-          <CategoryTag title="EV Charger Installation" />
+          <CategoryTag title="Panel Upgrade / Replacement" />
 
           <AuthHeading
             title="Additional information"
@@ -46,11 +46,11 @@ export default function AdditionalInfo() {
 
           {/* Text Area */}
           <TextAreaInput
-            label="Additional information"
+            label="Additional Information"
             placeholder="Any additional information you feel we should know..."
             value={additionalInfo}
             onChangeText={(text) =>
-              dispatch(updateEVChargerDetails({ additionalInfo: text }))
+              dispatch(updatePanelUpgradeDetails({ additionalInfo: text }))
             }
             minHeight={120}
           />

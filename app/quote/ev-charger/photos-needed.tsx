@@ -1,4 +1,3 @@
-// src/app/quote/hot-tub/photos-needed.tsx
 import AuthHeading from "@/src/components/auth/AuthHeading";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import PhotoUploadSection from "@/src/components/quote/PhotoUploadSection";
@@ -6,34 +5,24 @@ import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
-import { updateHotTubDetails } from "@/src/redux/slices/serviceFormSlice";
+import { updateEVChargerDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
 import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function PhotosNeeded() {
+export default function GeneratorPhotosNeeded() {
   const dispatch = useDispatch();
 
+  const chargerAreaPhotos = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "2") return data?.details?.chargerAreaPhotos;
+    return [];
+  });
   const panelPhotos = useSelector((state: RootState) => {
     const data = state.serviceForm.categoryData;
-    if (data?.categoryId === "6" && data.details)
-      return data.details.panelPhotos;
-    return [];
-  });
-
-  const installLocationPhotos = useSelector((state: RootState) => {
-    const data = state.serviceForm.categoryData;
-    if (data?.categoryId === "6" && data.details)
-      return data.details.installLocationPhotos;
-    return [];
-  });
-
-  const receptaclePhotos = useSelector((state: RootState) => {
-    const data = state.serviceForm.categoryData;
-    if (data?.categoryId === "6" && data.details)
-      return data.details.receptaclePhotos;
+    if (data?.categoryId === "2") return data?.details?.panelPhotos;
     return [];
   });
 
@@ -50,37 +39,29 @@ export default function PhotosNeeded() {
           contentContainerStyle={{ paddingBottom: 32 }}
         >
           <StepProgressBar currentStep={7} totalSteps={9} />
-          <CategoryTag title="Hot Tub Installation" />
+          <CategoryTag title="EV Charger Installation" />
 
           <AuthHeading title="Photos needed" subtitle="" />
 
           <PhotoUploadSection
-            label="Upload photos of your electrical panel"
-            photos={panelPhotos}
+            label="Upload photo of area you want EV charger installed"
+            photos={chargerAreaPhotos || []}
             onPhotosChange={(p) =>
-              dispatch(updateHotTubDetails({ panelPhotos: p }))
+              dispatch(updateEVChargerDetails({ chargerAreaPhotos: p }))
             }
           />
 
           <PhotoUploadSection
-            label="Upload a photo of where your hot tub will be installed"
-            photos={installLocationPhotos}
+            label="Upload photos of your electrical panel up close so we can see the breakers/panel label and about 10 ft away"
+            photos={panelPhotos || []}
             onPhotosChange={(p) =>
-              dispatch(updateHotTubDetails({ installLocationPhotos: p }))
-            }
-          />
-
-          <PhotoUploadSection
-            label="Upload a photo of where the receptacle or disconnect might be installed"
-            photos={receptaclePhotos}
-            onPhotosChange={(p) =>
-              dispatch(updateHotTubDetails({ receptaclePhotos: p }))
+              dispatch(updateEVChargerDetails({ panelPhotos: p }))
             }
           />
 
           <GradientButton
-            label="Submit"
-            onPress={() => router.push("/quote/hot-tub/additional-info")}
+            label="Continue"
+            onPress={() => router.push("/quote/ev-charger/additional-info")}
           />
         </ScrollView>
       </KeyboardAvoidingView>
