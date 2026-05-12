@@ -297,7 +297,7 @@ const SolarInstallation = () => {
               </TouchableOpacity>
 
               {/* Visit Support */}
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 onPress={() => router.push("/shared/help")}
                 activeOpacity={0.7}
               >
@@ -310,7 +310,7 @@ const SolarInstallation = () => {
                 >
                   Visit Support
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </Animated.View>
 

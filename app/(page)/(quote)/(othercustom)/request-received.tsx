@@ -186,7 +186,7 @@ const RequestReceived = () => {
             {/* Return Home */}
             <GradientButton
               label="Return Home"
-              onPress={() => router.push("/(tabs)/quotes")}
+              onPress={() => router.push("/quote/choose-category")}
             />
 
             {/* New Quote + My Quotes */}
@@ -201,6 +201,9 @@ const RequestReceived = () => {
                   shadowOffset: { width: 0, height: 2 },
                   elevation: 1,
                 }}
+                onPress={() =>
+                  router.replace("/(page)/(quote)/other-custom-service")
+                }
               >
                 <Text className="font-Inter_Medium text-[#0F172A] text-sm">
                   New Quote

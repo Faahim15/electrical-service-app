@@ -123,7 +123,7 @@ const OtherStart = () => {
   const { titleofSub, bestForItems, provideItems, timeEstimate, steps } =
     categoryData;
 
-  console.log("Selected Other Category:", oipencategory);
+  console.log("Selected Other Categorysss:", oipencategory);
   return (
     <ScreenWrapper>
       <SafeAreaView edges={["top"]} className="flex-1">
