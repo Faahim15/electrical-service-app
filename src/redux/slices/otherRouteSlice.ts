@@ -1,10 +1,13 @@
+import { Ionicons } from "@expo/vector-icons";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface OtherCategory {
-  id: number;
-  icon: string;
+  id: string;
   title: string;
-  subtitle: string;
+  description: string;
+  iconName: keyof typeof Ionicons.glyphMap;
+  iconBg: string;
+  iconColor: string;
 }
 
 interface OtherCategoryState {
@@ -19,7 +22,10 @@ const otherCategoryRouteSlice = createSlice({
   name: "otherCategoryRoute",
   initialState,
   reducers: {
-    setSelectedRouteCategory: (state, action: PayloadAction<OtherCategory>) => {
+    setSelectedRouteOtherCategory: (
+      state,
+      action: PayloadAction<OtherCategory>,
+    ) => {
       state.selectedOtherCategory = action.payload;
     },
     clearSelectedCategory: (state) => {
@@ -28,6 +34,6 @@ const otherCategoryRouteSlice = createSlice({
   },
 });
 
-export const { setSelectedRouteCategory, clearSelectedCategory } =
+export const { setSelectedRouteOtherCategory, clearSelectedCategory } =
   otherCategoryRouteSlice.actions;
 export default otherCategoryRouteSlice.reducer;

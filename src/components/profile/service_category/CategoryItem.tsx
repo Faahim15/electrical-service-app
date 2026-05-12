@@ -1,6 +1,7 @@
 import { setSelectedRouteCategory } from "@/src/redux/slices/categoryRouteSlice";
+import { setSelectedRouteOtherCategory } from "@/src/redux/slices/otherRouteSlice";
 import { ServiceCategory } from "@/src/types/tabs.home.types";
-import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -11,13 +12,22 @@ const CategoryItem = ({ item }: { item: ServiceCategory }) => {
   const handlePress = () => {
     dispatch(setSelectedRouteCategory(item));
 
-    if (item.title === "Other Custom Service") {
-      router.push("/other-custom-service");
-    } else if (item.title === "Solar Installation") {
+    if (Number(item.id) < 11) {
+      router.push("/quote/service-details");
+    } else if (Number(item.id) === 11) {
       router.push("/sollar-installation");
     } else {
-      router.push("/quote/service-details");
+      dispatch(setSelectedRouteOtherCategory(item));
+      router.push("/other-start" as any);
     }
+
+    // if (item.title === "Other Custom Service") {
+    //   router.push("/other-custom-service");
+    // } else if (item.title === "Solar Installation") {
+    //   router.push("/sollar-installation");
+    // } else {
+    //   router.push("/quote/service-details");
+    // }
   };
 
   return (
@@ -38,7 +48,11 @@ const CategoryItem = ({ item }: { item: ServiceCategory }) => {
         className="w-12 h-12 rounded-2xl items-center justify-center mr-4"
         style={{ backgroundColor: item.iconBg }}
       >
-        <Ionicons name={item.iconName} size={22} color={item.iconColor} />
+        {item.title === "Ceiling Fan" ? (
+          <FontAwesome5 name="fan" size={22} color={item.iconColor} />
+        ) : (
+          <Ionicons name={item.iconName} size={22} color={item.iconColor} />
+        )}
       </View>
 
       {/* Text Content */}

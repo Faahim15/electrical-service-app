@@ -2,7 +2,7 @@ import { getCategoryData } from "@/data/otherCategoryData";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import { RootState } from "@/src/redux/store";
-import { Feather, FontAwesome5 } from "@expo/vector-icons";
+import { Feather, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
@@ -115,7 +115,7 @@ const OtherStart = () => {
   }, []);
 
   const oipencategory = useSelector(
-    (state: RootState) => state.openCategoryRoute.selectedOtherCategory,
+    (state: RootState) => state.otherCategoryRoute.selectedOtherCategory,
   );
 
   // ✅ Fetch dynamic data based on selected category title
@@ -176,12 +176,8 @@ const OtherStart = () => {
                 {oipencategory?.title === "Ceiling Fan" ? (
                   <FontAwesome5 name="fan" size={32} color="#155DFC" />
                 ) : (
-                  <Feather
-                    name={
-                      oipencategory?.icon as React.ComponentProps<
-                        typeof Feather
-                      >["name"]
-                    }
+                  <Ionicons
+                    name={oipencategory?.iconName}
                     size={32}
                     color="#155DFC"
                   />
@@ -212,7 +208,7 @@ const OtherStart = () => {
               <Text
                 className="font-Inter_Regular w-[80%]"
                 style={{
-                  fontSize: 13,
+                  fontSize: 14,
                   color: "#6B7280",
                   textAlign: "center",
                   lineHeight: 20,
@@ -240,7 +236,7 @@ const OtherStart = () => {
             >
               <Text
                 className="font-Inter_SemiBold"
-                style={{ fontSize: 14, color: "#111827", marginBottom: 12 }}
+                style={{ fontSize: 16, color: "#111827", marginBottom: 12 }}
               >
                 Best for
               </Text>
@@ -260,7 +256,7 @@ const OtherStart = () => {
                   <Text
                     className="font-Inter_Regular"
                     style={{
-                      fontSize: 13,
+                      fontSize: 14,
                       color: "#374151",
                       flex: 1,
                       lineHeight: 19,
@@ -290,7 +286,7 @@ const OtherStart = () => {
             >
               <Text
                 className="font-Inter_SemiBold"
-                style={{ fontSize: 14, color: "#111827", marginBottom: 12 }}
+                style={{ fontSize: 16, color: "#111827", marginBottom: 12 }}
               >
                 What you may need to provide
               </Text>
@@ -314,7 +310,7 @@ const OtherStart = () => {
                   />
                   <Text
                     className="font-Inter_Regular"
-                    style={{ fontSize: 13, color: "#374151" }}
+                    style={{ fontSize: 14, color: "#374151" }}
                   >
                     {item}
                   </Text>
@@ -345,7 +341,7 @@ const OtherStart = () => {
               <View style={{ flex: 1 }}>
                 <Text
                   className="font-Inter_SemiBold"
-                  style={{ fontSize: 13, color: "#111827", marginBottom: 3 }}
+                  style={{ fontSize: 14, color: "#111827", marginBottom: 3 }}
                 >
                   {timeEstimate.label}
                 </Text>
@@ -377,7 +373,7 @@ const OtherStart = () => {
             >
               <Text
                 className="font-Inter_SemiBold"
-                style={{ fontSize: 14, color: "#111827", marginBottom: 14 }}
+                style={{ fontSize: 16, color: "#111827", marginBottom: 14 }}
               >
                 Simple 3-step process
               </Text>
@@ -404,7 +400,7 @@ const OtherStart = () => {
                   >
                     <Text
                       className="font-Inter_Bold"
-                      style={{ fontSize: 12, color: "#FFFFFF" }}
+                      style={{ fontSize: 13, color: "#FFFFFF" }}
                     >
                       {step.id}
                     </Text>
@@ -412,7 +408,7 @@ const OtherStart = () => {
 
                   <Text
                     className="font-Inter_Regular"
-                    style={{ fontSize: 13, color: "#374151" }}
+                    style={{ fontSize: 14, color: "#374151" }}
                   >
                     {step.label}
                   </Text>

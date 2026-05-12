@@ -111,7 +111,7 @@ const WholeHomeSt1 = () => {
       {/* Subtitle */}
       <Animated.Text
         style={fadeSlideDown(subtitleAnim)}
-        className="text-[#6B7280] text-sm font-Inter_Regular mb-5"
+        className="text-[#6B7280] text-base font-Inter_Regular mb-5"
       >
         Protect your home from power surges
       </Animated.Text>

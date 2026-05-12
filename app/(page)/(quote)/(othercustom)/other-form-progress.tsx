@@ -119,12 +119,14 @@ const getStarlinkSteps = (dishLocation: string | null): StepConfig[] => [
 // ─── Main Screen ──────────────────────────────────────────────────────────────
 
 const OtherFormProgress = () => {
-  const category = useSelector((state: RootState) => state.openCategoryRoute);
+  const category = useSelector(
+    (state: RootState) => state.otherCategoryRoute.selectedOtherCategory,
+  );
   const { dishLocation, hasMounting, images } = useSelector(
     (state: RootState) => state.starlinkRoute,
   );
 
-  const selectedTitle = category.selectedOtherCategory?.title ?? "";
+  const selectedTitle = category?.title ?? "";
 
   // Spread category-specific steps after common steps
   const STEPS: StepConfig[] =
