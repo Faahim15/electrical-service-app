@@ -43,7 +43,8 @@ export default function CustomInput({
           style={{ color: labelColor }}
           className="font-Inter_Regular text-sm mb-1"
         >
-          {label}
+          {label.replace(" *", "")}
+          {label.includes(" *") && <Text style={{ color: "#EF4444" }}> *</Text>}
         </Text>
       ) : null}
 

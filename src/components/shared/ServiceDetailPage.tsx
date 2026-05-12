@@ -1,26 +1,21 @@
-import { Ionicons } from "@expo/vector-icons";
+import { GradientButton } from "@/src/components/onboarding/GradientButton";
+import { Feather, Ionicons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
-import React from "react";
-import { FlatList, ScrollView, Text, View } from "react-native";
-import { GradientButton } from "../onboarding/GradientButton";
-import CustomHeader from "./CustomHeader";
+import React, { useEffect, useRef } from "react";
+import {
+  Animated,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import ScreenWrapper from "./ScreenWrapper";
 
-type BestForItem = {
-  id: string;
-  text: string;
-};
-
-type ProvideItem = {
-  id: string;
-  text: string;
-};
-
-type StepItem = {
-  id: string;
-  step: number;
-  label: string;
-};
+type BestForItem = { id: string; text: string };
+type ProvideItem = { id: string; text: string };
+type StepItem = { id: string; step: number; label: string };
 
 type ServiceDetailPageProps = {
   iconName: string;
@@ -39,209 +34,398 @@ type ServiceDetailPageProps = {
 
 export default function ServiceDetailPage({
   iconName = "flash-outline",
-  iconColor = "#14B8A6",
-  iconBg = "#E0F7F7",
   title = "Service Call",
   subtitle = "Fast response for electrical repairs, troubleshooting, and emergency fixes.",
-  bestForItems = [
-    { id: "1", text: "Electrical issues or outages" },
-    { id: "2", text: "Circuit breaker problems" },
-    { id: "3", text: "Outlet or switch repairs" },
-    { id: "4", text: "Safety inspections" },
-  ],
-  provideItems = [
-    { id: "1", text: "Description of the issue" },
-    { id: "2", text: "Photos of the problem area" },
-    { id: "3", text: "Property access details" },
-  ],
+  bestForItems = [],
+  provideItems = [],
   estimatedTime = "Takes about 2–3 minutes",
   estimatedTimeSubtitle = "Quick and easy process",
-  steps = [
-    { id: "1", step: 1, label: "Contact details" },
-    { id: "2", step: 2, label: "Project information" },
-    { id: "3", step: 3, label: "Photo upload" },
-    { id: "4", step: 4, label: "Review & submit" },
-  ],
+  steps = [],
   onStartQuote,
   onBackToCategories,
 }: ServiceDetailPageProps) {
-  const stepColors = ["#0EA5E9", "#14B8A6", "#8B5CF6", "#F59E0B"];
+  // ── Animated values — exact same as OtherStart ──────────────────────────
+  const iconScale = useRef(new Animated.Value(0)).current;
+  const titleOpacity = useRef(new Animated.Value(0)).current;
+  const titleSlide = useRef(new Animated.Value(16)).current;
+  const card1Opacity = useRef(new Animated.Value(0)).current;
+  const card1Slide = useRef(new Animated.Value(30)).current;
+  const card2Opacity = useRef(new Animated.Value(0)).current;
+  const card2Slide = useRef(new Animated.Value(30)).current;
+  const card3Opacity = useRef(new Animated.Value(0)).current;
+  const card3Slide = useRef(new Animated.Value(30)).current;
+  const card4Opacity = useRef(new Animated.Value(0)).current;
+  const card4Slide = useRef(new Animated.Value(30)).current;
+  const btnOpacity = useRef(new Animated.Value(0)).current;
+  const btnSlide = useRef(new Animated.Value(20)).current;
+
+  useEffect(() => {
+    Animated.sequence([
+      Animated.spring(iconScale, {
+        toValue: 1,
+        tension: 60,
+        friction: 7,
+        useNativeDriver: true,
+      }),
+      Animated.parallel([
+        Animated.timing(titleOpacity, {
+          toValue: 1,
+          duration: 350,
+          useNativeDriver: true,
+        }),
+        Animated.timing(titleSlide, {
+          toValue: 0,
+          duration: 350,
+          useNativeDriver: true,
+        }),
+      ]),
+      Animated.parallel([
+        Animated.timing(card1Opacity, {
+          toValue: 1,
+          duration: 350,
+          useNativeDriver: true,
+        }),
+        Animated.timing(card1Slide, {
+          toValue: 0,
+          duration: 350,
+          useNativeDriver: true,
+        }),
+      ]),
+      Animated.parallel([
+        Animated.timing(card2Opacity, {
+          toValue: 1,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+        Animated.timing(card2Slide, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+      ]),
+      Animated.parallel([
+        Animated.timing(card3Opacity, {
+          toValue: 1,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+        Animated.timing(card3Slide, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+      ]),
+      Animated.parallel([
+        Animated.timing(card4Opacity, {
+          toValue: 1,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+        Animated.timing(card4Slide, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+      ]),
+      Animated.parallel([
+        Animated.timing(btnOpacity, {
+          toValue: 1,
+          duration: 350,
+          useNativeDriver: true,
+        }),
+        Animated.timing(btnSlide, {
+          toValue: 0,
+          duration: 350,
+          useNativeDriver: true,
+        }),
+      ]),
+    ]).start();
+  }, []);
+
+  const cardShadow = {
+    shadowColor: "#06B6D4",
+    shadowOffset: { width: 0, height: 1 } as const,
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+    elevation: 2,
+  };
 
   return (
-    <>
-      <ScreenWrapper paddingHorizontal={0}>
-        <CustomHeader title={title} />
-
-        <View className="flex-1">
+    <ScreenWrapper>
+      <SafeAreaView edges={["top"]} className="flex-1">
+        <View style={{ flex: 1 }}>
           <ScrollView
+            style={{ flex: 1 }}
+            contentContainerStyle={{ paddingBottom: 32 }}
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: 120 }}
           >
-            {/* Hero */}
-            <View className="items-center px-[8%] pt-[4%] pb-[6%]">
-              <View
-                className="w-[72px] h-[72px] rounded-full items-center justify-center mb-5"
-                style={{ backgroundColor: iconBg }}
+            {/* Back Button */}
+            <View style={{ paddingTop: 12, paddingBottom: 4 }}>
+              <TouchableOpacity
+                onPress={onBackToCategories ?? (() => router.back())}
+                activeOpacity={0.7}
+                style={{ padding: 4, alignSelf: "flex-start" }}
               >
-                <Ionicons name={iconName as any} size={34} color={iconColor} />
-              </View>
-              <Text className="text-[#1E293B] text-[22px] font-Inter_Bold text-center mb-2">
+                <Feather name="arrow-left" size={22} color="#1F2937" />
+              </TouchableOpacity>
+            </View>
+
+            {/* Icon — same spring scale as OtherStart */}
+            <Animated.View
+              style={{
+                transform: [{ scale: iconScale }],
+                alignItems: "center",
+                marginTop: 12,
+                marginBottom: 16,
+              }}
+            >
+              <LinearGradient
+                colors={["#DBEAFE", "#CEFAFE"]}
+                style={{
+                  width: 72,
+                  height: 72,
+                  borderRadius: 36,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  ...cardShadow,
+                }}
+              >
+                <Ionicons name={iconName as any} size={32} color="#155DFC" />
+              </LinearGradient>
+            </Animated.View>
+
+            {/* Title & Subtitle */}
+            <Animated.View
+              style={{
+                opacity: titleOpacity,
+                transform: [{ translateY: titleSlide }],
+                alignItems: "center",
+                marginBottom: 20,
+              }}
+            >
+              <Text
+                className="font-Inter_Bold"
+                style={{
+                  fontSize: 22,
+                  color: "#111827",
+                  textAlign: "center",
+                  marginBottom: 8,
+                }}
+              >
                 {title}
               </Text>
-              <Text className="text-[#64748B] text-[13.5px] font-Inter_Regular text-center leading-[21px]">
+              <Text
+                className="font-Inter_Regular"
+                style={{
+                  fontSize: 14,
+                  color: "#6B7280",
+                  textAlign: "justify",
+
+                  lineHeight: 20,
+                }}
+              >
                 {subtitle}
               </Text>
-            </View>
+            </Animated.View>
 
-            {/* Best For */}
-            <View
-              className="mx-[4%] mb-[3%] bg-white rounded-2xl px-[5%] py-[5%]"
+            {/* Best For Card */}
+            <Animated.View
               style={{
-                shadowColor: "#94A3B8",
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.08,
-                shadowRadius: 6,
-                elevation: 2,
+                opacity: card1Opacity,
+                transform: [{ translateY: card1Slide }],
+                backgroundColor: "#FFFFFF",
+                borderRadius: 16,
+                padding: 16,
+                marginBottom: 12,
+                ...cardShadow,
               }}
             >
-              <Text className="text-[#1E293B] text-[14px] font-Inter_Bold mb-3">
+              <Text
+                className="font-Inter_SemiBold"
+                style={{ fontSize: 16, color: "#111827", marginBottom: 12 }}
+              >
                 Best for
               </Text>
-              <FlatList
-                data={bestForItems}
-                keyExtractor={(item) => item.id}
-                scrollEnabled={false}
-                renderItem={({ item }) => (
-                  <View className="flex-row items-center mb-[10px]">
-                    <Ionicons
-                      name="checkmark-circle-outline"
-                      size={18}
-                      color="#14B8A6"
-                    />
-                    <Text className="text-[#475569] text-[13px] font-Inter_Regular ml-2 flex-1">
-                      {item.text}
-                    </Text>
+              {bestForItems.map((item, i) => (
+                <View
+                  key={item.id}
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "flex-start",
+                    marginBottom: i < bestForItems.length - 1 ? 10 : 0,
+                  }}
+                >
+                  <View className="h-6 w-6 mr-1 rounded-full justify-center items-center bg-[#EFF6FF]">
+                    <Feather name="check" size={12} color="#155DFC" />
                   </View>
-                )}
-              />
-            </View>
-
-            {/* What you may need to provide */}
-            <View
-              className="mx-[4%] mb-[3%] bg-white rounded-2xl px-[5%] py-[5%]"
-              style={{
-                shadowColor: "#94A3B8",
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.08,
-                shadowRadius: 6,
-                elevation: 2,
-              }}
-            >
-              <Text className="text-[#1E293B] text-[14px] font-Inter_Bold mb-3">
-                What you may need to provide
-              </Text>
-              <FlatList
-                data={provideItems}
-                keyExtractor={(item) => item.id}
-                scrollEnabled={false}
-                renderItem={({ item }) => (
-                  <View className="flex-row items-center mb-[10px]">
-                    <View
-                      className="w-[7px] h-[7px] rounded-full mr-3"
-                      style={{ backgroundColor: "#0EA5E9" }}
-                    />
-                    <Text className="text-[#475569] text-[13px] font-Inter_Regular flex-1">
-                      {item.text}
-                    </Text>
-                  </View>
-                )}
-              />
-
-              {/* Time estimate badge */}
-              <View className="mt-2 flex-row items-center bg-[#EEF9FF] rounded-xl px-[4%] py-[3%]">
-                <Ionicons name="time-outline" size={18} color="#0EA5E9" />
-                <View className="ml-3">
-                  <Text className="text-[#0EA5E9] text-[13px] font-Inter_SemiBold">
-                    {estimatedTime}
-                  </Text>
-                  <Text className="text-[#64748B] text-[11.5px] font-Inter_Regular">
-                    {estimatedTimeSubtitle}
-                  </Text>
-                </View>
-              </View>
-            </View>
-
-            {/* Simple 4-step process */}
-            <View className="mx-[4%] mb-[3%]">
-              <Text className="text-[#1E293B] text-[15px] font-Inter_Bold mb-3">
-                Simple {steps.length}-step process
-              </Text>
-              <FlatList
-                data={steps}
-                keyExtractor={(item) => item.id}
-                scrollEnabled={false}
-                renderItem={({ item, index }) => (
-                  <View
-                    className="bg-white flex-row items-center px-[5%] py-[4%] rounded-2xl mb-[2.5%]"
+                  <Text
+                    className="font-Inter_Regular"
                     style={{
-                      shadowColor: "#94A3B8",
-                      shadowOffset: { width: 0, height: 2 },
-                      shadowOpacity: 0.07,
-                      shadowRadius: 5,
-                      elevation: 2,
+                      fontSize: 14,
+                      color: "#374151",
+                      flex: 1,
+                      lineHeight: 19,
                     }}
                   >
-                    <View
-                      className="w-7 h-7 rounded-full items-center justify-center mr-4"
-                      style={{
-                        backgroundColor:
-                          stepColors[index % stepColors.length] + "22",
-                      }}
-                    >
-                      <Text
-                        className="text-[12px] font-Inter_Bold"
-                        style={{ color: stepColors[index % stepColors.length] }}
-                      >
-                        {item.step}
-                      </Text>
-                    </View>
-                    <Text className="text-[#1E293B] text-[13.5px] font-Inter_Medium flex-1">
-                      {item.label}
-                    </Text>
-                  </View>
-                )}
-              />
-            </View>
-          </ScrollView>
+                    {item.text}
+                  </Text>
+                </View>
+              ))}
+            </Animated.View>
 
-          {/* Bottom CTA */}
-          <View
-            className="absolute bottom-0 left-0 right-0 bg-[#F0F6FF] px-[4%] pt-[3%] pb-[8%]"
-            style={{
-              shadowColor: "#94A3B8",
-              shadowOffset: { width: 0, height: -3 },
-              shadowOpacity: 0.08,
-              shadowRadius: 8,
-              elevation: 6,
-            }}
-          >
-            <GradientButton
-              label="Start Quote"
-              onPress={() => router.push("/quote/common/contact-details")}
-            />
-
-            {/* <TouchableOpacity
-              activeOpacity={0.7}
-              onPress={onBackToCategories ?? (() => router.back())}
-              className="items-center"
+            {/* What You May Need Card */}
+            <Animated.View
+              style={{
+                opacity: card2Opacity,
+                transform: [{ translateY: card2Slide }],
+                backgroundColor: "#FFFFFF",
+                borderRadius: 16,
+                padding: 16,
+                marginBottom: 12,
+                ...cardShadow,
+              }}
             >
-              <Text className="text-[#64748B] text-[13px] font-Inter_Medium">
-                Back to Categories
+              <Text
+                className="font-Inter_SemiBold"
+                style={{ fontSize: 16, color: "#111827", marginBottom: 12 }}
+              >
+                What you may need to provide
               </Text>
-            </TouchableOpacity> */}
-          </View>
+              {provideItems.map((item, i) => (
+                <View
+                  key={item.id}
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginBottom: i < provideItems.length - 1 ? 10 : 0,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 7,
+                      height: 7,
+                      borderRadius: 4,
+                      backgroundColor: "#2B7FFF",
+                      marginRight: 10,
+                    }}
+                  />
+                  <Text
+                    className="font-Inter_Regular"
+                    style={{ fontSize: 14, color: "#374151" }}
+                  >
+                    {item.text}
+                  </Text>
+                </View>
+              ))}
+            </Animated.View>
+
+            {/* Time Estimate Card */}
+            <Animated.View
+              style={{
+                opacity: card3Opacity,
+                transform: [{ translateY: card3Slide }],
+                backgroundColor: "#FFFFFF",
+                borderRadius: 16,
+                paddingHorizontal: 16,
+                paddingVertical: 14,
+                marginBottom: 12,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                ...cardShadow,
+              }}
+            >
+              <View style={{ flex: 1 }}>
+                <Text
+                  className="font-Inter_SemiBold"
+                  style={{ fontSize: 14, color: "#111827", marginBottom: 3 }}
+                >
+                  {estimatedTime}
+                </Text>
+                <Text
+                  className="font-Inter_Regular"
+                  style={{ fontSize: 12, color: "#9CA3AF" }}
+                >
+                  {estimatedTimeSubtitle}
+                </Text>
+              </View>
+              <Feather name="clock" size={20} color="#155DFC" />
+            </Animated.View>
+
+            {/* Steps Card */}
+            <Animated.View
+              style={{
+                opacity: card4Opacity,
+                transform: [{ translateY: card4Slide }],
+                backgroundColor: "#FFFFFF",
+                borderRadius: 16,
+                padding: 16,
+                marginBottom: 24,
+                ...cardShadow,
+              }}
+            >
+              <Text
+                className="font-Inter_SemiBold"
+                style={{ fontSize: 16, color: "#111827", marginBottom: 14 }}
+              >
+                Simple {steps.length}-step process
+              </Text>
+              {steps.map((step, i) => (
+                <View
+                  key={step.id}
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginBottom: i < steps.length - 1 ? 12 : 0,
+                  }}
+                >
+                  <LinearGradient
+                    colors={["#2B7FFF", "#00B8DB"]}
+                    style={{
+                      width: 26,
+                      height: 26,
+                      borderRadius: 13,
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginRight: 12,
+                    }}
+                  >
+                    <Text
+                      className="font-Inter_Bold"
+                      style={{ fontSize: 13, color: "#FFFFFF" }}
+                    >
+                      {step.step}
+                    </Text>
+                  </LinearGradient>
+                  <Text
+                    className="font-Inter_Regular"
+                    style={{ fontSize: 14, color: "#374151" }}
+                  >
+                    {step.label}
+                  </Text>
+                </View>
+              ))}
+            </Animated.View>
+
+            {/* Button — same animated wrapper as OtherStart */}
+            <Animated.View
+              style={{
+                opacity: btnOpacity,
+                transform: [{ translateY: btnSlide }],
+                ...cardShadow,
+              }}
+            >
+              <GradientButton
+                label="Start Quote"
+                onPress={
+                  onStartQuote ??
+                  (() => router.push("/quote/common/contact-details"))
+                }
+              />
+            </Animated.View>
+          </ScrollView>
         </View>
-      </ScreenWrapper>
-    </>
+      </SafeAreaView>
+    </ScreenWrapper>
   );
 }

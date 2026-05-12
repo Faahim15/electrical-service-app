@@ -54,7 +54,7 @@ const popularServices: Category[] = [
     id: "1",
     title: "Service Call",
     description: "Quick electrical inspection.",
-    iconName: "flash-outline",
+    iconName: "construct-outline",
     iconColor: "#14B8A6",
     iconBg: "#CCFBF1",
   },
@@ -62,7 +62,7 @@ const popularServices: Category[] = [
     id: "2",
     title: "EV Charger\nInstallation",
     description: "EV charging station setup.",
-    iconName: "car-outline",
+    iconName: "flash-outline",
     iconColor: "#0EA5E9",
     iconBg: "#E0F2FE",
   },
@@ -70,7 +70,7 @@ const popularServices: Category[] = [
     id: "3",
     title: "Panel Upgrade",
     description: "Modernize electrical panel.",
-    iconName: "home-outline",
+    iconName: "cube-outline",
     iconColor: "#F59E0B",
     iconBg: "#FEF3C7",
   },
@@ -78,7 +78,7 @@ const popularServices: Category[] = [
     id: "9",
     title: "Generator\nInstallation",
     description: "Backup power solutions.",
-    iconName: "construct-outline",
+    iconName: "battery-charging-outline",
     iconColor: "#8B5CF6",
     iconBg: "#EDE9FE",
   },
@@ -147,9 +147,8 @@ export default function QuotesScreen() {
           {/* Quick Actions - Using .map instead of FlatList */}
           <View className="px-[4%] mb-[4%]">
             {quickActions.map((item) => (
-              <TouchableOpacity
+              <View
                 key={item.id}
-                activeOpacity={0.8}
                 className="bg-white flex-row items-center px-[4%] py-[4%] mb-[2.5%] rounded-2xl shadow-sm"
               >
                 <View
@@ -161,8 +160,7 @@ export default function QuotesScreen() {
                 <Text className="text-[#1E293B] text-sm font-Inter_Medium flex-1">
                   {item.label}
                 </Text>
-                <Ionicons name="chevron-forward" size={16} color="#CBD5E1" />
-              </TouchableOpacity>
+              </View>
             ))}
           </View>
 

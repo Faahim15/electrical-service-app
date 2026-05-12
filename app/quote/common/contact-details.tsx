@@ -34,7 +34,7 @@ export default function ContactDetails() {
         />
 
         <CustomInput
-          label="Full Name"
+          label="Full Name *"
           leftIcon="person-outline"
           textInputConfig={{
             placeholder: "Enter your full name",
@@ -46,7 +46,7 @@ export default function ContactDetails() {
         />
 
         <CustomInput
-          label="Email Address"
+          label="Email Address *"
           leftIcon="mail-outline"
           textInputConfig={{
             placeholder: "Enter your email",
@@ -59,7 +59,7 @@ export default function ContactDetails() {
         />
 
         <CustomInput
-          label="Phone Number"
+          label="Phone Number *"
           leftIcon="call-outline"
           textInputConfig={{
             placeholder: "Enter your phone number",

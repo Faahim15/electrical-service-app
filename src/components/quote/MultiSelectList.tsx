@@ -36,7 +36,7 @@ const MultiSelectList = ({
                 paddingVertical: 13,
                 paddingHorizontal: 16,
                 borderRadius: 12,
-                backgroundColor: isSelected ? "#EEF9FF" : "#FFFFFF",
+                backgroundColor: isSelected ? "#0EA5E9" : "#FFFFFF",
                 borderWidth: 1.5,
                 borderColor: isSelected ? "#0EA5E9" : "#E2E8F0",
                 shadowColor: "#94A3B8",
@@ -48,7 +48,7 @@ const MultiSelectList = ({
             >
               <Text
                 className="text-[13.5px] font-Inter_Medium"
-                style={{ color: isSelected ? "#0EA5E9" : "#475569" }}
+                style={{ color: isSelected ? "#FFFFFF" : "#475569" }}
               >
                 {option}
               </Text>

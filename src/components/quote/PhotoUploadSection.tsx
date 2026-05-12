@@ -1,3 +1,5 @@
+import { photoUploadSvg } from "@/assets/images/svg/tabs-svg";
+import { scale, verticalScale } from "@/src/utils/Scaling";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
@@ -11,6 +13,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import CustomSvg from "../shared/CustomSvg";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
@@ -70,19 +73,25 @@ const PhotoUploadSection = ({
 
   return (
     <View
-      className="bg-white rounded-2xl px-4 py-4 mb-4"
+      className="bg-white rounded-2xl px-4 py-5 mb-4"
       style={{
+        borderWidth: 1,
+        borderColor: "#E8F4FD",
         shadowColor: "#94A3B8",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.08,
-        shadowRadius: 6,
-        elevation: 2,
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.06,
+        shadowRadius: 4,
+        elevation: 1,
       }}
     >
       {/* Header */}
       <View className="items-center mb-3">
-        <Ionicons name="cloud-upload-outline" size={28} color="#0EA5E9" />
-        <Text className="text-[#1E293B] text-[14px] font-Inter_SemiBold mt-2">
+        <CustomSvg
+          xml={photoUploadSvg.replace(/currentColor/g, "#0EA5E9")}
+          width={28}
+          height={28}
+        />
+        <Text className="text-[#1E293B] text-[14px] font-Inter_SemiBold mt-2 text-center">
           {label}
         </Text>
       </View>
@@ -135,13 +144,14 @@ const PhotoUploadSection = ({
         style={{
           borderWidth: 1,
           borderColor: "#BAE6FD",
-          borderRadius: 10,
-          paddingVertical: 9,
+          borderRadius: scale(12),
+          paddingVertical: verticalScale(14),
           alignItems: "center",
-          backgroundColor: "#EEF9FF",
+          backgroundColor: "#FFFFFF",
+          alignSelf: "stretch",
         }}
       >
-        <Text className="text-[#0EA5E9] text-[13px] font-Inter_SemiBold">
+        <Text className="text-[#0EA5E9] text-sm font-Inter_SemiBold">
           Choose File
         </Text>
       </TouchableOpacity>

@@ -5,11 +5,11 @@ import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import {
-    FlatList,
-    ScrollView,
-    Text,
-    TouchableOpacity,
-    View,
+  FlatList,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 const TABS = ["All", "Quotes", "Reminders", "Guides"];
@@ -235,7 +235,18 @@ export default function RecentActivity() {
               {/* Gradient Button */}
               <GradientPressable
                 label="View Details"
-                onPress={() => router.push("/recent-activity/details" as any)}
+                onPress={() =>
+                  router.push({
+                    pathname: "/recent-activity/details",
+                    params: {
+                      id: item.id,
+                      title: item.title,
+                      subtitle: item.subtitle,
+                      badge: item.status ?? "",
+                      badgeColor: item.statusColor ?? "",
+                    },
+                  })
+                }
               />
             </View>
           )}
