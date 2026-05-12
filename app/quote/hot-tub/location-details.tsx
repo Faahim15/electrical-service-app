@@ -9,9 +9,10 @@ import StepProgressBar from "@/src/components/shared/StepProgressBar";
 import TextAreaInput from "@/src/components/shared/TextAreaInput";
 import { updateHotTubDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
+import { verticalScale } from "@/src/utils/Scaling";
 import { router } from "expo-router";
 import React from "react";
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 const PLACEMENT_OPTIONS = [
@@ -85,65 +86,69 @@ export default function LocationDetails() {
         <ScrollView
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
-          contentContainerStyle={{ paddingBottom: 32 }}
+          contentContainerStyle={{ paddingBottom: verticalScale(70) }}
         >
           <StepProgressBar currentStep={6} totalSteps={9} />
           <CategoryTag title="Hot Tub Installation" />
 
           <AuthHeading title="Location details" subtitle="" />
-
-          <OptionGrid
-            label="What will the hot tub be placed on?"
-            options={PLACEMENT_OPTIONS}
-            selected={placement}
-            onSelect={(val) =>
-              dispatch(updateHotTubDetails({ placement: val as any }))
-            }
-            numColumns={1}
-          />
-          {placement === "Other" && (
-            <TextAreaInput
-              label="Please specify"
-              placeholder="Describe where the hot tub will be placed"
-              value={placementOther ?? ""}
-              onChangeText={(text) =>
-                dispatch(updateHotTubDetails({ placementOther: text }))
+          <View className=" mt-[2%] ">
+            <OptionGrid
+              label="What will the hot tub be placed on?"
+              options={PLACEMENT_OPTIONS}
+              selected={placement}
+              onSelect={(val) =>
+                dispatch(updateHotTubDetails({ placement: val as any }))
               }
+              numColumns={1}
             />
-          )}
-          <OptionGrid
-            label="Where is your electrical panel located?"
-            options={PANEL_LOCATIONS}
-            selected={panelLocation}
-            onSelect={(val) =>
-              dispatch(updateHotTubDetails({ panelLocation: val as any }))
-            }
-            numColumns={1}
-          />
-          {panelLocation === "Other (please specify)" && (
-            <TextAreaInput
-              label="Please specify"
-              placeholder="Describe your panel location"
-              value={panelLocationOther ?? ""}
-              onChangeText={(text) =>
-                dispatch(updateHotTubDetails({ panelLocationOther: text }))
+            {placement === "Other" && (
+              <TextAreaInput
+                label="Please specify"
+                placeholder="Describe where the hot tub will be placed"
+                value={placementOther ?? ""}
+                onChangeText={(text) =>
+                  dispatch(updateHotTubDetails({ placementOther: text }))
+                }
+              />
+            )}
+            <View className="my-[2%]">
+              <OptionGrid
+                label="Where is your electrical panel located?"
+                options={PANEL_LOCATIONS}
+                selected={panelLocation}
+                onSelect={(val) =>
+                  dispatch(updateHotTubDetails({ panelLocation: val as any }))
+                }
+                numColumns={1}
+              />
+            </View>
+            {panelLocation === "Other (please specify)" && (
+              <TextAreaInput
+                label="Please specify"
+                placeholder="Describe your panel location"
+                value={panelLocationOther ?? ""}
+                onChangeText={(text) =>
+                  dispatch(updateHotTubDetails({ panelLocationOther: text }))
+                }
+              />
+            )}
+            <OptionGrid
+              label="What is the approximate distance of the electrical panel from hot tub location?"
+              options={PANEL_DISTANCES}
+              selected={panelDistance}
+              onSelect={(val) =>
+                dispatch(updateHotTubDetails({ panelDistance: val as any }))
               }
+              numColumns={1}
             />
-          )}
-          <OptionGrid
-            label="What is the approximate distance of the electrical panel from hot tub location?"
-            options={PANEL_DISTANCES}
-            selected={panelDistance}
-            onSelect={(val) =>
-              dispatch(updateHotTubDetails({ panelDistance: val as any }))
-            }
-            numColumns={1}
-          />
-
-          <GradientButton
-            label="Continue"
-            onPress={() => router.push("/quote/hot-tub/photos-needed")}
-          />
+            <View className="mt-[2%]">
+              <GradientButton
+                label="Continue"
+                onPress={() => router.push("/quote/hot-tub/photos-needed")}
+              />
+            </View>
+          </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

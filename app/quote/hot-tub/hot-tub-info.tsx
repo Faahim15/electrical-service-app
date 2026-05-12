@@ -12,7 +12,7 @@ import { updateHotTubDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function HotTubInfo() {
@@ -114,13 +114,14 @@ export default function HotTubInfo() {
               />
             </>
           )}
-
-          <GradientButton
-            label="Continue"
-            onPress={() =>
-              router.push("/quote/hot-tub/electrical-requirements" as any)
-            }
-          />
+          <View className="mt-[3%]">
+            <GradientButton
+              label="Continue"
+              onPress={() =>
+                router.push("/quote/hot-tub/electrical-requirements" as any)
+              }
+            />
+          </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

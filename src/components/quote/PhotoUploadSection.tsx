@@ -86,11 +86,23 @@ const PhotoUploadSection = ({
     >
       {/* Header */}
       <View className="items-center mb-3">
-        <CustomSvg
-          xml={photoUploadSvg.replace(/currentColor/g, "#0EA5E9")}
-          width={28}
-          height={28}
-        />
+        <View
+          style={{
+            width: scale(48),
+            height: verticalScale(48),
+            borderRadius: scale(24),
+            backgroundColor: "#EFF6FF",
+            borderColor: "#EFF6FF",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CustomSvg
+            xml={photoUploadSvg.replace(/currentColor/g, "#60A5FA")}
+            width={24}
+            height={24}
+          />
+        </View>
         <Text className="text-[#1E293B] text-[14px] font-Inter_SemiBold mt-2 text-center">
           {label}
         </Text>
@@ -143,15 +155,18 @@ const PhotoUploadSection = ({
         onPress={showPickerOptions}
         style={{
           borderWidth: 1,
-          borderColor: "#BAE6FD",
-          borderRadius: scale(12),
+          borderColor: "#EFF6FF",
+          alignSelf: "center",
+          borderRadius: scale(16),
           paddingVertical: verticalScale(14),
           alignItems: "center",
-          backgroundColor: "#FFFFFF",
-          alignSelf: "stretch",
+          backgroundColor: "#EFF6FF",
+          justifyContent: "center",
+          height: verticalScale(50),
+          width: scale(130),
         }}
       >
-        <Text className="text-[#0EA5E9] text-sm font-Inter_SemiBold">
+        <Text className="text-[#60A5FA] text-base font-Inter_SemiBold">
           Choose File
         </Text>
       </TouchableOpacity>

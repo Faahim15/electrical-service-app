@@ -25,8 +25,8 @@ const OptionGrid = ({
   return (
     <View className="mb-[1%]">
       {label !== "" && (
-        <View className="flex-row items-center mb-1">
-          <Text className="text-[#1E293B] text-sm font-Inter_SemiBold">
+        <View className="flex-row items-center mb-[2%]">
+          <Text className="text-[#1E293B] text-base font-Inter_SemiBold">
             {label}
           </Text>
           {required && (
