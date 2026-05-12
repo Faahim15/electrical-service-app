@@ -20,9 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function ProjectBasics() {
   const dispatch = useDispatch();
-  // const { propertyType, ownershipStatus, timeline } = useSelector(
-  //   (state: RootState) => state.serviceForm.projectBasics,
-  // );
+
   const { propertyType, ownershipStatus, timeline, ownershipStatusOther } =
     useSelector((state: RootState) => state.serviceForm.projectBasics);
   const selectedCategory = useSelector(
