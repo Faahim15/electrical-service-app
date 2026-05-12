@@ -1,31 +1,39 @@
-import { Ionicons } from "@expo/vector-icons";
+import {
+  help,
+  home,
+  partners,
+  profile,
+  quotes,
+} from "@/assets/images/svg/tabs-svg";
 import { router, Tabs, usePathname } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { SvgXml } from "react-native-svg";
 
 const tabs = [
-  { name: "home", route: "/(tabs)/home", icon: "home", label: "Home" },
-  {
-    name: "quotes",
-    route: "/(tabs)/quotes",
-    icon: "document-text",
-    label: "Quotes",
-  },
-  { name: "help", route: "/(tabs)/help", icon: "build", label: "Help" },
+  { name: "home", route: "/(tabs)/home", icon: home, label: "Home" },
+  { name: "quotes", route: "/(tabs)/quotes", icon: quotes, label: "Quotes" },
+  { name: "help", route: "/(tabs)/help", icon: help, label: "Help" },
   {
     name: "partners",
     route: "/(tabs)/partners",
-    icon: "people",
+    icon: partners,
     label: "Partners",
   },
   {
     name: "profile",
     route: "/(tabs)/profile",
-    icon: "person",
+    icon: profile,
     label: "Profile",
   },
 ];
+
+function TabIcon({ xml, focused }: { xml: string; focused: boolean }) {
+  const color = focused ? "#00ABB0" : "#9CA3AF";
+  const coloredXml = xml.replace(/currentColor/g, color);
+  return <SvgXml xml={coloredXml} width={22} height={22} />;
+}
 
 function CustomTabBar() {
   const pathname = usePathname();
@@ -90,11 +98,7 @@ function CustomTabBar() {
                   }}
                 />
               )}
-              <Ionicons
-                name={(focused ? tab.icon : `${tab.icon}-outline`) as any}
-                size={22}
-                color={focused ? "#00ABB0" : "#9CA3AF"}
-              />
+              <TabIcon xml={tab.icon} focused={focused} />
             </View>
 
             <Text
