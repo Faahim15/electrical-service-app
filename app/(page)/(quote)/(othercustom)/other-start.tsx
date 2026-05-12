@@ -375,7 +375,7 @@ const OtherStart = () => {
                 className="font-Inter_SemiBold"
                 style={{ fontSize: 16, color: "#111827", marginBottom: 14 }}
               >
-                Simple 3-step process
+                Simple {steps.length}-step process
               </Text>
               {steps.map((step, i) => (
                 <View

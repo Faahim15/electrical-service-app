@@ -36,7 +36,7 @@ const StatCardProfile = ({ value, label, delay }: StatCardProps) => {
       }}
       className="bg-white rounded-2xl mx-1 py-4 items-center shadow-sm"
     >
-      <Text className="text-2xl font-bold text-[#0F172A]">{value}</Text>
+      <Text className="text-2xl font-Inter_Bold text-[#0F172A]">{value}</Text>
       <Text className="text-xs font-Inter_Regular text-[#475569] mt-0.5">
         {label}
       </Text>

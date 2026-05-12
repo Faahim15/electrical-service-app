@@ -1,4 +1,5 @@
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
+import { RootState } from "@/src/redux/store";
 import Feather from "@expo/vector-icons/build/Feather";
 import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
@@ -10,8 +11,13 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
 
 const Reminderdetails = () => {
+  const reminder = useSelector(
+    (state: RootState) => state.reminderDetails.selectedReminder,
+  );
+  console.log(reminder);
   // Animation refs
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(30)).current;
@@ -124,7 +130,7 @@ const Reminderdetails = () => {
               Reminder Title
             </Text>
             <Text className="text-base text-[#111827] font-Inter_Bold">
-              Smoke Detector Check
+              {reminder?.title}
             </Text>
           </Animated.View>
 
@@ -141,7 +147,7 @@ const Reminderdetails = () => {
                   Frequency
                 </Text>
                 <Text className="text-sm text-[#111827] font-Inter_SemiBold mt-0.5">
-                  Monthly
+                  {reminder?.frequency}
                 </Text>
               </View>
             </View>
@@ -168,9 +174,9 @@ const Reminderdetails = () => {
             <Text className="text-xs text-gray-400 mb-2 font-Inter_Regular">
               Status
             </Text>
-            <View className="self-start bg-cyan-50 border border-cyan-200 rounded-full px-4 py-1">
-              <Text className="text-sm text-cyan-500 font-Inter_SemiBold">
-                Active
+            <View className="self-start bg-cyan-50   rounded-full px-4 py-1">
+              <Text className="text-sm text-gray-700 font-Inter_SemiBold">
+                {reminder?.status}
               </Text>
             </View>
           </Animated.View>

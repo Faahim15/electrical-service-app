@@ -1,4 +1,5 @@
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
+import { setSelectedQuote } from "@/src/redux/slices/quoteDetailsSlice";
 import Feather from "@expo/vector-icons/build/Feather";
 import { router } from "expo-router";
 import React, { useCallback, useRef, useState } from "react";
@@ -13,6 +14,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useDispatch } from "react-redux";
 
 // ----------- Types -------------------------------------------------------------------------
 
@@ -98,6 +100,7 @@ function QuoteCard({ item, index }: { item: Quote; index: number }) {
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(30)).current;
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     Animated.parallel([
@@ -118,22 +121,10 @@ function QuoteCard({ item, index }: { item: Quote; index: number }) {
     ]).start();
   }, []);
 
-  const handlePressIn = () => {
-    Animated.spring(scaleAnim, {
-      toValue: 0.975,
-      useNativeDriver: true,
-      speed: 30,
-      bounciness: 4,
-    }).start();
-  };
+  const handlePress = () => {
+    dispatch(setSelectedQuote(item));
 
-  const handlePressOut = () => {
-    Animated.spring(scaleAnim, {
-      toValue: 1,
-      useNativeDriver: true,
-      speed: 20,
-      bounciness: 6,
-    }).start();
+    router.push("/my-quotedetais");
   };
 
   return (
@@ -148,7 +139,7 @@ function QuoteCard({ item, index }: { item: Quote; index: number }) {
         <Pressable
           // onPressIn={handlePressIn}
           // onPressOut={handlePressOut}
-          // onPress={() => router.push("/my-quotedetais")}
+          onPress={handlePress}
           className="bg-white rounded-2xl p-4 shadow-md"
           style={{
             shadowColor: "#0000000D",
@@ -210,9 +201,14 @@ function FilterPill({
     }).start();
   }, [active]);
 
+  const borderColor = bgAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["#D9E6EE", "#1DA1F2"],
+  });
+
   const backgroundColor = bgAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: ["#F3F4F6", "#2563EB"],
+    outputRange: ["#FFFFFF", "#1DA1F2"],
   });
 
   const textColor = bgAnim.interpolate({
@@ -224,10 +220,10 @@ function FilterPill({
     <TouchableOpacity activeOpacity={0.75} onPress={onPress}>
       <Animated.View
         className="rounded-full px-4 py-2 mr-2"
-        style={{ backgroundColor }}
+        style={{ backgroundColor, borderWidth: 1, borderColor: borderColor }}
       >
         <Animated.Text
-          className={`text-[13px] ${active ? "font-semibold" : "font-normal"}`}
+          className={`text-[13px] ${active ? "font-Inter_Medium" : "font-Inter_Regular"}`}
           style={{ color: textColor }}
         >
           {label}
@@ -275,12 +271,12 @@ function EmptyState({ filter }: { filter: FilterType }) {
       </View>
 
       {/* Title */}
-      <Text className="text-base font-semibold text-gray-700 mb-1">
+      <Text className="text-base font-Inter_SemiBold text-gray-700 mb-1">
         No {filter === "All" ? "" : filter} Quotes
       </Text>
 
       {/* Description */}
-      <Text className="text-[13px] text-gray-400 text-center max-w-[220px]">
+      <Text className="text-[13px] text-gray-400 font-Inter_Regular text-center max-w-[220px]">
         {`You don't have any`} {filter === "All" ? "" : filter.toLowerCase()}{" "}
         quotes yet.
       </Text>

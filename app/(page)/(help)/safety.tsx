@@ -40,7 +40,7 @@ const safetyItems = [
   {
     id: "4",
     icon: "home",
-    title: "Septic\nSystem Alarm",
+    title: "Septic System \n Alarm",
     description: "Check alarm battery and function",
     enabled: true,
   },
@@ -54,7 +54,7 @@ const safetyItems = [
   {
     id: "6",
     icon: "zap",
-    title: "Inspect\nElectrical Cords",
+    title: "Inspect Electrical\n Cords",
     description: "Check for damage or wear",
     enabled: true,
   },
@@ -140,9 +140,10 @@ const SafetyCard = ({
         {/* Text */}
         <View style={{ flex: 1 }} className="ml-1.5">
           <Text
+            className="font-Inter_Bold"
             style={{
               fontSize: 15,
-              fontWeight: "600",
+
               color: "#111827",
               lineHeight: 21,
               marginBottom: 1,
@@ -151,6 +152,7 @@ const SafetyCard = ({
             {item.title}
           </Text>
           <Text
+            className="font-Inter_Regular"
             style={{
               fontSize: 12,
               color: "#6B7280",

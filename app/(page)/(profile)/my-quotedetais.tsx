@@ -1,5 +1,6 @@
 import LinearButton from "@/src/components/shared/LinearButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
+import { RootState } from "@/src/redux/store";
 import Feather from "@expo/vector-icons/build/Feather";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
@@ -14,6 +15,28 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
+interface Quote {
+  id: string;
+  title: string;
+  date: string;
+  description: string;
+  status: "Submitted" | "Draft" | "Closed";
+}
+const STATUS_CONFIGC: Record<Quote["status"], { bg: string; text: string }> = {
+  Submitted: {
+    bg: "#06B6D415",
+    text: "#06B6D4",
+  },
+  Draft: {
+    bg: "#F59E0B15",
+    text: "#F59E0B",
+  },
+  Closed: {
+    bg: "#F3F4F6",
+    text: "#6B7280",
+  },
+};
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -183,7 +206,7 @@ function InfoRow({
     <View className="flex-row items-start gap-3">
       <View className="mt-0.5">{icon}</View>
       <View className="flex-1">
-        <Text className="text-xs text-gray-400 font-Inter_Regular mb-0.5">
+        <Text className="text-xs text-[#6B7280] font-Inter_Regular mb-0.5">
           {label}
         </Text>
         <Text
@@ -224,35 +247,14 @@ function ContactRow({
         <View>{icon}</View>
         <Text
           className={`flex-1 text-sm font-Inter_Regular ${
-            hasValue ? "text-sky-500 underline" : "text-gray-400"
+            hasValue ? "text-[#6B7280] " : "text-gray-400"
           }`}
         >
           {value || placeholder}
         </Text>
-        {hasValue && <Feather name="chevron-right" size={16} color="#9CA3AF" />}
       </TouchableOpacity>
       {showDivider && <Divider />}
     </>
-  );
-}
-
-// ─── Status Badge ─────────────────────────────────────────────────────────────
-
-function StatusBadge({ status }: { status: QuoteStatus }) {
-  const cfg = STATUS_CONFIG[status];
-  return (
-    <View
-      className="flex-row items-center gap-1 rounded-full px-2.5 py-1"
-      style={{ backgroundColor: cfg.badgeBg }}
-    >
-      <Feather name={cfg.icon as any} size={13} color={cfg.color} />
-      <Text
-        className="text-xs font-Inter_SemiBold"
-        style={{ color: cfg.color }}
-      >
-        {status}
-      </Text>
-    </View>
   );
 }
 
@@ -347,6 +349,10 @@ const Myquotedetais = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const [quote, setQuote] = useState<QuoteDetail | null>(null);
   const [loading, setLoading] = useState(true);
+  const quoteitem = useSelector(
+    (state: RootState) => state.quoteDetails.selectedQuote,
+  );
+  console.log(quoteitem);
 
   const headerFade = useRef(new Animated.Value(0)).current;
 
@@ -414,7 +420,7 @@ const Myquotedetais = () => {
               {`This quote may have been removed or doesn't exist.`}
             </Text>
             <TouchableOpacity
-              className="bg-sky-500 rounded-2xl px-8 py-4 mt-2"
+              className="bg-[#06B6D4] rounded-2xl px-8 py-4 mt-2"
               onPress={() => router.back()}
               activeOpacity={0.85}
             >
@@ -434,17 +440,16 @@ const Myquotedetais = () => {
             <AnimatedCard delay={0}>
               <View className="flex-row items-center gap-3">
                 <View className="w-11 h-11 rounded-xl bg-sky-50 items-center justify-center">
-                  <Feather name="file-text" size={22} color="#0EA5E9" />
+                  <Feather name="file-text" size={22} color="#06B6D4" />
                 </View>
                 <View className="flex-1">
-                  <Text className="text-xs text-gray-400 font-Inter_Regular mb-0.5">
+                  <Text className="text-xs text-[#6B7280] font-Inter_Regular mb-0.5">
                     Service Type
                   </Text>
                   <Text className="text-[15px] text-gray-900 font-Inter_Bold">
-                    {quote.serviceType}
+                    {quoteitem?.title}
                   </Text>
                 </View>
-                <StatusBadge status={quote.status} />
               </View>
             </AnimatedCard>
 
@@ -461,12 +466,16 @@ const Myquotedetais = () => {
                   <Feather
                     name={STATUS_CONFIG[quote.status].icon as any}
                     size={18}
-                    color={STATUS_CONFIG[quote.status].color}
+                    color={
+                      STATUS_CONFIGC[quoteitem?.status as Quote["status"]]?.text
+                    }
                   />
                 }
                 label="Status"
-                value={quote.status}
-                valueColor={STATUS_CONFIG[quote.status].color}
+                value={quoteitem?.status}
+                valueColor={
+                  STATUS_CONFIGC[quoteitem?.status as Quote["status"]]?.text
+                }
               />
             </AnimatedCard>
 
@@ -557,7 +566,7 @@ const Myquotedetais = () => {
             <View className="flex-col gap-3">
               <LinearButton
                 title="Contact Support"
-                onPress={() => console.log("Contact Support")}
+                onPress={() => router.push("/shared/help")}
                 variant="primary"
               />
               <LinearButton

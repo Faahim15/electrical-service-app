@@ -1,4 +1,5 @@
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
+import { setSelectedReminder } from "@/src/redux/slices/myReminderSlice";
 import Feather from "@expo/vector-icons/build/Feather";
 import { router } from "expo-router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
@@ -12,6 +13,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useDispatch } from "react-redux";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -100,7 +102,7 @@ function FilterTab({
 
   const backgroundColor = bgAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: ["#F3F4F6", "#0EA5E9"],
+    outputRange: ["#F3F4F6", "#1DA1F2"],
   });
 
   const textColor = bgAnim.interpolate({
@@ -154,22 +156,10 @@ function ReminderCard({ item, index }: { item: Reminder; index: number }) {
     ]).start();
   }, []);
 
-  const handlePressIn = () => {
-    Animated.spring(scaleAnim, {
-      toValue: 0.972,
-      useNativeDriver: true,
-      speed: 30,
-      bounciness: 4,
-    }).start();
-  };
-
-  const handlePressOut = () => {
-    Animated.spring(scaleAnim, {
-      toValue: 1,
-      useNativeDriver: true,
-      speed: 20,
-      bounciness: 6,
-    }).start();
+  const dispatch = useDispatch();
+  const handleTheRiminder = () => {
+    dispatch(setSelectedReminder(item));
+    router.push("/reminder-details");
   };
 
   return (
@@ -184,11 +174,9 @@ function ReminderCard({ item, index }: { item: Reminder; index: number }) {
       {/* Inner: scale on press */}
       <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
         <Pressable
-          onPressIn={handlePressIn}
-          onPressOut={handlePressOut}
-          onPress={() => {
-            router.push("/reminder-details");
-          }}
+          // onPressIn={handlePressIn}
+          // onPressOut={handlePressOut}
+          onPress={handleTheRiminder}
           style={{
             shadowColor: "#94A3B8",
             shadowOffset: { width: 0, height: 2 },
@@ -221,7 +209,7 @@ function ReminderCard({ item, index }: { item: Reminder; index: number }) {
           >
             <Text
               className={`text-xs font-Inter_SemiBold ${
-                item.status === "Active" ? "text-sky-500" : "text-gray-500"
+                item.status === "Active" ? "text-[#1DA1F2]" : "text-gray-500"
               }`}
             >
               {item.status}
