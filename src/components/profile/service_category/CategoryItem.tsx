@@ -7,7 +7,15 @@ import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { useDispatch } from "react-redux";
 
-const CategoryItem = ({ item }: { item: ServiceCategory }) => {
+const CategoryItem = ({
+  item,
+  onPress,
+  trailingIcon,
+}: {
+  item: ServiceCategory;
+  onPress?: () => void;
+  trailingIcon?: React.ReactNode;
+}) => {
   const dispatch = useDispatch();
   const handlePress = () => {
     dispatch(setSelectedRouteCategory(item));

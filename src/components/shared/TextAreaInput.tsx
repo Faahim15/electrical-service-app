@@ -1,4 +1,3 @@
-// src/components/shared/TextAreaInput.tsx
 import React from "react";
 import { Text, TextInput, TextInputProps, View } from "react-native";
 

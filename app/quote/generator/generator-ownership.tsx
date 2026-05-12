@@ -1,4 +1,3 @@
-// src/app/quote/generator/generator-ownership.tsx
 import AuthHeading from "@/src/components/auth/AuthHeading";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import OptionGrid from "@/src/components/quote/OptionGrid";
@@ -7,6 +6,7 @@ import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
+import TextAreaInput from "@/src/components/shared/TextAreaInput";
 import { updateGeneratorDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
@@ -193,20 +193,93 @@ export default function GeneratorOwnership() {
                 }
                 numColumns={1}
               />
+              {/* Show TextAreaInput only when "Other" is selected */}
+              {panelLocation === "Other (please specify)" && (
+                <TextAreaInput
+                  label="Please specify location"
+                  placeholder="Describe where the panel is located..."
+                  value={""} // You might want to add a specific 'otherPanelLocation' field to your Redux slice later
+                  onChangeText={(text) => {
+                    // For now, we can append it or handle it via a new state field
+                    // If you want to save the specific text, you'll need a field in GeneratorDetails
+                    console.log("Specified location:", text);
+                  }}
+                />
+              )}
             </>
           )}
 
           {/* No — purchasing */}
           {isPurchasing && (
-            <OptionGrid
-              label="What size generator will you be purchasing?"
-              options={PURCHASE_SIZES}
-              selected={purchaseSize}
-              onSelect={(val) =>
-                dispatch(updateGeneratorDetails({ purchaseSize: val as any }))
-              }
-              numColumns={1}
-            />
+            <>
+              <OptionGrid
+                label="What size generator will you be purchasing?"
+                options={PURCHASE_SIZES}
+                selected={purchaseSize}
+                onSelect={(val) =>
+                  dispatch(updateGeneratorDetails({ purchaseSize: val as any }))
+                }
+                numColumns={1}
+              />
+
+              <OptionGrid
+                label="What is your preferred back-up installation?"
+                options={BACKUP_OPTIONS}
+                selected={backupInstallation}
+                onSelect={(val) =>
+                  dispatch(
+                    updateGeneratorDetails({ backupInstallation: val as any }),
+                  )
+                }
+                numColumns={1}
+              />
+              <PhotoUploadSection
+                label="Upload photo of where your generator inlet will be"
+                photos={generatorPhotos}
+                onPhotosChange={(p) =>
+                  dispatch(updateGeneratorDetails({ generatorPhotos: p }))
+                }
+              />
+              <OptionGrid
+                label="What is the approximate distance of the electrical panel from test location?"
+                options={PANEL_DISTANCES}
+                selected={panelDistance}
+                onSelect={(val) =>
+                  dispatch(
+                    updateGeneratorDetails({ panelDistance: val as any }),
+                  )
+                }
+                numColumns={1}
+              />
+
+              <OptionGrid
+                label="Where is your electrical panel located?"
+                options={PANEL_LOCATIONS}
+                selected={panelLocation}
+                onSelect={(val) =>
+                  dispatch(
+                    updateGeneratorDetails({ panelLocation: val as any }),
+                  )
+                }
+                numColumns={1}
+              />
+              {(panelLocation === "Other (please specify)" ||
+                (!PANEL_LOCATIONS.includes(panelLocation) &&
+                  panelLocation !== "")) && (
+                <TextAreaInput
+                  label="Please specify location"
+                  placeholder="Describe where the panel is located..."
+                  value={
+                    PANEL_LOCATIONS.includes(panelLocation) ? "" : panelLocation
+                  }
+                  onChangeText={(text) =>
+                    dispatch(
+                      updateGeneratorDetails({ panelLocation: text as any }),
+                    )
+                  }
+                />
+              )}
+            </>
           )}
 
           <GradientButton

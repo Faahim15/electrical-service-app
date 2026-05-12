@@ -1,12 +1,13 @@
 import { Ionicons } from "@expo/vector-icons";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-interface Category {
+export interface Category {
   id: string;
   title: string;
   description: string;
   iconName: keyof typeof Ionicons.glyphMap;
   iconBg: string;
   iconColor: string;
+  subtitle?: string;
 }
 
 interface CategoryState {
