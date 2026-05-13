@@ -223,11 +223,11 @@ function SearchModal({
     setQuery("");
     const isOther = OTHER_IDS.includes(item.id);
     if (isOther) {
-      router.push("/(page)/(quote)/(othercustom)/other-form-progress"); // adjust
+      router.push("/(page)/(quote)/(othercustom)/other-form-progress");
     } else if (item.title === "Solar Installation") {
-      router.push("/sollar-installation"); // adjust
+      router.push("/sollar-installation");
     } else {
-      router.push("/quote/service-details"); // adjust
+      router.push("/quote/service-details");
     }
   };
 
@@ -295,7 +295,8 @@ function SearchModal({
             <Ionicons name={s.iconName} size={20} color={s.iconColor} />
           </View>
           <View className="flex-1">
-            <View className="flex-row items-center gap-2 mb-0.5">
+            {/* ✅ FIXED: flex-wrap prevents badge overlap on narrow screens */}
+            <View className="flex-row flex-wrap items-center gap-2 mb-0.5">
               <Text className="font-Inter_SemiBold text-sm text-gray-900">
                 {s.title}
               </Text>
@@ -337,7 +338,8 @@ function SearchModal({
             <Ionicons name={a.icon} size={20} color="#00ABB0" />
           </View>
           <View className="flex-1">
-            <View className="flex-row items-center gap-2 mb-0.5">
+            {/* ✅ FIXED: flex-wrap prevents "Activity" badge + status badge overlap */}
+            <View className="flex-row flex-wrap items-center gap-2 mb-0.5">
               <Text className="font-Inter_SemiBold text-sm text-gray-900">
                 {a.title}
               </Text>
@@ -346,6 +348,20 @@ function SearchModal({
                   Activity
                 </Text>
               </View>
+              {/* Status badge moved inside title row so it wraps correctly */}
+              {a.badge && (
+                <View
+                  className="px-2 py-0.5 rounded-full"
+                  style={{ backgroundColor: a.badgeColor + "20" }}
+                >
+                  <Text
+                    className="font-Inter_Medium text-[10px]"
+                    style={{ color: a.badgeColor }}
+                  >
+                    {a.badge}
+                  </Text>
+                </View>
+              )}
             </View>
             <Text
               className="font-Inter_Regular text-xs text-gray-400"
@@ -354,19 +370,6 @@ function SearchModal({
               {a.subtitle}
             </Text>
           </View>
-          {a.badge && (
-            <View
-              className="px-2 py-0.5 rounded-full mr-2"
-              style={{ backgroundColor: a.badgeColor + "20" }}
-            >
-              <Text
-                className="font-Inter_Medium text-xs"
-                style={{ color: a.badgeColor }}
-              >
-                {a.badge}
-              </Text>
-            </View>
-          )}
           <Ionicons name="chevron-forward" size={16} color="#D1D5DB" />
         </TouchableOpacity>
       );
@@ -392,7 +395,8 @@ function SearchModal({
             <Ionicons name={ac.icon} size={20} color="#00ABB0" />
           </View>
           <View className="flex-1">
-            <View className="flex-row items-center gap-2 mb-0.5">
+            {/* ✅ FIXED: flex-wrap prevents badge overflow on narrow screens */}
+            <View className="flex-row flex-wrap items-center gap-2 mb-0.5">
               <Text className="font-Inter_SemiBold text-sm text-gray-900">
                 {ac.title}
               </Text>
