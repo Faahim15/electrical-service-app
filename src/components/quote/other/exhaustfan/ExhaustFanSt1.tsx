@@ -1,3 +1,4 @@
+import { Feather } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -166,13 +167,12 @@ const UploadButton = ({
         style={{
           transform: [{ scale: scaleAnim }],
           borderWidth: 1.5,
-          borderColor: "#CBD5E1",
-          borderStyle: "dashed",
+          borderColor: "#0000001A",
         }}
-        className="rounded-xl py-3.5 px-4 flex-row items-center justify-center gap-2 bg-slate-50"
+        className="rounded-xl py-3.5 px-4 flex-row items-center justify-center gap-2 bg-[#ECECF04D]"
       >
-        <Text className="text-slate-400 text-base">↑</Text>
-        <Text className="font-Inter_Medium text-[13px] text-[#60A5FA]">
+        <Feather name="upload" size={13} color="#717182" />
+        <Text className="font-Inter_Medium text-[13px] text-[#717182]">
           {label}
         </Text>
       </Animated.View>

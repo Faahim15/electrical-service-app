@@ -54,6 +54,7 @@ const editprofile = () => {
                 shadowRadius: 20,
                 elevation: 10,
                 marginTop: 20,
+                marginBottom: 16,
               }}
             >
               {/* ==============The main content of the card */}

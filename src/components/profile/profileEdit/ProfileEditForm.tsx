@@ -70,7 +70,7 @@ const ProfileEditForm: React.FC = () => {
   };
 
   return (
-    <View className="flex-1">
+    <View className="flex-1 flex-col gap-4">
       {/* Profile Info Card */}
       <View className="bg-white rounded-[20px] px-5 py-5 gap-1 shadow-md">
         <InputField

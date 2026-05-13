@@ -144,7 +144,10 @@ const Safetywarning = () => {
               opacity: buttonOpacity,
             }}
           >
-            <TouchableOpacity activeOpacity={0.85}>
+            <TouchableOpacity
+              onPress={() => router.push("/shared/help")}
+              activeOpacity={0.85}
+            >
               <LinearGradient
                 colors={["#06B6D4", "#14B8A6"]}
                 start={{ x: 0, y: 0 }}

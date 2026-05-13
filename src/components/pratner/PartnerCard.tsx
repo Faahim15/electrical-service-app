@@ -109,13 +109,14 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
             className="flex-row items-center mb-3"
             onPress={() => Linking.openURL(item?.contact?.website!)}
           >
-            <Feather name="globe" size={14} color="#64748B" />
-            <Text
-              className="text-[13px] font-Inter_Regular text-[#0F172A] ml-2"
-              numberOfLines={1}
-            >
-              {item?.contact?.website}
-            </Text>
+            <View>
+              <Feather name="globe" size={14} color="#64748B" />
+            </View>
+            <View className="flex-1 flex-row flex-wrap">
+              <Text className="text-[13px] font-Inter_Regular text-[#0F172A] ml-2 flex-shrink flex-wrap">
+                {item?.contact?.website}
+              </Text>
+            </View>
           </TouchableOpacity>
         )}
 
