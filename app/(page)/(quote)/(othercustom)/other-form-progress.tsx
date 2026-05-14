@@ -131,7 +131,10 @@ const OtherFormProgress = () => {
   // Spread category-specific steps after common steps
   const STEPS: StepConfig[] =
     selectedTitle === "Whole Home Surge Protection"
-      ? CATEGORY_STEP_MAP["Whole Home Surge Protection"]
+      ? [
+          ...COMMON_STEPS,
+          ...(CATEGORY_STEP_MAP["Whole Home Surge Protection"] ?? []),
+        ]
       : selectedTitle === "Starlink Installation"
         ? [...COMMON_STEPS, ...getStarlinkSteps(dishLocation)]
         : [...COMMON_STEPS, ...(CATEGORY_STEP_MAP[selectedTitle] ?? [])];

@@ -1,3 +1,6 @@
+import { nemaChart } from "@/assets/images/svg/tabs-svg";
+import CustomSvg from "@/src/components/shared/CustomSvg";
+import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
@@ -7,14 +10,15 @@ import {
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  useWindowDimensions,
   View,
 } from "react-native";
-import NEMAModal from "./NEMAModal";
 
 const ampOptions = [15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100, 125, 150];
 const voltOptions = ["110 or 120", "220 or 240", "110/220 or 120/240"];
 
 const DedicatedCircuitSt3 = () => {
+  const { width: screenWidth } = useWindowDimensions();
   const [selectedAmp, setSelectedAmp] = useState<number | null>(null);
   const [selectedVolt, setSelectedVolt] = useState<string | null>(null);
   const [nemaConfig, setNemaConfig] = useState("");
@@ -270,11 +274,55 @@ const DedicatedCircuitSt3 = () => {
                     }}
                   />
                 </View>
+                {isvisiable && (
+                  <View
+                    className="mt-3 rounded-2xl overflow-hidden"
+                    style={{
+                      borderWidth: 1,
+                      borderColor: "#BAE6FD",
+                      shadowColor: "#0EA5E9",
+                      shadowOffset: { width: 0, height: 2 },
+                      shadowOpacity: 0.1,
+                      shadowRadius: 8,
+                      elevation: 3,
+                    }}
+                  >
+                    {/* Header */}
+                    <View
+                      className="flex-row items-center justify-between px-4 py-3"
+                      style={{ backgroundColor: "#EEF9FF" }}
+                    >
+                      <Text className="text-lg font-Inter_SemiBold text-[#0369A1]">
+                        {/* NEMA Configuration Chart */}
+                      </Text>
+                      <TouchableOpacity
+                        onPress={() => setIsVisiable(false)}
+                        className="w-[26px] h-[26px] rounded-full items-center justify-center"
+                        style={{ backgroundColor: "#BAE6FD" }}
+                      >
+                        <Ionicons name="close" size={14} color="#0369A1" />
+                      </TouchableOpacity>
+                    </View>
+
+                    {/* SVG — full width, scrollable vertically */}
+                    <ScrollView
+                      showsVerticalScrollIndicator={false}
+                      bounces={false}
+                      style={{ backgroundColor: "#F0F9FF", maxHeight: 900 }}
+                    >
+                      <CustomSvg
+                        xml={nemaChart}
+                        width={screenWidth - 78}
+                        height={800}
+                      />
+                    </ScrollView>
+                  </View>
+                )}
               </Animated.View>
             );
           })()}
         </ScrollView>
-        <NEMAModal visible={isvisiable} onClose={() => setIsVisiable(false)} />
+        {/* <NEMAModal visible={isvisiable} onClose={() => setIsVisiable(false)} /> */}
       </View>
     </TouchableWithoutFeedback>
   );
