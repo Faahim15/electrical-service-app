@@ -100,7 +100,7 @@ const MaintenanceDetails = () => {
           edges={["top"]}
           className="flex-1 items-center justify-center"
         >
-          <Text className="text-[#6B7280] text-sm">No item selected.</Text>
+          <Text className="text-[#6B7280] font-Inter_Regular text-sm">No item selected.</Text>
           <TouchableOpacity onPress={() => router.back()} className="mt-4">
             <Text className="text-[#155DFC] font-Inter_SemiBold">Go Back</Text>
           </TouchableOpacity>
@@ -123,7 +123,7 @@ const MaintenanceDetails = () => {
           <TouchableOpacity onPress={() => router.back()}>
             <Feather name="arrow-left" size={24} color="#111827" />
           </TouchableOpacity>
-          <Text className="text-xl text-[#111827] font-Inter_Bold">
+          <Text className="text-xl text-[#1F2937] font-Inter_SemiBold">
             Maintenance Details
           </Text>
           <View />
@@ -142,7 +142,7 @@ const MaintenanceDetails = () => {
             }}
             className=" pt-2 pb-4"
           >
-            <Text className="text-xl font-Inter_Bold text-[#111827]">
+            <Text className="text-xl font-Inter_Medium  text-[#111827]">
               {selectedItem.pageTitle}
             </Text>
           </Animated.View>
@@ -164,11 +164,11 @@ const MaintenanceDetails = () => {
                     size={20}
                     color="#06B6D4"
                   />
-                  <Text className="text-[15px] font-Inter_SemiBold text-[#111827]">
+                  <Text className="text-[16px] font-Inter_Medium text-[#1F2937]">
                     {detail.title}
                   </Text>
                 </View>
-                <Text className="text-[13px] text-[#6B7280] font-Inter_Regular leading-5 pl-6">
+                <Text className="text-[14px] text-[#6B7280] font-Inter_Regular leading-5 pl-6">
                   {detail.body}
                 </Text>
               </Animated.View>
