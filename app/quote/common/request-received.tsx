@@ -223,7 +223,7 @@ const RequestReceived = () => {
           {/* Bottom Buttons */}
           <Animated.View style={{ opacity: btnAnim }}>
             <TouchableOpacity
-              onPress={() => router.replace("/quote/choose-category")}
+              onPress={() => router.replace("/(tabs)/quotes")}
               activeOpacity={0.85}
               className="rounded-full py-4 items-center mb-3"
               style={{

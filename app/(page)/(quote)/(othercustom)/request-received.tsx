@@ -186,7 +186,7 @@ const RequestReceived = () => {
             {/* Return Home */}
             <GradientButton
               label="Return Home"
-              onPress={() => router.push("/quote/choose-category")}
+              onPress={() => router.push("/(tabs)/quotes")}
             />
 
             {/* New Quote + My Quotes */}

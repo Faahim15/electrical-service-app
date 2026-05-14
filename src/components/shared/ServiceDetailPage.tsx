@@ -344,7 +344,7 @@ export default function ServiceDetailPage({
                 </Text>
                 <Text
                   className="font-Inter_Regular"
-                  style={{ fontSize: 12, color: "#9CA3AF" }}
+                  style={{ fontSize: 12, color: "#4A5565" }}
                 >
                   {estimatedTimeSubtitle}
                 </Text>

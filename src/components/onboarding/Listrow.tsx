@@ -10,7 +10,7 @@ export const ListRow = ({ item }: { item: ListItem }) => {
 
   return (
     <View
-      className="flex-row items-center rounded-2xl px-4 py-3.5 mb-3"
+      className="flex-row items-center rounded-2xl  px-4 py-3.5 mb-3"
       style={{ backgroundColor: isHighlighted ? item.highlightBg : "#FFFFFF" }}
     >
       {/* Icon badge */}
@@ -26,11 +26,8 @@ export const ListRow = ({ item }: { item: ListItem }) => {
       </View>
 
       {/* Content */}
-      <View className="flex-1">
-        <Text
-          className="font-Inter_SemiBold text-gray-800"
-          style={{ fontSize: 15 }}
-        >
+      <View className="flex-1  ">
+        <Text className="font-Inter_SemiBold text-base text-gray-800">
           {item.title}
         </Text>
 
