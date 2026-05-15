@@ -41,7 +41,7 @@ const ACTIVITIES = [
     statusBg: "#FEF3C7",
     title: "EV Charger Installation",
     subtitle: "Submitted 2 days ago",
-    icon: "document-text-outline",
+    icon: "flash-outline",
     iconColor: "#3B82F6",
     iconBg: "#EFF6FF",
   },
@@ -244,6 +244,10 @@ export default function RecentActivity() {
                       subtitle: item.subtitle,
                       badge: item.status ?? "",
                       badgeColor: item.statusColor ?? "",
+                      type: item.type,
+                      icon: item.icon,
+                      iconColor: item.iconColor,
+                      iconBg: item.iconBg,
                     },
                   })
                 }

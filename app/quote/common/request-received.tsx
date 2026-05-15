@@ -5,7 +5,7 @@ import { SERVICE_CATEGORIES } from "@/src/constants/tabs.home.constant";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
-import { Animated, Text, TouchableOpacity, View } from "react-native";
+import { Animated, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SvgXml } from "react-native-svg";
 import { useSelector } from "react-redux";
@@ -222,9 +222,8 @@ const RequestReceived = () => {
 
           {/* Bottom Buttons */}
           <Animated.View style={{ opacity: btnAnim }}>
-            <TouchableOpacity
+            <Pressable
               onPress={() => router.replace("/(tabs)/quotes")}
-              activeOpacity={0.85}
               className="rounded-full py-4 items-center mb-3"
               style={{
                 backgroundColor: "#06B6D4",
@@ -238,13 +237,12 @@ const RequestReceived = () => {
               <Text className="text-white text-base font-Inter_SemiBold">
                 Return Home
               </Text>
-            </TouchableOpacity>
+            </Pressable>
 
             <View className="flex-row gap-x-3">
-              <TouchableOpacity
-                activeOpacity={0.8}
+              <Pressable
                 className="flex-1 rounded-full py-[14px] items-center bg-white"
-                onPress={() => router.replace("/quote/common/contact-details")}
+                onPress={() => router.replace("/quote/choose-category")}
                 style={{
                   shadowColor: "#0EA5E9",
                   shadowOpacity: 0.07,
@@ -256,12 +254,13 @@ const RequestReceived = () => {
                 <Text className="text-[#0F172A] text-sm font-Inter_Medium">
                   New Quote
                 </Text>
-              </TouchableOpacity>
+              </Pressable>
 
-              <TouchableOpacity
-                activeOpacity={0.8}
+              <Pressable
                 className="flex-1 rounded-full py-[14px] items-center bg-white"
-                onPress={() => router.push("/recent-activity" as any)}
+                onPress={() => {
+                  router.push("/quote/my-quotes");
+                }}
                 style={{
                   shadowColor: "#0EA5E9",
                   shadowOpacity: 0.07,
@@ -273,7 +272,7 @@ const RequestReceived = () => {
                 <Text className="text-[#0F172A] text-sm font-Inter_Medium">
                   My Quotes
                 </Text>
-              </TouchableOpacity>
+              </Pressable>
             </View>
           </Animated.View>
         </View>

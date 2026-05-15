@@ -53,8 +53,7 @@ function QuickActionCard({ item }: { item: QuickAction }) {
   };
 
   return (
-    <TouchableOpacity
-      activeOpacity={0.8}
+    <Pressable
       onPress={handlePress}
       className="bg-white rounded-2xl p-4 mb-3"
       style={{
@@ -74,7 +73,7 @@ function QuickActionCard({ item }: { item: QuickAction }) {
       <Text className="font-Inter_Regular text-xs text-gray-400">
         {item.subtitle}
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 
@@ -91,8 +90,7 @@ function QuickActionFullCard({ item }: { item: QuickAction }) {
   };
 
   return (
-    <TouchableOpacity
-      activeOpacity={0.8}
+    <Pressable
       onPress={handlePress}
       className="bg-white rounded-2xl p-4 mb-3 flex-row items-center gap-3"
       style={{
@@ -114,7 +112,7 @@ function QuickActionFullCard({ item }: { item: QuickAction }) {
         </Text>
       </View>
       <Ionicons name="chevron-forward" size={16} color="#D1D5DB" />
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 
@@ -276,8 +274,7 @@ function SearchModal({
     if (item.type === "service") {
       const s = item.data;
       return (
-        <TouchableOpacity
-          activeOpacity={0.7}
+        <Pressable
           onPress={() => handleSelectService(s)}
           className="flex-row items-center bg-white rounded-2xl px-4 py-3 mb-3"
           style={{
@@ -295,7 +292,7 @@ function SearchModal({
             <Ionicons name={s.iconName} size={20} color={s.iconColor} />
           </View>
           <View className="flex-1">
-            {/* ✅ FIXED: flex-wrap prevents badge overlap on narrow screens */}
+            {/* FIXED: flex-wrap prevents badge overlap on narrow screens */}
             <View className="flex-row flex-wrap items-center gap-2 mb-0.5">
               <Text className="font-Inter_SemiBold text-sm text-gray-900">
                 {s.title}
@@ -314,7 +311,7 @@ function SearchModal({
             </Text>
           </View>
           <Ionicons name="chevron-forward" size={16} color="#D1D5DB" />
-        </TouchableOpacity>
+        </Pressable>
       );
     }
 
@@ -322,8 +319,7 @@ function SearchModal({
     if (item.type === "activity") {
       const a = item.data;
       return (
-        <TouchableOpacity
-          activeOpacity={0.7}
+        <Pressable
           onPress={() => handleSelectActivity(a)}
           className="flex-row items-center bg-white rounded-2xl px-4 py-3 mb-3"
           style={{
@@ -338,7 +334,7 @@ function SearchModal({
             <Ionicons name={a.icon} size={20} color="#00ABB0" />
           </View>
           <View className="flex-1">
-            {/* ✅ FIXED: flex-wrap prevents "Activity" badge + status badge overlap */}
+            {/*  FIXED: flex-wrap prevents "Activity" badge + status badge overlap */}
             <View className="flex-row flex-wrap items-center gap-2 mb-0.5">
               <Text className="font-Inter_SemiBold text-sm text-gray-900">
                 {a.title}
@@ -371,7 +367,7 @@ function SearchModal({
             </Text>
           </View>
           <Ionicons name="chevron-forward" size={16} color="#D1D5DB" />
-        </TouchableOpacity>
+        </Pressable>
       );
     }
 
@@ -379,8 +375,7 @@ function SearchModal({
     if (item.type === "action") {
       const ac = item.data;
       return (
-        <TouchableOpacity
-          activeOpacity={0.7}
+        <Pressable
           onPress={() => handleSelectAction(ac)}
           className="flex-row items-center bg-white rounded-2xl px-4 py-3 mb-3"
           style={{
@@ -414,7 +409,7 @@ function SearchModal({
             </Text>
           </View>
           <Ionicons name="chevron-forward" size={16} color="#D1D5DB" />
-        </TouchableOpacity>
+        </Pressable>
       );
     }
 
@@ -464,11 +459,11 @@ function SearchModal({
                 </TouchableOpacity>
               )}
             </View>
-            <TouchableOpacity onPress={handleClose}>
+            <Pressable onPress={handleClose}>
               <Text className="font-Inter_Medium text-sm text-[#00ABB0]">
                 Cancel
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
 
           {query.trim().length > 0 && (
@@ -494,7 +489,7 @@ function SearchModal({
             </Text>
             <View className="flex-row flex-wrap justify-center gap-2 mt-5">
               {SUGGESTION_TAGS.map((tag) => (
-                <TouchableOpacity
+                <Pressable
                   key={tag}
                   onPress={() => setQuery(tag)}
                   className="bg-white border border-gray-200 rounded-full px-4 py-2"
@@ -503,7 +498,7 @@ function SearchModal({
                   <Text className="font-Inter_Medium text-xs text-gray-600">
                     {tag}
                   </Text>
-                </TouchableOpacity>
+                </Pressable>
               ))}
             </View>
           </View>
@@ -577,13 +572,13 @@ export default function HomeScreen() {
                 />
               </TouchableOpacity>
 
-              <TouchableOpacity
+              <Pressable
                 onPress={() => router.push("/(page)/(profile)/editprofile")}
               >
                 <View className="w-10 h-10 rounded-full bg-[#00ABB0] items-center justify-center">
                   <Text className="font-Inter_Bold text-sm text-white">AM</Text>
                 </View>
-              </TouchableOpacity>
+              </Pressable>
             </View>
           </View>
 

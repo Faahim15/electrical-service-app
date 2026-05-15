@@ -201,9 +201,7 @@ const RequestReceived = () => {
                   shadowOffset: { width: 0, height: 2 },
                   elevation: 1,
                 }}
-                onPress={() =>
-                  router.replace("/(page)/(quote)/other-custom-service")
-                }
+                onPress={() => router.replace("/quote/choose-category")}
               >
                 <Text className="font-Inter_Medium text-[#0F172A] text-sm">
                   New Quote
@@ -211,7 +209,7 @@ const RequestReceived = () => {
               </TouchableOpacity>
 
               <TouchableOpacity
-                onPress={() => router.push("/(tabs)/quotes")}
+                onPress={() => router.push("/quote/my-quotes")}
                 activeOpacity={0.8}
                 className="flex-1 rounded-full py-3.5 items-center bg-white"
                 style={{

@@ -171,7 +171,7 @@ export default function GeneratorOwnership() {
               />
 
               <OptionGrid
-                label="What is the approximate distance of the electrical panel from test location?"
+                label="What is the approximate distance of the electrical panel from intel location?"
                 options={PANEL_DISTANCES}
                 selected={panelDistance}
                 onSelect={(val) =>
@@ -241,7 +241,7 @@ export default function GeneratorOwnership() {
                 }
               />
               <OptionGrid
-                label="What is the approximate distance of the electrical panel from test location?"
+                label="What is the approximate distance of the electrical panel from intel location?"
                 options={PANEL_DISTANCES}
                 selected={panelDistance}
                 onSelect={(val) =>

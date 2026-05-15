@@ -99,7 +99,12 @@ const DETAILS_MAP: Record<string, { label: string; value: string }[]> = {
       label: "Current Progress",
       value: "Pending final review and site assessment",
     },
-    { label: "Submitted Photos", value: "8 photos attached" },
+    {
+      label: "Notes",
+      value:
+        "Photos installation in garage, near main panel. Existing 240V outlet available.",
+    },
+    { label: "Uploaded Photos", value: "3 photos attached" },
     { label: "Estimated Follow-up", value: "Within 1-2 business days" },
   ],
   "2": [
@@ -116,19 +121,78 @@ const DETAILS_MAP: Record<string, { label: string; value: string }[]> = {
   ],
 };
 
+const MAIN_CARD_MAP: Record<
+  string,
+  {
+    requestId: string;
+    submitted: string;
+    lastUpdated: string;
+    serviceType: string;
+  }
+> = {
+  "1": {
+    requestId: "#EV-2048",
+    submitted: "Apr 8, 2026",
+    lastUpdated: "2 hours ago",
+    serviceType: "EV Charger Installation",
+  },
+  "2": {
+    requestId: "#SD-1032",
+    submitted: "Apr 10, 2026",
+    lastUpdated: "1 day ago",
+    serviceType: "Smoke Detector Check",
+  },
+  "3": {
+    requestId: "#PU-3091",
+    submitted: "Apr 3, 2026",
+    lastUpdated: "5 days ago",
+    serviceType: "Panel Upgrade",
+  },
+  "4": {
+    requestId: "#GD-4011",
+    submitted: "Apr 7, 2026",
+    lastUpdated: "Yesterday",
+    serviceType: "GFCI Reset Guide",
+  },
+  "5": {
+    requestId: "#PT-5022",
+    submitted: "Apr 5, 2026",
+    lastUpdated: "3 days ago",
+    serviceType: "Licensed Electricians",
+  },
+  "6": {
+    requestId: "#CB-6008",
+    submitted: "Apr 9, 2026",
+    lastUpdated: "3 days ago",
+    serviceType: "Circuit Breaker Test",
+  },
+};
+
 const ATTACHMENTS_MAP: Record<string, { id: string }[]> = {
-  "1": [{ id: "1" }, { id: "2" }],
+  "1": [{ id: "1" }, { id: "2" }, { id: "3" }],
   "2": [{ id: "1" }],
   "3": [],
 };
 
 // ── Sub-components ──────────────────────────────────────────────────────────
 
-const InfoRow = ({ label, value }: { label: string; value: string }) => (
-  <View className="flex-row justify-between py-[10px] border-b border-[#F1F5F9]">
-    <Text className="text-[#94A3B8] text-[12.5px] font-Inter_Regular flex-1">
-      {label}
-    </Text>
+// Horizontal layout with icon — used in Main Card
+const InfoRow = ({
+  label,
+  value,
+  icon,
+}: {
+  label: string;
+  value: string;
+  icon?: string;
+}) => (
+  <View className="flex-row justify-between items-center py-[10px] border-b border-[#F1F5F9]">
+    <View className="flex-row items-center flex-1 gap-2">
+      {icon && <Ionicons name={icon as any} size={15} color="#94A3B8" />}
+      <Text className="text-[#94A3B8] text-[12.5px] font-Inter_Regular">
+        {label}
+      </Text>
+    </View>
     <Text
       className="text-[#1E293B] text-[12.5px] font-Inter_Medium flex-1"
       style={{ textAlign: "right" }}
@@ -138,20 +202,57 @@ const InfoRow = ({ label, value }: { label: string; value: string }) => (
   </View>
 );
 
+// Stacked layout — used in Details Card
+const DetailRow = ({ label, value }: { label: string; value: string }) => (
+  <View className="py-[10px] border-b border-[#F1F5F9]">
+    <Text className="text-[#94A3B8] text-[11.5px] font-Inter_Regular mb-[4px]">
+      {label}
+    </Text>
+    <Text className="text-[#1E293B] text-[13px] font-Inter_Medium">
+      {value}
+    </Text>
+  </View>
+);
+
 // ── Screen ──────────────────────────────────────────────────────────────────
 
 export default function ActivityDetails() {
-  const { id, title, subtitle, badge, badgeColor } = useLocalSearchParams<{
+  const {
+    id,
+    title,
+    subtitle,
+    badge,
+    badgeColor,
+    type,
+    icon,
+    iconColor,
+    iconBg,
+  } = useLocalSearchParams<{
     id: string;
     title: string;
     subtitle: string;
     badge: string;
     badgeColor: string;
+    type: string;
+    icon: string;
+    iconColor: string;
+    iconBg: string;
   }>();
 
   const updates = UPDATES_MAP[id] ?? [];
   const details = DETAILS_MAP[id] ?? [];
   const attachments = ATTACHMENTS_MAP[id] ?? [];
+  const mainCard = MAIN_CARD_MAP[id] ?? {
+    requestId: `#ACT-${id}00${id}`,
+    submitted: "—",
+    lastUpdated: "—",
+    serviceType: title ?? "—",
+  };
+
+  const cardIcon = icon ?? "flash-outline";
+  const cardIconColor = iconColor ?? "#3B82F6";
+  const cardIconBg = iconBg ?? "#EFF6FF";
+  const cardType = type ?? "Activity";
 
   const badgeBg = badgeColor ? badgeColor + "20" : "#F1F5F9";
 
@@ -201,17 +302,47 @@ export default function ActivityDetails() {
               elevation: 2,
             }}
           >
-            <Text className="text-[#94A3B8] text-[11px] font-Inter_Medium mb-1">
-              Activity
+            <Text className="text-[#94A3B8] text-[11px] font-Inter_Medium mb-2">
+              {cardType}
             </Text>
-            <Text className="text-[#1E293B] text-[18px] font-Inter_Bold mb-1">
-              {title}
-            </Text>
+            <View className="flex-row items-center gap-3 mb-1">
+              <View
+                className="w-10 h-10 rounded-full items-center justify-center"
+                style={{ backgroundColor: cardIconBg }}
+              >
+                <Ionicons
+                  name={cardIcon as any}
+                  size={20}
+                  color={cardIconColor}
+                />
+              </View>
+              <Text className="text-[#1E293B] text-[18px] font-Inter_Bold flex-1">
+                {title}
+              </Text>
+            </View>
             <Text className="text-[#94A3B8] text-[12px] font-Inter_Regular mb-4">
               {subtitle}
             </Text>
-            <InfoRow label="Request ID" value={`#ACT-${id}00${id}`} />
-            <InfoRow label="Status" value={badge || "Completed"} />
+            <InfoRow
+              label="Request ID"
+              value={mainCard.requestId}
+              icon="document-text-outline"
+            />
+            <InfoRow
+              label="Submitted"
+              value={mainCard.submitted}
+              icon="calendar-outline"
+            />
+            <InfoRow
+              label="Last Updated"
+              value={mainCard.lastUpdated}
+              icon="time-outline"
+            />
+            <InfoRow
+              label="Service Type"
+              value={mainCard.serviceType}
+              icon="person-outline"
+            />
           </View>
 
           {/* Details Card */}
@@ -230,7 +361,11 @@ export default function ActivityDetails() {
                 Details
               </Text>
               {details.map((row) => (
-                <InfoRow key={row.label} label={row.label} value={row.value} />
+                <DetailRow
+                  key={row.label}
+                  label={row.label}
+                  value={row.value}
+                />
               ))}
             </View>
           )}
