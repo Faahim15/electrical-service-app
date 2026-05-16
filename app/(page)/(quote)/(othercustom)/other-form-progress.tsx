@@ -3,6 +3,7 @@ import CeilingFanSt1 from "@/src/components/quote/other/cellingfan/CeilingFanSt1
 import CeilingFanSt2 from "@/src/components/quote/other/cellingfan/CeilingFanSt2";
 import CeilingFanSt3 from "@/src/components/quote/other/cellingfan/CeilingFanSt3";
 import CeilingFanSt4 from "@/src/components/quote/other/cellingfan/CeilingFanSt4";
+import ReviewRequest from "@/src/components/quote/other/common/ReviewRequest";
 import Step1 from "@/src/components/quote/other/common/Step1";
 import Step2 from "@/src/components/quote/other/common/Step2";
 import Step3 from "@/src/components/quote/other/common/Step3";
@@ -55,6 +56,10 @@ const COMMON_STEPS: StepConfig[] = [
   { component: Step1, title: "Contact" },
   { component: Step2, title: "Address" },
   { component: Step3, title: "Project" },
+];
+
+const Final_step: StepConfig[] = [
+  { component: ReviewRequest, title: "Project" },
 ];
 
 // ─── Category-specific steps (all values are arrays) ─────────────────────────
@@ -134,10 +139,15 @@ const OtherFormProgress = () => {
       ? [
           ...COMMON_STEPS,
           ...(CATEGORY_STEP_MAP["Whole Home Surge Protection"] ?? []),
+          ...Final_step,
         ]
       : selectedTitle === "Starlink Installation"
-        ? [...COMMON_STEPS, ...getStarlinkSteps(dishLocation)]
-        : [...COMMON_STEPS, ...(CATEGORY_STEP_MAP[selectedTitle] ?? [])];
+        ? [...COMMON_STEPS, ...getStarlinkSteps(dishLocation), ...Final_step]
+        : [
+            ...COMMON_STEPS,
+            ...(CATEGORY_STEP_MAP[selectedTitle] ?? []),
+            ...Final_step,
+          ];
 
   const [currentStep, setCurrentStep] = useState(0);
   const progressAnim = useRef(new Animated.Value(0)).current;

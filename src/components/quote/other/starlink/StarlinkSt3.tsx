@@ -1,13 +1,8 @@
-import {
-  addImages,
-  removeImage,
-} from "@/src/redux/slices/starlinkTheRouteSlice";
-import { AppDispatch, RootState } from "@/src/redux/store";
-import * as ImagePicker from "expo-image-picker";
+import { AppDispatch } from "@/src/redux/store";
 import React, { useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import UploadArea from "../share/UploadArea";
+import { useDispatch } from "react-redux";
+import PhotoUploadSection from "../../PhotoUploadSection";
 const StarlinkSt3 = () => {
   const [room, setRoom] = useState("");
   const [above, setAbove] = useState<string[]>([]);
@@ -26,23 +21,7 @@ const StarlinkSt3 = () => {
       prev.includes(opt) ? prev.filter((o) => o !== opt) : [...prev, opt],
     );
   };
-  const images = useSelector((state: RootState) => state.starlinkRoute.images);
-
-  const pickImage = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsMultipleSelection: true,
-      quality: 0.8,
-    });
-    if (!result.canceled) {
-      const uris = result.assets.map((a) => a.uri);
-      dispatch(addImages(uris));
-    }
-  };
-
-  const handleRemoveImage = (uri: string) => {
-    dispatch(removeImage(uri));
-  };
+  const [photos, setPhotos] = useState<string[]>([]);
 
   return (
     <View className="flex-1">
@@ -82,7 +61,7 @@ const StarlinkSt3 = () => {
                 backgroundColor: sel ? "#3B82F6" : "#FFFFFF",
                 borderRadius: 50,
                 paddingVertical: 8,
-                paddingHorizontal: 12,
+                paddingHorizontal: 20,
                 marginBottom: 6,
               }}
               className="border border-[#E5E7EB]"
@@ -91,7 +70,7 @@ const StarlinkSt3 = () => {
                 className="font-Inter_Regular"
                 style={{
                   color: sel ? "#fff" : "#1F2937",
-                  fontSize: 13,
+                  fontSize: 14,
                 }}
               >
                 {opt}
@@ -100,11 +79,10 @@ const StarlinkSt3 = () => {
           );
         })}
       </View>
-      <UploadArea
-        tittle="Upload photo of room to install WiFi router"
-        images={images}
-        pickImage={pickImage}
-        onRemove={handleRemoveImage}
+      <PhotoUploadSection
+        label="Upload photo of room to install WiFi router"
+        photos={photos}
+        onPhotosChange={setPhotos}
       />
     </View>
   );

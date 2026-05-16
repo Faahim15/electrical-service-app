@@ -3,7 +3,8 @@ import InfoBanner from "@/src/components/quote/InfoBanner";
 import OptionGrid from "@/src/components/quote/OptionGrid";
 import TimelineOption from "@/src/components/quote/TimelineOption";
 import TextAreaInput from "@/src/components/shared/TextAreaInput";
-import { updateProjectBasics } from "@/src/redux/slices/serviceFormSlice";
+import { updateProjectBasicsCommon } from "@/src/redux/slices/globalstore/commonContractdetailsStoreSlice";
+
 import { RootState } from "@/src/redux/store";
 import React from "react";
 import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
@@ -11,16 +12,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function ProjectBasics() {
   const dispatch = useDispatch();
-  // const { propertyType, ownershipStatus, timeline } = useSelector(
-  //   (state: RootState) => state.serviceForm.projectBasics,
-  // );
-  const { propertyType, ownershipStatus, timeline, ownershipStatusOther } =
-    useSelector((state: RootState) => state.serviceForm.projectBasics);
-  const selectedCategory = useSelector(
-    (state: RootState) => state.categoryRoute.selectedCategory,
-  );
-
-  console.log("selectedCategory:", selectedCategory?.id);
+  const { propertyType, ownershipStatus, ownershipStatusOther, timeline } =
+    useSelector(
+      (state: RootState) => state.commonContractDetails.projectBasics,
+    );
 
   return (
     <KeyboardAvoidingView
@@ -43,7 +38,7 @@ export default function ProjectBasics() {
           options={["House", "Condo", "Apartment", "Commercial"]}
           selected={propertyType}
           onSelect={(val) =>
-            dispatch(updateProjectBasics({ propertyType: val as any }))
+            dispatch(updateProjectBasicsCommon({ propertyType: val as any }))
           }
           numColumns={2}
         />
@@ -54,24 +49,28 @@ export default function ProjectBasics() {
           options={["Owner", "Tenant", "Property Manager", "Other"]}
           selected={ownershipStatus}
           onSelect={(val) =>
-            dispatch(updateProjectBasics({ ownershipStatus: val as any }))
+            dispatch(updateProjectBasicsCommon({ ownershipStatus: val as any }))
           }
           numColumns={1}
         />
+
         {ownershipStatus === "Other" && (
           <TextAreaInput
             label="Please specify"
             placeholder="Describe your ownership status"
             value={ownershipStatusOther ?? ""}
             onChangeText={(text) =>
-              dispatch(updateProjectBasics({ ownershipStatusOther: text }))
+              dispatch(
+                updateProjectBasicsCommon({ ownershipStatusOther: text }),
+              )
             }
           />
         )}
+
         <TimelineOption
           selected={timeline}
           onSelect={(val) =>
-            dispatch(updateProjectBasics({ timeline: val as any }))
+            dispatch(updateProjectBasicsCommon({ timeline: val as any }))
           }
         />
 

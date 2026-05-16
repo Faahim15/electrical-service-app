@@ -1,118 +1,20 @@
 import AuthHeading from "@/src/components/auth/AuthHeading";
 import TermsAndPolicy from "@/src/components/auth/TermsAndPolicy";
 import CustomInput from "@/src/components/shared/CustomInput";
-import React, { useRef, useState } from "react";
-import {
-  Animated,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+
+import { updateServiceAddress } from "@/src/redux/slices/globalstore/commonContractdetailsStoreSlice";
+import { RootState } from "@/src/redux/store";
+import React from "react";
+import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import InfoBanner from "../../InfoBanner";
 
-const AnimatedTextInput = ({
-  label,
-  placeholder,
-  required,
-  value,
-  onChangeText,
-  keyboardType,
-  maxLength,
-  style,
-}: {
-  label: string;
-  placeholder: string;
-  required?: boolean;
-  value: string;
-  onChangeText: (text: string) => void;
-  keyboardType?: any;
-  maxLength?: number;
-  style?: any;
-}) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const borderAnim = useRef(new Animated.Value(0)).current;
-  const scaleAnim = useRef(new Animated.Value(1)).current;
-
-  const handleFocus = () => {};
-
-  const handleBlur = () => {};
-
-  const borderColor = borderAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["#E5E7EB", "#06B6D4"],
-  });
-
-  return (
-    <View style={style}>
-      <Text className="text-sm font-Inter_Medium text-[#374151] mb-1">
-        {label}
-        {required && <Text className="text-red-500"> *</Text>}
-      </Text>
-      <Animated.View
-        style={{
-          borderColor,
-          transform: [{ scale: scaleAnim }],
-          borderWidth: 1,
-          borderRadius: 12,
-          backgroundColor: "white",
-          shadowColor: isFocused ? "#06B6D4" : "transparent",
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: isFocused ? 0.15 : 0,
-          shadowRadius: 4,
-          elevation: isFocused ? 3 : 0,
-        }}
-      >
-        <TextInput
-          value={value}
-          onChangeText={onChangeText}
-          placeholder={placeholder}
-          placeholderTextColor="#9CA3AF"
-          keyboardType={keyboardType}
-          maxLength={maxLength}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          className="px-4 py-3 text-[#111827] font-Inter_Regular text-sm"
-          style={{ outline: "none" } as any}
-        />
-      </Animated.View>
-    </View>
-  );
-};
-
 const Step2 = () => {
-  const [streetAddress, setStreetAddress] = useState("");
-  const [apartment, setApartment] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [zip, setZip] = useState("");
-  const [isHomeAddress, setIsHomeAddress] = useState(false);
-
-  const checkAnim = useRef(new Animated.Value(0)).current;
-  const buttonScaleAnim = useRef(new Animated.Value(1)).current;
-
-  const checkScale = checkAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0.5, 1],
-  });
-
-  const checkOpacity = checkAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, 1],
-  });
-
-  const toggleHomeAddress = () => {
-    const toValue = isHomeAddress ? 0 : 1;
-    setIsHomeAddress(!isHomeAddress);
-    Animated.spring(checkAnim, {
-      toValue,
-      useNativeDriver: true,
-      friction: 6,
-      tension: 120,
-    }).start();
-  };
+  const dispatch = useDispatch();
+  const { streetAddress, apartment, city, state, zip, isHomeAddress } =
+    useSelector(
+      (state: RootState) => state.commonContractDetails.serviceAddress,
+    );
 
   return (
     <KeyboardAvoidingView
@@ -135,6 +37,9 @@ const Step2 = () => {
           textInputConfig={{
             placeholder: "Enter your street address",
             autoCapitalize: "words",
+            value: streetAddress,
+            onChangeText: (text: string) =>
+              dispatch(updateServiceAddress({ streetAddress: text })),
           }}
         />
 
@@ -145,6 +50,9 @@ const Step2 = () => {
             placeholder: "Apt, suite, unit (optional)",
             keyboardType: "default",
             autoCapitalize: "none",
+            value: apartment,
+            onChangeText: (text: string) =>
+              dispatch(updateServiceAddress({ apartment: text })),
           }}
         />
 
@@ -155,6 +63,9 @@ const Step2 = () => {
             placeholder: "Enter your city",
             keyboardType: "default",
             autoCapitalize: "words",
+            value: city,
+            onChangeText: (text: string) =>
+              dispatch(updateServiceAddress({ city: text })),
           }}
         />
 
@@ -165,6 +76,9 @@ const Step2 = () => {
             placeholder: "Enter your state",
             keyboardType: "default",
             autoCapitalize: "characters",
+            value: state,
+            onChangeText: (text: string) =>
+              dispatch(updateServiceAddress({ state: text })),
           }}
         />
 
@@ -175,6 +89,9 @@ const Step2 = () => {
             placeholder: "Enter your zip code",
             keyboardType: "number-pad",
             autoCapitalize: "none",
+            value: zip,
+            onChangeText: (text: string) =>
+              dispatch(updateServiceAddress({ zip: text })),
           }}
         />
 
@@ -182,7 +99,11 @@ const Step2 = () => {
           shouldShowTitle={false}
           subtitle="This is my home address"
           subtitleColor="#6b7280"
+          // wire if TermsAndPolicy supports it:
+          // checked={isHomeAddress}
+          // onToggle={(val) => dispatch(updateServiceAddress({ isHomeAddress: val }))}
         />
+
         <InfoBanner />
       </ScrollView>
     </KeyboardAvoidingView>
