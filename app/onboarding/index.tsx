@@ -129,7 +129,7 @@ export default function OnboardingScreen() {
           label={slide.primaryBtn}
           onPress={() => {
             if (currentIndex === TOTAL - 1) {
-              router.push("/auth/sign-in");
+              router.push("/auth/sign-up");
             } else {
               animateTo(currentIndex + 1);
             }
