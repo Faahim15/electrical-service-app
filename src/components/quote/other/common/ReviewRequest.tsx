@@ -1,20 +1,11 @@
-import { AccessoryBuildingReview } from "@/src/components/quote/review/AccessoryBuildingReview";
-import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
-import { DockPowerReview } from "@/src/components/quote/review/DockPowerReview";
-import { ElectricalInspectionReview } from "@/src/components/quote/review/ElectricalInspectionReview";
-import { EVChargerReview } from "@/src/components/quote/review/EVChargerRow";
-import { GeneratorReview } from "@/src/components/quote/review/GeneratorReview";
-import { HotTubReview } from "@/src/components/quote/review/HotTubReview";
-import { NewConstructionReview } from "@/src/components/quote/review/NewConstructionReview";
-import { PanelUpgradeReview } from "@/src/components/quote/review/PanelUpgradeReview";
-import { RemodelingReview } from "@/src/components/quote/review/RemodelingReview";
 import { ReviewRow } from "@/src/components/quote/review/ReviewRow";
 import { ReviewSectionTitle } from "@/src/components/quote/review/ReviewSectionTitle";
-import { ServiceCallReview } from "@/src/components/quote/review/ServiceCallReview";
 import { RootState } from "@/src/redux/store";
 import React from "react";
 import { Text, View } from "react-native";
 import { useSelector } from "react-redux";
+import StarlinkData from "./ReviewDataShow/StarlinkData";
+import WholeHomeData from "./ReviewDataShow/WholeHomeData";
 
 export default function ReviewRequest() {
   // ── Common contract data from shared slice ──────────────────────────────────
@@ -39,7 +30,13 @@ export default function ReviewRequest() {
   console.log(contactDetails);
   return (
     <View>
-      {selectedCategory && <CategoryTag title={selectedCategory.title} />}
+      {selectedCategory && (
+        <View className="self-start bg-[#EFF6FF] px-3 py-2 rounded-full mb-4">
+          <Text className="text-[#60A5FA] text-sm font-Inter_Medium">
+            {selectedCategory.title}
+          </Text>
+        </View>
+      )}
 
       <Text className="text-[#1E293B] text-[22px] font-Inter_Bold mb-1">
         Review your request
@@ -85,37 +82,14 @@ export default function ReviewRequest() {
       )}
       <ReviewRow label="Timeline / Urgency" value={projectBasics.timeline} />
 
-      {/* ── Category-Specific Sections ──────────────────────────────────────── */}
-      {categoryData?.categoryId === "1" && categoryData.details && (
-        <ServiceCallReview details={categoryData.details} />
-      )}
-      {categoryData?.categoryId === "2" && categoryData.details && (
-        <EVChargerReview details={categoryData.details} />
-      )}
-      {categoryData?.categoryId === "3" && categoryData.details && (
-        <PanelUpgradeReview details={categoryData.details} />
-      )}
-      {categoryData?.categoryId === "4" && categoryData.details && (
-        <RemodelingReview details={categoryData.details} />
-      )}
-      {categoryData?.categoryId === "5" && categoryData.details && (
-        <AccessoryBuildingReview details={categoryData.details} />
-      )}
-      {categoryData?.categoryId === "6" && categoryData.details && (
-        <HotTubReview details={categoryData.details} />
-      )}
-      {categoryData?.categoryId === "7" && categoryData.details && (
-        <DockPowerReview details={categoryData.details} />
-      )}
-      {categoryData?.categoryId === "8" && categoryData.details && (
-        <ElectricalInspectionReview details={categoryData.details} />
-      )}
-      {categoryData?.categoryId === "9" && categoryData.details && (
-        <GeneratorReview details={categoryData.details} />
-      )}
-      {categoryData?.categoryId === "10" && categoryData.details && (
-        <NewConstructionReview details={categoryData.details} />
-      )}
+      {/* ── each wise data show ──────────────────────────────────────────────────── */}
+
+      {selectedCategory &&
+        selectedCategory.title === "Whole Home Surge Protection" && (
+          <WholeHomeData />
+        )}
+      {selectedCategory &&
+        selectedCategory.title === "Starlink Installation" && <StarlinkData />}
     </View>
   );
 }

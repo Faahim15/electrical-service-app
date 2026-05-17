@@ -130,6 +130,8 @@ const OtherFormProgress = () => {
   const { dishLocation, hasMounting, images } = useSelector(
     (state: RootState) => state.starlinkRoute,
   );
+  console.log("===========root=============");
+  console.log(dishLocation);
 
   const selectedTitle = category?.title ?? "";
 

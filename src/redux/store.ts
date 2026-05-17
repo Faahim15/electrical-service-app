@@ -2,6 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import categoryRouteReducer from "./slices/categoryRouteSlice";
 
 import commonContractdetails from "./slices/globalstore/commonContractdetailsStoreSlice";
+import starlinkDataReducer from "./slices/globalstore/StarlinkDataSlice";
+import wholeHomeDataReducer from "./slices/globalstore/wholeHomeDataSlice";
 import reminderDetailsReducer from "./slices/myReminderSlice";
 import otherCategoryRouteSlice from "./slices/otherRouteSlice";
 import partnerDetailsReducer from "./slices/parnerDetailsSlice";
@@ -25,6 +27,8 @@ export const store = configureStore({
     quoteDetails: quoteDetailsReducer,
     reminderDetails: reminderDetailsReducer,
     commonContractDetails: commonContractdetails,
+    wholeHomeData: wholeHomeDataReducer,
+    starlinkData: starlinkDataReducer,
   },
 });
 

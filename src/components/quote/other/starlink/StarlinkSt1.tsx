@@ -1,4 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import {
+  setExpectedDate,
+  setHasEquipment,
+} from "@/src/redux/slices/globalstore/StarlinkDataSlice";
+import { AppDispatch, RootState } from "@/src/redux/store";
+import React, { useEffect, useRef } from "react";
 import {
   Animated,
   Text,
@@ -6,8 +11,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
-/** Selectable option row */
 const OptionRow = ({
   label,
   selected,
@@ -33,7 +38,7 @@ const OptionRow = ({
   });
   const textColor = bgAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: ["#374151", "#ffffff"],
+    outputRange: ["#1F2937", "#ffffff"],
   });
 
   return (
@@ -50,11 +55,8 @@ const OptionRow = ({
         }}
       >
         <Animated.Text
-          style={{
-            color: textColor,
-            fontFamily: "Inter_Medium",
-            fontSize: 15,
-          }}
+          style={{ color: textColor }}
+          className="font-Inter_Medium text-base"
         >
           {label}
         </Animated.Text>
@@ -64,83 +66,79 @@ const OptionRow = ({
 };
 
 const StarlinkSt1 = () => {
-  const [hasEquipment, setHasEquipment] = useState<string | null>(null);
-  const [expectedDate, setExpectedDate] = useState("");
+  const dispatch = useDispatch<AppDispatch>();
+
+  const hasEquipment = useSelector(
+    (state: RootState) => state.starlinkData.hasEquipment,
+  );
+  const expectedDate = useSelector(
+    (state: RootState) => state.starlinkData.expectedDate,
+  );
 
   const slideAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    if (hasEquipment === "no") {
-      Animated.timing(slideAnim, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    } else {
-      Animated.timing(slideAnim, {
-        toValue: 0,
-        duration: 200,
-        useNativeDriver: true,
-      }).start();
-    }
+    Animated.timing(slideAnim, {
+      toValue: hasEquipment === "no" ? 1 : 0,
+      duration: hasEquipment === "no" ? 300 : 200,
+      useNativeDriver: true,
+    }).start();
   }, [hasEquipment]);
 
   return (
     <View className="flex-1">
-      <View>
-        <View className="bg-[#EFF6FF] px-2 py-1.5 justify-center items-center rounded-full w-24">
-          <Text className="text-sm font-Inter_Medium text-[#60A5FA] ">
-            Starlink
-          </Text>
-        </View>
-
-        <Text className="text-2xl font-Inter_Bold text-[#1F2937] mb-2">
-          Equipment status
+      <View className="bg-[#EFF6FF] px-2 py-1.5 justify-center items-center rounded-full w-24">
+        <Text className="text-sm font-Inter_Medium text-[#60A5FA]">
+          Starlink
         </Text>
-        <Text className="text-sm font-Inter_Medium text-[#1F2937] mb-5">
-          Do you have the Starlink equipment?
-        </Text>
-
-        <OptionRow
-          label="Yes"
-          selected={hasEquipment === "yes"}
-          onPress={() => setHasEquipment("yes")}
-        />
-        <OptionRow
-          label="No"
-          selected={hasEquipment === "no"}
-          onPress={() => setHasEquipment("no")}
-        />
-
-        <Animated.View
-          style={{
-            opacity: slideAnim,
-            transform: [
-              {
-                translateY: slideAnim.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [-10, 0],
-                }),
-              },
-            ],
-          }}
-        >
-          {hasEquipment === "no" && (
-            <View className="mt-3">
-              <Text className="text-sm font-Inter_Medium text-gray-700 mb-2">
-                When do you expect to have the equipment?
-              </Text>
-              <TextInput
-                value={expectedDate}
-                onChangeText={setExpectedDate}
-                placeholder=""
-                placeholderTextColor="#9CA3AF"
-                className="border border-gray-200 rounded-xl mb-4 px-4 py-4 font-Inter_Regular text-sm text-gray-800 bg-white"
-              />
-            </View>
-          )}
-        </Animated.View>
       </View>
+
+      <Text className="text-2xl font-Inter_Bold text-[#1F2937] mb-2">
+        Equipment status
+      </Text>
+      <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-5">
+        Do you have the Starlink equipment?
+      </Text>
+
+      <OptionRow
+        label="Yes"
+        selected={hasEquipment === "yes"}
+        onPress={() => dispatch(setHasEquipment("yes"))}
+      />
+      <OptionRow
+        label="No"
+        selected={hasEquipment === "no"}
+        onPress={() => dispatch(setHasEquipment("no"))}
+      />
+
+      <Animated.View
+        style={{
+          opacity: slideAnim,
+          transform: [
+            {
+              translateY: slideAnim.interpolate({
+                inputRange: [0, 1],
+                outputRange: [-10, 0],
+              }),
+            },
+          ],
+        }}
+      >
+        {hasEquipment === "no" && (
+          <View className="mt-3">
+            <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-2">
+              When do you expect to have the equipment?
+            </Text>
+            <TextInput
+              value={expectedDate}
+              onChangeText={(text) => dispatch(setExpectedDate(text))}
+              placeholder=""
+              placeholderTextColor="#9CA3AF"
+              className="border border-gray-200 rounded-xl mb-4 px-4 py-4 font-Inter_Regular text-sm text-[#1F2937] bg-white"
+            />
+          </View>
+        )}
+      </Animated.View>
     </View>
   );
 };
