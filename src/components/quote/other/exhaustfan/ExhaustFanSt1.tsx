@@ -1,16 +1,47 @@
-import { Feather } from "@expo/vector-icons";
-import * as ImagePicker from "expo-image-picker";
+import { RootState } from "@/src/redux/store";
 import React, { useEffect, useRef, useState } from "react";
 import {
-  Alert,
   Animated,
-  Image,
   Pressable,
   ScrollView,
   Text,
   TextInput,
   View,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import PhotoUploadSection from "../../PhotoUploadSection";
+// import { setFanLocation } from "@/src/redux/slices/globalstore/ExhaustFanDataSlice";
+
+import {
+  setAtticFanType,
+  setAtticStories,
+  setBathroomAreaOther,
+  setBathroomDist,
+  setBathroomDuctInfo,
+  setBathroomFanType,
+  setBathroomYesNo,
+  setFanLocation,
+  setInstallType,
+  setKitchenAreaOther,
+  setKitchenDist,
+  setKitchenDuctInfo,
+  setKitchenFanType,
+  setKitchenYesNo,
+  setPanelLocation,
+  setPanelLocationOther,
+  setPhotosAtticLocation,
+  setPhotosBathroomCurrentFan,
+  setPhotosBathroomNewFan,
+  setPhotosKitchenCurrentFan,
+  setPhotosKitchenNewFan,
+  setPhotosNewFan,
+  setPhotosPanelClose,
+  setPhotosPanelWide,
+  setSpecialtyControl,
+  setSupplyingAtticFan,
+  toggleBathroomArea,
+  toggleKitchenArea,
+} from "@/src/redux/slices/globalstore/ExhaustFanDataSlice";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type InstallType = "New Installation" | "Replacement";
@@ -55,130 +86,6 @@ type KitchenFanType =
   | "Over the range microwave"
   | "Through the wall vent"
   | "Through the ceiling (commonly over an Island)";
-
-// ─── Image Picker Hook ────────────────────────────────────────────────────────
-const useImagePicker = () => {
-  const pickImage = async (onPicked: (uri: string) => void) => {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== "granted") {
-      Alert.alert(
-        "Permission Required",
-        "Please allow access to your photo library.",
-        [{ text: "OK" }],
-      );
-      return;
-    }
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: false,
-      quality: 0.85,
-      allowsMultipleSelection: false,
-    });
-    if (!result.canceled && result.assets.length > 0)
-      onPicked(result.assets[0].uri);
-  };
-
-  const takePhoto = async (onPicked: (uri: string) => void) => {
-    const { status } = await ImagePicker.requestCameraPermissionsAsync();
-    if (status !== "granted") {
-      Alert.alert(
-        "Permission Required",
-        "Please allow camera access to take photos.",
-        [{ text: "OK" }],
-      );
-      return;
-    }
-    const result = await ImagePicker.launchCameraAsync({
-      allowsEditing: false,
-      quality: 0.85,
-    });
-    if (!result.canceled && result.assets.length > 0)
-      onPicked(result.assets[0].uri);
-  };
-
-  const showOptions = (onPicked: (uri: string) => void) => {
-    Alert.alert("Upload Photo", "Choose a source", [
-      { text: "Camera", onPress: () => takePhoto(onPicked) },
-      { text: "Photo Library", onPress: () => pickImage(onPicked) },
-      { text: "Cancel", style: "cancel" },
-    ]);
-  };
-
-  return { showOptions };
-};
-
-// ─── UploadButton ─────────────────────────────────────────────────────────────
-const UploadButton = ({
-  label,
-  imageUri,
-  onImagePicked,
-}: {
-  label: string;
-  imageUri: string | null;
-  onImagePicked: (uri: string) => void;
-}) => {
-  const scaleAnim = useRef(new Animated.Value(1)).current;
-  const { showOptions } = useImagePicker();
-
-  const handlePress = () => {
-    Animated.sequence([
-      Animated.spring(scaleAnim, {
-        toValue: 0.97,
-        useNativeDriver: true,
-        speed: 50,
-        bounciness: 0,
-      }),
-      Animated.spring(scaleAnim, {
-        toValue: 1,
-        useNativeDriver: true,
-        speed: 50,
-        bounciness: 0,
-      }),
-    ]).start();
-    showOptions(onImagePicked);
-  };
-
-  if (imageUri) {
-    return (
-      <Pressable onPress={handlePress} className="mb-3">
-        <Animated.View
-          style={{ transform: [{ scale: scaleAnim }] }}
-          className="rounded-xl overflow-hidden border-[1.5px] border-[#60A5FA] bg-blue-50"
-        >
-          <Image
-            source={{ uri: imageUri }}
-            style={{ width: "100%", height: 160 }}
-            resizeMode="cover"
-          />
-          <View className="absolute bottom-0 left-0 right-0 bg-[#60A5FA] py-2 flex-row items-center justify-center gap-1.5">
-            <Text className="text-white text-sm">🔄</Text>
-            <Text className="font-Inter_SemiBold text-xs text-white">
-              Tap to replace
-            </Text>
-          </View>
-        </Animated.View>
-      </Pressable>
-    );
-  }
-
-  return (
-    <Pressable onPress={handlePress} className="mb-3">
-      <Animated.View
-        style={{
-          transform: [{ scale: scaleAnim }],
-          borderWidth: 1.5,
-          borderColor: "#0000001A",
-        }}
-        className="rounded-xl py-3.5 px-4 flex-row items-center justify-center gap-2 bg-[#ECECF04D]"
-      >
-        <Feather name="upload" size={13} color="#717182" />
-        <Text className="font-Inter_Medium text-[13px] text-[#717182]">
-          {label}
-        </Text>
-      </Animated.View>
-    </Pressable>
-  );
-};
 
 // ─── AnimatedOption ───────────────────────────────────────────────────────────
 const AnimatedOption = ({
@@ -245,7 +152,7 @@ const AnimatedOption = ({
           className="py-3 px-4 items-center justify-center"
         >
           <Text
-            className={`text-[13px] text-center ${selected ? "font-Inter_SemiBold text-white" : "font-Inter_Medium text-gray-700"}`}
+            className={`text-base text-center ${selected ? "font-Inter_SemiBold text-white" : "font-Inter_Medium text-[#1F2937]"}`}
           >
             {label}
           </Text>
@@ -320,7 +227,7 @@ const RowOption = ({
           className="py-3.5 px-4"
         >
           <Text
-            className={`text-[13px] ${selected ? "font-Inter_SemiBold text-white" : "font-Inter_Regular text-gray-700"}`}
+            className={`text-base font-Inter_SemiBold ${selected ? "text-white" : "font-Inter_Regular text-gray-700"}`}
           >
             {label}
           </Text>
@@ -395,7 +302,7 @@ const ChipOption = ({
           className="py-2 px-3.5"
         >
           <Text
-            className={`text-[12px] ${selected ? "font-Inter_SemiBold text-white" : "font-Inter_Regular text-gray-700"}`}
+            className={`text-base font-Inter_Medium ${selected ? "text-white" : "text-[#1F2937]"}`}
           >
             {label}
           </Text>
@@ -415,7 +322,7 @@ const SectionCard = ({
 }) => (
   <View className="bg-white rounded-2xl p-4 mb-4 shadow-sm">
     {title ? (
-      <Text className="font-Inter_Bold text-[15px] text-gray-900 mb-3">
+      <Text className="text-lg font-Inter_SemiBold text-[#1F2937] mb-3">
         {title}
       </Text>
     ) : null}
@@ -426,11 +333,9 @@ const SectionCard = ({
 // ─── Label ────────────────────────────────────────────────────────────────────
 const Label = ({ text, sub }: { text: string; sub?: string }) => (
   <View className="mb-2.5">
-    <Text className="font-Inter_SemiBold text-[13px] text-slate-800">
-      {text}
-    </Text>
+    <Text className="font-Inter_SemiBold text-base text-slate-800">{text}</Text>
     {sub ? (
-      <Text className="font-Inter_Regular text-[11px] text-slate-500 mt-0.5">
+      <Text className="font-Inter_Regular text-[11px] text-[#717182] mt-0.5">
         {sub}
       </Text>
     ) : null}
@@ -439,13 +344,6 @@ const Label = ({ text, sub }: { text: string; sub?: string }) => (
 
 // ─── Divider ──────────────────────────────────────────────────────────────────
 const Divider = () => <View className="h-px bg-slate-100 my-3" />;
-
-// ─── SubLabel ─────────────────────────────────────────────────────────────────
-const SubLabel = ({ text }: { text: string }) => (
-  <Text className="font-Inter_SemiBold text-[11px] text-[#60A5FA] uppercase tracking-wide mb-2">
-    {text}
-  </Text>
-);
 
 // ─── StyledInput ──────────────────────────────────────────────────────────────
 const StyledInput = ({
@@ -534,49 +432,8 @@ const OtherInput = ({
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 const ExhaustFanSt1 = () => {
-  const [installType, setInstallType] = useState<InstallType>("Replacement");
-  const [fanLocation, setFanLocation] = useState<FanLocation>("Bathroom");
-
-  const [atticFanType, setAtticFanType] =
-    useState<AtticFanType>("Gable (wall) fan");
-  const [supplyingAtticFan, setSupplyingAtticFan] = useState<YesNo>("Yes");
-  const [atticStories, setAtticStories] = useState<Stories>("1");
-
-  const [bathroomYesNo, setBathroomYesNo] = useState<YesNo>("Yes");
-  const [bathroomFanType, setBathroomFanType] =
-    useState<BathroomFanType | null>(null);
-  const [specialtyControl, setSpecialtyControl] = useState<SpecialtyControl>(
-    "No specialty control",
-  );
-  const [bathroomAreas, setBathroomAreas] = useState<AreaOption[]>([]);
-  const [bathroomAreaOther, setBathroomAreaOther] = useState("");
-  const [bathroomDist, setBathroomDist] = useState<Distance | null>(null);
-  const [bathroomDuctInfo, setBathroomDuctInfo] = useState("");
-
-  const [kitchenYesNo, setKitchenYesNo] = useState<YesNo>("No");
-  const [kitchenFanType, setKitchenFanType] = useState<KitchenFanType | null>(
-    null,
-  );
-  const [kitchenAreas, setKitchenAreas] = useState<AreaOption[]>([]);
-  const [kitchenAreaOther, setKitchenAreaOther] = useState("");
-  const [kitchenDist, setKitchenDist] = useState<Distance | null>(null);
-  const [kitchenDuctInfo, setKitchenDuctInfo] = useState("");
-
-  const [panelLocation, setPanelLocation] = useState<PanelLocation>(
-    "Basement (Finished)",
-  );
-  const [panelLocationOther, setPanelLocationOther] = useState("");
-
-  const [additionalInfo, setAdditionalInfo] = useState("");
-  const [additionalFocused, setAdditionalFocused] = useState(false);
-
-  const [imgCurrentFan, setImgCurrentFan] = useState<string | null>(null);
-  const [imgNewFan, setImgNewFan] = useState<string | null>(null);
-  const [imgInstallLocation, setImgInstallLocation] = useState<string | null>(
-    null,
-  );
-  const [imgPanelClose, setImgPanelClose] = useState<string | null>(null);
-  const [imgPanelWide, setImgPanelWide] = useState<string | null>(null);
+  const dispatch = useDispatch();
+  const state = useSelector((s: RootState) => s.exhaustFan);
 
   const fadeAnim = useRef(new Animated.Value(1)).current;
 
@@ -586,10 +443,7 @@ const ExhaustFanSt1 = () => {
       duration: 150,
       useNativeDriver: true,
     }).start(() => {
-      setFanLocation(loc);
-      setImgCurrentFan(null);
-      setImgNewFan(null);
-      setImgInstallLocation(null);
+      dispatch(setFanLocation(loc));
       Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 250,
@@ -597,15 +451,6 @@ const ExhaustFanSt1 = () => {
       }).start();
     });
   };
-
-  const toggleArea = (
-    area: AreaOption,
-    list: AreaOption[],
-    setter: (v: AreaOption[]) => void,
-  ) =>
-    setter(
-      list.includes(area) ? list.filter((a) => a !== area) : [...list, area],
-    );
 
   const panelOptions: PanelLocation[] = [
     "Basement (Finished)",
@@ -633,7 +478,7 @@ const ExhaustFanSt1 = () => {
 
   const renderDetails = () => {
     // ── Attic ──────────────────────────────────────────────────────────────
-    if (fanLocation === "Attic") {
+    if (state.fanLocation === "Attic") {
       return (
         <SectionCard title="Attic Fan Details">
           <Label text="Is it a roof or gable (wall) fan?" />
@@ -642,8 +487,8 @@ const ExhaustFanSt1 = () => {
               <AnimatedOption
                 key={t}
                 label={t}
-                selected={atticFanType === t}
-                onPress={() => setAtticFanType(t)}
+                selected={state.atticFanType === t}
+                onPress={() => dispatch(setAtticFanType(t))}
               />
             ))}
           </View>
@@ -654,19 +499,19 @@ const ExhaustFanSt1 = () => {
               <AnimatedOption
                 key={v}
                 label={v}
-                selected={supplyingAtticFan === v}
-                onPress={() => setSupplyingAtticFan(v)}
+                selected={state.supplyingAtticFan === v}
+                onPress={() => dispatch(setSupplyingAtticFan(v))}
               />
             ))}
           </View>
 
-          {supplyingAtticFan === "Yes" && (
+          {state.supplyingAtticFan === "Yes" && (
             <>
               <Label text="Upload photo of new fan" />
-              <UploadButton
+              <PhotoUploadSection
                 label="Upload New Fan Photo"
-                imageUri={imgNewFan}
-                onImagePicked={setImgNewFan}
+                photos={state.photosNewFan}
+                onPhotosChange={(p) => dispatch(setPhotosNewFan(p))}
               />
             </>
           )}
@@ -677,19 +522,19 @@ const ExhaustFanSt1 = () => {
               <AnimatedOption
                 key={s}
                 label={s}
-                selected={atticStories === s}
-                onPress={() => setAtticStories(s)}
+                selected={state.atticStories === s}
+                onPress={() => dispatch(setAtticStories(s))}
               />
             ))}
           </View>
 
           <Label text="Upload photo from the ground showing where the attic fan will be installed" />
-          <UploadButton
+          <PhotoUploadSection
             label="Upload Install Location Photo"
-            imageUri={imgInstallLocation}
-            onImagePicked={setImgInstallLocation}
+            photos={state.photosAtticLocation}
+            onPhotosChange={(p) => dispatch(setPhotosAtticLocation(p))}
           />
-          <Text className="font-Inter_Regular text-[11px] text-slate-500">
+          <Text className="font-Inter_Regular text-[11px] text-[#717182]">
             This photo helps us understand access and installation conditions.
           </Text>
         </SectionCard>
@@ -697,22 +542,22 @@ const ExhaustFanSt1 = () => {
     }
 
     // ── Kitchen ────────────────────────────────────────────────────────────
-    if (fanLocation === "Kitchen") {
+    if (state.fanLocation === "Kitchen") {
       return (
         <SectionCard title="Kitchen Exhaust Fan Details">
-          <SubLabel text="Current Kitchen Fan" />
+          <Label text="Current Kitchen Fan" />
           <Label text="Upload photo of current exhaust fan" />
-          <UploadButton
+          <PhotoUploadSection
             label="Upload Current Fan Photo"
-            imageUri={imgCurrentFan}
-            onImagePicked={setImgCurrentFan}
+            photos={state.photosKitchenCurrentFan}
+            onPhotosChange={(p) => dispatch(setPhotosKitchenCurrentFan(p))}
           />
 
           <Label text="Existing duct diameter and vent location if known" />
           <StyledInput
-            placeholder="e.g., 6 in duct venting through exterior"
-            value={kitchenDuctInfo}
-            onChangeText={setKitchenDuctInfo}
+            placeholder="e.g., 6 in duct venting through exterior wall"
+            value={state.kitchenDuctInfo}
+            onChangeText={(t) => dispatch(setKitchenDuctInfo(t))}
           />
 
           <Label text="Will you be providing the new kitchen exhaust fan?" />
@@ -721,24 +566,24 @@ const ExhaustFanSt1 = () => {
               <AnimatedOption
                 key={v}
                 label={v}
-                selected={kitchenYesNo === v}
-                onPress={() => setKitchenYesNo(v)}
+                selected={state.kitchenYesNo === v}
+                onPress={() => dispatch(setKitchenYesNo(v))}
               />
             ))}
           </View>
 
-          {kitchenYesNo === "Yes" && (
+          {state.kitchenYesNo === "Yes" && (
             <>
               <Label text="Upload photo of new fan" />
-              <UploadButton
+              <PhotoUploadSection
                 label="Upload New Fan Photo"
-                imageUri={imgNewFan}
-                onImagePicked={setImgNewFan}
+                photos={state.photosKitchenNewFan}
+                onPhotosChange={(p) => dispatch(setPhotosKitchenNewFan(p))}
               />
             </>
           )}
 
-          {kitchenYesNo === "No" && (
+          {state.kitchenYesNo === "No" && (
             <>
               <Label text="What type of exhaust fan do you want?" />
               {(
@@ -752,8 +597,8 @@ const ExhaustFanSt1 = () => {
                 <RowOption
                   key={t}
                   label={t}
-                  selected={kitchenFanType === t}
-                  onPress={() => setKitchenFanType(t)}
+                  selected={state.kitchenFanType === t}
+                  onPress={() => dispatch(setKitchenFanType(t))}
                 />
               ))}
             </>
@@ -766,16 +611,16 @@ const ExhaustFanSt1 = () => {
               <ChipOption
                 key={a}
                 label={a}
-                selected={kitchenAreas.includes(a)}
-                onPress={() => toggleArea(a, kitchenAreas, setKitchenAreas)}
+                selected={state.kitchenAreas.includes(a)}
+                onPress={() => dispatch(toggleKitchenArea(a))}
               />
             ))}
           </View>
           <OtherInput
-            visible={kitchenAreas.includes("Other")}
+            visible={state.kitchenAreas.includes("Other")}
             placeholder='Please describe "Other" area...'
-            value={kitchenAreaOther}
-            onChangeText={setKitchenAreaOther}
+            value={state.kitchenAreaOther}
+            onChangeText={(t) => dispatch(setKitchenAreaOther(t))}
           />
 
           <Divider />
@@ -787,8 +632,8 @@ const ExhaustFanSt1 = () => {
             <RowOption
               key={d}
               label={d}
-              selected={kitchenDist === d}
-              onPress={() => setKitchenDist(d)}
+              selected={state.kitchenDist === d}
+              onPress={() => dispatch(setKitchenDist(d))}
             />
           ))}
         </SectionCard>
@@ -798,19 +643,19 @@ const ExhaustFanSt1 = () => {
     // ── Bathroom ───────────────────────────────────────────────────────────
     return (
       <SectionCard title="Bathroom Exhaust Fan Details">
-        <SubLabel text="Current Bathroom Fan" />
+        <Label text="Current Bathroom Fan" />
         <Label text="Upload photo of current exhaust fan" />
-        <UploadButton
+        <PhotoUploadSection
           label="Upload Current Fan Photo"
-          imageUri={imgCurrentFan}
-          onImagePicked={setImgCurrentFan}
+          photos={state.photosBathroomCurrentFan}
+          onPhotosChange={(p) => dispatch(setPhotosBathroomCurrentFan(p))}
         />
 
         <Label text="Existing duct diameter and vent location if known" />
         <StyledInput
-          placeholder="e.g., 6 in duct venting through exterior"
-          value={bathroomDuctInfo}
-          onChangeText={setBathroomDuctInfo}
+          placeholder="e.g., 6 in duct venting through exterior wall"
+          value={state.bathroomDuctInfo}
+          onChangeText={(t) => dispatch(setBathroomDuctInfo(t))}
         />
 
         <Label text="Will you be providing the new bathroom exhaust fan?" />
@@ -819,24 +664,24 @@ const ExhaustFanSt1 = () => {
             <AnimatedOption
               key={v}
               label={v}
-              selected={bathroomYesNo === v}
-              onPress={() => setBathroomYesNo(v)}
+              selected={state.bathroomYesNo === v}
+              onPress={() => dispatch(setBathroomYesNo(v))}
             />
           ))}
         </View>
 
-        {bathroomYesNo === "Yes" && (
+        {state.bathroomYesNo === "Yes" && (
           <>
             <Label text="Upload photo of new fan" />
-            <UploadButton
+            <PhotoUploadSection
               label="Upload New Fan Photo"
-              imageUri={imgNewFan}
-              onImagePicked={setImgNewFan}
+              photos={state.photosBathroomNewFan}
+              onPhotosChange={(p) => dispatch(setPhotosBathroomNewFan(p))}
             />
           </>
         )}
 
-        {bathroomYesNo === "No" && (
+        {state.bathroomYesNo === "No" && (
           <>
             <Label text="What type of exhaust fan do you want?" />
             {(
@@ -852,8 +697,8 @@ const ExhaustFanSt1 = () => {
               <RowOption
                 key={t}
                 label={t}
-                selected={bathroomFanType === t}
-                onPress={() => setBathroomFanType(t)}
+                selected={state.bathroomFanType === t}
+                onPress={() => dispatch(setBathroomFanType(t))}
               />
             ))}
             <Divider />
@@ -869,8 +714,8 @@ const ExhaustFanSt1 = () => {
               <RowOption
                 key={c}
                 label={c}
-                selected={specialtyControl === c}
-                onPress={() => setSpecialtyControl(c)}
+                selected={state.specialtyControl === c}
+                onPress={() => dispatch(setSpecialtyControl(c))}
               />
             ))}
           </>
@@ -883,16 +728,16 @@ const ExhaustFanSt1 = () => {
             <ChipOption
               key={a}
               label={a}
-              selected={bathroomAreas.includes(a)}
-              onPress={() => toggleArea(a, bathroomAreas, setBathroomAreas)}
+              selected={state.bathroomAreas.includes(a)}
+              onPress={() => dispatch(toggleBathroomArea(a))}
             />
           ))}
         </View>
         <OtherInput
-          visible={bathroomAreas.includes("Other")}
+          visible={state.bathroomAreas.includes("Other")}
           placeholder='Please describe "Other" area...'
-          value={bathroomAreaOther}
-          onChangeText={setBathroomAreaOther}
+          value={state.bathroomAreaOther}
+          onChangeText={(t) => dispatch(setBathroomAreaOther(t))}
         />
 
         <Divider />
@@ -904,8 +749,8 @@ const ExhaustFanSt1 = () => {
           <RowOption
             key={d}
             label={d}
-            selected={bathroomDist === d}
-            onPress={() => setBathroomDist(d)}
+            selected={state.bathroomDist === d}
+            onPress={() => dispatch(setBathroomDist(d))}
           />
         ))}
       </SectionCard>
@@ -913,27 +758,24 @@ const ExhaustFanSt1 = () => {
   };
 
   return (
-    <View className="flex-1 bg-[#EFF6FF]">
+    <View className="flex-1">
       <ScrollView
-        contentContainerStyle={{
-          paddingTop: 24,
-          paddingBottom: 40,
-        }}
+        contentContainerStyle={{ paddingBottom: 40 }}
         showsVerticalScrollIndicator={false}
       >
         {/* Badge */}
-        <View className="self-start bg-blue-50 rounded-full px-3 py-1 mb-5 border border-blue-100">
-          <Text className="font-Inter_SemiBold text-[11px] text-[#60A5FA] tracking-wide">
+        <View className="bg-[#EFF6FF] px-2 py-1.5 justify-center items-center rounded-full w-32 mb-2">
+          <Text className="text-sm font-Inter_Medium text-[#60A5FA]">
             Exhaust Fans
           </Text>
         </View>
 
         {/* Header */}
         <SectionCard>
-          <Text className="font-Inter_Bold text-[20px] text-gray-900 mb-1">
+          <Text className="text-xl font-Inter_Bold text-[#1F2937] mb-1">
             Exhaust Fans
           </Text>
-          <Text className="font-Inter_Regular text-[13px] text-slate-500">
+          <Text className="font-Inter_Regular text-base text-[#717182]">
             Answer these exhaust-fan-specific questions so we can estimate
             accurately.
           </Text>
@@ -941,7 +783,7 @@ const ExhaustFanSt1 = () => {
 
         {/* New or Replacement */}
         <SectionCard title="New or Replacement?">
-          <Text className="font-Inter_Regular text-[13px] text-slate-500 mb-3">
+          <Text className="font-Inter_Regular text-sm text-[#717182] mb-3">
             Is this a new installation or a replacement?
           </Text>
           <View className="flex-row gap-2.5">
@@ -949,8 +791,8 @@ const ExhaustFanSt1 = () => {
               <AnimatedOption
                 key={t}
                 label={t}
-                selected={installType === t}
-                onPress={() => setInstallType(t)}
+                selected={state.installType === t}
+                onPress={() => dispatch(setInstallType(t))}
               />
             ))}
           </View>
@@ -962,7 +804,7 @@ const ExhaustFanSt1 = () => {
             <RowOption
               key={loc}
               label={loc}
-              selected={fanLocation === loc}
+              selected={state.fanLocation === loc}
               onPress={() => switchLocation(loc)}
             />
           ))}
@@ -980,33 +822,33 @@ const ExhaustFanSt1 = () => {
             <RowOption
               key={p}
               label={p}
-              selected={panelLocation === p}
-              onPress={() => setPanelLocation(p)}
+              selected={state.panelLocation === p}
+              onPress={() => dispatch(setPanelLocation(p))}
             />
           ))}
           <OtherInput
-            visible={panelLocation === "Other"}
+            visible={state.panelLocation === "Other"}
             placeholder="Describe panel location..."
-            value={panelLocationOther}
-            onChangeText={setPanelLocationOther}
+            value={state.panelLocationOther}
+            onChangeText={(t) => dispatch(setPanelLocationOther(t))}
           />
 
           <Divider />
-          <Text className="font-Inter_Regular text-[13px] text-gray-700 mb-3">
+          <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-3">
             Upload photos of your electrical panel up close so we can see the
             breakers / panel label and about 10 ft away.
           </Text>
-          <UploadButton
+          <PhotoUploadSection
             label="Upload Panel Close-Up"
-            imageUri={imgPanelClose}
-            onImagePicked={setImgPanelClose}
+            photos={state.photosPanelClose}
+            onPhotosChange={(p) => dispatch(setPhotosPanelClose(p))}
           />
-          <UploadButton
+          <PhotoUploadSection
             label="Upload Panel Wide Photo"
-            imageUri={imgPanelWide}
-            onImagePicked={setImgPanelWide}
+            photos={state.photosPanelWide}
+            onPhotosChange={(p) => dispatch(setPhotosPanelWide(p))}
           />
-          <Text className="font-Inter_Regular text-[11px] text-slate-500">
+          <Text className="font-Inter_Regular text-[11px] text-[#717182]">
             These photos help us estimate routing and installation requirements
             more accurately.
           </Text>

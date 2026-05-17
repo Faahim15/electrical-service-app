@@ -4,6 +4,7 @@ import { RootState } from "@/src/redux/store";
 import React from "react";
 import { Text, View } from "react-native";
 import { useSelector } from "react-redux";
+import ExhaustFunData from "./ReviewDataShow/ExhaustFunData";
 import StarlinkData from "./ReviewDataShow/StarlinkData";
 import WholeHomeData from "./ReviewDataShow/WholeHomeData";
 
@@ -90,6 +91,10 @@ export default function ReviewRequest() {
         )}
       {selectedCategory &&
         selectedCategory.title === "Starlink Installation" && <StarlinkData />}
+
+      {selectedCategory && selectedCategory.title === "Exhaust Fan" && (
+        <ExhaustFunData />
+      )}
     </View>
   );
 }

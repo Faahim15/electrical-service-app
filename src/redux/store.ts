@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import categoryRouteReducer from "./slices/categoryRouteSlice";
 
 import commonContractdetails from "./slices/globalstore/commonContractdetailsStoreSlice";
+import exhaustFanReducer from "./slices/globalstore/ExhaustFanDataSlice";
 import starlinkDataReducer from "./slices/globalstore/StarlinkDataSlice";
 import wholeHomeDataReducer from "./slices/globalstore/wholeHomeDataSlice";
 import reminderDetailsReducer from "./slices/myReminderSlice";
@@ -29,6 +30,7 @@ export const store = configureStore({
     commonContractDetails: commonContractdetails,
     wholeHomeData: wholeHomeDataReducer,
     starlinkData: starlinkDataReducer,
+    exhaustFan: exhaustFanReducer,
   },
 });
 
