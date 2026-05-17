@@ -6,6 +6,7 @@ import { Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import ExhaustFunData from "./ReviewDataShow/ExhaustFunData";
 import StarlinkData from "./ReviewDataShow/StarlinkData";
+import SwitchesData from "./ReviewDataShow/SwitchesData";
 import WholeHomeData from "./ReviewDataShow/WholeHomeData";
 
 export default function ReviewRequest() {
@@ -94,6 +95,10 @@ export default function ReviewRequest() {
 
       {selectedCategory && selectedCategory.title === "Exhaust Fan" && (
         <ExhaustFunData />
+      )}
+
+      {selectedCategory && selectedCategory.title === "Switches" && (
+        <SwitchesData />
       )}
     </View>
   );

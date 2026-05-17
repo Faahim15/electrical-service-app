@@ -1,4 +1,10 @@
-import React, { useRef, useState } from "react";
+import {
+  selectSwitchesInstallType,
+  selectSwitchesQuantity,
+  setInstallType,
+  setQuantity,
+} from "@/src/redux/slices/globalstore/switchesDataSlice";
+import React, { useRef } from "react";
 import {
   Animated,
   ScrollView,
@@ -7,10 +13,12 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
 const SwitchesSt1 = () => {
-  const [quantity, setQuantity] = useState("");
-  const [installType, setInstallType] = useState("New install");
+  const quantity = useSelector(selectSwitchesQuantity);
+  const installType = useSelector(selectSwitchesInstallType);
+  const dispatch = useDispatch();
 
   const installAnims = useRef(
     ["New install", "Replacement"].map(() => new Animated.Value(1)),
@@ -37,31 +45,31 @@ const SwitchesSt1 = () => {
       <ScrollView className="flex-1 " showsVerticalScrollIndicator={false}>
         {/* Breadcrumb */}
         <View className="mt-4 mb-3">
-          <View className="self-start bg-blue-50 rounded-full px-3 py-1 mb-5 border border-blue-100">
-            <Text className="font-Inter_SemiBold text-[11px] text-[#60A5FA] tracking-wide">
+          <View className="bg-[#EFF6FF] px-2 py-1.5 justify-center items-center rounded-full w-24">
+            <Text className="text-sm font-Inter_Medium text-[#60A5FA]">
               Switches
             </Text>
           </View>
         </View>
 
-        <Text className="font-Inter_Bold text-2xl text-gray-900 mb-5">
+        <Text className="text-2xl font-Inter_Bold text-[#1F2937] mb-5">
           Switch details
         </Text>
 
         {/* Quantity */}
-        <Text className="font-Inter_SemiBold text-gray-800 text-sm mb-2">
+        <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-2">
           How many switches do you need installed / replaced?
         </Text>
         <TextInput
-          className="border border-gray-200 rounded-xl px-4 py-3 font-Inter_Regular text-gray-800 text-sm bg-white mb-5"
+          className="border border-[#E5E7EB] rounded-xl px-4 py-4 font-Inter_Regular text-gray-800 text-sm bg-white mb-5"
+          onChangeText={(v) => dispatch(setQuantity(v))}
           value={quantity}
-          onChangeText={setQuantity}
           keyboardType="numeric"
           placeholderTextColor="#9CA3AF"
         />
 
         {/* Install Type */}
-        <Text className="font-Inter_SemiBold text-gray-800 text-sm mb-3">
+        <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-3">
           Is this a new install or replacement?
         </Text>
 
@@ -75,7 +83,7 @@ const SwitchesSt1 = () => {
               <TouchableOpacity
                 onPress={() => {
                   animatePressIn(installAnims[index]);
-                  setInstallType(item);
+                  dispatch(setInstallType(item));
                 }}
                 activeOpacity={0.85}
                 className="mb-2 rounded-xl border px-4 py-4"
@@ -85,8 +93,8 @@ const SwitchesSt1 = () => {
                 }}
               >
                 <Text
-                  className={`font-Inter_Medium text-sm ${
-                    isSelected ? "text-white" : "text-gray-700"
+                  className={`font-Inter_Medium text-base ${
+                    isSelected ? "text-white" : "text-[#1F2937]"
                   }`}
                 >
                   {item}

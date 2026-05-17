@@ -118,10 +118,8 @@ const OptionButton = ({
       style={{ minHeight: 48 }}
     >
       <Text
-        className={`text-sm text-center ${
-          selected
-            ? "text-white font-Inter_SemiBold"
-            : "text-[#0A0A0A] font-Inter_Medium"
+        className={`text-sm font-Inter_SemiBold text-center ${
+          selected ? "text-white" : "text-[#1F2937] "
         }`}
       >
         {label}
@@ -188,13 +186,13 @@ const SectionCard = ({
 );
 
 const Label = ({ children }: { children: React.ReactNode }) => (
-  <Text className="text-[#364153] font-Inter_Regular text-sm mb-3 leading-5">
+  <Text className="text-[#364153] font-Inter_Medium text-base mb-3 leading-5">
     {children}
   </Text>
 );
 
 const SubHeading = ({ children }: { children: React.ReactNode }) => (
-  <Text className="text-[#364153] font-Inter_Regular text-xs mb-1">
+  <Text className="text-[#364153] font-Inter_Medium text-xs mb-1">
     {children}
   </Text>
 );
@@ -242,7 +240,7 @@ const InteriorSection = () => {
 
   return (
     <SectionCard>
-      <Text className="text-[#0A0A0A] font-Inter_SemiBold text-base mb-4">
+      <Text className="text-lg font-Inter_SemiBold text-[#1F2937] mb-4">
         Interior Lighting Details
       </Text>
 
@@ -1152,22 +1150,18 @@ const LightingSt1 = () => {
         showsVerticalScrollIndicator={false}
       >
         {/* Intro Card */}
-        <SectionCard>
-          <Text className="text-[#0A0A0A] font-Inter_Bold text-lg mb-1">
+        <View className="bg-[#EFF6FF] px-2 py-1.5 justify-center items-center rounded-full w-32 mb-2">
+          <Text className="text-sm font-Inter_Medium text-[#60A5FA]">
             Lighting
           </Text>
-          <Text className="text-[#364153] font-Inter_Regular text-sm leading-5">
-            Answer these lighting-specific questions so we can estimate
-            accurately.
-          </Text>
-        </SectionCard>
+        </View>
 
         {/* Lighting Type */}
         <SectionCard>
-          <Text className="text-[#0A0A0A] font-Inter_SemiBold text-base mb-1">
+          <Text className="text-2xl font-Inter_Bold text-[#1F2937] mb-1">
             Lighting Type
           </Text>
-          <Text className="text-[#364153] font-Inter_Regular text-sm mb-4">
+          <Text className="text-lg font-Inter_SemiBold text-[#1F2937] mb-4">
             What type of lighting do you need?
           </Text>
           <TwoColGrid

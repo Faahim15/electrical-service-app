@@ -1,4 +1,9 @@
-import React, { useRef, useState } from "react";
+import {
+  selectSwitchesSelectedTypes,
+  SwitchType,
+  toggleSwitchType,
+} from "@/src/redux/slices/globalstore/switchesDataSlice";
+import React, { useRef } from "react";
 import {
   Animated,
   ScrollView,
@@ -6,8 +11,12 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+// import {
 
-const SWITCH_TYPES = [
+// } from "./switchesDataSlice";
+
+const SWITCH_TYPES: SwitchType[] = [
   "Standard (Toggle)",
   "Standard (Rocker/Decorator)",
   "Dimmer (Toggle)",
@@ -18,8 +27,7 @@ const SWITCH_TYPES = [
   "I'll provide my own",
 ];
 
-// Row layout matching the image
-const CHIP_ROWS: string[][] = [
+const CHIP_ROWS: SwitchType[][] = [
   ["Standard (Toggle)"],
   ["Standard (Rocker/Decorator)"],
   ["Dimmer (Toggle)"],
@@ -28,13 +36,12 @@ const CHIP_ROWS: string[][] = [
 ];
 
 const SwitchesSt3 = () => {
-  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-  const [additionalInfo, setAdditionalInfo] = useState("");
+  const dispatch = useDispatch();
+  const selectedTypes = useSelector(selectSwitchesSelectedTypes);
 
   const chipAnims = useRef(
     SWITCH_TYPES.map(() => new Animated.Value(1)),
   ).current;
-  const submitAnim = useRef(new Animated.Value(1)).current;
 
   const animatePressIn = (anim: Animated.Value) => {
     Animated.sequence([
@@ -51,31 +58,29 @@ const SwitchesSt3 = () => {
     ]).start();
   };
 
-  const handleToggleType = (type: string) => {
+  const handleToggleType = (type: SwitchType) => {
     const index = SWITCH_TYPES.indexOf(type);
     if (index !== -1) animatePressIn(chipAnims[index]);
-    setSelectedTypes((prev) =>
-      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type],
-    );
+    dispatch(toggleSwitchType(type));
   };
 
   return (
-    <View className="flex-1 ">
-      <ScrollView className="flex-1 " showsVerticalScrollIndicator={false}>
+    <View className="flex-1">
+      <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         {/* Breadcrumb */}
         <View className="mt-4 mb-3">
-          <View className="self-start bg-blue-50 rounded-full px-3 py-1 mb-5 border border-blue-100">
-            <Text className="font-Inter_SemiBold text-[11px] text-[#60A5FA] tracking-wide">
+          <View className="bg-[#EFF6FF] px-2 py-1.5 justify-center items-center rounded-full w-24">
+            <Text className="text-sm font-Inter_Medium text-[#60A5FA]">
               Switches
             </Text>
           </View>
         </View>
 
-        <Text className="font-Inter_Bold text-2xl text-gray-900 mb-5">
-          Switch type and timeline
+        <Text className="text-2xl font-Inter_Bold text-[#1F2937] mb-5">
+          Switch type
         </Text>
 
-        <Text className="font-Inter_SemiBold text-gray-800 text-sm mb-4">
+        <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-4">
           What type of switch(es) do you need?
         </Text>
 
@@ -101,12 +106,12 @@ const SwitchesSt3 = () => {
                       className="px-4 py-2 rounded-full border"
                       style={{
                         backgroundColor: isSelected ? "#60A5FA" : "#ffffff",
-                        borderColor: isSelected ? "#60A5FA" : "#D1D5DB",
+                        borderColor: isSelected ? "#60A5FA" : "#E5E7EB",
                       }}
                     >
                       <Text
                         className={`font-Inter_Medium text-sm ${
-                          isSelected ? "text-white" : "text-gray-700"
+                          isSelected ? "text-white" : "text-[#1F2937]"
                         }`}
                       >
                         {chip}

@@ -4,6 +4,7 @@ import categoryRouteReducer from "./slices/categoryRouteSlice";
 import commonContractdetails from "./slices/globalstore/commonContractdetailsStoreSlice";
 import exhaustFanReducer from "./slices/globalstore/ExhaustFanDataSlice";
 import starlinkDataReducer from "./slices/globalstore/StarlinkDataSlice";
+import switchesDataReducer from "./slices/globalstore/switchesDataSlice";
 import wholeHomeDataReducer from "./slices/globalstore/wholeHomeDataSlice";
 import reminderDetailsReducer from "./slices/myReminderSlice";
 import otherCategoryRouteSlice from "./slices/otherRouteSlice";
@@ -14,6 +15,7 @@ import safetyMaintenanceReducer from "./slices/seftymaintanceSlice";
 import serviceFormReducer from "./slices/serviceFormSlice";
 import starlinkRouteReducer from "./slices/starlinkTheRouteSlice";
 import troubleshootRouteReducer from "./slices/troubleshootRouteSlice";
+
 export const store = configureStore({
   reducer: {
     partners: partnersReducer,
@@ -31,6 +33,7 @@ export const store = configureStore({
     wholeHomeData: wholeHomeDataReducer,
     starlinkData: starlinkDataReducer,
     exhaustFan: exhaustFanReducer,
+    switchesData: switchesDataReducer,
   },
 });
 
