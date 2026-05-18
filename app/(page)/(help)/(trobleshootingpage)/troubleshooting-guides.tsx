@@ -137,7 +137,7 @@ const Troubleshootingguides = () => {
           >
             <View className="flex-row items-center gap-2 mb-1">
               <Feather name="alert-triangle" size={18} color="#EF4444" />
-              <Text className="text-[#EF4444] font-Inter_Bold text-base">
+              <Text className="text-[#EF4444] font-Inter_SemiBold text-base">
                 Safety Warnings
               </Text>
             </View>
@@ -151,7 +151,7 @@ const Troubleshootingguides = () => {
             style={{ opacity: stepsLabelAnim }}
             className="px-4 mt-5 mb-2"
           >
-            <Text className="text-[#111827] font-Inter_Bold text-lg">
+            <Text className="text-base font-Inter_SemiBold text-[#1F2937] ">
               Steps to Follow
             </Text>
           </Animated.View>
@@ -181,16 +181,16 @@ const Troubleshootingguides = () => {
                 }}
                 className="items-center bg-white rounded-2xl px-4 py-4 flex-row gap-4"
               >
-                <View className="w-8 h-8 rounded-lg border border-gray-200 bg-white items-center justify-center">
-                  <Text className="text-[#111827] font-Inter_Bold text-base">
+                <View className="w-8 h-8 rounded-lg border border-[#1F2937] bg-white items-center justify-center">
+                  <Text className="text-base font-Inter_SemiBold text-[#1F2937]">
                     {step.id}
                   </Text>
                 </View>
                 <View className="flex-1">
-                  <Text className="text-[#111827] font-Inter_SemiBold text-base mb-0.5">
+                  <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-0.5">
                     {step.title}
                   </Text>
-                  <Text className="text-gray-500 text-sm leading-4">
+                  <Text className="text-[#6B7280] text-sm leading-4">
                     {step.description}
                   </Text>
                 </View>
@@ -218,10 +218,10 @@ const Troubleshootingguides = () => {
             }}
             className="mx-4 mt-5 bg-white rounded-2xl px-4 py-4 flex-col gap-3"
           >
-            <Text className="text-[16px] font-Inter_Bold text-[#0F172A]">
+            <Text className="text-base font-Inter_SemiBold text-[#1F2937]">
               {stillHavingIssues.title}
             </Text>
-            <Text className="text-[13px] font-Inter_Regular text-[#64748B] leading-5">
+            <Text className="text-sm font-Inter_Regular text-[#6B7280] leading-5">
               {stillHavingIssues.subtitle}
             </Text>
 

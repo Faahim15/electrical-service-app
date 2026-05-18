@@ -140,11 +140,8 @@ const SafetyCard = ({
         {/* Text */}
         <View style={{ flex: 1 }} className="ml-1.5">
           <Text
-            className="font-Inter_Bold"
+            className="text-base font-Inter_SemiBold text-[#1F2937]"
             style={{
-              fontSize: 15,
-
-              color: "#111827",
               lineHeight: 21,
               marginBottom: 1,
             }}
@@ -152,10 +149,8 @@ const SafetyCard = ({
             {item.title}
           </Text>
           <Text
-            className="font-Inter_Regular"
+            className="font-Inter_Regular text-sm text-[#6B7280]"
             style={{
-              fontSize: 12,
-              color: "#6B7280",
               lineHeight: 17,
             }}
           >
@@ -268,16 +263,17 @@ const Safety = () => {
             }}
           >
             <Text
+              className="text-base font-Inter_SemiBold text-[#1F2937]"
               style={{
-                fontSize: 16,
-                fontWeight: "700",
-                color: "#111827",
                 marginBottom: 4,
               }}
             >
               Safety & Maintenance
             </Text>
-            <Text style={{ fontSize: 13, color: "#6B7280", lineHeight: 19 }}>
+            <Text
+              className="font-Inter_Regular text-sm text-[#6B7280]"
+              style={{ lineHeight: 19 }}
+            >
               Keep your home safe and your electrical system running
               efficiently. Toggle any item ON to set an automatic reminder - you
               will receive a notification alert when it is time for maintenance

@@ -1,5 +1,7 @@
+import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import { Feather } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, Modal, Text, TouchableOpacity, View } from "react-native";
@@ -116,21 +118,15 @@ const SavedDraft = () => {
           className="flex-row items-center px-4 pt-2 pb-3"
         >
           <TouchableOpacity onPress={() => router.back()} className="p-1 mr-2">
-            <Feather name="arrow-left" size={22} color="#111827" />
+            <Feather name="arrow-left" size={22} color="#0F172A" />
           </TouchableOpacity>
-          <Text
-            className="text-xl text-[#111827]"
-            style={{ fontFamily: "Inter_Bold" }}
-          >
-            Saved drafts
+          <Text className="text-xl text-[#0F172A] font-Inter_Bold">
+            Saved Drafts
           </Text>
         </Animated.View>
 
         {/* Subtitle */}
-        <Animated.Text
-          style={{ opacity: headerOpacity, fontFamily: "Inter_Regular" }}
-          className="text-[#64748B] text-sm px-4 mb-4"
-        >
+        <Animated.Text className="text-[#475569] text-sm px-4 mb-4">
           Finish your quote requests anytime
         </Animated.Text>
 
@@ -156,10 +152,7 @@ const SavedDraft = () => {
               >
                 {/* Title Row */}
                 <View className="flex-row justify-between items-start mb-1">
-                  <Text
-                    className="text-[#0F172A] text-[16px] flex-1 pr-2"
-                    style={{ fontFamily: "Inter_Bold" }}
-                  >
+                  <Text className="text-[#0F172A] font-Inter_SemiBold text-base  flex-1 pr-2">
                     {draft.title}
                   </Text>
                   <TouchableOpacity
@@ -171,16 +164,13 @@ const SavedDraft = () => {
                 </View>
 
                 {/* Last edited */}
-                <Text
-                  className="text-[#94A3B8] text-xs mb-3"
-                  style={{ fontFamily: "Inter_Regular" }}
-                >
+                <Text className="text-[#64748B] font-Inter_Regular text-sm mb-3">
                   Last edited {draft.lastEdited}
                 </Text>
 
                 {/* Progress label */}
                 <Text
-                  className="text-[#475569] text-xs mb-1.5"
+                  className="text-[#64748B] font-Inter_Regular text-sm mb-1.5"
                   style={{ fontFamily: "Inter_Regular" }}
                 >
                   {draft.progress}% complete
@@ -188,35 +178,22 @@ const SavedDraft = () => {
 
                 {/* Progress bar */}
                 <View className="w-full h-2 bg-[#E2E8F0] rounded-full mb-4 overflow-hidden">
-                  <View
-                    className="h-2 rounded-full"
+                  <LinearGradient
+                    colors={["#0EA5E9", "#14B8A6"]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
                     style={{
                       width: `${draft.progress}%`,
-                      backgroundColor: "#06B6D4",
+                      height: 8,
+                      borderRadius: 999,
                     }}
                   />
                 </View>
 
-                {/* Resume Button */}
-                <TouchableOpacity
-                  activeOpacity={0.85}
-                  className="rounded-full py-3.5 items-center"
-                  style={{
-                    backgroundColor: "#06B6D4",
-                    shadowColor: "#06B6D4",
-                    shadowOpacity: 0.28,
-                    shadowRadius: 10,
-                    shadowOffset: { width: 0, height: 4 },
-                    elevation: 4,
-                  }}
-                >
-                  <Text
-                    className="text-white text-[15px]"
-                    style={{ fontFamily: "Inter_SemiBold" }}
-                  >
-                    Resume
-                  </Text>
-                </TouchableOpacity>
+                <GradientButton
+                  label="Resume"
+                  onPress={() => console.log("")}
+                />
               </Animated.View>
             );
           })}
