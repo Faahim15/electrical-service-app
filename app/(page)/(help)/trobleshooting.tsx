@@ -90,10 +90,10 @@ const TroubleshootingCard = ({
 
           {/* Text */}
           <View className="flex-1">
-            <Text className="text-[15px] font-Inter_Bold text-[#0F172A] mb-0.5">
+            <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-0.5">
               {item.title}
             </Text>
-            <Text className="text-[13px] font-Inter_Regular text-[#64748B] leading-5">
+            <Text className="text-sm font-Inter_Regular text-[#64748B] leading-5">
               {item.description}
             </Text>
           </View>
@@ -211,10 +211,10 @@ const Trobleshooting = () => {
                 elevation: 2,
               }}
             >
-              <Text className="text-[17px] font-Inter_Bold text-[#0F172A] mb-1">
+              <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-1">
                 Troubleshooting Guides
               </Text>
-              <Text className="text-[13px] font-Inter_Regular text-[#64748B] leading-5">
+              <Text className="text-sm font-Inter_Regular text-[#64748B] leading-5">
                 Step-by-step help for common electrical issues, with
                 safety-first instructions.
               </Text>
@@ -243,11 +243,11 @@ const Trobleshooting = () => {
             >
               <View className="flex-row items-center gap-2 mb-1.5">
                 <Feather name="alert-triangle" size={18} color="#F59E0B" />
-                <Text className="text-[15px] font-Inter_Bold text-[#0F172A]">
+                <Text className="text-base font-Inter_SemiBold text-[#1F2937]">
                   Safety First
                 </Text>
               </View>
-              <Text className="text-[13px] font-Inter_Regular text-[#64748B] leading-5 mb-3">
+              <Text className="text-sm font-Inter_Regular text-[#64748B] leading-5 mb-3">
                 Stop and call our trained professionals if you notice sparks,
                 burning smells, heat, or visible damage.
               </Text>
@@ -285,10 +285,10 @@ const Trobleshooting = () => {
                 elevation: 2,
               }}
             >
-              <Text className="text-[16px] font-Inter_Bold text-[#0F172A] mb-1">
+              <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-1">
                 Still need help?
               </Text>
-              <Text className="text-[13px] font-Inter_Regular text-[#64748B] leading-5 mb-4">
+              <Text className="text-sm font-Inter_Regular text-[#64748B] leading-5 mb-4">
                 Contact us or request service if your issue is not resolved.
               </Text>
               <TouchableOpacity

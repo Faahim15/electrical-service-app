@@ -1,10 +1,12 @@
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import { RootState } from "@/src/redux/store";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Feather from "@expo/vector-icons/build/Feather";
 import { router } from "expo-router";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
+  Modal,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -27,6 +29,7 @@ const Reminderdetails = () => {
   const card4Anim = useRef(new Animated.Value(0)).current;
   const btnAnim = useRef(new Animated.Value(0)).current;
   const btnScale = useRef(new Animated.Value(1)).current;
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     Animated.parallel([
@@ -85,18 +88,7 @@ const Reminderdetails = () => {
   });
 
   const handleDeletePress = () => {
-    Animated.sequence([
-      Animated.timing(btnScale, {
-        toValue: 0.95,
-        duration: 100,
-        useNativeDriver: true,
-      }),
-      Animated.timing(btnScale, {
-        toValue: 1,
-        duration: 100,
-        useNativeDriver: true,
-      }),
-    ]).start();
+    setShowDeleteModal(true);
   };
 
   return (
@@ -211,9 +203,102 @@ const Reminderdetails = () => {
             </TouchableOpacity>
           </Animated.View>
         </ScrollView>
+        <DeleteModal
+          visible={showDeleteModal}
+          onCancel={() => setShowDeleteModal(false)}
+          onConfirm={() => {
+            setShowDeleteModal(false);
+          }}
+        />
       </SafeAreaView>
     </ScreenWrapper>
   );
 };
 
 export default Reminderdetails;
+
+const DeleteModal = ({
+  visible,
+  onCancel,
+  onConfirm,
+}: {
+  visible: boolean;
+  onCancel: () => void;
+  onConfirm: () => void;
+}) => {
+  const scaleAnim = useRef(new Animated.Value(0.85)).current;
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (visible) {
+      Animated.parallel([
+        Animated.spring(scaleAnim, {
+          toValue: 1,
+          useNativeDriver: true,
+          damping: 16,
+          stiffness: 200,
+        }),
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 200,
+          useNativeDriver: true,
+        }),
+      ]).start();
+    } else {
+      scaleAnim.setValue(0.85);
+      fadeAnim.setValue(0);
+    }
+  }, [visible]);
+
+  return (
+    <Modal
+      transparent
+      visible={visible}
+      animationType="fade"
+      onRequestClose={onCancel}
+    >
+      <View className="flex-1 bg-black/40 items-center justify-center px-8">
+        <Animated.View
+          style={{ opacity: fadeAnim, transform: [{ scale: scaleAnim }] }}
+          className="bg-white rounded-3xl px-6 pt-6 pb-5 w-full items-center"
+        >
+          {/* Red X icon */}
+          <View className="w-12 h-12 rounded-2xl bg-red-50 items-center justify-center mb-4">
+            <MaterialCommunityIcons
+              name="delete-empty"
+              size={24}
+              color="#EF4444"
+            />
+          </View>
+
+          <Text className="text-xl text-[#111827] font-Inter_Bold mb-2">
+            Delete
+          </Text>
+          <Text className="text-sm text-gray-400 font-Inter_Regular text-center mb-6">
+            Are you sure you want to log out of{"\n"}your account?
+          </Text>
+
+          {/* Log Out button */}
+          <TouchableOpacity
+            onPress={onConfirm}
+            activeOpacity={0.85}
+            className="bg-red-500 rounded-2xl w-full py-4 items-center mb-3"
+          >
+            <Text className="text-white font-Inter_Bold text-base">Yes</Text>
+          </TouchableOpacity>
+
+          {/* Cancel */}
+          <TouchableOpacity
+            className=" rounded-2xl w-full py-4 items-center mb-3"
+            onPress={onCancel}
+            activeOpacity={0.7}
+          >
+            <Text className="text-sm text-gray-500 font-Inter_SemiBold">
+              No
+            </Text>
+          </TouchableOpacity>
+        </Animated.View>
+      </View>
+    </Modal>
+  );
+};

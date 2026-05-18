@@ -100,7 +100,9 @@ const MaintenanceDetails = () => {
           edges={["top"]}
           className="flex-1 items-center justify-center"
         >
-          <Text className="text-[#6B7280] font-Inter_Regular text-sm">No item selected.</Text>
+          <Text className="text-[#6B7280] font-Inter_Regular text-sm">
+            No item selected.
+          </Text>
           <TouchableOpacity onPress={() => router.back()} className="mt-4">
             <Text className="text-[#155DFC] font-Inter_SemiBold">Go Back</Text>
           </TouchableOpacity>

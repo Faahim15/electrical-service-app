@@ -113,10 +113,10 @@ const HelpCard = ({
 
           {/* Text */}
           <View className="flex-1">
-            <Text className="text-[15px] font-Inter_Bold text-[#0F172A] mb-0.5">
+            <Text className="  text-base font-Inter_SemiBold text-[#0F172A] mb-0.5">
               {item.title}
             </Text>
-            <Text className="text-[13px] font-Inter_Regular text-[#64748B] leading-5">
+            <Text className="text-sm font-Inter_Medium text-[#6B7280] leading-5">
               {item.description}
             </Text>
           </View>
