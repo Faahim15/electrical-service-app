@@ -1,4 +1,10 @@
-import React, { useRef, useState } from "react";
+import {
+  setSelectedSwitchKind,
+  setSwitchConnection,
+  setUpgradeSwitch,
+} from "@/src/redux/slices/globalstore/cellingfanDataSlice";
+import { AppDispatch, RootState } from "@/src/redux/store";
+import React, { useRef } from "react";
 import {
   Animated,
   ScrollView,
@@ -6,77 +12,36 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
-type SwitchConnection = "new" | "existing" | "remote" | null;
-type YesNo = "yes" | "no" | null;
-const SWITCH_TYPES = [
+const switchKinds = [
   "Standard (Toggle)",
-  "Standard (Rocker/Decorator)",
-  "Dimmer (Toggle)",
-  "Dimmer (Rocker/Decorator)",
   "Smart",
+  "Standard (Rocker/Decorator)",
+  "Dimmer (Rocker/Decorator)",
+  "Dimmer (Toggle)",
   "Motion",
   "Timer",
   "I'll provide my own",
 ];
-const CHIP_ROWS: string[][] = [
-  ["Standard (Toggle)"],
-  ["Standard (Rocker/Decorator)"],
-  ["Dimmer (Toggle)"],
-  ["Dimmer (Rocker/Decorator)", "Smart"],
-  ["Motion", "Timer", "I'll provide my own"],
-];
-
-type SwitchType =
-  | "standard_toggle"
-  | "smart"
-  | "standard_rocker"
-  | "dimmer_rocker"
-  | "dimmer_toggle"
-  | "motion"
-  | "timer"
-  | "provide_own"
-  | null;
 
 const CeilingFanSt3 = () => {
-  const [switchConnection, setSwitchConnection] =
-    useState<SwitchConnection>(null);
-  const [upgradeSwitch, setUpgradeSwitch] = useState<YesNo>(null);
-  const [switchType, setSwitchType] = useState<SwitchType>(null);
-  const [additionalInfo, setAdditionalInfo] = useState("");
-  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const switchConnection = useSelector(
+    (state: RootState) => state.ceilingFanData.switchConnection,
+  );
+  const selectedSwitchKind = useSelector(
+    (state: RootState) => state.ceilingFanData.selectedSwitchKind,
+  );
+  const upgradeSwitch = useSelector(
+    (state: RootState) => state.ceilingFanData.upgradeSwitch,
+  );
+
   const scaleAnims = useRef<{ [key: string]: Animated.Value }>({}).current;
-  const chipAnims = useRef(
-    SWITCH_TYPES.map(() => new Animated.Value(1)),
-  ).current;
-
-  const animatePressIn = (anim: Animated.Value) => {
-    Animated.sequence([
-      Animated.timing(anim, {
-        toValue: 0.93,
-        duration: 80,
-        useNativeDriver: true,
-      }),
-      Animated.timing(anim, {
-        toValue: 1,
-        duration: 120,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  };
-
-  const handleToggleType = (type: string) => {
-    const index = SWITCH_TYPES.indexOf(type);
-    if (index !== -1) animatePressIn(chipAnims[index]);
-    setSelectedTypes((prev) =>
-      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type],
-    );
-  };
 
   const getAnim = (key: string) => {
-    if (!scaleAnims[key]) {
-      scaleAnims[key] = new Animated.Value(1);
-    }
+    if (!scaleAnims[key]) scaleAnims[key] = new Animated.Value(1);
     return scaleAnims[key];
   };
 
@@ -101,36 +66,25 @@ const CeilingFanSt3 = () => {
     isSelected,
     onPress,
     animKey,
-    flex,
   }: {
     label: string;
     isSelected: boolean;
     onPress: () => void;
     animKey: string;
-    flex?: boolean;
   }) => (
-    <Animated.View
-      style={{
-        transform: [{ scale: getAnim(animKey) }],
-        flex: flex ? 1 : undefined,
-        marginHorizontal: flex ? 2 : 0,
-      }}
-    >
+    <Animated.View style={{ transform: [{ scale: getAnim(animKey) }] }}>
       <TouchableOpacity
         onPress={() => animatePress(animKey, onPress)}
-        className={`py-3 px-3 rounded-lg border ${
+        className={`py-3 px-3 rounded-lg border mb-2 ${
           isSelected
             ? "bg-[#60A5FA] border-[#60A5FA]"
             : "bg-white border-gray-200"
         }`}
-        style={{ marginBottom: flex ? 0 : 8 }}
         activeOpacity={0.85}
       >
         <Text
-          className={`text-sm text-center ${
-            isSelected
-              ? "text-white font-Inter_SemiBold"
-              : "text-gray-700 font-Inter_Medium"
+          className={`text-base font-Inter_Medium ${
+            isSelected ? "text-white" : "text-[#1F2937]"
           }`}
         >
           {label}
@@ -140,161 +94,87 @@ const CeilingFanSt3 = () => {
   );
 
   return (
-    <View className="flex-1 ">
+    <View className="flex-1">
       <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 100 }}
       >
-        {/* Category tag */}
-        <View className=" ">
-          <View className="self-start bg-blue-50 rounded-full px-3 py-1 mb-5 border border-blue-100">
-            <Text className="font-Inter_SemiBold text-[11px] text-[#60A5FA] tracking-wide">
-              Ceiling Fans
-            </Text>
-          </View>
+        <View className="bg-[#EFF6FF] px-2 py-1.5 justify-center items-center rounded-full w-32 mb-2">
+          <Text className="text-sm font-Inter_Medium text-[#60A5FA]">
+            Ceiling Fans
+          </Text>
         </View>
 
-        {/* Title */}
-        <Text className="text-xl font-Inter_Bold text-gray-900 mb-1">
+        <Text className="text-2xl font-Inter_Bold text-[#1F2937] mb-1">
           Switch details
         </Text>
-        <Text className="text-base text-[#1F2937] font-Inter_Medium mb-4">
+        <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-4">
           Will the fan be connected to a new or existing switch?
         </Text>
 
         <SelectButton
           label="New"
           isSelected={switchConnection === "new"}
-          onPress={() => setSwitchConnection("new")}
+          onPress={() => dispatch(setSwitchConnection("new"))}
           animKey="sw_new"
         />
         <SelectButton
           label="Existing"
           isSelected={switchConnection === "existing"}
-          onPress={() => setSwitchConnection("existing")}
+          onPress={() => dispatch(setSwitchConnection("existing"))}
           animKey="sw_existing"
         />
         <SelectButton
           label="My fan comes with a remote"
           isSelected={switchConnection === "remote"}
-          onPress={() => setSwitchConnection("remote")}
+          onPress={() => dispatch(setSwitchConnection("remote"))}
           animKey="sw_remote"
         />
 
-        {/* Switch type grid for "new" selection */}
         {switchConnection === "new" && (
           <View className="mt-4">
-            <Text className="text-base text-[#1F2937] font-Inter_Medium mb-3">
+            <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-3">
               What kind of switch do you want installed?
             </Text>
-            <View className="mb-6">
-              {CHIP_ROWS.map((row, rowIdx) => (
-                <View key={rowIdx} className="flex-row flex-wrap mb-2">
-                  {row.map((chip) => {
-                    const index = SWITCH_TYPES.indexOf(chip);
-                    const isSelected = selectedTypes.includes(chip);
-                    return (
-                      <Animated.View
-                        key={chip}
-                        style={{
-                          transform: [{ scale: chipAnims[index] }],
-                          marginRight: 8,
-                          marginBottom: 4,
-                        }}
-                      >
-                        <TouchableOpacity
-                          onPress={() => handleToggleType(chip)}
-                          activeOpacity={0.8}
-                          className="px-4 py-2 rounded-full border"
-                          style={{
-                            backgroundColor: isSelected ? "#60A5FA" : "#ffffff",
-                            borderColor: isSelected ? "#60A5FA" : "#D1D5DB",
-                          }}
-                        >
-                          <Text
-                            className={`font-Inter_Medium text-sm ${
-                              isSelected ? "text-white" : "text-gray-700"
-                            }`}
-                          >
-                            {chip}
-                          </Text>
-                        </TouchableOpacity>
-                      </Animated.View>
-                    );
-                  })}
-                </View>
-              ))}
-            </View>
+            <TwoColGrid
+              items={switchKinds}
+              selected={selectedSwitchKind}
+              onSelect={(v) => dispatch(setSelectedSwitchKind(v))}
+            />
           </View>
         )}
 
-        {/* Upgrade switch for "existing" selection */}
         {switchConnection === "existing" && (
           <View className="mt-4">
-            <Text className="text-base text-[#1F2937] font-Inter_Medium mb-3">
+            <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-3">
               Do you want to upgrade your switch?
             </Text>
             <SelectButton
               label="Yes"
               isSelected={upgradeSwitch === "yes"}
-              onPress={() => setUpgradeSwitch("yes")}
+              onPress={() => dispatch(setUpgradeSwitch("yes"))}
               animKey="up_yes"
             />
             <SelectButton
               label="No"
               isSelected={upgradeSwitch === "no"}
-              onPress={() => setUpgradeSwitch("no")}
+              onPress={() => dispatch(setUpgradeSwitch("no"))}
               animKey="up_no"
             />
           </View>
         )}
 
-        {/* Switch type grid when upgrading */}
         {switchConnection === "existing" && upgradeSwitch === "yes" && (
           <View className="mt-4">
-            <Text className="text-base text-[#1F2937] font-Inter_Medium mb-3">
+            <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-3">
               What kind of switch do you want installed?
             </Text>
-
-            <View className="mb-6">
-              {CHIP_ROWS.map((row, rowIdx) => (
-                <View key={rowIdx} className="flex-row flex-wrap mb-2">
-                  {row.map((chip) => {
-                    const index = SWITCH_TYPES.indexOf(chip);
-                    const isSelected = selectedTypes.includes(chip);
-                    return (
-                      <Animated.View
-                        key={chip}
-                        style={{
-                          transform: [{ scale: chipAnims[index] }],
-                          marginRight: 8,
-                          marginBottom: 4,
-                        }}
-                      >
-                        <TouchableOpacity
-                          onPress={() => handleToggleType(chip)}
-                          activeOpacity={0.8}
-                          className="px-4 py-2 rounded-full border"
-                          style={{
-                            backgroundColor: isSelected ? "#60A5FA" : "#ffffff",
-                            borderColor: isSelected ? "#60A5FA" : "#D1D5DB",
-                          }}
-                        >
-                          <Text
-                            className={`font-Inter_Medium text-sm ${
-                              isSelected ? "text-white" : "text-gray-700"
-                            }`}
-                          >
-                            {chip}
-                          </Text>
-                        </TouchableOpacity>
-                      </Animated.View>
-                    );
-                  })}
-                </View>
-              ))}
-            </View>
+            <TwoColGrid
+              items={switchKinds}
+              selected={selectedSwitchKind}
+              onSelect={(v) => dispatch(setSelectedSwitchKind(v))}
+            />
           </View>
         )}
       </ScrollView>
@@ -303,3 +183,38 @@ const CeilingFanSt3 = () => {
 };
 
 export default CeilingFanSt3;
+
+const TwoColGrid = ({
+  items,
+  selected,
+  onSelect,
+}: {
+  items: string[];
+  selected: string | null;
+  onSelect: (v: string) => void;
+}) => (
+  <View className="flex-row flex-wrap gap-2">
+    {items.map((item) => (
+      <View key={item} style={{ width: "48%" }}>
+        <TouchableOpacity onPress={() => onSelect(item)}>
+          <View
+            className={`rounded-xl border py-3 px-3 items-center justify-center ${
+              selected === item
+                ? "bg-[#4AA9F5] border-[#4AA9F5]"
+                : "bg-white border-gray-200"
+            }`}
+            style={{ minHeight: 48 }}
+          >
+            <Text
+              className={`text-sm font-Inter_SemiBold text-center ${
+                selected === item ? "text-white" : "text-[#1F2937]"
+              }`}
+            >
+              {item}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    ))}
+  </View>
+);

@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import categoryRouteReducer from "./slices/categoryRouteSlice";
 
+import ceilingFanDataReducer from "./slices/globalstore/cellingfanDataSlice";
 import commonContractdetails from "./slices/globalstore/commonContractdetailsStoreSlice";
 import exhaustFanReducer from "./slices/globalstore/ExhaustFanDataSlice";
+import lightingReducer from "./slices/globalstore/lightingDataSlice";
 import starlinkDataReducer from "./slices/globalstore/StarlinkDataSlice";
 import switchesDataReducer from "./slices/globalstore/switchesDataSlice";
 import wholeHomeDataReducer from "./slices/globalstore/wholeHomeDataSlice";
@@ -34,6 +36,8 @@ export const store = configureStore({
     starlinkData: starlinkDataReducer,
     exhaustFan: exhaustFanReducer,
     switchesData: switchesDataReducer,
+    lighting: lightingReducer,
+    ceilingFanData: ceilingFanDataReducer,
   },
 });
 

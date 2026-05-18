@@ -1,5 +1,84 @@
 import { useImagePicker } from "@/src/hook/useImagePicker";
-import React, { useRef, useState } from "react";
+import {
+  FixtureKind,
+  FixtureWeight,
+  InstallType,
+  LightingType,
+  PowerControl,
+  SwitchNewExisting,
+  SwitchType,
+  VoltageType,
+  WallSurface,
+  YesNo,
+  setDrivewayDistance,
+  setDrivewayInstallType,
+  setDrivewayMultiSwitch,
+  setDrivewayNewLightDetails,
+  setDrivewayPhotosCurrent,
+  setDrivewayPhotosFixtureNew,
+  setDrivewayPhotosNew,
+  setDrivewayPowerControl,
+  setDrivewayProviding,
+  setDrivewaySwitchKind,
+  setDrivewaySwitchNewExisting,
+  setDrivewaySwitchOtherText,
+  setDrivewayUpgradeSwitch,
+  setFloodDetails,
+  setFloodInstallHeight,
+  setFloodInstallType,
+  setFloodMultiSwitch,
+  setFloodPhotosCurrent,
+  setFloodPhotosFixtureNew,
+  setFloodPhotosNew,
+  setFloodPowerControl,
+  setFloodProviding,
+  setFloodSwitchKind,
+  setFloodSwitchNewExisting,
+  setFloodSwitchOtherText,
+  setFloodUpgradeSwitch,
+  setInteriorCeilingHeight,
+  setInteriorComplexAssembly,
+  setInteriorFixtureDetails,
+  setInteriorFixtureKind,
+  setInteriorFixtureWeight,
+  setInteriorInstallType,
+  setInteriorMultiSwitch,
+  setInteriorPhotosCurrent,
+  setInteriorPhotosFixtureNew,
+  setInteriorPhotosNew,
+  setInteriorProviding,
+  setInteriorSwitchKind,
+  setInteriorSwitchNewExisting,
+  setInteriorUpgradeSwitch,
+  setLandscapeVoltage,
+  setLightingType,
+  setPoleDistance,
+  setPoleInstallType,
+  setPoleLightDetails,
+  setPoleMultiSwitch,
+  setPolePhotosCurrent,
+  setPolePhotosFixtureNew,
+  setPolePhotosNew,
+  setPolePowerControl,
+  setPoleProviding,
+  setPoleSwitchKind,
+  setPoleSwitchNewExisting,
+  setPoleSwitchOtherText,
+  setPoleUpgradeSwitch,
+  setWallInstallType,
+  setWallMultiSwitch,
+  setWallNewLightDetails,
+  setWallPhotosCurrent,
+  setWallPhotosFixtureNew,
+  setWallPhotosNew,
+  setWallProviding,
+  setWallSurface,
+  setWallSwitchKind,
+  setWallSwitchNewExisting,
+  setWallUpgradeSwitch,
+} from "@/src/redux/slices/globalstore/lightingDataSlice";
+import { RootState } from "@/src/redux/store";
+import React, { useRef } from "react";
 import {
   Animated,
   ScrollView,
@@ -8,58 +87,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import UploadArea from "../share/UploadArea";
-
-// ─── Types ────────────────────────────────────────────────────────────────────
-type LightingType =
-  | "Interior Lighting"
-  | "Flood Lights"
-  | "Wall / Coach Lights"
-  | "Driveway Lighting"
-  | "Pole / Area Lighting"
-  | "Landscape"
-  | null;
-
-type InstallType = "New Installation" | "Replacement" | null;
-type YesNo = "Yes" | "No" | null;
-type SwitchType =
-  | "Standard (Toggle)"
-  | "Smart"
-  | "Standard (Rocker/Decorator)"
-  | "Dimmer (Rocker/Decorator)"
-  | "Dimmer (Toggle)"
-  | "Motion"
-  | "Timer"
-  | "I'll provide my own"
-  | "Other"
-  | null;
-type SwitchNewExisting = "New" | "Existing" | null;
-type PowerControl = "Switch" | "Dusk to dawn" | "Timer" | null;
-
-// Interior sub-types
-type FixtureWeight = "less than 15 lbs" | "greater than 15 lbs" | null;
-type FixtureKind =
-  | "Surface Mount"
-  | "Recessed"
-  | "Chain hung chandelier"
-  | "Pendant (Chain)"
-  | "Crystal Chandelier"
-  | "Pendant (Rod)"
-  | "Pendant (Cord)"
-  | null;
-
-// Wall surface
-type WallSurface =
-  | "Brick"
-  | "Siding"
-  | "Stucco"
-  | "Concrete"
-  | "Wood"
-  | "Metal"
-  | null;
-
-// Landscape voltage
-type VoltageType = "Line Voltage" | "Low Voltage" | null;
+import { useDispatch, useSelector } from "react-redux";
+import PhotoUploadSection from "../../PhotoUploadSection";
 
 // ─── AnimatedPressable ────────────────────────────────────────────────────────
 const AnimatedTouchable = ({
@@ -112,14 +141,12 @@ const OptionButton = ({
     <View
       className={`rounded-xl border py-3 px-3 items-center justify-center ${
         fullWidth ? "w-full" : ""
-      } ${
-        selected ? "bg-[#4AA9F5] border-[#4AA9F5]" : "bg-white border-gray-200"
-      }`}
+      } ${selected ? "bg-[#4AA9F5] border-[#4AA9F5]" : "bg-white border-gray-200"}`}
       style={{ minHeight: 48 }}
     >
       <Text
         className={`text-sm font-Inter_SemiBold text-center ${
-          selected ? "text-white" : "text-[#1F2937] "
+          selected ? "text-white" : "text-[#1F2937]"
         }`}
       >
         {label}
@@ -199,23 +226,9 @@ const SubHeading = ({ children }: { children: React.ReactNode }) => (
 
 // ─── Interior Lighting Section ────────────────────────────────────────────────
 const InteriorSection = () => {
-  const [fixtureWeight, setFixtureWeight] = useState<FixtureWeight>(null);
-  const [fixtureKind, setFixtureKind] = useState<FixtureKind>(null);
-  const [complexAssembly, setComplexAssembly] = useState<YesNo>(null);
-  const [installType, setInstallType] = useState<InstallType>(null);
-  const [ceilingHeight, setCeilingHeight] = useState("");
-  const [providing, setProviding] = useState<YesNo>(null);
-  const [fixtureDetails, setFixtureDetails] = useState("");
-  const [switchType, setSwitchType] = useState<SwitchNewExisting>(null);
-  const [upgradeSwitch, setUpgradeSwitch] = useState<YesNo>(null);
-  const [switchKind, setSwitchKind] = useState<SwitchType>(null);
-  const [multiSwitch, setMultiSwitch] = useState<YesNo>(null);
-  const outletImages = useImagePicker();
-  const fixedImages = useImagePicker();
-  const fixtureImage = useImagePicker();
-  const [areaPhotos, setAreaPhotos] = useState<string[]>([]);
-  const [currentPhotos, setCurrentPhotos] = useState<string[]>([]);
-  const [newPhotos, setNewPhotos] = useState<string[]>([]);
+  const dispatch = useDispatch();
+  const s = useSelector((state: RootState) => state.lighting.interior);
+  useImagePicker(); // keep hook alive if needed elsewhere
 
   const fixtureKinds = [
     "Surface Mount",
@@ -226,7 +239,6 @@ const InteriorSection = () => {
     "Pendant (Rod)",
     "Pendant (Cord)",
   ];
-
   const switchKinds = [
     "Standard (Toggle)",
     "Smart",
@@ -253,8 +265,8 @@ const InteriorSection = () => {
             <OptionButton
               key={w!}
               label={`Lighting Fixture(s) ${w}`}
-              selected={fixtureWeight === w}
-              onPress={() => setFixtureWeight(w)}
+              selected={s.fixtureWeight === w}
+              onPress={() => dispatch(setInteriorFixtureWeight(w))}
               fullWidth
             />
           ),
@@ -264,8 +276,8 @@ const InteriorSection = () => {
       <Label>What kind of light fixture(s) will be installed?</Label>
       <TwoColGrid
         items={fixtureKinds}
-        selected={fixtureKind}
-        onSelect={(v) => setFixtureKind(v as FixtureKind)}
+        selected={s.fixtureKind}
+        onSelect={(v) => dispatch(setInteriorFixtureKind(v as FixtureKind))}
       />
       <View className="mb-4" />
 
@@ -274,7 +286,10 @@ const InteriorSection = () => {
         Many parts to be assembled, multiple attachment points, or delivered in
         multiple boxes
       </SubHeading>
-      <YesNoRow value={complexAssembly} onChange={setComplexAssembly} />
+      <YesNoRow
+        value={s.complexAssembly}
+        onChange={(v) => dispatch(setInteriorComplexAssembly(v))}
+      />
       <View className="mb-4" />
 
       <Label>Is this a new install or replacement light fixture(s)?</Label>
@@ -283,38 +298,36 @@ const InteriorSection = () => {
           <View key={opt!} style={{ flex: 1 }}>
             <OptionButton
               label={opt!}
-              selected={installType === opt}
-              onPress={() => setInstallType(opt)}
+              selected={s.installType === opt}
+              onPress={() => dispatch(setInteriorInstallType(opt))}
             />
           </View>
         ))}
       </View>
 
-      {installType === "New Installation" && (
+      {s.installType === "New Installation" && (
         <>
           <Label>
             Upload photos of the area where you want light fixture(s) installed
           </Label>
           <View className="mb-4">
-            <UploadArea
-              tittle="Upload Area Photos"
-              images={outletImages.images}
-              pickImage={outletImages.pickImage}
-              onRemove={outletImages.onRemove}
+            <PhotoUploadSection
+              label="Upload Area Photos"
+              photos={s.photosNew}
+              onPhotosChange={(p) => dispatch(setInteriorPhotosNew(p))}
             />
           </View>
         </>
       )}
 
-      {installType === "Replacement" && (
+      {s.installType === "Replacement" && (
         <>
           <Label>Upload photos of current light fixture(s)</Label>
           <View className="mb-4">
-            <UploadArea
-              tittle="Upload Current Fixture Photos"
-              images={fixedImages.images}
-              pickImage={fixedImages.pickImage}
-              onRemove={fixedImages.onRemove}
+            <PhotoUploadSection
+              label="Upload Current Fixture Photos"
+              photos={s.photosCurrent}
+              onPhotosChange={(p) => dispatch(setInteriorPhotosCurrent(p))}
             />
           </View>
         </>
@@ -327,29 +340,31 @@ const InteriorSection = () => {
         className="border border-gray-200 rounded-xl px-4 py-3 mb-4 text-gray-800 font-Inter_Regular"
         placeholder="Enter ceiling height"
         placeholderTextColor="#aaa"
-        value={ceilingHeight}
-        onChangeText={setCeilingHeight}
+        value={s.ceilingHeight}
+        onChangeText={(v) => dispatch(setInteriorCeilingHeight(v))}
       />
 
       <Label>Will you be providing the new light fixture(s)?</Label>
-      <YesNoRow value={providing} onChange={setProviding} />
+      <YesNoRow
+        value={s.providing}
+        onChange={(v) => dispatch(setInteriorProviding(v))}
+      />
       <View className="mb-4" />
 
-      {providing === "Yes" && (
+      {s.providing === "Yes" && (
         <>
           <Label>Upload photo(s) of your new light fixture(s)</Label>
           <View className="mb-4">
-            <UploadArea
-              tittle="Upload New Fixture Photos"
-              images={fixtureImage.images}
-              pickImage={fixtureImage.pickImage}
-              onRemove={fixtureImage.onRemove}
+            <PhotoUploadSection
+              label="Upload New Fixture Photos"
+              photos={s.photosFixtureNew}
+              onPhotosChange={(p) => dispatch(setInteriorPhotosFixtureNew(p))}
             />
           </View>
         </>
       )}
 
-      {providing === "No" && (
+      {s.providing === "No" && (
         <>
           <Label>
             Please provide details on the type of fixture(s) you want provided
@@ -361,8 +376,8 @@ const InteriorSection = () => {
             multiline
             numberOfLines={4}
             style={{ minHeight: 100, textAlignVertical: "top" }}
-            value={fixtureDetails}
-            onChangeText={setFixtureDetails}
+            value={s.fixtureDetails}
+            onChangeText={(v) => dispatch(setInteriorFixtureDetails(v))}
           />
         </>
       )}
@@ -375,53 +390,49 @@ const InteriorSection = () => {
           <View key={opt!} style={{ flex: 1 }}>
             <OptionButton
               label={opt!}
-              selected={switchType === opt}
-              onPress={() => setSwitchType(opt)}
+              selected={s.switchNewExisting === opt}
+              onPress={() => dispatch(setInteriorSwitchNewExisting(opt))}
             />
           </View>
         ))}
       </View>
 
-      {switchType === "New" && (
+      {s.switchNewExisting === "New" && (
         <>
           <Label>What kind of switch do you want installed?</Label>
           <TwoColGrid
             items={switchKinds}
-            selected={switchKind}
-            onSelect={(v) => setSwitchKind(v as SwitchType)}
+            selected={s.switchKind}
+            onSelect={(v) => dispatch(setInteriorSwitchKind(v as SwitchType))}
           />
           <View className="mb-4" />
         </>
       )}
 
-      {switchType === "Existing" && (
+      {s.switchNewExisting === "Existing" && (
         <>
           <Label>Do you want to upgrade your switch?</Label>
-          <YesNoRow value={upgradeSwitch} onChange={setUpgradeSwitch} />
+          <YesNoRow
+            value={s.upgradeSwitch}
+            onChange={(v) => dispatch(setInteriorUpgradeSwitch(v))}
+          />
           <View className="mb-4" />
         </>
       )}
 
       <Label>Will there be more than one switch location?</Label>
-      <YesNoRow value={multiSwitch} onChange={setMultiSwitch} />
+      <YesNoRow
+        value={s.multiSwitch}
+        onChange={(v) => dispatch(setInteriorMultiSwitch(v))}
+      />
     </SectionCard>
   );
 };
 
 // ─── Flood Lights Section ─────────────────────────────────────────────────────
 const FloodLightsSection = () => {
-  const [installType, setInstallType] = useState<InstallType>(null);
-  const [installHeight, setInstallHeight] = useState("");
-  const [providing, setProviding] = useState<YesNo>(null);
-  const [floodDetails, setFloodDetails] = useState("");
-  const [powerControl, setPowerControl] = useState<PowerControl>(null);
-  const [switchType, setSwitchType] = useState<SwitchNewExisting>(null);
-  const [switchKind, setSwitchKind] = useState<SwitchType>(null);
-  const [multiSwitch, setMultiSwitch] = useState<YesNo>(null);
-  const CurrentFloodLightImages = useImagePicker();
-  const CurrentFloodLightImages2 = useImagePicker();
-  const [currentPhotos, setCurrentPhotos] = useState<string[]>([]);
-  const [newPhotos, setNewPhotos] = useState<string[]>([]);
+  const dispatch = useDispatch();
+  const s = useSelector((state: RootState) => state.lighting.floodLights);
 
   const switchKinds = [
     "Standard (Toggle)",
@@ -443,51 +454,71 @@ const FloodLightsSection = () => {
           <View key={opt!} style={{ flex: 1 }}>
             <OptionButton
               label={opt!}
-              selected={installType === opt}
-              onPress={() => setInstallType(opt)}
+              selected={s.installType === opt}
+              onPress={() => dispatch(setFloodInstallType(opt))}
             />
           </View>
         ))}
       </View>
 
-      <Label>Upload photo(s) of current flood light(s)</Label>
-      <View className="mb-4">
-        <UploadArea
-          tittle="Upload Current Flood Light Photos"
-          images={CurrentFloodLightImages.images}
-          pickImage={CurrentFloodLightImages.pickImage}
-          onRemove={CurrentFloodLightImages.onRemove}
-        />
-      </View>
+      {s.installType === "New Installation" && (
+        <>
+          <Label>
+            Upload photos of the area where you want light fixture(s) installed
+          </Label>
+          <View className="mb-4">
+            <PhotoUploadSection
+              label="Upload Area Photos"
+              photos={s.photosNew}
+              onPhotosChange={(p) => dispatch(setFloodPhotosNew(p))}
+            />
+          </View>
+        </>
+      )}
+
+      {s.installType === "Replacement" && (
+        <>
+          <Label>Upload photos of current light fixture(s)</Label>
+          <View className="mb-4">
+            <PhotoUploadSection
+              label="Upload Current Fixture Photos"
+              photos={s.photosCurrent}
+              onPhotosChange={(p) => dispatch(setFloodPhotosCurrent(p))}
+            />
+          </View>
+        </>
+      )}
 
       <Label>How high will the flood light(s) be installed?</Label>
       <TextInput
         className="border border-gray-200 rounded-xl px-4 py-3 mb-4 text-gray-800 font-Inter_Regular"
         placeholder="Enter installation height"
         placeholderTextColor="#aaa"
-        value={installHeight}
-        onChangeText={setInstallHeight}
+        value={s.installHeight}
+        onChangeText={(v) => dispatch(setFloodInstallHeight(v))}
       />
 
       <Label>Will you be providing the new flood light(s)?</Label>
-      <YesNoRow value={providing} onChange={setProviding} />
+      <YesNoRow
+        value={s.providing}
+        onChange={(v) => dispatch(setFloodProviding(v))}
+      />
       <View className="mb-4" />
 
-      {providing === "Yes" && (
+      {s.providing === "Yes" && (
         <>
           <Label>Upload photo(s) of new fixture(s)</Label>
           <View className="mb-4">
-            <UploadArea
-              tittle="Upload New Flood Light Photos"
-              images={CurrentFloodLightImages2.images}
-              pickImage={CurrentFloodLightImages2.pickImage}
-              onRemove={CurrentFloodLightImages2.onRemove}
+            <PhotoUploadSection
+              label="Upload New Flood Light Photos"
+              photos={s.photosFixtureNew}
+              onPhotosChange={(p) => dispatch(setFloodPhotosFixtureNew(p))}
             />
           </View>
         </>
       )}
 
-      {providing === "No" && (
+      {s.providing === "No" && (
         <>
           <Label>
             Please provide details on the type of flood light(s) you want
@@ -500,8 +531,8 @@ const FloodLightsSection = () => {
             multiline
             numberOfLines={4}
             style={{ minHeight: 100, textAlignVertical: "top" }}
-            value={floodDetails}
-            onChangeText={setFloodDetails}
+            value={s.floodDetails}
+            onChangeText={(v) => dispatch(setFloodDetails(v))}
           />
         </>
       )}
@@ -520,14 +551,14 @@ const FloodLightsSection = () => {
           <OptionButton
             key={opt}
             label={opt}
-            selected={powerControl === opt}
-            onPress={() => setPowerControl(opt as PowerControl)}
+            selected={s.powerControl === opt}
+            onPress={() => dispatch(setFloodPowerControl(opt))}
             fullWidth
           />
         ))}
       </View>
 
-      {powerControl === "Switch" && (
+      {s.powerControl === "Switch" && (
         <>
           <Label>
             Will the fixture(s) be connected to a new or existing switch?
@@ -537,27 +568,50 @@ const FloodLightsSection = () => {
               <View key={opt!} style={{ flex: 1 }}>
                 <OptionButton
                   label={opt!}
-                  selected={switchType === opt}
-                  onPress={() => setSwitchType(opt)}
+                  selected={s.switchNewExisting === opt}
+                  onPress={() => dispatch(setFloodSwitchNewExisting(opt))}
                 />
               </View>
             ))}
           </View>
 
-          {switchType === "New" && (
+          {s.switchNewExisting === "New" && (
             <>
               <Label>What kind of switch do you want installed?</Label>
               <TwoColGrid
                 items={switchKinds}
-                selected={switchKind}
-                onSelect={(v) => setSwitchKind(v as SwitchType)}
+                selected={s.switchKind}
+                onSelect={(v) => dispatch(setFloodSwitchKind(v as SwitchType))}
+              />
+              {s.switchKind === "Other" && (
+                <TextInput
+                  className="border mt-3 border-gray-200 rounded-xl px-4 py-3 mb-4 text-gray-800 font-Inter_Regular"
+                  placeholder="Enter the Name of switch want install"
+                  placeholderTextColor="#aaa"
+                  value={s.switchOtherText}
+                  onChangeText={(v) => dispatch(setFloodSwitchOtherText(v))}
+                />
+              )}
+              <View className="mb-4" />
+            </>
+          )}
+
+          {s.switchNewExisting === "Existing" && (
+            <>
+              <Label>Do you want to upgrade your switch?</Label>
+              <YesNoRow
+                value={s.upgradeSwitch}
+                onChange={(v) => dispatch(setFloodUpgradeSwitch(v))}
               />
               <View className="mb-4" />
             </>
           )}
 
           <Label>Will there be more than one switch location?</Label>
-          <YesNoRow value={multiSwitch} onChange={setMultiSwitch} />
+          <YesNoRow
+            value={s.multiSwitch}
+            onChange={(v) => dispatch(setFloodMultiSwitch(v))}
+          />
         </>
       )}
     </SectionCard>
@@ -566,18 +620,8 @@ const FloodLightsSection = () => {
 
 // ─── Wall / Coach Lights Section ──────────────────────────────────────────────
 const WallCoachSection = () => {
-  const [installType, setInstallType] = useState<InstallType>(null);
-  const [surface, setSurface] = useState<WallSurface>(null);
-  const [providing, setProviding] = useState<YesNo>(null);
-  const [newLightDetails, setNewLightDetails] = useState("");
-  const [switchType, setSwitchType] = useState<SwitchNewExisting>(null);
-  const [upgradeSwitch, setUpgradeSwitch] = useState<YesNo>(null);
-  const [switchKind, setSwitchKind] = useState<SwitchType>(null);
-  const [multiSwitch, setMultiSwitch] = useState<YesNo>(null);
-  const CoachLightsImage = useImagePicker();
-  const CoachLightsImage2 = useImagePicker();
-  const [areaPhotos, setAreaPhotos] = useState<string[]>([]);
-  const [newPhotos, setNewPhotos] = useState<string[]>([]);
+  const dispatch = useDispatch();
+  const s = useSelector((state: RootState) => state.lighting.wallCoach);
 
   const surfaces = ["Brick", "Siding", "Stucco", "Concrete", "Wood", "Metal"];
   const switchKinds = [
@@ -603,56 +647,74 @@ const WallCoachSection = () => {
           <View key={opt!} style={{ flex: 1 }}>
             <OptionButton
               label={opt!}
-              selected={installType === opt}
-              onPress={() => setInstallType(opt)}
+              selected={s.installType === opt}
+              onPress={() => dispatch(setWallInstallType(opt))}
             />
           </View>
         ))}
       </View>
 
-      <Label>
-        Upload photo(s) of the area(s) you want light fixture(s) installed
-      </Label>
-      <View className="mb-4">
-        <UploadArea
-          tittle="Upload Area Photos"
-          images={CoachLightsImage.images}
-          pickImage={CoachLightsImage.pickImage}
-          onRemove={CoachLightsImage.onRemove}
-        />
-      </View>
+      {s.installType === "New Installation" && (
+        <>
+          <Label>
+            Upload photos of the area where you want light fixture(s) installed
+          </Label>
+          <View className="mb-4">
+            <PhotoUploadSection
+              label="Upload Area Photos"
+              photos={s.photosNew}
+              onPhotosChange={(p) => dispatch(setWallPhotosNew(p))}
+            />
+          </View>
+        </>
+      )}
 
-      {installType === "New Installation" && (
+      {s.installType === "Replacement" && (
+        <>
+          <Label>Upload photos of current light fixture(s)</Label>
+          <View className="mb-4">
+            <PhotoUploadSection
+              label="Upload Current Fixture Photos"
+              photos={s.photosCurrent}
+              onPhotosChange={(p) => dispatch(setWallPhotosCurrent(p))}
+            />
+          </View>
+        </>
+      )}
+
+      {s.installType === "New Installation" && (
         <View>
           <Label>What type of surface will the lights be mounted to?</Label>
           <TwoColGrid
             items={surfaces}
-            selected={surface}
-            onSelect={(v) => setSurface(v as WallSurface)}
+            selected={s.surface}
+            onSelect={(v) => dispatch(setWallSurface(v as WallSurface))}
           />
           <View className="mb-4" />
         </View>
       )}
 
       <Label>Will you be providing the new light fixture(s)?</Label>
-      <YesNoRow value={providing} onChange={setProviding} />
+      <YesNoRow
+        value={s.providing}
+        onChange={(v) => dispatch(setWallProviding(v))}
+      />
       <View className="mb-4" />
 
-      {providing === "Yes" && (
+      {s.providing === "Yes" && (
         <>
           <Label>Upload photo(s) of your new light fixture(s)</Label>
           <View className="mb-4">
-            <UploadArea
-              tittle="Upload New Fixture Photos"
-              images={CoachLightsImage2.images}
-              pickImage={CoachLightsImage2.pickImage}
-              onRemove={CoachLightsImage2.onRemove}
+            <PhotoUploadSection
+              label="Upload New Fixture Photos"
+              photos={s.photosFixtureNew}
+              onPhotosChange={(p) => dispatch(setWallPhotosFixtureNew(p))}
             />
           </View>
         </>
       )}
 
-      {providing === "No" && (
+      {s.providing === "No" && (
         <>
           <Label>
             Please provide details on the type of New light(s) you want provided
@@ -664,8 +726,8 @@ const WallCoachSection = () => {
             multiline
             numberOfLines={4}
             style={{ minHeight: 100, textAlignVertical: "top" }}
-            value={newLightDetails}
-            onChangeText={setNewLightDetails}
+            value={s.newLightDetails}
+            onChangeText={(v) => dispatch(setWallNewLightDetails(v))}
           />
         </>
       )}
@@ -678,31 +740,34 @@ const WallCoachSection = () => {
           <View key={opt!} style={{ flex: 1 }}>
             <OptionButton
               label={opt!}
-              selected={switchType === opt}
-              onPress={() => setSwitchType(opt)}
+              selected={s.switchNewExisting === opt}
+              onPress={() => dispatch(setWallSwitchNewExisting(opt))}
             />
           </View>
         ))}
       </View>
 
-      {switchType === "New" && (
+      {s.switchNewExisting === "New" && (
         <>
           <Label>What kind of switch do you want installed?</Label>
           <TwoColGrid
             items={switchKinds}
-            selected={switchKind}
-            onSelect={(v) => setSwitchKind(v as SwitchType)}
+            selected={s.switchKind}
+            onSelect={(v) => dispatch(setWallSwitchKind(v as SwitchType))}
           />
           <View className="mb-4" />
         </>
       )}
 
-      {switchType === "Existing" && (
+      {s.switchNewExisting === "Existing" && (
         <>
           <Label>Do you want to upgrade your switch?</Label>
-          <YesNoRow value={upgradeSwitch} onChange={setUpgradeSwitch} />
+          <YesNoRow
+            value={s.upgradeSwitch}
+            onChange={(v) => dispatch(setWallUpgradeSwitch(v))}
+          />
           <View className="mb-4" />
-          {upgradeSwitch === "Yes" && (
+          {s.upgradeSwitch === "Yes" && (
             <>
               <Label>What kind of switch do you want installed?</Label>
               <TwoColGrid
@@ -716,8 +781,8 @@ const WallCoachSection = () => {
                   "Timer",
                   "I'll provide my own",
                 ]}
-                selected={switchKind}
-                onSelect={(v) => setSwitchKind(v as SwitchType)}
+                selected={s.switchKind}
+                onSelect={(v) => dispatch(setWallSwitchKind(v as SwitchType))}
               />
               <View className="mb-4" />
             </>
@@ -726,25 +791,18 @@ const WallCoachSection = () => {
       )}
 
       <Label>Will there be more than one switch location?</Label>
-      <YesNoRow value={multiSwitch} onChange={setMultiSwitch} />
+      <YesNoRow
+        value={s.multiSwitch}
+        onChange={(v) => dispatch(setWallMultiSwitch(v))}
+      />
     </SectionCard>
   );
 };
 
 // ─── Driveway Lighting Section ────────────────────────────────────────────────
 const DrivewaySection = () => {
-  const [installType, setInstallType] = useState<InstallType>(null);
-  const [providing, setProviding] = useState<YesNo>(null);
-  const [newLightDetails, setNewLightDetails] = useState("");
-  const [distance, setDistance] = useState("");
-  const [powerControl, setPowerControl] = useState<PowerControl>(null);
-  const [switchType, setSwitchType] = useState<SwitchNewExisting>(null);
-  const [switchKind, setSwitchKind] = useState<SwitchType>(null);
-  const [multiSwitch, setMultiSwitch] = useState<YesNo>(null);
-  const DrivewayLighting = useImagePicker();
-  const DrivewayLighting2 = useImagePicker();
-  const [currentPhotos, setCurrentPhotos] = useState<string[]>([]);
-  const [newPhotos, setNewPhotos] = useState<string[]>([]);
+  const dispatch = useDispatch();
+  const s = useSelector((state: RootState) => state.lighting.driveway);
 
   const controls: PowerControl[] = ["Switch", "Dusk to dawn", "Timer"];
 
@@ -760,42 +818,62 @@ const DrivewaySection = () => {
           <View key={opt!} style={{ flex: 1 }}>
             <OptionButton
               label={opt!}
-              selected={installType === opt}
-              onPress={() => setInstallType(opt)}
+              selected={s.installType === opt}
+              onPress={() => dispatch(setDrivewayInstallType(opt))}
             />
           </View>
         ))}
       </View>
 
-      <Label>Upload photo(s) of current lighting</Label>
-      <View className="mb-4">
-        <UploadArea
-          tittle="Upload Current Lighting Photos"
-          images={DrivewayLighting.images}
-          pickImage={DrivewayLighting.pickImage}
-          onRemove={DrivewayLighting.onRemove}
-        />
-      </View>
-
-      <Label>Will you be providing the new lighting?</Label>
-      <YesNoRow value={providing} onChange={setProviding} />
-      <View className="mb-4" />
-
-      {providing === "Yes" && (
+      {s.installType === "New Installation" && (
         <>
-          <Label>Upload photo(s) of new lights</Label>
+          <Label>
+            Upload photos of the area where you want light fixture(s) installed
+          </Label>
           <View className="mb-4">
-            <UploadArea
-              tittle="Upload Current Lighting Photos"
-              images={DrivewayLighting2.images}
-              pickImage={DrivewayLighting2.pickImage}
-              onRemove={DrivewayLighting2.onRemove}
+            <PhotoUploadSection
+              label="Upload Area Photos"
+              photos={s.photosNew}
+              onPhotosChange={(p) => dispatch(setDrivewayPhotosNew(p))}
             />
           </View>
         </>
       )}
 
-      {providing === "No" && (
+      {s.installType === "Replacement" && (
+        <>
+          <Label>Upload photos of current light fixture(s)</Label>
+          <View className="mb-4">
+            <PhotoUploadSection
+              label="Upload Current Fixture Photos"
+              photos={s.photosCurrent}
+              onPhotosChange={(p) => dispatch(setDrivewayPhotosCurrent(p))}
+            />
+          </View>
+        </>
+      )}
+
+      <Label>Will you be providing the new lighting?</Label>
+      <YesNoRow
+        value={s.providing}
+        onChange={(v) => dispatch(setDrivewayProviding(v))}
+      />
+      <View className="mb-4" />
+
+      {s.providing === "Yes" && (
+        <>
+          <Label>Upload photo(s) of new lights</Label>
+          <View className="mb-4">
+            <PhotoUploadSection
+              label="Upload Current Lighting Photos"
+              photos={s.photosFixtureNew}
+              onPhotosChange={(p) => dispatch(setDrivewayPhotosFixtureNew(p))}
+            />
+          </View>
+        </>
+      )}
+
+      {s.providing === "No" && (
         <>
           <Label>
             Please provide details on the type of New light(s) you want provided
@@ -807,8 +885,8 @@ const DrivewaySection = () => {
             multiline
             numberOfLines={4}
             style={{ minHeight: 100, textAlignVertical: "top" }}
-            value={newLightDetails}
-            onChangeText={setNewLightDetails}
+            value={s.newLightDetails}
+            onChangeText={(v) => dispatch(setDrivewayNewLightDetails(v))}
           />
         </>
       )}
@@ -818,8 +896,8 @@ const DrivewaySection = () => {
         className="border border-gray-200 rounded-xl px-4 py-3 mb-4 text-gray-800 font-Inter_Regular"
         placeholder="Enter distance from house"
         placeholderTextColor="#aaa"
-        value={distance}
-        onChangeText={setDistance}
+        value={s.distance}
+        onChangeText={(v) => dispatch(setDrivewayDistance(v))}
       />
 
       <Label>How do you want the lighting controlled?</Label>
@@ -828,14 +906,14 @@ const DrivewaySection = () => {
           <OptionButton
             key={c!}
             label={c!}
-            selected={powerControl === c}
-            onPress={() => setPowerControl(c)}
+            selected={s.powerControl === c}
+            onPress={() => dispatch(setDrivewayPowerControl(c))}
             fullWidth
           />
         ))}
       </View>
 
-      {powerControl === "Switch" && (
+      {s.powerControl === "Switch" && (
         <>
           <Label>
             Will the fixture(s) be connected to a new or existing switch?
@@ -845,27 +923,52 @@ const DrivewaySection = () => {
               <View key={opt!} style={{ flex: 1 }}>
                 <OptionButton
                   label={opt!}
-                  selected={switchType === opt}
-                  onPress={() => setSwitchType(opt)}
+                  selected={s.switchNewExisting === opt}
+                  onPress={() => dispatch(setDrivewaySwitchNewExisting(opt))}
                 />
               </View>
             ))}
           </View>
 
-          {switchType && (
+          {s.switchNewExisting === "New" && (
             <>
               <Label>What kind of switch do you want installed?</Label>
               <TwoColGrid
                 items={["Standard", "Smart", "Other", "I'll provide my own"]}
-                selected={switchKind}
-                onSelect={(v) => setSwitchKind(v as SwitchType)}
+                selected={s.switchKind}
+                onSelect={(v) =>
+                  dispatch(setDrivewaySwitchKind(v as SwitchType))
+                }
+              />
+              {s.switchKind === "Other" && (
+                <TextInput
+                  className="border mt-3 border-gray-200 rounded-xl px-4 py-3 mb-4 text-gray-800 font-Inter_Regular"
+                  placeholder="Enter the Name of switch want install"
+                  placeholderTextColor="#aaa"
+                  value={s.switchOtherText}
+                  onChangeText={(v) => dispatch(setDrivewaySwitchOtherText(v))}
+                />
+              )}
+              <View className="mb-4" />
+            </>
+          )}
+
+          {s.switchNewExisting === "Existing" && (
+            <>
+              <Label>Do you want to upgrade your switch?</Label>
+              <YesNoRow
+                value={s.upgradeSwitch}
+                onChange={(v) => dispatch(setDrivewayUpgradeSwitch(v))}
               />
               <View className="mb-4" />
             </>
           )}
 
           <Label>Will there be more than one switch location?</Label>
-          <YesNoRow value={multiSwitch} onChange={setMultiSwitch} />
+          <YesNoRow
+            value={s.multiSwitch}
+            onChange={(v) => dispatch(setDrivewayMultiSwitch(v))}
+          />
         </>
       )}
     </SectionCard>
@@ -874,21 +977,8 @@ const DrivewaySection = () => {
 
 // ─── Pole / Area Lighting Section ─────────────────────────────────────────────
 const PoleAreaSection = () => {
-  const [installType, setInstallType] = useState<InstallType>(null);
-  const [providing, setProviding] = useState<YesNo>(null);
-  const [lightDetails, setLightDetails] = useState("");
-  const [distance, setDistance] = useState("");
-  const [powerControl, setPowerControl] = useState<PowerControl>(null);
-  const [switchType, setSwitchType] = useState<SwitchNewExisting>(null);
-  const [upgradeSwitch, setUpgradeSwitch] = useState<YesNo>(null);
-  const [switchKind, setSwitchKind] = useState<SwitchType>(null);
-  const [multiSwitch, setMultiSwitch] = useState<YesNo>(null);
-  const PoleAreaLighting = useImagePicker();
-  const PoleAreaLighting2 = useImagePicker();
-  const PoleAreaLighting3 = useImagePicker();
-  const [areaPhotos, setAreaPhotos] = useState<string[]>([]);
-  const [currentPhotos, setCurrentPhotos] = useState<string[]>([]);
-  const [newPhotos, setNewPhotos] = useState<string[]>([]);
+  const dispatch = useDispatch();
+  const s = useSelector((state: RootState) => state.lighting.poleArea);
 
   const controls: PowerControl[] = ["Switch", "Dusk to dawn", "Timer"];
 
@@ -904,60 +994,62 @@ const PoleAreaSection = () => {
           <View key={opt!} style={{ flex: 1 }}>
             <OptionButton
               label={opt!}
-              selected={installType === opt}
-              onPress={() => setInstallType(opt)}
+              selected={s.installType === opt}
+              onPress={() => dispatch(setPoleInstallType(opt))}
             />
           </View>
         ))}
       </View>
 
-      {installType === "New Installation" && (
+      {s.installType === "New Installation" && (
         <>
-          <Label>Upload photo(s) of where the lighting will be installed</Label>
+          <Label>
+            Upload photos of the area where you want light fixture(s) installed
+          </Label>
           <View className="mb-4">
-            <UploadArea
-              tittle="Upload Area Photos"
-              images={PoleAreaLighting.images}
-              pickImage={PoleAreaLighting.pickImage}
-              onRemove={PoleAreaLighting.onRemove}
+            <PhotoUploadSection
+              label="Upload Area Photos"
+              photos={s.photosNew}
+              onPhotosChange={(p) => dispatch(setPolePhotosNew(p))}
             />
           </View>
         </>
       )}
 
-      {installType === "Replacement" && (
+      {s.installType === "Replacement" && (
         <>
-          <Label>Upload photo(s) of current lighting</Label>
+          <Label>Upload photos of current light fixture(s)</Label>
           <View className="mb-4">
-            <UploadArea
-              tittle="Upload Current Lighting Photos"
-              images={PoleAreaLighting2.images}
-              pickImage={PoleAreaLighting2.pickImage}
-              onRemove={PoleAreaLighting2.onRemove}
+            <PhotoUploadSection
+              label="Upload Current Fixture Photos"
+              photos={s.photosCurrent}
+              onPhotosChange={(p) => dispatch(setPolePhotosCurrent(p))}
             />
           </View>
         </>
       )}
 
       <Label>Will you be providing the new lighting?</Label>
-      <YesNoRow value={providing} onChange={setProviding} />
+      <YesNoRow
+        value={s.providing}
+        onChange={(v) => dispatch(setPoleProviding(v))}
+      />
       <View className="mb-4" />
 
-      {providing === "Yes" && (
+      {s.providing === "Yes" && (
         <>
           <Label>Upload photo(s) of new lights</Label>
           <View className="mb-4">
-            <UploadArea
-              tittle="Upload New Lighting Photos"
-              images={PoleAreaLighting3.images}
-              pickImage={PoleAreaLighting3.pickImage}
-              onRemove={PoleAreaLighting3.onRemove}
+            <PhotoUploadSection
+              label="Upload Photos"
+              photos={s.photosFixtureNew}
+              onPhotosChange={(p) => dispatch(setPolePhotosFixtureNew(p))}
             />
           </View>
         </>
       )}
 
-      {providing === "No" && (
+      {s.providing === "No" && (
         <>
           <Label>Describe the lighting you want provided</Label>
           <TextInput
@@ -967,8 +1059,8 @@ const PoleAreaSection = () => {
             multiline
             numberOfLines={4}
             style={{ minHeight: 100, textAlignVertical: "top" }}
-            value={lightDetails}
-            onChangeText={setLightDetails}
+            value={s.lightDetails}
+            onChangeText={(v) => dispatch(setPoleLightDetails(v))}
           />
         </>
       )}
@@ -980,8 +1072,8 @@ const PoleAreaSection = () => {
         className="border border-gray-200 rounded-xl px-4 py-3 mb-4 text-gray-800 font-Inter_Regular"
         placeholder="Enter distance from house"
         placeholderTextColor="#aaa"
-        value={distance}
-        onChangeText={setDistance}
+        value={s.distance}
+        onChangeText={(v) => dispatch(setPoleDistance(v))}
       />
 
       <Label>How do you want the lighting controlled?</Label>
@@ -990,14 +1082,14 @@ const PoleAreaSection = () => {
           <OptionButton
             key={c!}
             label={c!}
-            selected={powerControl === c}
-            onPress={() => setPowerControl(c)}
+            selected={s.powerControl === c}
+            onPress={() => dispatch(setPolePowerControl(c))}
             fullWidth
           />
         ))}
       </View>
 
-      {powerControl === "Switch" && (
+      {s.powerControl === "Switch" && (
         <>
           <Label>
             Will the fixture(s) be connected to a new or existing switch?
@@ -1007,31 +1099,43 @@ const PoleAreaSection = () => {
               <View key={opt!} style={{ flex: 1 }}>
                 <OptionButton
                   label={opt!}
-                  selected={switchType === opt}
-                  onPress={() => setSwitchType(opt)}
+                  selected={s.switchNewExisting === opt}
+                  onPress={() => dispatch(setPoleSwitchNewExisting(opt))}
                 />
               </View>
             ))}
           </View>
 
-          {switchType === "New" && (
+          {s.switchNewExisting === "New" && (
             <>
               <Label>What kind of switch do you want installed?</Label>
               <TwoColGrid
                 items={["Standard", "Smart", "Other", "I'll provide my own"]}
-                selected={switchKind}
-                onSelect={(v) => setSwitchKind(v as SwitchType)}
+                selected={s.switchKind}
+                onSelect={(v) => dispatch(setPoleSwitchKind(v as SwitchType))}
               />
+              {s.switchKind === "Other" && (
+                <TextInput
+                  className="border mt-3 border-gray-200 rounded-xl px-4 py-3 mb-4 text-gray-800 font-Inter_Regular"
+                  placeholder="Enter the Name of switch want install"
+                  placeholderTextColor="#aaa"
+                  value={s.switchOtherText}
+                  onChangeText={(v) => dispatch(setPoleSwitchOtherText(v))}
+                />
+              )}
               <View className="mb-4" />
             </>
           )}
 
-          {switchType === "Existing" && (
+          {s.switchNewExisting === "Existing" && (
             <>
               <Label>Do you want to upgrade your switch?</Label>
-              <YesNoRow value={upgradeSwitch} onChange={setUpgradeSwitch} />
+              <YesNoRow
+                value={s.upgradeSwitch}
+                onChange={(v) => dispatch(setPoleUpgradeSwitch(v))}
+              />
               <View className="mb-4" />
-              {upgradeSwitch === "Yes" && (
+              {s.upgradeSwitch === "Yes" && (
                 <>
                   <Label>What kind of switch do you want installed?</Label>
                   <TwoColGrid
@@ -1041,9 +1145,20 @@ const PoleAreaSection = () => {
                       "Other",
                       "I'll provide my own",
                     ]}
-                    selected={switchKind}
-                    onSelect={(v) => setSwitchKind(v as SwitchType)}
+                    selected={s.switchKind}
+                    onSelect={(v) =>
+                      dispatch(setPoleSwitchKind(v as SwitchType))
+                    }
                   />
+                  {s.switchKind === "Other" && (
+                    <TextInput
+                      className="border mt-3 border-gray-200 rounded-xl px-4 py-3 mb-4 text-gray-800 font-Inter_Regular"
+                      placeholder="Enter the Name of switch want install"
+                      placeholderTextColor="#aaa"
+                      value={s.switchOtherText}
+                      onChangeText={(v) => dispatch(setPoleSwitchOtherText(v))}
+                    />
+                  )}
                   <View className="mb-4" />
                 </>
               )}
@@ -1051,7 +1166,10 @@ const PoleAreaSection = () => {
           )}
 
           <Label>Will there be more than one switch location?</Label>
-          <YesNoRow value={multiSwitch} onChange={setMultiSwitch} />
+          <YesNoRow
+            value={s.multiSwitch}
+            onChange={(v) => dispatch(setPoleMultiSwitch(v))}
+          />
         </>
       )}
     </SectionCard>
@@ -1060,8 +1178,8 @@ const PoleAreaSection = () => {
 
 // ─── Landscape Section ────────────────────────────────────────────────────────
 const LandscapeSection = () => {
-  const [voltage, setVoltage] = useState<VoltageType>(null);
-  const [info, setInfo] = useState("");
+  const dispatch = useDispatch();
+  const s = useSelector((state: RootState) => state.lighting.landscape);
 
   return (
     <SectionCard>
@@ -1077,8 +1195,8 @@ const LandscapeSection = () => {
           <OptionButton
             key={v!}
             label={v!}
-            selected={voltage === v}
-            onPress={() => setVoltage(v)}
+            selected={s.voltage === v}
+            onPress={() => dispatch(setLandscapeVoltage(v))}
             fullWidth
           />
         ))}
@@ -1096,8 +1214,10 @@ const LandscapeSection = () => {
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 const LightingSt1 = () => {
-  const [lightingType, setLightingType] = useState<LightingType>(null);
-  const [additionalInfo, setAdditionalInfo] = useState("");
+  const dispatch = useDispatch();
+  const lightingType = useSelector(
+    (state: RootState) => state.lighting.lightingType,
+  );
 
   const lightingTypes: LightingType[] = [
     "Interior Lighting",
@@ -1120,7 +1240,7 @@ const LightingSt1 = () => {
 
   const handleTypeSelect = (t: LightingType) => {
     fadeAnim.setValue(0);
-    setLightingType(t);
+    dispatch(setLightingType(t));
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 350,
@@ -1143,20 +1263,18 @@ const LightingSt1 = () => {
   };
 
   return (
-    <View className="flex-1 ">
+    <View className="flex-1">
       <ScrollView
         className="flex-1"
         contentContainerStyle={{ paddingBottom: 120 }}
         showsVerticalScrollIndicator={false}
       >
-        {/* Intro Card */}
         <View className="bg-[#EFF6FF] px-2 py-1.5 justify-center items-center rounded-full w-32 mb-2">
           <Text className="text-sm font-Inter_Medium text-[#60A5FA]">
             Lighting
           </Text>
         </View>
 
-        {/* Lighting Type */}
         <SectionCard>
           <Text className="text-2xl font-Inter_Bold text-[#1F2937] mb-1">
             Lighting Type
@@ -1171,7 +1289,6 @@ const LightingSt1 = () => {
           />
         </SectionCard>
 
-        {/* Conditional Details */}
         {renderDetailsSection()}
       </ScrollView>
     </View>

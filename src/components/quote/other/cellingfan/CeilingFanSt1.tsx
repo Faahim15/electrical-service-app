@@ -1,5 +1,15 @@
-import { useImagePicker } from "@/src/hook/useImagePicker";
-import React, { useRef, useState } from "react";
+// import {
+
+// } from "@/src/redux/slices/ceilingFanDataSlice";
+import {
+  addReplacementPhotos,
+  setHasLightFixture,
+  setInstallationType,
+  setPreWired,
+  toggleSelectedArea,
+} from "@/src/redux/slices/globalstore/cellingfanDataSlice";
+import { AppDispatch, RootState } from "@/src/redux/store";
+import React, { useRef } from "react";
 import {
   Animated,
   ScrollView,
@@ -7,9 +17,9 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import UploadArea from "../share/UploadArea";
+import { useDispatch, useSelector } from "react-redux";
+import PhotoUploadSection from "../../PhotoUploadSection";
 
-type InstallationType = "replacement" | "new_install" | null;
 type AreaOption =
   | "Attic above"
   | "Occupied space above"
@@ -26,23 +36,30 @@ const AREA_OPTIONS: AreaOption[] = [
   "Basement (unfinished)",
   "Basement (finished)",
 ];
-type YesNo = "yes" | "no" | null;
-type YesNoUnsure = "yes" | "no" | "unsure" | null;
 
 const CeilingFanSt1 = () => {
-  const [installationType, setInstallationType] =
-    useState<InstallationType>(null);
+  const dispatch = useDispatch<AppDispatch>();
 
-  const [hasLightFixture, setHasLightFixture] = useState<YesNo>(null);
-  const [preWired, setPreWired] = useState<YesNoUnsure>(null);
-  const [photoUri, setPhotoUri] = useState<string | null>(null);
-  const cellingimage = useImagePicker();
+  const installationType = useSelector(
+    (state: RootState) => state.ceilingFanData.installationType,
+  );
+  const replacementPhotos = useSelector(
+    (state: RootState) => state.ceilingFanData.replacementPhotos,
+  );
+  const selectedAreas = useSelector(
+    (state: RootState) => state.ceilingFanData.selectedAreas,
+  );
+  const hasLightFixture = useSelector(
+    (state: RootState) => state.ceilingFanData.hasLightFixture,
+  );
+  const preWired = useSelector(
+    (state: RootState) => state.ceilingFanData.preWired,
+  );
+
   const scaleAnims = useRef<{ [key: string]: Animated.Value }>({}).current;
-  const [selectedAreas, setSelectedAreas] = useState<AreaOption[]>([]);
+
   const getAnim = (key: string) => {
-    if (!scaleAnims[key]) {
-      scaleAnims[key] = new Animated.Value(1);
-    }
+    if (!scaleAnims[key]) scaleAnims[key] = new Animated.Value(1);
     return scaleAnims[key];
   };
 
@@ -61,11 +78,6 @@ const CeilingFanSt1 = () => {
       }),
     ]).start(callback);
   };
-  const toggleArea = (area: AreaOption) => {
-    setSelectedAreas((prev) =>
-      prev.includes(area) ? prev.filter((a) => a !== area) : [...prev, area],
-    );
-  };
 
   const SelectButton = ({
     label,
@@ -80,9 +92,7 @@ const CeilingFanSt1 = () => {
   }) => (
     <Animated.View style={{ transform: [{ scale: getAnim(animKey) }] }}>
       <TouchableOpacity
-        onPress={() => {
-          animatePress(animKey, onPress);
-        }}
+        onPress={() => animatePress(animKey, onPress)}
         className={`w-full py-4 px-4 rounded-lg mb-2 border ${
           isSelected
             ? "bg-[#60A5FA] border-[#60A5FA]"
@@ -91,10 +101,8 @@ const CeilingFanSt1 = () => {
         activeOpacity={0.85}
       >
         <Text
-          className={`text-sm text-center ${
-            isSelected
-              ? "text-white font-Inter_SemiBold"
-              : "text-[#1F2937] font-Inter_Medium"
+          className={`text-base font-Inter_Medium ${
+            isSelected ? "text-white" : "text-[#1F2937]"
           }`}
         >
           {label}
@@ -104,65 +112,66 @@ const CeilingFanSt1 = () => {
   );
 
   return (
-    <View className="flex-1 ">
+    <View className="flex-1">
       <ScrollView
-        className="flex-1 "
+        className="flex-1"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 100 }}
       >
-        {/* Category tag */}
         <View className="mt-4 mb-3">
-          <View className="self-start bg-blue-50 rounded-full px-3 py-1 mb-5 border border-blue-100">
-            <Text className="font-Inter_SemiBold text-[11px] text-[#60A5FA] tracking-wide">
+          <View className="bg-[#EFF6FF] px-2 py-1.5 justify-center items-center rounded-full w-32 mb-2">
+            <Text className="text-sm font-Inter_Medium text-[#60A5FA]">
               Ceiling Fans
             </Text>
           </View>
         </View>
 
-        {/* Title */}
-        <Text className="text-xl font-Inter_Bold text-gray-900 mb-1">
+        <Text className="text-2xl font-Inter_Bold text-[#1F2937] mb-1">
           Installation type
         </Text>
-        <Text className="text-base text-[#1F2937] font-Inter_Medium mb-4">
+        <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-4">
           Is this a replacement or new install?
         </Text>
 
         <SelectButton
           label="Replacement"
           isSelected={installationType === "replacement"}
-          onPress={() => setInstallationType("replacement")}
+          onPress={() => dispatch(setInstallationType("replacement"))}
           animKey="replacement"
         />
         <SelectButton
           label="New install"
           isSelected={installationType === "new_install"}
-          onPress={() => setInstallationType("new_install")}
+          onPress={() => dispatch(setInstallationType("new_install"))}
           animKey="new_install"
         />
 
-        {/* Photo Upload */}
         {installationType === "replacement" && (
-          <UploadArea
-            tittle="Please upload photos of your current fan"
-            images={cellingimage.images}
-            pickImage={cellingimage.pickImage}
-            onRemove={cellingimage.onRemove}
+          <PhotoUploadSection
+            label="Please upload photos of your current fan"
+            photos={replacementPhotos}
+            onPhotosChange={(newPhotos) =>
+              dispatch(
+                addReplacementPhotos(
+                  newPhotos.filter((p) => !replacementPhotos.includes(p)),
+                ),
+              )
+            }
           />
         )}
+
         {installationType === "new_install" && (
           <View>
-            {/* Space above */}
-            <Text className="text-base text-[#1F2937] font-Inter_Medium mb-3 mt-2">
+            <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-3 mt-2">
               What is above / below the area the ceiling fan will be installed?
             </Text>
-
             <View className="flex-row flex-wrap gap-2 mb-4">
               {AREA_OPTIONS.map((area) => {
                 const isSelected = selectedAreas.includes(area);
                 return (
                   <TouchableOpacity
                     key={area}
-                    onPress={() => toggleArea(area)}
+                    onPress={() => dispatch(toggleSelectedArea(area))}
                     activeOpacity={0.8}
                     style={{
                       paddingHorizontal: 16,
@@ -174,13 +183,8 @@ const CeilingFanSt1 = () => {
                     }}
                   >
                     <Text
-                      style={{
-                        fontSize: 13,
-                        color: isSelected ? "#ffffff" : "#1F2937",
-                        fontFamily: isSelected
-                          ? "Inter_SemiBold"
-                          : "Inter_Medium",
-                      }}
+                      className="font-Inter_Medium text-sm"
+                      style={{ color: isSelected ? "#ffffff" : "#1F2937" }}
                     >
                       {area}
                     </Text>
@@ -189,43 +193,41 @@ const CeilingFanSt1 = () => {
               })}
             </View>
 
-            {/* Light fixture */}
-            <Text className="text-base text-[#1F2937] font-Inter_Medium mb-3 mt-4">
+            <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-3 mt-4">
               Is there a current light fixture where you want the fan installed?
             </Text>
             <SelectButton
               label="Yes"
               isSelected={hasLightFixture === "yes"}
-              onPress={() => setHasLightFixture("yes")}
+              onPress={() => dispatch(setHasLightFixture("yes"))}
               animKey="light_yes"
             />
             <SelectButton
               label="No"
               isSelected={hasLightFixture === "no"}
-              onPress={() => setHasLightFixture("no")}
+              onPress={() => dispatch(setHasLightFixture("no"))}
               animKey="light_no"
             />
 
-            {/* Pre-wired */}
-            <Text className="text-base text-[#1F2937] font-Inter_Medium mb-3 mt-4">
+            <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-3 mt-4">
               Was the area prewired for a ceiling fan?
             </Text>
             <SelectButton
               label="Yes"
               isSelected={preWired === "yes"}
-              onPress={() => setPreWired("yes")}
+              onPress={() => dispatch(setPreWired("yes"))}
               animKey="pre_yes"
             />
             <SelectButton
               label="No"
               isSelected={preWired === "no"}
-              onPress={() => setPreWired("no")}
+              onPress={() => dispatch(setPreWired("no"))}
               animKey="pre_no"
             />
             <SelectButton
               label="I'm not sure"
               isSelected={preWired === "unsure"}
-              onPress={() => setPreWired("unsure")}
+              onPress={() => dispatch(setPreWired("unsure"))}
               animKey="pre_unsure"
             />
           </View>

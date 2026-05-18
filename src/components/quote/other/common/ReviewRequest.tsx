@@ -4,7 +4,9 @@ import { RootState } from "@/src/redux/store";
 import React from "react";
 import { Text, View } from "react-native";
 import { useSelector } from "react-redux";
+import CellingFanData from "./ReviewDataShow/CellingFanData";
 import ExhaustFunData from "./ReviewDataShow/ExhaustFunData";
+import LightingData from "./ReviewDataShow/LightingData";
 import StarlinkData from "./ReviewDataShow/StarlinkData";
 import SwitchesData from "./ReviewDataShow/SwitchesData";
 import WholeHomeData from "./ReviewDataShow/WholeHomeData";
@@ -99,6 +101,12 @@ export default function ReviewRequest() {
 
       {selectedCategory && selectedCategory.title === "Switches" && (
         <SwitchesData />
+      )}
+      {selectedCategory && selectedCategory.title === "Lighting" && (
+        <LightingData />
+      )}
+      {selectedCategory && selectedCategory.title === "Ceiling Fan" && (
+        <CellingFanData />
       )}
     </View>
   );
