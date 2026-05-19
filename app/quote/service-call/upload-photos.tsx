@@ -1,6 +1,7 @@
 import AuthHeading from "@/src/components/auth/AuthHeading";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import PhotoUploadSection from "@/src/components/quote/PhotoUploadSection";
+import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
@@ -61,7 +62,8 @@ export default function UploadPhotos() {
           contentContainerStyle={{ paddingBottom: 32 }}
         >
           <StepProgressBar currentStep={6} />
-
+          {/* Category Tag */}
+          <CategoryTag title="Service Call" />
           <AuthHeading
             title="Upload photos"
             subtitle="Photos help us understand your request faster"

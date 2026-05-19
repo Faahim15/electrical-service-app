@@ -1,5 +1,6 @@
 import AuthHeading from "@/src/components/auth/AuthHeading";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
+import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
@@ -8,13 +9,7 @@ import { updateServiceCallDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function ProjectDetails() {
@@ -47,27 +42,9 @@ export default function ProjectDetails() {
           <StepProgressBar currentStep={4} />
 
           {/* Category Tag */}
-          {selectedCategory && (
-            <View className="self-start mb-4">
-              <View
-                className="px-3 py-[6px] rounded-full"
-                style={{
-                  backgroundColor: "#EEF9FF",
-                  borderWidth: 1,
-                  borderColor: "#BAE6FD",
-                }}
-              >
-                <Text className="text-[#0EA5E9] text-[12.5px] font-Inter_Medium">
-                  {selectedCategory.title}
-                </Text>
-              </View>
-            </View>
-          )}
+          {selectedCategory && <CategoryTag title="Service Call" />}
 
-          <AuthHeading
-            title="Project details"
-            subtitle="Step 1 of your service questions"
-          />
+          <AuthHeading title="Project details" />
 
           <TextAreaInput
             label="Explain the issue you are having"

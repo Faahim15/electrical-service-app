@@ -2,12 +2,12 @@ import AuthHeading from "@/src/components/auth/AuthHeading";
 import TermsAndPolicy from "@/src/components/auth/TermsAndPolicy";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import InfoBanner from "@/src/components/quote/InfoBanner";
+import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import BackButton from "@/src/components/shared/BackButton";
 import CustomInput from "@/src/components/shared/CustomInput";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
 import { updateServiceAddress } from "@/src/redux/slices/serviceFormSlice";
-
 import { RootState } from "@/src/redux/store";
 import { CATEGORY_TOTAL_STEPS } from "@/src/utils/CategorySteps";
 import { router } from "expo-router";
@@ -30,12 +30,15 @@ export default function ServiceAddress() {
         style={{ flex: 1 }}
       >
         <BackButton />
+
         <ScrollView
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 32 }}
         >
           <StepProgressBar currentStep={2} totalSteps={totalSteps} />
+
+          {selectedCategory && <CategoryTag title={selectedCategory.title} />}
           <AuthHeading
             title="Your service address"
             subtitle="Where is the work needed?"

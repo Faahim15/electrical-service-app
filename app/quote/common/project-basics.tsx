@@ -2,6 +2,7 @@ import AuthHeading from "@/src/components/auth/AuthHeading";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import InfoBanner from "@/src/components/quote/InfoBanner";
 import OptionGrid from "@/src/components/quote/OptionGrid";
+import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import TimelineOption from "@/src/components/quote/TimelineOption";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
@@ -79,6 +80,7 @@ export default function ProjectBasics() {
           contentContainerStyle={{ paddingBottom: 32 }}
         >
           <StepProgressBar currentStep={3} totalSteps={totalSteps} />
+          {selectedCategory && <CategoryTag title={selectedCategory.title} />}
           <AuthHeading
             title="Project basics"
             subtitle="A few details to help us understand the job"
