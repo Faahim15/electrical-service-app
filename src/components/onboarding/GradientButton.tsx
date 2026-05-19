@@ -1,6 +1,6 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { Pressable, Text } from "react-native";
 
 interface GradientButtonProps {
   label: string;
@@ -9,9 +9,8 @@ interface GradientButtonProps {
 
 export const GradientButton = ({ label, onPress }: GradientButtonProps) => {
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={onPress}
-      activeOpacity={0.85}
       className="rounded-2xl overflow-hidden mb-3"
       style={{
         shadowColor: "#0EA5E9",
@@ -34,6 +33,6 @@ export const GradientButton = ({ label, onPress }: GradientButtonProps) => {
           {label}
         </Text>
       </LinearGradient>
-    </TouchableOpacity>
+    </Pressable>
   );
 };

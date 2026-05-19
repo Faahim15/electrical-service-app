@@ -1,5 +1,6 @@
 import AuthHeading from "@/src/components/auth/AuthHeading";
 import TermsAndPolicy from "@/src/components/auth/TermsAndPolicy";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import PreferredContactSelector from "@/src/components/quote/PreferredContactSelector";
 import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
@@ -87,6 +88,8 @@ export default function ContactDetails() {
           label="Continue"
           onPress={() => router.push("/quote/common/service-address")}
         />
+
+        <SavedEditAction />
       </View>
     </ScreenWrapper>
   );
