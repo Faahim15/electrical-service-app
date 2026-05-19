@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
-import { Pressable, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
 interface ForgotPasswordProps {
   title: string;
@@ -12,10 +12,9 @@ const ForgotPassword = ({ title, subtitle, onPress }: ForgotPasswordProps) => {
   const [rememberMe, setRememberMe] = useState(false);
   return (
     <View className="flex-row items-center justify-between mb-[5%] mt-1">
-      <TouchableOpacity
+      <Pressable
         onPress={() => setRememberMe((prev) => !prev)}
         className="flex-row items-center gap-2"
-        activeOpacity={0.7}
       >
         <View
           className={`w-4 h-4 rounded border ${
@@ -29,7 +28,7 @@ const ForgotPassword = ({ title, subtitle, onPress }: ForgotPasswordProps) => {
         <Text className="font-Inter_Regular text-sm text-gray-600">
           {title}
         </Text>
-      </TouchableOpacity>
+      </Pressable>
 
       <Pressable onPress={onPress}>
         <Text className="font-Inter_Medium text-sm text-[#00ABB0]">

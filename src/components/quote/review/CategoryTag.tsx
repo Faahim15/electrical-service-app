@@ -3,17 +3,8 @@ import { Text, View } from "react-native";
 
 export const CategoryTag = ({ title }: { title: string }) => (
   <View className="self-start mb-4">
-    <View
-      className="px-3 py-[6px] rounded-full"
-      style={{
-        backgroundColor: "#EEF9FF",
-        borderWidth: 1,
-        borderColor: "#BAE6FD",
-      }}
-    >
-      <Text className="text-[#0EA5E9] text-[12.5px] font-Inter_Medium">
-        {title}
-      </Text>
+    <View className="bg-[#EFF6FF] px-2 py-1.5 justify-center items-center rounded-full min-w-32 mb-2">
+      <Text className="text-sm font-Inter_Medium text-[#60A5FA]">{title}</Text>
     </View>
   </View>
 );

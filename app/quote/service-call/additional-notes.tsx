@@ -2,6 +2,7 @@ import AuthHeading from "@/src/components/auth/AuthHeading";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import InfoBanner from "@/src/components/quote/InfoBanner";
 import QuickTags from "@/src/components/quote/QuickTags";
+import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
@@ -51,7 +52,8 @@ export default function AdditionalNotes() {
           contentContainerStyle={{ paddingBottom: 32 }}
         >
           <StepProgressBar currentStep={7} />
-
+          {/* Category Tag */}
+          <CategoryTag title="Service Call" />
           <AuthHeading
             title="Additional notes"
             subtitle="Anything else we should know?"

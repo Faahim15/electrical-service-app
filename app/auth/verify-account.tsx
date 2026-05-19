@@ -1,5 +1,7 @@
-import { verifyIcon } from "@/assets/images/svg/auth-svg";
+import { verifyAccountIcon, verifyIcon } from "@/assets/images/svg/auth-svg";
+import AuthFooter from "@/src/components/auth/AuthFooter";
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import ChangeEmail from "@/src/components/auth/ChangeEmail";
 import OtpField from "@/src/components/auth/OtpField";
 import SignUpLink from "@/src/components/auth/SignUpLink";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
@@ -26,6 +28,13 @@ const VerifyAccount = () => {
             title="Verify your account"
             subtitle="Enter the 6-digit code sent to your email to continue."
           />
+          <AuthFooter
+            iconXml={verifyAccountIcon}
+            iconWidth={scale(16)}
+            iconHeight={verticalScale(16)}
+            title="Code sent to"
+            subtitle="ri***@email.com"
+          />
         </View>
         <OtpField />
 
@@ -37,6 +46,8 @@ const VerifyAccount = () => {
             onPress={() => router.push("/auth/reset-password")}
           />
         </View>
+
+        <ChangeEmail />
       </View>
     </ScreenWrapper>
   );

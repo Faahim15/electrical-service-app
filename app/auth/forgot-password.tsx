@@ -1,7 +1,8 @@
 import { forgotPasswordIcon } from "@/assets/images/svg/auth-svg";
+import AuthFooter from "@/src/components/auth/AuthFooter";
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import BackToSignIn from "@/src/components/auth/BackToSignIn";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
-import BackButton from "@/src/components/shared/BackButton";
 import CustomInput from "@/src/components/shared/CustomInput";
 import CustomSvg from "@/src/components/shared/CustomSvg";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
@@ -15,10 +16,7 @@ const ForgotPassword = () => {
   return (
     <ScreenWrapper>
       <View className="flex-1 ">
-        <View className="mt-[9%]">
-          <BackButton />
-        </View>
-        <View className="justify-center items-center mt-[10%]">
+        <View className="justify-center items-center mt-[20%]">
           <CustomSvg
             xml={forgotPasswordIcon}
             height={verticalScale(128)}
@@ -33,6 +31,7 @@ const ForgotPassword = () => {
         </View>
         <CustomInput
           label="Email Address"
+          labelColor="#0F172A"
           leftIcon="mail-outline"
           textInputConfig={{
             placeholder: "Enter your email",
@@ -42,12 +41,17 @@ const ForgotPassword = () => {
             onChangeText: setEmail,
           }}
         />
-        <View className="mt-[3%]">
+
+        <View>
+          <AuthFooter />
+        </View>
+        <View className="mt-[4%]">
           <GradientButton
             label="Send Code"
             onPress={() => router.push("/auth/verify-account")}
           />
         </View>
+        <BackToSignIn />
       </View>
     </ScreenWrapper>
   );

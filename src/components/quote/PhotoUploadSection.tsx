@@ -9,8 +9,8 @@ import {
   Dimensions,
   FlatList,
   Modal,
+  Pressable,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import CustomSvg from "../shared/CustomSvg";
@@ -84,7 +84,7 @@ const PhotoUploadSection = ({
         elevation: 1,
       }}
     >
-      {/* Header */}
+      {/* Header — icon + label always visible */}
       <View className="items-center mb-3">
         <View
           style={{
@@ -103,32 +103,37 @@ const PhotoUploadSection = ({
             height={24}
           />
         </View>
-        <Text className="text-[#1E293B] text-[14px] font-Inter_SemiBold mt-2 text-center">
+        {/* ✅ Label always rendered here, not hidden when photos exist */}
+        <Text
+          className="text-[#1E293B] text-[14px] font-Inter_SemiBold mt-2 text-center"
+          style={{ paddingHorizontal: scale(8) }} // prevents text edge clipping
+        >
           {label}
         </Text>
       </View>
 
-      {/* Photos FlatList */}
+      {/* Photos — centered wrap layout instead of left-aligned FlatList */}
       {photos.length > 0 && (
         <FlatList
           data={photos}
           horizontal
           showsHorizontalScrollIndicator={false}
           keyExtractor={(_, index) => index.toString()}
-          contentContainerStyle={{ gap: 8, marginBottom: 12 }}
+          contentContainerStyle={{
+            gap: 8,
+            marginBottom: 12,
+            paddingHorizontal: 6,
+          }}
           renderItem={({ item, index }) => (
-            <View>
-              <TouchableOpacity
-                activeOpacity={0.85}
-                onPress={() => setPreviewUri(item)}
-              >
+            <View style={{ overflow: "visible", margin: 6 }}>
+              <Pressable onPress={() => setPreviewUri(item)}>
                 <Image
                   source={{ uri: item }}
-                  style={{ width: 80, height: 80, borderRadius: 10 }}
+                  style={{ width: 90, height: 90, borderRadius: 10 }}
                   contentFit="cover"
                 />
-              </TouchableOpacity>
-              <TouchableOpacity
+              </Pressable>
+              <Pressable
                 onPress={() => removePhoto(index)}
                 style={{
                   position: "absolute",
@@ -140,18 +145,18 @@ const PhotoUploadSection = ({
                   height: 20,
                   alignItems: "center",
                   justifyContent: "center",
+                  zIndex: 10,
                 }}
               >
                 <Ionicons name="close" size={12} color="white" />
-              </TouchableOpacity>
+              </Pressable>
             </View>
           )}
         />
       )}
 
       {/* Choose File Button */}
-      <TouchableOpacity
-        activeOpacity={0.8}
+      <Pressable
         onPress={showPickerOptions}
         style={{
           borderWidth: 1,
@@ -169,7 +174,7 @@ const PhotoUploadSection = ({
         <Text className="text-[#60A5FA] text-base font-Inter_SemiBold">
           Choose File
         </Text>
-      </TouchableOpacity>
+      </Pressable>
 
       {/* Full Screen Preview Modal */}
       <Modal
@@ -186,12 +191,12 @@ const PhotoUploadSection = ({
             justifyContent: "center",
           }}
         >
-          <TouchableOpacity
+          <Pressable
             onPress={() => setPreviewUri(null)}
             style={{ position: "absolute", top: 52, right: 20, zIndex: 10 }}
           >
             <Ionicons name="close-circle" size={36} color="white" />
-          </TouchableOpacity>
+          </Pressable>
           {previewUri && (
             <Image
               source={{ uri: previewUri }}

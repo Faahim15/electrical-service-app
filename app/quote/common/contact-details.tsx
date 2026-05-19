@@ -2,6 +2,7 @@ import AuthHeading from "@/src/components/auth/AuthHeading";
 import TermsAndPolicy from "@/src/components/auth/TermsAndPolicy";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import PreferredContactSelector from "@/src/components/quote/PreferredContactSelector";
+import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import BackButton from "@/src/components/shared/BackButton";
 import CustomInput from "@/src/components/shared/CustomInput";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
@@ -23,11 +24,15 @@ export default function ContactDetails() {
     (state: RootState) => state.categoryRoute.selectedCategory,
   );
   const totalSteps = CATEGORY_TOTAL_STEPS[selectedCategory?.id ?? ""] ?? 8;
+
   return (
     <ScreenWrapper paddingHorizontal={20}>
       <BackButton />
       <View>
         <StepProgressBar currentStep={1} totalSteps={totalSteps} />
+
+        {selectedCategory && <CategoryTag title={selectedCategory.title} />}
+
         <AuthHeading
           title="Your contact details"
           subtitle="We'll use this to follow up on your request"
