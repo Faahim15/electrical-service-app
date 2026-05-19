@@ -1,4 +1,5 @@
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import InfoBanner from "@/src/components/quote/InfoBanner";
 import QuickTags from "@/src/components/quote/QuickTags";
@@ -81,6 +82,7 @@ export default function AdditionalNotes() {
             label="Continue"
             onPress={() => router.push("/quote/common/review-request")}
           />
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

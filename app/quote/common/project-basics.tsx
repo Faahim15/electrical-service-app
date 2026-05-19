@@ -1,4 +1,5 @@
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import InfoBanner from "@/src/components/quote/InfoBanner";
 import OptionGrid from "@/src/components/quote/OptionGrid";
@@ -127,6 +128,7 @@ export default function ProjectBasics() {
           <InfoBanner message="The more accurate your details, the faster we can respond with a quote." />
 
           <GradientButton label="Continue" onPress={handleContinue} />
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

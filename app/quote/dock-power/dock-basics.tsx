@@ -1,5 +1,6 @@
 // src/app/quote/dock-power/dock-basics.tsx
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import OptionGrid from "@/src/components/quote/OptionGrid";
 import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
@@ -92,6 +93,7 @@ export default function DockBasics() {
               router.push("/quote/dock-power/power-requirements" as any)
             }
           />
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

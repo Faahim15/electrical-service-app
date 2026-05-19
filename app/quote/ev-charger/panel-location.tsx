@@ -1,4 +1,5 @@
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import OptionGrid from "@/src/components/quote/OptionGrid";
 import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
@@ -107,6 +108,7 @@ export default function PanelLocation() {
             label="Continue"
             onPress={() => router.push("/quote/ev-charger/photos-needed")}
           />
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

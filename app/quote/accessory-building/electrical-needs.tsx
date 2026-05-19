@@ -1,4 +1,5 @@
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import OptionGrid from "@/src/components/quote/OptionGrid";
 import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
@@ -43,7 +44,7 @@ export default function ElectricalNeeds() {
           contentContainerStyle={{ paddingBottom: 32 }}
         >
           <StepProgressBar currentStep={6} totalSteps={12} />
-          <CategoryTag title="Accessory Building Power" />
+          <CategoryTag title="Accessory Building Power / Shed Power" />
 
           <AuthHeading title="Electrical needs" subtitle="" />
 
@@ -80,6 +81,7 @@ export default function ElectricalNeeds() {
               }
             />
           </View>
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

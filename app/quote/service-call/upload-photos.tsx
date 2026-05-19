@@ -1,4 +1,5 @@
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import PhotoUploadSection from "@/src/components/quote/PhotoUploadSection";
 import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
@@ -131,6 +132,7 @@ export default function UploadPhotos() {
             label="Continue"
             onPress={() => router.push("/quote/service-call/additional-notes")}
           />
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

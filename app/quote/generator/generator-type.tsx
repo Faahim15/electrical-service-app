@@ -1,5 +1,6 @@
 // src/app/quote/generator/generator-type.tsx
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import OptionGrid from "@/src/components/quote/OptionGrid";
 import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
@@ -10,7 +11,7 @@ import { updateGeneratorDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 const GENERATOR_TYPES = ["Portable", "Whole Home Standby"];
@@ -74,11 +75,14 @@ export default function GeneratorType() {
             numColumns={1}
           />
 
-          <GradientButton
-            label="Continue"
-            onPress={handleContinue}
-            // generatorType select না করলে disabled
-          />
+          <View className="mt-[1%]">
+            <GradientButton
+              label="Continue"
+              onPress={handleContinue}
+              // generatorType select না করলে disabled
+            />
+          </View>
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

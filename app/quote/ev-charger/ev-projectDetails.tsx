@@ -1,6 +1,8 @@
 import { nemaChart } from "@/assets/images/svg/tabs-svg";
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
+import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import BackButton from "@/src/components/shared/BackButton";
 import CustomSvg from "@/src/components/shared/CustomSvg";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
@@ -146,7 +148,7 @@ export default function EVChargerDetails() {
           <StepProgressBar currentStep={4} totalSteps={9} />
 
           {/* Category Tag */}
-          <View className="self-start mb-4">
+          {/* <View className="self-start mb-4">
             <View
               className="px-3 py-[6px] rounded-full"
               style={{
@@ -159,7 +161,8 @@ export default function EVChargerDetails() {
                 EV Charger Installation
               </Text>
             </View>
-          </View>
+          </View> */}
+          <CategoryTag title="EV Charger Installation" />
 
           <AuthHeading
             title="Project details"
@@ -308,6 +311,7 @@ export default function EVChargerDetails() {
                 router.push("/quote/ev-charger/installation-location")
               }
             />
+            <SavedEditAction />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

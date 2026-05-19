@@ -1,4 +1,5 @@
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import BackButton from "@/src/components/shared/BackButton";
@@ -37,7 +38,7 @@ export default function AdditionalInfo() {
 
           {/* Category Tag */}
 
-          <CategoryTag title="Accessory Building Power" />
+          <CategoryTag title="Accessory Building Power / Shed Power" />
 
           <AuthHeading
             title="Additional information"
@@ -59,6 +60,7 @@ export default function AdditionalInfo() {
             label="Continue"
             onPress={() => router.push("/quote/common/review-request")}
           />
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

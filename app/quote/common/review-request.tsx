@@ -1,3 +1,4 @@
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import { AccessoryBuildingReview } from "@/src/components/quote/review/AccessoryBuildingReview";
 import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
@@ -143,6 +144,7 @@ export default function ReviewRequest() {
             label="Submit"
             onPress={() => router.push("/quote/common/submit-quote")}
           />
+          <SavedEditAction title="Edit" onPress={() => router.back()} />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

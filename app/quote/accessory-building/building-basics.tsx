@@ -1,5 +1,6 @@
 // src/app/quote/accessory-building/building-basics.tsx
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import BackButton from "@/src/components/shared/BackButton";
@@ -44,7 +45,7 @@ export default function BuildingBasics() {
           contentContainerStyle={{ paddingBottom: 32 }}
         >
           <StepProgressBar currentStep={4} totalSteps={12} />
-          <CategoryTag title="Accessory Building Power" />
+          <CategoryTag title="Accessory Building Power / Shed Power" />
 
           <AuthHeading title="Building basics" subtitle="" />
 
@@ -79,6 +80,7 @@ export default function BuildingBasics() {
               )
             }
           />
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

@@ -5,6 +5,8 @@ import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
 import { updateEVChargerDetails } from "@/src/redux/slices/serviceFormSlice";
 
+import SavedEditAction from "@/src/components/common/SavedButton";
+import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import TextAreaInput from "@/src/components/shared/TextAreaInput";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
@@ -84,20 +86,8 @@ export default function InstallationLocation() {
           <StepProgressBar currentStep={5} totalSteps={9} />
 
           {/* Category Tag */}
-          <View className="self-start mb-4">
-            <View
-              className="px-3 py-[6px] rounded-full"
-              style={{
-                backgroundColor: "#EEF9FF",
-                borderWidth: 1,
-                borderColor: "#BAE6FD",
-              }}
-            >
-              <Text className="text-[#0EA5E9] text-[12.5px] font-Inter_Medium">
-                EV Charger Installation
-              </Text>
-            </View>
-          </View>
+
+          <CategoryTag title="EV Charger Installation" />
 
           <AuthHeading
             title="Installation location"
@@ -140,6 +130,7 @@ export default function InstallationLocation() {
             label="Continue"
             onPress={() => router.push("/quote/ev-charger/panel-location")}
           />
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

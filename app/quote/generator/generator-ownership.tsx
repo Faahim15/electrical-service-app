@@ -1,4 +1,5 @@
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import OptionGrid from "@/src/components/quote/OptionGrid";
 import PhotoUploadSection from "@/src/components/quote/PhotoUploadSection";
@@ -286,6 +287,7 @@ export default function GeneratorOwnership() {
             label="Continue"
             onPress={() => router.push("/quote/generator/photos-needed")}
           />
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

@@ -1,5 +1,7 @@
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
+import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import StepProgressBar from "@/src/components/shared/StepProgressBar";
@@ -13,9 +15,9 @@ import React, { useEffect } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   ScrollView,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,8 +34,7 @@ const SelectOption = ({
   selected: boolean;
   onPress: () => void;
 }) => (
-  <TouchableOpacity
-    activeOpacity={0.8}
+  <Pressable
     onPress={onPress}
     style={{
       paddingVertical: 13,
@@ -56,7 +57,7 @@ const SelectOption = ({
     >
       {label}
     </Text>
-  </TouchableOpacity>
+  </Pressable>
 );
 
 export default function PanelServiceType() {
@@ -97,20 +98,7 @@ export default function PanelServiceType() {
           <StepProgressBar currentStep={4} totalSteps={9} />
 
           {/* Category Tag */}
-          <View className="self-start mb-4">
-            <View
-              className="px-3 py-[6px] rounded-full"
-              style={{
-                backgroundColor: "#EEF9FF",
-                borderWidth: 1,
-                borderColor: "#BAE6FD",
-              }}
-            >
-              <Text className="text-[#0EA5E9] text-[12.5px] font-Inter_Medium">
-                Panel Upgrade / Replacement
-              </Text>
-            </View>
-          </View>
+          <CategoryTag title="Panel Upgrade / Replacement" />
 
           <AuthHeading title="Service type" subtitle="What do you need?" />
 
@@ -159,6 +147,7 @@ export default function PanelServiceType() {
               router.push("/quote/panel-upgrade/current-panel-details")
             }
           />
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

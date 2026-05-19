@@ -1,5 +1,6 @@
 // src/app/quote/hot-tub/location-details.tsx
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import OptionGrid from "@/src/components/quote/OptionGrid";
 import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
@@ -148,6 +149,7 @@ export default function LocationDetails() {
                 onPress={() => router.push("/quote/hot-tub/photos-needed")}
               />
             </View>
+            <SavedEditAction />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

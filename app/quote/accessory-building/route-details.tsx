@@ -1,4 +1,5 @@
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import BackButton from "@/src/components/shared/BackButton";
@@ -49,7 +50,7 @@ export default function RouteDetails() {
           contentContainerStyle={{ paddingBottom: 32 }}
         >
           <StepProgressBar currentStep={8} totalSteps={12} />
-          <CategoryTag title="Accessory Building Power" />
+          <CategoryTag title="Accessory Building Power / Shed Power" />
 
           <AuthHeading title="Route Details" subtitle="" />
 
@@ -91,6 +92,7 @@ export default function RouteDetails() {
               router.push("/quote/accessory-building/plans-permit")
             }
           />
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

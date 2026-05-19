@@ -1,5 +1,6 @@
 // src/app/quote/dock-power/route-details.tsx
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import BackButton from "@/src/components/shared/BackButton";
@@ -85,6 +86,7 @@ export default function DockRouteDetails() {
             label="Continue"
             onPress={() => router.push("/quote/dock-power/plans-permit")}
           />
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

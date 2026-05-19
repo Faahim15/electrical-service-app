@@ -1,5 +1,6 @@
 // src/app/quote/new-construction/project-status.tsx
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import OptionGrid from "@/src/components/quote/OptionGrid";
 import PhotoUploadSection from "@/src/components/quote/PhotoUploadSection";
@@ -181,6 +182,7 @@ export default function ProjectStatus() {
               onPress={() => router.push("/quote/common/review-request" as any)}
             />
           </View>
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

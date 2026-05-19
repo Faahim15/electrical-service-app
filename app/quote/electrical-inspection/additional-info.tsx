@@ -1,5 +1,6 @@
 // src/app/quote/electrical-inspection/additional-info.tsx
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import BackButton from "@/src/components/shared/BackButton";
@@ -10,7 +11,7 @@ import { updateElectricalInspectionDetails } from "@/src/redux/slices/serviceFor
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function AdditionalInformation() {
@@ -51,11 +52,13 @@ export default function AdditionalInformation() {
             }
             minHeight={160}
           />
-
-          <GradientButton
-            label="Continue"
-            onPress={() => router.push("/quote/common/review-request" as any)}
-          />
+          <View className="mt-[0%]">
+            <GradientButton
+              label="Continue"
+              onPress={() => router.push("/quote/common/review-request" as any)}
+            />
+          </View>
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

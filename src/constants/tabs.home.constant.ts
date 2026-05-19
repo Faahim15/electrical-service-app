@@ -126,7 +126,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
   },
   {
     id: "8",
-    title: "Electrical Inspection",
+    title: "Electrical Systems Inspection",
     description: "Inspect your system\nFor safety and issues",
     iconName: "document-text-outline",
     iconBg: "#FDF0F8",

@@ -1,4 +1,5 @@
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import OptionGrid from "@/src/components/quote/OptionGrid";
 import PhotoUploadSection from "@/src/components/quote/PhotoUploadSection";
@@ -56,7 +57,7 @@ export default function PlansPermit() {
           contentContainerStyle={{ paddingBottom: 32 }}
         >
           <StepProgressBar currentStep={9} totalSteps={12} />
-          <CategoryTag title="Accessory Building Power" />
+          <CategoryTag title="Accessory Building Power / Shed Power" />
 
           <AuthHeading title="Plans, Permit & Timeline" subtitle="" />
 
@@ -126,6 +127,7 @@ export default function PlansPermit() {
               router.push("/quote/accessory-building/photos-needed")
             }
           />
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

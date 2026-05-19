@@ -1,5 +1,6 @@
 // src/app/quote/electrical-inspection/inspection-type.tsx
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import OptionGrid from "@/src/components/quote/OptionGrid";
 import PhotoUploadSection from "@/src/components/quote/PhotoUploadSection";
@@ -12,7 +13,7 @@ import { updateElectricalInspectionDetails } from "@/src/redux/slices/serviceFor
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 const INSPECTION_TYPES = [
@@ -139,12 +140,17 @@ export default function InspectionType() {
             </>
           )}
 
-          <GradientButton
-            label="Continue"
-            onPress={() =>
-              router.push("/quote/electrical-inspection/additional-info" as any)
-            }
-          />
+          <View className="mt-[3%]">
+            <GradientButton
+              label="Continue"
+              onPress={() =>
+                router.push(
+                  "/quote/electrical-inspection/additional-info" as any,
+                )
+              }
+            />
+          </View>
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

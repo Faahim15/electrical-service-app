@@ -1,7 +1,9 @@
 // src/app/quote/remodeling/project-basics.tsx
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import OptionGrid from "@/src/components/quote/OptionGrid";
+import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import BackButton from "@/src/components/shared/BackButton";
 import CustomInput from "@/src/components/shared/CustomInput";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
@@ -11,13 +13,7 @@ import { updateRemodelingDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 const PANEL_LOCATIONS = [
@@ -66,20 +62,7 @@ export default function RemodelingProjectBasics() {
           <StepProgressBar currentStep={4} totalSteps={9} />
 
           {/* Category Tag */}
-          <View className="self-start mb-4">
-            <View
-              className="px-3 py-[6px] rounded-full"
-              style={{
-                backgroundColor: "#EEF9FF",
-                borderWidth: 1,
-                borderColor: "#BAE6FD",
-              }}
-            >
-              <Text className="text-[#0EA5E9] text-[12.5px] font-Inter_Medium">
-                Remodel
-              </Text>
-            </View>
-          </View>
+          <CategoryTag title="Remodeling" />
 
           <AuthHeading
             title="Project basics"
@@ -119,6 +102,7 @@ export default function RemodelingProjectBasics() {
             label="Continue"
             onPress={() => router.push("/quote/remodeling/plans-electrical")}
           />
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

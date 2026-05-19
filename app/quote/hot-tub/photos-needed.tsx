@@ -1,5 +1,6 @@
 // src/app/quote/hot-tub/photos-needed.tsx
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import PhotoUploadSection from "@/src/components/quote/PhotoUploadSection";
 import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
@@ -82,6 +83,7 @@ export default function PhotosNeeded() {
             label="Submit"
             onPress={() => router.push("/quote/hot-tub/additional-info")}
           />
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

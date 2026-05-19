@@ -1,5 +1,6 @@
 // src/app/quote/generator/photos-needed.tsx
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import PhotoUploadSection from "@/src/components/quote/PhotoUploadSection";
 import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
@@ -67,6 +68,7 @@ export default function GeneratorPhotosNeeded() {
             label="Continue"
             onPress={() => router.push("/quote/common/review-request" as any)}
           />
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

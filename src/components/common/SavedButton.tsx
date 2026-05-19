@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 
@@ -7,7 +8,9 @@ interface SavedEditActionProps {
 }
 
 export default function SavedEditAction({
-  onPress,
+  onPress = () => {
+    router.push("/(page)/(home)/saved-draft");
+  },
   title = "Save for Later",
 }: SavedEditActionProps) {
   return (

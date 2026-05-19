@@ -1,5 +1,6 @@
 import AuthHeading from "@/src/components/auth/AuthHeading";
 import TermsAndPolicy from "@/src/components/auth/TermsAndPolicy";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import InfoBanner from "@/src/components/quote/InfoBanner";
 import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
@@ -123,6 +124,7 @@ export default function ServiceAddress() {
             label="Continue"
             onPress={() => router.push("/quote/common/project-basics")}
           />
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

@@ -1,4 +1,5 @@
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import InfoBanner from "@/src/components/quote/InfoBanner";
 import MultiSelectList from "@/src/components/quote/MultiSelectList";
@@ -92,6 +93,7 @@ export default function FinalProjectQuestions() {
             label="Continue"
             onPress={() => router.push("/quote/service-call/upload-photos")}
           />
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>

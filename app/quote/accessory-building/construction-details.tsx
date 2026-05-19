@@ -1,4 +1,5 @@
 import AuthHeading from "@/src/components/auth/AuthHeading";
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import OptionGrid from "@/src/components/quote/OptionGrid";
 import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
@@ -58,7 +59,7 @@ export default function ConstructionDetails() {
           contentContainerStyle={{ paddingBottom: verticalScale(30) }}
         >
           <StepProgressBar currentStep={5} totalSteps={12} />
-          <CategoryTag title="Accessory Building Power" />
+          <CategoryTag title="Accessory Building Power / Shed Power" />
 
           <AuthHeading title="Construction details" subtitle="" />
 
@@ -107,6 +108,7 @@ export default function ConstructionDetails() {
               }
             />
           </View>
+          <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenWrapper>
