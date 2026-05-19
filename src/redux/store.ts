@@ -3,8 +3,10 @@ import categoryRouteReducer from "./slices/categoryRouteSlice";
 
 import ceilingFanDataReducer from "./slices/globalstore/cellingfanDataSlice";
 import commonContractdetails from "./slices/globalstore/commonContractdetailsStoreSlice";
+import dedicatedCircuitDataReducer from "./slices/globalstore/dedicatedCircuitDataSlice";
 import exhaustFanReducer from "./slices/globalstore/ExhaustFanDataSlice";
 import lightingReducer from "./slices/globalstore/lightingDataSlice";
+import outletsDataReducer from "./slices/globalstore/outletsDataSlice";
 import starlinkDataReducer from "./slices/globalstore/StarlinkDataSlice";
 import switchesDataReducer from "./slices/globalstore/switchesDataSlice";
 import wholeHomeDataReducer from "./slices/globalstore/wholeHomeDataSlice";
@@ -38,6 +40,8 @@ export const store = configureStore({
     switchesData: switchesDataReducer,
     lighting: lightingReducer,
     ceilingFanData: ceilingFanDataReducer,
+    dedicatedCircuitData: dedicatedCircuitDataReducer,
+    outletsData: outletsDataReducer,
   },
 });
 

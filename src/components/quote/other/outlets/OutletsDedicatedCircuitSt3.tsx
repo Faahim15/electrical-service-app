@@ -1,11 +1,12 @@
 import { nemaChart } from "@/assets/images/svg/tabs-svg";
 import CustomSvg from "@/src/components/shared/CustomSvg";
 import {
-  setNemaConfig,
-  setSelectedAmp,
-  setSelectedVolt,
-} from "@/src/redux/slices/globalstore/dedicatedCircuitDataSlice";
-import { AppDispatch, RootState } from "@/src/redux/store";
+  selectDedicatedCircuitSt3,
+  setDedicatedAmp,
+  setDedicatedNemaConfig,
+  setDedicatedVolt,
+  VoltOption,
+} from "@/src/redux/slices/globalstore/outletsDataSlice";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -22,29 +23,26 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 const ampOptions = [15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100, 125, 150];
-const voltOptions = ["110 or 120", "220 or 240", "110/220 or 120/240"];
+const voltOptions: VoltOption[] = [
+  "110 or 120",
+  "220 or 240",
+  "110/220 or 120/240",
+];
 
-const DedicatedCircuitSt3 = () => {
-  const dispatch = useDispatch<AppDispatch>();
+const OutletsDedicatedCircuitSt3 = () => {
+  const dispatch = useDispatch();
+  const { selectedAmp, selectedVolt, nemaConfig } = useSelector(
+    selectDedicatedCircuitSt3,
+  );
+
   const { width: screenWidth } = useWindowDimensions();
-
-  const selectedAmp = useSelector(
-    (state: RootState) => state.dedicatedCircuitData.selectedAmp,
-  );
-  const selectedVolt = useSelector(
-    (state: RootState) => state.dedicatedCircuitData.selectedVolt,
-  );
-  const nemaConfig = useSelector(
-    (state: RootState) => state.dedicatedCircuitData.nemaConfig,
-  );
-
   const [nemaFocused, setNemaFocused] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isvisiable, setIsVisiable] = useState(false);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(20)).current;
-  const totalItems = ampOptions.length + voltOptions.length + 1;
 
+  const totalItems = ampOptions.length + voltOptions.length + 1;
   const itemAnims = useRef(
     Array.from({ length: totalItems }, () => ({
       opacity: new Animated.Value(0),
@@ -69,6 +67,7 @@ const DedicatedCircuitSt3 = () => {
         useNativeDriver: true,
       }),
     ]).start();
+
     itemAnims.forEach((anim, i) => {
       Animated.parallel([
         Animated.timing(anim.opacity, {
@@ -87,56 +86,64 @@ const DedicatedCircuitSt3 = () => {
     });
   }, []);
 
-  const animatePressIn = (index: number) =>
+  const animatePressIn = (index: number) => {
     Animated.spring(pressScales[index], {
       toValue: 0.97,
       useNativeDriver: true,
       speed: 50,
       bounciness: 4,
     }).start();
+  };
 
-  const animatePressOut = (index: number) =>
+  const animatePressOut = (index: number) => {
     Animated.spring(pressScales[index], {
       toValue: 1,
       useNativeDriver: true,
       speed: 50,
       bounciness: 4,
     }).start();
+  };
 
   const renderOptionCard = (
     label: string,
     index: number,
     isSelected: boolean,
     onPress: () => void,
-  ) => (
-    <View key={label} style={{ marginBottom: 8 }}>
-      <TouchableOpacity
-        activeOpacity={1}
-        onPressIn={() => animatePressIn(index)}
-        onPressOut={() => animatePressOut(index)}
-        onPress={onPress}
-        style={{
-          backgroundColor: isSelected ? "#60A5FA" : "#FFFFFF",
-          borderRadius: 14,
-          paddingHorizontal: 16,
-          paddingVertical: 14,
-          borderWidth: isSelected ? 1.5 : 1,
-          borderColor: isSelected ? "#60A5FA" : "transparent",
-          shadowColor: isSelected ? "#06B6D4" : "#0EA5E9",
-          shadowOpacity: isSelected ? 0.12 : 0.05,
-          shadowRadius: isSelected ? 8 : 5,
-          shadowOffset: { width: 0, height: 2 },
-          elevation: isSelected ? 3 : 2,
-        }}
-      >
-        <Text
-          className={`text-base font-Inter_Medium ${isSelected ? "text-white" : "text-[#1F2937]"}`}
+  ) => {
+    const scale = pressScales[index];
+
+    return (
+      <View key={label} style={{ marginBottom: 8 }}>
+        <TouchableOpacity
+          activeOpacity={1}
+          onPressIn={() => animatePressIn(index)}
+          onPressOut={() => animatePressOut(index)}
+          onPress={onPress}
+          style={{
+            backgroundColor: isSelected ? "#60A5FA" : "#FFFFFF",
+            borderRadius: 14,
+            paddingHorizontal: 16,
+            paddingVertical: 14,
+            borderWidth: isSelected ? 1.5 : 1,
+            borderColor: isSelected ? "#60A5FA" : "transparent",
+            shadowColor: isSelected ? "#06B6D4" : "#0EA5E9",
+            shadowOpacity: isSelected ? 0.12 : 0.05,
+            shadowRadius: isSelected ? 8 : 5,
+            shadowOffset: { width: 0, height: 2 },
+            elevation: isSelected ? 3 : 2,
+          }}
         >
-          {label}
-        </Text>
-      </TouchableOpacity>
-    </View>
-  );
+          <Text
+            className={`text-base font-Inter_Medium ${
+              isSelected ? "text-white" : "text-[#1F2937]"
+            }`}
+          >
+            {label}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -147,12 +154,14 @@ const DedicatedCircuitSt3 = () => {
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
+          {/* Badge */}
           <View className="self-start bg-[#EFF6FF] rounded-full px-3 py-1 mb-5">
             <Text className="text-[#60A5FA] text-[11px] font-Inter_SemiBold tracking-wide">
-              Dedicated Circuit
+              Outlets
             </Text>
           </View>
 
+          {/* Title */}
           <Animated.View
             style={{
               opacity: fadeAnim,
@@ -165,6 +174,7 @@ const DedicatedCircuitSt3 = () => {
             </Text>
           </Animated.View>
 
+          {/* Amps */}
           <Animated.View
             style={{
               opacity: fadeAnim,
@@ -179,10 +189,11 @@ const DedicatedCircuitSt3 = () => {
 
           {ampOptions.map((amp, index) =>
             renderOptionCard(String(amp), index, selectedAmp === amp, () =>
-              dispatch(setSelectedAmp(selectedAmp === amp ? null : amp)),
+              dispatch(setDedicatedAmp(selectedAmp === amp ? null : amp)),
             ),
           )}
 
+          {/* Volts */}
           <Animated.View
             style={{
               opacity: fadeAnim,
@@ -201,10 +212,11 @@ const DedicatedCircuitSt3 = () => {
               ampOptions.length + index,
               selectedVolt === volt,
               () =>
-                dispatch(setSelectedVolt(selectedVolt === volt ? null : volt)),
+                dispatch(setDedicatedVolt(selectedVolt === volt ? null : volt)),
             ),
           )}
 
+          {/* NEMA */}
           {(() => {
             const nemaIndex = ampOptions.length + voltOptions.length;
             const anim = itemAnims[nemaIndex];
@@ -221,18 +233,20 @@ const DedicatedCircuitSt3 = () => {
                     What is the NEMA configuration?
                   </Text>
                   <TouchableOpacity
-                    onPress={() => setIsVisible(true)}
+                    onPress={() => setIsVisiable(true)}
                     className="h-4 w-4 rounded-full border border-[#60A5FA] justify-center items-center"
                   >
                     <Text className="text-[#60A5FA] font-Inter_Bold">i</Text>
                   </TouchableOpacity>
                 </View>
+
                 <Text
                   className="font-Inter_Regular"
                   style={{ fontSize: 12, color: "#94A3B8", marginBottom: 10 }}
                 >
                   If there will be one
                 </Text>
+
                 <View
                   style={{
                     backgroundColor: "#FFFFFF",
@@ -250,16 +264,22 @@ const DedicatedCircuitSt3 = () => {
                 >
                   <TextInput
                     value={nemaConfig}
-                    onChangeText={(text) => dispatch(setNemaConfig(text))}
+                    onChangeText={(v) => dispatch(setDedicatedNemaConfig(v))}
                     onFocus={() => setNemaFocused(true)}
                     onBlur={() => setNemaFocused(false)}
                     placeholder="14-50, 6-50, 14-30, unsure, etc."
                     placeholderTextColor="#CBD5E1"
-                    className="font-Inter_Regular text-sm text-[#1F2937]"
-                    style={{ padding: 0, margin: 0 }}
+                    style={{
+                      fontFamily: "Inter_Regular",
+                      fontSize: 15,
+                      color: "#334155",
+                      padding: 0,
+                      margin: 0,
+                    }}
                   />
                 </View>
-                {isVisible && (
+
+                {isvisiable && (
                   <View
                     className="mt-3 rounded-2xl overflow-hidden"
                     style={{
@@ -276,14 +296,16 @@ const DedicatedCircuitSt3 = () => {
                       className="flex-row items-center justify-between px-4 py-3"
                       style={{ backgroundColor: "#EEF9FF" }}
                     >
+                      <Text className="text-lg font-Inter_SemiBold text-[#0369A1]" />
                       <TouchableOpacity
-                        onPress={() => setIsVisible(false)}
+                        onPress={() => setIsVisiable(false)}
                         className="w-[26px] h-[26px] rounded-full items-center justify-center"
                         style={{ backgroundColor: "#BAE6FD" }}
                       >
                         <Ionicons name="close" size={14} color="#0369A1" />
                       </TouchableOpacity>
                     </View>
+
                     <ScrollView
                       showsVerticalScrollIndicator={false}
                       bounces={false}
@@ -306,4 +328,4 @@ const DedicatedCircuitSt3 = () => {
   );
 };
 
-export default DedicatedCircuitSt3;
+export default OutletsDedicatedCircuitSt3;

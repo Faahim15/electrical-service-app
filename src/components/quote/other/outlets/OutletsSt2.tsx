@@ -1,39 +1,51 @@
 import { nemaChart } from "@/assets/images/svg/tabs-svg";
 import CustomSvg from "@/src/components/shared/CustomSvg";
 import { useImagePicker } from "@/src/hook/useImagePicker";
+// import {
+
+// } from "@/src/store/outletsDataSlice";
+import {
+  AmpOption,
+  InstallType,
+  selectOutletsSt2,
+  setSt2InstallType,
+  setSt2NemaConfig,
+  setSt2Photos,
+  setSt2SelectedAmp,
+  setSt2SelectedVolt,
+  VoltOption,
+} from "@/src/redux/slices/globalstore/outletsDataSlice";
 import { Ionicons } from "@expo/vector-icons";
-import * as ImagePicker from "expo-image-picker";
 import React, { useRef, useState } from "react";
 import {
-  Alert,
   Animated,
-  Platform,
-  Pressable,
   ScrollView,
   Text,
+  TextInput,
   TouchableOpacity,
   useWindowDimensions,
   View,
 } from "react-native";
-import UploadArea from "../share/UploadArea";
+import { useDispatch, useSelector } from "react-redux";
+import PhotoUploadSection from "../../PhotoUploadSection";
 
-const AMPS = ["15", "20", "30", "50"];
-const VOLTS = ["110 or 120", "220 or 240", "110/220 or 120/240"];
+const AMPS: AmpOption[] = ["15", "20", "30", "50"];
+const VOLTS: VoltOption[] = ["110 or 120", "220 or 240", "110/220 or 120/240"];
 
 const OutletsSt2 = () => {
+  const dispatch = useDispatch();
+  const { installType, photos, selectedAmp, selectedVolt, nemaConfig } =
+    useSelector(selectOutletsSt2);
+
   const { width: screenWidth } = useWindowDimensions();
   const outletImages = useImagePicker();
-  const [installType, setInstallType] = useState("New install");
-  const [selectedAmp, setSelectedAmp] = useState("15");
-  const [selectedVolt, setSelectedVolt] = useState("110 or 120");
-  const [pickedImage, setPickedImage] = useState<string | null>(null);
   const [isvisiable, setIsVisiable] = useState(false);
+
   const installAnims = useRef(
     ["New install", "Replacement"].map(() => new Animated.Value(1)),
   ).current;
   const ampAnims = useRef(AMPS.map(() => new Animated.Value(1))).current;
   const voltAnims = useRef(VOLTS.map(() => new Animated.Value(1))).current;
-  const continueAnim = useRef(new Animated.Value(1)).current;
 
   const animatePressIn = (anim: Animated.Value) => {
     Animated.sequence([
@@ -50,91 +62,69 @@ const OutletsSt2 = () => {
     ]).start();
   };
 
-  const handlePickImage = async () => {
-    if (Platform.OS !== "web") {
-      const { status } =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== "granted") {
-        Alert.alert(
-          "Permission required",
-          "Please allow access to your photo library.",
-        );
-        return;
-      }
-    }
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      quality: 0.8,
-    });
-    if (!result.canceled && result.assets && result.assets.length > 0) {
-      setPickedImage(result.assets[0].uri);
-    }
-  };
-
   return (
     <View className="flex-1">
-      <ScrollView className="flex-1 " showsVerticalScrollIndicator={false}>
-        {/* Breadcrumb */}
-
+      <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+        {/* Badge */}
         <View className="self-start bg-[#EFF6FF] rounded-full px-3 py-1 mb-5">
           <Text className="text-[#60A5FA] text-[11px] font-Inter_SemiBold tracking-wide">
             Outlets
           </Text>
         </View>
 
-        <Text className="font-Inter_Bold text-2xl text-gray-900 mb-5">
+        <Text className="text-2xl font-Inter_Bold text-[#1F2937] mb-5">
           Installation type
         </Text>
 
-        <Text className="font-Inter_SemiBold text-gray-800 text-sm mb-3">
+        <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-3">
           Is this a new install or replacement?
         </Text>
 
         {/* Install Type */}
-        {["New install", "Replacement"].map((item, index) => {
-          const isSelected = installType === item;
-          return (
-            <Animated.View
-              key={item}
-              style={{ transform: [{ scale: installAnims[index] }] }}
-            >
-              <TouchableOpacity
-                onPress={() => {
-                  animatePressIn(installAnims[index]);
-                  setInstallType(item);
-                }}
-                activeOpacity={0.85}
-                className="mb-2 rounded-xl border px-4 py-4"
-                style={{
-                  backgroundColor: isSelected ? "#60A5FA" : "#ffffff",
-                  borderColor: isSelected ? "#60A5FA" : "#E5E7EB",
-                }}
+        {(["New install", "Replacement"] as InstallType[]).map(
+          (item, index) => {
+            const isSelected = installType === item;
+            return (
+              <Animated.View
+                key={item}
+                style={{ transform: [{ scale: installAnims[index] }] }}
               >
-                <Text
-                  className={`font-Inter_Medium text-sm ${
-                    isSelected ? "text-white" : "text-gray-700"
-                  }`}
+                <TouchableOpacity
+                  onPress={() => {
+                    animatePressIn(installAnims[index]);
+                    dispatch(setSt2InstallType(item));
+                  }}
+                  activeOpacity={0.85}
+                  className="mb-2 rounded-xl border px-4 py-4"
+                  style={{
+                    backgroundColor: isSelected ? "#60A5FA" : "#ffffff",
+                    borderColor: isSelected ? "#60A5FA" : "#E5E7EB",
+                  }}
                 >
-                  {item}
-                </Text>
-              </TouchableOpacity>
-            </Animated.View>
-          );
-        })}
+                  <Text
+                    className={`text-base font-Inter_Medium ${
+                      isSelected ? "text-white" : "text-[#1F2937]"
+                    }`}
+                  >
+                    {item}
+                  </Text>
+                </TouchableOpacity>
+              </Animated.View>
+            );
+          },
+        )}
 
         {/* Photo Upload */}
-        <UploadArea
-          tittle="Please upload photos of where the outlet(s) will be installed."
-          images={outletImages.images}
-          pickImage={outletImages.pickImage}
-          onRemove={outletImages.onRemove}
+        <PhotoUploadSection
+          label="Please upload photos of where the outlet(s) will be installed."
+          photos={photos}
+          onPhotosChange={(p) => dispatch(setSt2Photos(p))}
         />
 
-        {/* Amps */}
+        {/* Amps — only for New install */}
         {installType === "New install" && (
           <>
-            <Text className="font-Inter_SemiBold text-gray-800 text-sm mt-5 mb-3">
+            <Text className="text-base font-Inter_SemiBold text-[#1F2937] mt-5 mb-3">
               How many Amps?
             </Text>
             {AMPS.map((amp, index) => {
@@ -147,7 +137,7 @@ const OutletsSt2 = () => {
                   <TouchableOpacity
                     onPress={() => {
                       animatePressIn(ampAnims[index]);
-                      setSelectedAmp(amp);
+                      dispatch(setSt2SelectedAmp(amp));
                     }}
                     activeOpacity={0.85}
                     className="mb-2 rounded-xl border px-4 py-4"
@@ -157,8 +147,8 @@ const OutletsSt2 = () => {
                     }}
                   >
                     <Text
-                      className={`font-Inter_Medium text-sm ${
-                        isSelected ? "text-white" : "text-gray-700"
+                      className={`text-base font-Inter_Medium ${
+                        isSelected ? "text-white" : "text-[#1F2937]"
                       }`}
                     >
                       {amp}
@@ -169,7 +159,7 @@ const OutletsSt2 = () => {
             })}
 
             {/* Volts */}
-            <Text className="font-Inter_SemiBold text-gray-800 text-sm mt-5 mb-3">
+            <Text className="text-base font-Inter_SemiBold text-[#1F2937] mt-5 mb-3">
               How many amps/volts do you need?
             </Text>
             {VOLTS.map((volt, index) => {
@@ -182,7 +172,7 @@ const OutletsSt2 = () => {
                   <TouchableOpacity
                     onPress={() => {
                       animatePressIn(voltAnims[index]);
-                      setSelectedVolt(volt);
+                      dispatch(setSt2SelectedVolt(volt));
                     }}
                     activeOpacity={0.85}
                     className="mb-2 rounded-xl border px-4 py-4"
@@ -192,8 +182,8 @@ const OutletsSt2 = () => {
                     }}
                   >
                     <Text
-                      className={`font-Inter_Medium text-sm ${
-                        isSelected ? "text-white" : "text-gray-700"
+                      className={`text-base font-Inter_Medium ${
+                        isSelected ? "text-white" : "text-[#1F2937]"
                       }`}
                     >
                       {volt}
@@ -204,13 +194,24 @@ const OutletsSt2 = () => {
             })}
 
             {/* NEMA */}
-
-            <Pressable onPress={() => setIsVisiable(true)}>
-              <Text className="font-Inter_SemiBold text-gray-800 text-sm mt-5 mb-4">
+            <TouchableOpacity onPress={() => setIsVisiable(true)}>
+              <Text className="text-base font-Inter_SemiBold text-[#1F2937] mt-5 mb-4">
                 What is the NEMA configuration for the receptacle (if there will
                 be one)? <Text style={{ color: "#60A5FA" }}>ⓘ</Text>
               </Text>
-            </Pressable>
+            </TouchableOpacity>
+            <TextInput
+              value={nemaConfig}
+              onChangeText={(v) => dispatch(setSt2NemaConfig(v))}
+              keyboardType="numeric"
+              placeholder="14-50, 6-50, 14-30, unsure, etc."
+              placeholderTextColor="#9CA3AF"
+              className="font-Inter_Regular text-sm text-gray-800 bg-[#F8FAFC] rounded-xl px-4 py-4"
+              style={{
+                borderWidth: 1.5,
+                borderColor: "#E5E7EB",
+              }}
+            />
 
             {isvisiable && (
               <View
@@ -225,14 +226,11 @@ const OutletsSt2 = () => {
                   elevation: 3,
                 }}
               >
-                {/* Header */}
                 <View
                   className="flex-row items-center justify-between px-4 py-3"
                   style={{ backgroundColor: "#EEF9FF" }}
                 >
-                  <Text className="text-lg font-Inter_SemiBold text-[#0369A1]">
-                    {/* NEMA Configuration Chart */}
-                  </Text>
+                  <Text className="text-lg font-Inter_SemiBold text-[#0369A1]" />
                   <TouchableOpacity
                     onPress={() => setIsVisiable(false)}
                     className="w-[26px] h-[26px] rounded-full items-center justify-center"
@@ -242,7 +240,6 @@ const OutletsSt2 = () => {
                   </TouchableOpacity>
                 </View>
 
-                {/* SVG — full width, scrollable vertically */}
                 <ScrollView
                   showsVerticalScrollIndicator={false}
                   bounces={false}

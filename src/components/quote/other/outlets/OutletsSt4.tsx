@@ -1,4 +1,12 @@
-import React, { useRef, useState } from "react";
+// import {
+
+// } from "@/src/store/outletsDataSlice";
+import {
+  OutletType,
+  selectOutletsSt4,
+  toggleOutletType,
+} from "@/src/redux/slices/globalstore/outletsDataSlice";
+import React, { useRef } from "react";
 import {
   Animated,
   ScrollView,
@@ -6,8 +14,9 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
-const OUTLET_TYPES = [
+const OUTLET_TYPES: OutletType[] = [
   "Standard (Rounded)",
   "Decorator (Rectangle)",
   "GFI",
@@ -18,14 +27,22 @@ const OUTLET_TYPES = [
   "I'll provide my own",
 ];
 
+const rows: OutletType[][] = [
+  ["Standard (Rounded)"],
+  ["Decorator (Rectangle)", "GFI"],
+  ["Surge protected", "Floor", "Smart"],
+  ["Night light", "I'll provide my own"],
+];
+
+const flatChips = rows.flat();
+
 const OutletsSt4 = () => {
-  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-  const [additionalInfo, setAdditionalInfo] = useState("");
+  const dispatch = useDispatch();
+  const { selectedTypes } = useSelector(selectOutletsSt4);
 
   const chipAnims = useRef(
     OUTLET_TYPES.map(() => new Animated.Value(1)),
   ).current;
-  const submitAnim = useRef(new Animated.Value(1)).current;
 
   const animatePressIn = (anim: Animated.Value) => {
     Animated.sequence([
@@ -42,45 +59,32 @@ const OutletsSt4 = () => {
     ]).start();
   };
 
-  const handleToggleType = (type: string, index: number) => {
+  const handleToggleType = (type: OutletType, index: number) => {
     animatePressIn(chipAnims[index]);
-    setSelectedTypes((prev) =>
-      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type],
-    );
+    dispatch(toggleOutletType(type));
   };
 
-  // Group chips into rows matching the design layout
-  const rows: string[][] = [
-    ["Standard (Rounded)"],
-    ["Decorator (Rectangle)", "GFI"],
-    ["Surge protected", "Floor", "Smart"],
-    ["Night light", "I'll provide my own"],
-  ];
-
-  // Flatten to get index
-  const flatChips = rows.flat();
-
   return (
-    <View className="flex-1 ">
-      <ScrollView className="flex-1 " showsVerticalScrollIndicator={false}>
-        {/* Breadcrumb */}
+    <View className="flex-1">
+      <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+        {/* Badge */}
         <View className="self-start bg-[#EFF6FF] rounded-full px-3 py-1 mb-5">
           <Text className="text-[#60A5FA] text-[11px] font-Inter_SemiBold tracking-wide">
             Outlets
           </Text>
         </View>
 
-        <Text className="font-Inter_Bold text-2xl text-gray-900 mb-5">
+        <Text className="text-2xl font-Inter_Bold text-[#1F2937] mb-5">
           Outlet type
         </Text>
 
-        <Text className="font-Inter_SemiBold text-gray-800 text-sm mb-4">
+        <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-4">
           What type of outlet(s) do you need?
         </Text>
 
         {/* Chips */}
         <View className="flex-row flex-wrap gap-2 mb-6">
-          {rows.map((row, rowIndex) =>
+          {rows.map((row) =>
             row.map((chip) => {
               const flatIndex = flatChips.indexOf(chip);
               const isSelected = selectedTypes.includes(chip);
@@ -100,7 +104,7 @@ const OutletsSt4 = () => {
                   >
                     <Text
                       className={`font-Inter_Medium text-sm ${
-                        isSelected ? "text-white" : "text-gray-700"
+                        isSelected ? "text-white" : "text-[#1F2937]"
                       }`}
                     >
                       {chip}

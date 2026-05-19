@@ -1,3 +1,10 @@
+import {
+  IntendedUse,
+  selectOutletsSt1,
+  setIntendedUse,
+  setOtherUseText,
+  setQuantity,
+} from "@/src/redux/slices/globalstore/outletsDataSlice";
 import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
@@ -7,10 +14,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
-const INTENDED_USES = [
+const INTENDED_USES: IntendedUse[] = [
   "General Use",
-  "EV Charger",
   "Freezer",
   "Tools / Equipment",
   "Other",
@@ -33,7 +40,7 @@ const OtherInput = ({
   useEffect(() => {
     Animated.parallel([
       Animated.timing(heightAnim, {
-        toValue: visible ? 120 : 0, // animate to exact px height
+        toValue: visible ? 120 : 0,
         duration: 280,
         useNativeDriver: false,
       }),
@@ -48,7 +55,7 @@ const OtherInput = ({
   return (
     <Animated.View
       style={{
-        height: heightAnim, // direct height, not maxHeight
+        height: heightAnim,
         opacity: opacityAnim,
         overflow: "hidden",
         marginBottom: visible ? 8 : 0,
@@ -75,16 +82,17 @@ const OtherInput = ({
 
 // ─── Main Screen ──────────────────────────────────────────────────────────────
 const OutletsSt1 = () => {
-  const [selectedUse, setSelectedUse] = useState("General Use");
-  const [otherText, setOtherText] = useState("");
-  const [quantity, setQuantity] = useState("");
+  const dispatch = useDispatch();
+  const { intendedUse, otherUseText, quantity } = useSelector(selectOutletsSt1);
+
   const [quantityFocused, setQuantityFocused] = useState(false);
+  console.log(intendedUse);
 
   const animatedValues = useRef(
     INTENDED_USES.map(() => new Animated.Value(1)),
   ).current;
 
-  const handleSelect = (item: string, index: number) => {
+  const handleSelect = (item: IntendedUse, index: number) => {
     Animated.sequence([
       Animated.timing(animatedValues[index], {
         toValue: 0.95,
@@ -97,11 +105,11 @@ const OutletsSt1 = () => {
         useNativeDriver: true,
       }),
     ]).start();
-    setSelectedUse(item);
+    dispatch(setIntendedUse(item));
   };
 
   return (
-    <View className="flex-1 ">
+    <View className="flex-1">
       <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}
@@ -119,21 +127,21 @@ const OutletsSt1 = () => {
         </View>
 
         {/* Title */}
-        <Text className="font-Inter_Bold text-2xl text-gray-900 mb-1">
+        <Text className="text-2xl font-Inter_Bold text-[#1F2937] mb-1">
           Outlet details
         </Text>
-        <Text className="font-Inter_Regular text-[13px] text-slate-500 mb-5">
+        <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-5">
           Tell us about the outlets you need so we can estimate accurately.
         </Text>
 
-        {/* Card */}
-        <View className="bg-white rounded-2xl p-4 mb-4 shadow-sm">
-          <Text className="font-Inter_SemiBold text-gray-800 text-sm mb-3">
+        {/* Intended Use */}
+        <View className="mb-4">
+          <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-3">
             What is the intended use of the outlet?
           </Text>
 
           {INTENDED_USES.map((item, index) => {
-            const isSelected = selectedUse === item;
+            const isSelected = intendedUse === item;
             return (
               <Animated.View
                 key={item}
@@ -150,22 +158,19 @@ const OutletsSt1 = () => {
                   }}
                 >
                   <Text
-                    className={`text-sm ${
-                      isSelected
-                        ? "font-Inter_SemiBold text-white"
-                        : "font-Inter_Medium text-gray-700"
+                    className={`text-base font-Inter_Medium ${
+                      isSelected ? "text-white" : "text-[#1F2937]"
                     }`}
                   >
                     {item}
                   </Text>
                 </TouchableOpacity>
 
-                {/* Animated "Other" input — slides open under the Other row */}
                 {item === "Other" && (
                   <OtherInput
-                    visible={selectedUse === "Other"}
-                    value={otherText}
-                    onChangeText={setOtherText}
+                    visible={intendedUse === "Other"}
+                    value={otherUseText}
+                    onChangeText={(t) => dispatch(setOtherUseText(t))}
                   />
                 )}
               </Animated.View>
@@ -173,21 +178,21 @@ const OutletsSt1 = () => {
           })}
         </View>
 
-        {/* Quantity Card */}
-        <View className="bg-white rounded-2xl p-4 shadow-sm">
-          <Text className="font-Inter_SemiBold text-gray-800 text-sm mb-3">
+        {/* Quantity */}
+        <View>
+          <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-3">
             How many outlets do you need installed / replaced?
           </Text>
 
           <TextInput
             value={quantity}
-            onChangeText={setQuantity}
+            onChangeText={(v) => dispatch(setQuantity(v))}
             onFocus={() => setQuantityFocused(true)}
             onBlur={() => setQuantityFocused(false)}
             keyboardType="numeric"
-            placeholder="e.g.  2"
+            placeholder=""
             placeholderTextColor="#9CA3AF"
-            className="font-Inter_Regular text-sm text-gray-800 bg-[#F8FAFC] rounded-xl px-4 py-3"
+            className="font-Inter_Regular text-sm text-gray-800 bg-[#F8FAFC] rounded-xl px-4 py-4"
             style={{
               borderWidth: 1.5,
               borderColor: quantityFocused ? "#60A5FA" : "#E5E7EB",

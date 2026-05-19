@@ -1,4 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import {
+  setOtherCircuitText,
+  setOtherPanelText,
+  setSelectedCircuit,
+  setSelectedPanel,
+} from "@/src/redux/slices/globalstore/dedicatedCircuitDataSlice";
+import { AppDispatch, RootState } from "@/src/redux/store";
+import React, { useEffect, useRef } from "react";
 import {
   Animated,
   ScrollView,
@@ -7,38 +14,38 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+
+const circuitOptions = ["Freezer", "RV", "Tools / Equipment", "Other"];
+const panelLocations = [
+  "Basement (Finished)",
+  "Basement (Unfinished)",
+  "Garage (Finished)",
+  "Garage (Unfinished)",
+  "Other (please specify)",
+];
 
 const DedicatedCircuitSt1 = () => {
-  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const dispatch = useDispatch<AppDispatch>();
 
+  const selectedCircuit = useSelector(
+    (state: RootState) => state.dedicatedCircuitData.selectedCircuit,
+  );
+  const otherCircuitText = useSelector(
+    (state: RootState) => state.dedicatedCircuitData.otherCircuitText,
+  );
+  const selectedPanel = useSelector(
+    (state: RootState) => state.dedicatedCircuitData.selectedPanel,
+  );
+  const otherPanelText = useSelector(
+    (state: RootState) => state.dedicatedCircuitData.otherPanelText,
+  );
+
+  const fadeAnim = useRef(new Animated.Value(0)).current;
   const inputHeight = useRef(new Animated.Value(0)).current;
   const inputOpacity = useRef(new Animated.Value(0)).current;
-
   const inputHeight2 = useRef(new Animated.Value(0)).current;
   const inputOpacity2 = useRef(new Animated.Value(0)).current;
-
-  const [selectedCircuit, setSelectedCircuit] = useState(null);
-  const [selectedPanel, setSelectedPanel] = useState(null);
-  const [otherText, setOtherText] = useState("");
-  const [otherPanelText, setOtherPanelText] = useState("");
-
-  const circuitOptions = [
-    "EV charger",
-    "Freezer",
-    "RV",
-    "Tools / Equipment",
-    "Accessory Building",
-    "Dock Power",
-    "Other",
-  ];
-
-  const panelLocations = [
-    "Basement (Finished)",
-    "Basement (Unfinished)",
-    "Garage (Finished)",
-    "Garage (Unfinished)",
-    "Other (please specify)",
-  ];
 
   useEffect(() => {
     Animated.timing(fadeAnim, {
@@ -49,67 +56,35 @@ const DedicatedCircuitSt1 = () => {
   }, []);
 
   const handleCircuitSelect = (option: string) => {
-    setSelectedCircuit(option);
-
-    if (option === "Other") {
-      Animated.parallel([
-        Animated.timing(inputHeight, {
-          toValue: 120,
-          duration: 250,
-          useNativeDriver: false,
-        }),
-        Animated.timing(inputOpacity, {
-          toValue: 1,
-          duration: 250,
-          useNativeDriver: false,
-        }),
-      ]).start();
-    } else {
-      Animated.parallel([
-        Animated.timing(inputHeight, {
-          toValue: 0,
-          duration: 200,
-          useNativeDriver: false,
-        }),
-        Animated.timing(inputOpacity, {
-          toValue: 0,
-          duration: 200,
-          useNativeDriver: false,
-        }),
-      ]).start();
-    }
+    dispatch(setSelectedCircuit(option));
+    Animated.parallel([
+      Animated.timing(inputHeight, {
+        toValue: option === "Other" ? 120 : 0,
+        duration: option === "Other" ? 250 : 200,
+        useNativeDriver: false,
+      }),
+      Animated.timing(inputOpacity, {
+        toValue: option === "Other" ? 1 : 0,
+        duration: option === "Other" ? 250 : 200,
+        useNativeDriver: false,
+      }),
+    ]).start();
   };
 
   const handlePanelSelect = (location: string) => {
-    setSelectedPanel(location);
-
-    if (location === "Other (please specify)") {
-      Animated.parallel([
-        Animated.timing(inputHeight2, {
-          toValue: 120,
-          duration: 250,
-          useNativeDriver: false,
-        }),
-        Animated.timing(inputOpacity2, {
-          toValue: 1,
-          duration: 250,
-          useNativeDriver: false,
-        }),
-      ]).start();
-    } else {
-      Animated.parallel([
-        Animated.timing(inputHeight2, {
-          toValue: 0,
-          duration: 200,
-          useNativeDriver: false,
-        }),
-        Animated.timing(inputOpacity2, {
-          toValue: 0,
-          duration: 200,
-          useNativeDriver: false,
-        }),
-      ]).start();
-    }
+    dispatch(setSelectedPanel(location));
+    Animated.parallel([
+      Animated.timing(inputHeight2, {
+        toValue: location === "Other (please specify)" ? 120 : 0,
+        duration: location === "Other (please specify)" ? 250 : 200,
+        useNativeDriver: false,
+      }),
+      Animated.timing(inputOpacity2, {
+        toValue: location === "Other (please specify)" ? 1 : 0,
+        duration: location === "Other (please specify)" ? 250 : 200,
+        useNativeDriver: false,
+      }),
+    ]).start();
   };
 
   const renderOption = (
@@ -133,7 +108,7 @@ const DedicatedCircuitSt1 = () => {
       }}
     >
       <Text
-        className={`font-Inter_Regular text-sm ${isSelected ? "text-white" : "text-[#334155]"}`}
+        className={`text-base font-Inter_Medium ${isSelected ? "text-white" : "text-[#1F2937]"}`}
       >
         {label}
       </Text>
@@ -147,23 +122,21 @@ const DedicatedCircuitSt1 = () => {
         contentContainerStyle={{ paddingBottom: 32 }}
         showsVerticalScrollIndicator={false}
       >
-        {/* Header tag */}
         <View className="self-start bg-[#EFF6FF] rounded-full px-3 py-1 mb-5">
-          <Text className="text-[#60A5FA] text-[11px] font-Inter_SemiBold tracking-wide ">
+          <Text className="text-[#60A5FA] text-[11px] font-Inter_SemiBold tracking-wide">
             Dedicated Circuit
           </Text>
         </View>
 
-        {/* Heading */}
         <Animated.View style={{ opacity: fadeAnim }} className="pt-2 pb-4">
-          <Text className="text-[#0F172A] text-2xl font-Inter_Bold">
+          <Text className="text-2xl font-Inter_Bold text-[#1F2937]">
             Intended use
           </Text>
         </Animated.View>
 
-        {/* Section 1 */}
+        {/* Circuit options */}
         <Animated.View style={{ opacity: fadeAnim }} className="pb-3">
-          <Text className="text-[#0F172A] text-base mb-3 font-Inter_Medium">
+          <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-3">
             What do you need a dedicated circuit for?
           </Text>
           {circuitOptions.map((option) =>
@@ -171,8 +144,6 @@ const DedicatedCircuitSt1 = () => {
               handleCircuitSelect(option),
             ),
           )}
-
-          {/* Animated "Other" input */}
           <Animated.View
             style={{
               height: inputHeight,
@@ -181,29 +152,22 @@ const DedicatedCircuitSt1 = () => {
             }}
           >
             <TextInput
-              value={otherText}
-              onChangeText={setOtherText}
+              value={otherCircuitText}
+              onChangeText={(text) => dispatch(setOtherCircuitText(text))}
               placeholder="Please describe your intended use..."
               placeholderTextColor="#94A3B8"
               multiline
               numberOfLines={5}
               textAlignVertical="top"
               className="bg-white rounded-2xl px-4 py-3 text-sm font-Inter_Regular text-[#334155] mt-2"
-              style={{
-                borderWidth: 2,
-                borderColor: "#60A5FA",
-                height: 112,
-              }}
+              style={{ borderWidth: 2, borderColor: "#60A5FA", height: 112 }}
             />
           </Animated.View>
         </Animated.View>
 
-        {/* Section 2 */}
+        {/* Panel location options */}
         <Animated.View style={{ opacity: fadeAnim }} className="pt-4 pb-3">
-          <Text
-            className="text-[#0F172A] text-[15px] mb-3"
-            style={{ fontFamily: "Inter_SemiBold" }}
-          >
+          <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-3">
             Where is your electrical panel located?
           </Text>
           {panelLocations.map((location) =>
@@ -211,8 +175,6 @@ const DedicatedCircuitSt1 = () => {
               handlePanelSelect(location),
             ),
           )}
-
-          {/* Animated "Other" input */}
           <Animated.View
             style={{
               height: inputHeight2,
@@ -222,18 +184,14 @@ const DedicatedCircuitSt1 = () => {
           >
             <TextInput
               value={otherPanelText}
-              onChangeText={setOtherPanelText}
+              onChangeText={(text) => dispatch(setOtherPanelText(text))}
               placeholder="Please describe panel location..."
               placeholderTextColor="#94A3B8"
               multiline
               numberOfLines={5}
               textAlignVertical="top"
               className="bg-white rounded-2xl px-4 py-3 text-sm font-Inter_Regular text-[#334155] mt-2"
-              style={{
-                borderWidth: 2,
-                borderColor: "#60A5FA",
-                height: 112,
-              }}
+              style={{ borderWidth: 2, borderColor: "#60A5FA", height: 112 }}
             />
           </Animated.View>
         </Animated.View>

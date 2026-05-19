@@ -16,6 +16,9 @@ import ExhaustFanSt1 from "@/src/components/quote/other/exhaustfan/ExhaustFanSt1
 import ExhaustFanSt2 from "@/src/components/quote/other/exhaustfan/ExhaustFanSt2";
 import LightingSt1 from "@/src/components/quote/other/lighting/LightingSt1";
 import LightingSt2 from "@/src/components/quote/other/lighting/LightingSt2";
+import OutletsDedicatedCircuitSt2 from "@/src/components/quote/other/outlets/OutletsDedicatedCircuitSt2";
+import OutletsDedicatedCircuitSt3 from "@/src/components/quote/other/outlets/OutletsDedicatedCircuitSt3";
+import OutletsDedicatedCircuitSt4 from "@/src/components/quote/other/outlets/OutletsDedicatedCircuitSt4";
 import OutletsSt1 from "@/src/components/quote/other/outlets/OutletsSt1";
 import OutletsSt2 from "@/src/components/quote/other/outlets/OutletsSt2";
 import OutletsSt4 from "@/src/components/quote/other/outlets/OutletsSt4";
@@ -31,6 +34,7 @@ import SwitchesSt4 from "@/src/components/quote/other/switches/SwitchesSt4";
 import WholeHomeSt1 from "@/src/components/quote/other/WholeHome/WholeHomeSt1";
 import WholeHomeSt2 from "@/src/components/quote/other/WholeHome/WholeHomeSt2";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
+import { selectOutletsSt1 } from "@/src/redux/slices/globalstore/outletsDataSlice";
 import { RootState } from "@/src/redux/store";
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
@@ -92,6 +96,10 @@ const CATEGORY_STEP_MAP: Record<string, StepConfig[]> = {
     // { component: OutletsSt3, title: "Outlets" },
     { component: OutletsSt4, title: "Outlets" },
     { component: OutletsSt5, title: "Outlets" },
+
+    { component: OutletsDedicatedCircuitSt2, title: "Outlets" },
+    { component: OutletsDedicatedCircuitSt3, title: "Outlets" },
+    { component: OutletsDedicatedCircuitSt4, title: "Outlets" },
   ],
   Switches: [
     { component: SwitchesSt1, title: "Switches" },
@@ -121,6 +129,24 @@ const getStarlinkSteps = (dishLocation: string | null): StepConfig[] => [
   { component: StarlinkSt4, title: "Starlink Installation" },
 ];
 
+const getOutletsSteps = (intendedUse: string | null): StepConfig[] => [
+  { component: OutletsSt1, title: "Outlets" },
+
+  ...(intendedUse?.includes("Freezer") ||
+  intendedUse?.includes("Tools / Equipment")
+    ? [
+        { component: OutletsDedicatedCircuitSt2, title: "Outlets" },
+        { component: OutletsDedicatedCircuitSt3, title: "Outlets" },
+        { component: OutletsDedicatedCircuitSt4, title: "Outlets" },
+        { component: OutletsSt5, title: "Outlets" },
+      ]
+    : [
+        { component: OutletsSt2, title: "Outlets" },
+        { component: OutletsSt4, title: "Outlets" },
+        { component: OutletsSt5, title: "Outlets" },
+      ]),
+];
+
 // ─── Main Screen ──────────────────────────────────────────────────────────────
 
 const OtherFormProgress = () => {
@@ -130,8 +156,7 @@ const OtherFormProgress = () => {
   const { dishLocation, hasMounting, images } = useSelector(
     (state: RootState) => state.starlinkRoute,
   );
-  console.log("===========root=============");
-  console.log(dishLocation);
+  const { intendedUse } = useSelector(selectOutletsSt1);
 
   const selectedTitle = category?.title ?? "";
 
@@ -145,11 +170,13 @@ const OtherFormProgress = () => {
         ]
       : selectedTitle === "Starlink Installation"
         ? [...COMMON_STEPS, ...getStarlinkSteps(dishLocation), ...Final_step]
-        : [
-            ...COMMON_STEPS,
-            ...(CATEGORY_STEP_MAP[selectedTitle] ?? []),
-            ...Final_step,
-          ];
+        : selectedTitle === "Outlets"
+          ? [...COMMON_STEPS, ...getOutletsSteps(intendedUse), ...Final_step]
+          : [
+              ...COMMON_STEPS,
+              ...(CATEGORY_STEP_MAP[selectedTitle] ?? []),
+              ...Final_step,
+            ];
 
   const [currentStep, setCurrentStep] = useState(0);
   const progressAnim = useRef(new Animated.Value(0)).current;

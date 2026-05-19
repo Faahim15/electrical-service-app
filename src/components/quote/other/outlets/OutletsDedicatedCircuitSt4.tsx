@@ -1,16 +1,18 @@
-import TextAreaInput from "@/src/components/shared/TextAreaInput";
 import {
-  selectOutletsSt5,
-  setAdditionalNotes,
+  selectDedicatedCircuitSt4,
+  setElectricalMeterPhotos,
+  setPathPhotos,
 } from "@/src/redux/slices/globalstore/outletsDataSlice";
-
 import React, { useRef } from "react";
 import { Animated, ScrollView, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import PhotoUploadSection from "../../PhotoUploadSection";
 
-const OutletsSt5 = () => {
+const OutletsDedicatedCircuitSt4 = () => {
   const dispatch = useDispatch();
-  const { additionalNotes } = useSelector(selectOutletsSt5);
+  const { electricalMeterPhotos, pathPhotos } = useSelector(
+    selectDedicatedCircuitSt4,
+  );
 
   const titleAnim = useRef(new Animated.Value(0)).current;
   const titleY = useRef(new Animated.Value(-12)).current;
@@ -40,7 +42,7 @@ const OutletsSt5 = () => {
       }}
       showsVerticalScrollIndicator={false}
     >
-      {/* Badge */}
+      {/* Badge + Title */}
       <Animated.View
         style={{ opacity: titleAnim, transform: [{ translateY: titleY }] }}
       >
@@ -49,19 +51,27 @@ const OutletsSt5 = () => {
             Outlets
           </Text>
         </View>
+
+        <Text className="text-2xl font-Inter_Bold text-[#1F2937] mb-4">
+          Photos Upload
+        </Text>
       </Animated.View>
 
-      {/* Additional Notes */}
-      <Animated.View style={{ opacity: titleAnim }}>
-        <TextAreaInput
-          label="Additional notes (optional)"
-          placeholder="Any additional information you'd like to share"
-          value={additionalNotes}
-          onChangeText={(v) => dispatch(setAdditionalNotes(v))}
-        />
-      </Animated.View>
+      {/* Meter photos */}
+      <PhotoUploadSection
+        label="Upload photos of your electrical meter (up close so we can see the numbers and about 10 ft away.)"
+        photos={electricalMeterPhotos}
+        onPhotosChange={(p) => dispatch(setElectricalMeterPhotos(p))}
+      />
+
+      {/* Path photos */}
+      <PhotoUploadSection
+        label="Upload a photo showing path from panel to install location"
+        photos={pathPhotos}
+        onPhotosChange={(p) => dispatch(setPathPhotos(p))}
+      />
     </ScrollView>
   );
 };
 
-export default OutletsSt5;
+export default OutletsDedicatedCircuitSt4;

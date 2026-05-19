@@ -5,8 +5,10 @@ import React from "react";
 import { Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import CellingFanData from "./ReviewDataShow/CellingFanData";
+import DedicatedCircuitData from "./ReviewDataShow/DedicatedCircuitData";
 import ExhaustFunData from "./ReviewDataShow/ExhaustFunData";
 import LightingData from "./ReviewDataShow/LightingData";
+import OutletsData from "./ReviewDataShow/OutletsData";
 import StarlinkData from "./ReviewDataShow/StarlinkData";
 import SwitchesData from "./ReviewDataShow/SwitchesData";
 import WholeHomeData from "./ReviewDataShow/WholeHomeData";
@@ -107,6 +109,12 @@ export default function ReviewRequest() {
       )}
       {selectedCategory && selectedCategory.title === "Ceiling Fan" && (
         <CellingFanData />
+      )}
+      {selectedCategory && selectedCategory.title === "Dedicated Circuit" && (
+        <DedicatedCircuitData />
+      )}
+      {selectedCategory && selectedCategory.title === "Outlets" && (
+        <OutletsData />
       )}
     </View>
   );

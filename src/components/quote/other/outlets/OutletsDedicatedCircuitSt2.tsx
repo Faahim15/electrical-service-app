@@ -1,11 +1,16 @@
+// import {
+
+// } from "@/src/store/outletsDataSlice";
 import {
+  AboveBelowOption,
+  DistanceOption,
+  selectDedicatedCircuitSt2,
+  setDistance,
   setInstallLocation,
   setOtherDistanceText,
-  setSelectedDistance,
   toggleAboveBelow,
-} from "@/src/redux/slices/globalstore/dedicatedCircuitDataSlice";
-import { AppDispatch, RootState } from "@/src/redux/store";
-import React, { useRef } from "react";
+} from "@/src/redux/slices/globalstore/outletsDataSlice";
+import React, { useRef, useState } from "react";
 import {
   Animated,
   ScrollView,
@@ -16,7 +21,7 @@ import {
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
-const ABOVE_BELOW_OPTIONS = [
+const ABOVE_BELOW_OPTIONS: AboveBelowOption[] = [
   "Attic above",
   "Occupied space above",
   "Crawlspace (unfinished)",
@@ -25,7 +30,7 @@ const ABOVE_BELOW_OPTIONS = [
   "Basement (finished)",
 ];
 
-const DISTANCE_OPTIONS = [
+const DISTANCE_OPTIONS: DistanceOption[] = [
   "Less than 25 ft",
   "25 – 50 ft",
   "50 – 100 ft",
@@ -36,6 +41,7 @@ const DISTANCE_OPTIONS = [
 
 const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 
+// ─── ChipButton ───────────────────────────────────────────────────────────────
 const ChipButton = ({
   label,
   selected,
@@ -46,6 +52,7 @@ const ChipButton = ({
   onPress: () => void;
 }) => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
+
   const handlePress = () => {
     Animated.sequence([
       Animated.spring(scaleAnim, {
@@ -63,6 +70,7 @@ const ChipButton = ({
     ]).start();
     onPress();
   };
+
   return (
     <AnimatedTouchable
       activeOpacity={0.85}
@@ -75,7 +83,9 @@ const ChipButton = ({
       }`}
     >
       <Text
-        className={`text-sm font-Inter_Medium ${selected ? "text-white" : "text-[#1F2937]"}`}
+        className={`text-sm font-Inter_Medium ${
+          selected ? "text-white" : "text-[#1F2937]"
+        }`}
       >
         {label}
       </Text>
@@ -83,6 +93,7 @@ const ChipButton = ({
   );
 };
 
+// ─── DistanceCard ─────────────────────────────────────────────────────────────
 const DistanceCard = ({
   label,
   selected,
@@ -93,6 +104,7 @@ const DistanceCard = ({
   onPress: () => void;
 }) => {
   const translateX = useRef(new Animated.Value(0)).current;
+
   const handlePress = () => {
     Animated.spring(translateX, {
       toValue: selected ? 0 : 6,
@@ -102,6 +114,7 @@ const DistanceCard = ({
     }).start();
     onPress();
   };
+
   return (
     <AnimatedTouchable
       activeOpacity={0.8}
@@ -112,7 +125,9 @@ const DistanceCard = ({
       }`}
     >
       <Text
-        className={`text-base font-Inter_Medium ${selected ? "text-white" : "text-[#1F2937]"}`}
+        className={`text-base font-Inter_Medium ${
+          selected ? "text-white" : "text-[#1F2937]"
+        }`}
       >
         {label}
       </Text>
@@ -120,61 +135,73 @@ const DistanceCard = ({
   );
 };
 
-const DedicatedCircuitSt2 = () => {
-  const dispatch = useDispatch<AppDispatch>();
+// ─── Main Screen ──────────────────────────────────────────────────────────────
+const OutletsDedicatedCircuitSt2 = () => {
+  const dispatch = useDispatch();
+  const { installLocation, aboveBelow, distance, otherDistanceText } =
+    useSelector(selectDedicatedCircuitSt2);
 
-  const installLocation = useSelector(
-    (state: RootState) => state.dedicatedCircuitData.installLocation,
-  );
-  const selectedAboveBelow = useSelector(
-    (state: RootState) => state.dedicatedCircuitData.selectedAboveBelow,
-  );
-  const selectedDistance = useSelector(
-    (state: RootState) => state.dedicatedCircuitData.selectedDistance,
-  );
-  const otherDistanceText = useSelector(
-    (state: RootState) => state.dedicatedCircuitData.otherDistanceText,
-  );
+  const [inputFocused, setInputFocused] = useState(false);
 
-  const [inputFocused, setInputFocused] = React.useState(false);
   const inputHeight = useRef(new Animated.Value(0)).current;
   const inputOpacity = useRef(new Animated.Value(0)).current;
 
-  const handleDistanceSelect = (opt: string) => {
-    dispatch(setSelectedDistance(opt));
-    Animated.parallel([
-      Animated.timing(inputHeight, {
-        toValue: opt === "Other" ? 120 : 0,
-        duration: opt === "Other" ? 250 : 200,
-        useNativeDriver: false,
-      }),
-      Animated.timing(inputOpacity, {
-        toValue: opt === "Other" ? 1 : 0,
-        duration: opt === "Other" ? 250 : 200,
-        useNativeDriver: false,
-      }),
-    ]).start();
+  const handleDistanceSelect = (opt: DistanceOption) => {
+    dispatch(setDistance(opt));
+
+    if (opt === "Other") {
+      Animated.parallel([
+        Animated.timing(inputHeight, {
+          toValue: 120,
+          duration: 250,
+          useNativeDriver: false,
+        }),
+        Animated.timing(inputOpacity, {
+          toValue: 1,
+          duration: 250,
+          useNativeDriver: false,
+        }),
+      ]).start();
+    } else {
+      Animated.parallel([
+        Animated.timing(inputHeight, {
+          toValue: 0,
+          duration: 200,
+          useNativeDriver: false,
+        }),
+        Animated.timing(inputOpacity, {
+          toValue: 0,
+          duration: 200,
+          useNativeDriver: false,
+        }),
+      ]).start();
+    }
   };
 
   return (
     <ScrollView
       className="flex-1"
-      contentContainerStyle={{ paddingTop: 24, paddingBottom: 40 }}
+      contentContainerStyle={{
+        paddingTop: 24,
+        paddingBottom: 40,
+      }}
       showsVerticalScrollIndicator={false}
     >
+      {/* Badge */}
       <View className="self-start bg-[#EFF6FF] rounded-full px-3 py-1 mb-5">
         <Text className="text-[#60A5FA] text-[11px] font-Inter_SemiBold tracking-wide">
-          Dedicated Circuit
+          Outlets
         </Text>
       </View>
 
+      {/* Title */}
       <View className="pt-2 pb-4">
         <Text className="text-2xl font-Inter_Bold text-[#1F2937]">
           Panel and location
         </Text>
       </View>
 
-      {/* Install location */}
+      {/* Q1: Location */}
       <View className="mb-7">
         <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-3">
           Where will the dedicated circuit be installed?
@@ -186,13 +213,13 @@ const DedicatedCircuitSt2 = () => {
           placeholder="Kitchen, garage, bedroom, etc."
           placeholderTextColor="#9CA3AF"
           value={installLocation}
-          onChangeText={(text) => dispatch(setInstallLocation(text))}
+          onChangeText={(v) => dispatch(setInstallLocation(v))}
           onFocus={() => setInputFocused(true)}
           onBlur={() => setInputFocused(false)}
         />
       </View>
 
-      {/* Above / Below */}
+      {/* Q2: Above / Below */}
       <View className="mb-7">
         <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-3">
           What is above / below the area?
@@ -202,14 +229,14 @@ const DedicatedCircuitSt2 = () => {
             <ChipButton
               key={opt}
               label={opt}
-              selected={selectedAboveBelow.includes(opt)}
+              selected={aboveBelow.includes(opt)}
               onPress={() => dispatch(toggleAboveBelow(opt))}
             />
           ))}
         </View>
       </View>
 
-      {/* Distance */}
+      {/* Q3: Distance */}
       <View className="mb-7">
         <Text className="text-base font-Inter_SemiBold text-[#1F2937] mb-2">
           What is the approximate distance of the electrical panel from
@@ -219,10 +246,12 @@ const DedicatedCircuitSt2 = () => {
           <DistanceCard
             key={opt}
             label={opt}
-            selected={selectedDistance === opt}
+            selected={distance === opt}
             onPress={() => handleDistanceSelect(opt)}
           />
         ))}
+
+        {/* Animated "Other" input */}
         <Animated.View
           style={{
             height: inputHeight,
@@ -232,14 +261,18 @@ const DedicatedCircuitSt2 = () => {
         >
           <TextInput
             value={otherDistanceText}
-            onChangeText={(text) => dispatch(setOtherDistanceText(text))}
+            onChangeText={(v) => dispatch(setOtherDistanceText(v))}
             placeholder="Please describe the distance..."
             placeholderTextColor="#94A3B8"
             multiline
             numberOfLines={5}
             textAlignVertical="top"
             className="bg-white rounded-2xl px-4 py-3 text-sm font-Inter_Regular text-gray-800 mt-2"
-            style={{ borderWidth: 2, borderColor: "#E5E7EB", height: 112 }}
+            style={{
+              borderWidth: 2,
+              borderColor: "#E5E7EB",
+              height: 112,
+            }}
           />
         </Animated.View>
       </View>
@@ -247,4 +280,4 @@ const DedicatedCircuitSt2 = () => {
   );
 };
 
-export default DedicatedCircuitSt2;
+export default OutletsDedicatedCircuitSt2;
