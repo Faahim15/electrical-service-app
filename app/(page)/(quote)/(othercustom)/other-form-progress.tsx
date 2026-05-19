@@ -1,3 +1,4 @@
+import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import CeilingFanSt1 from "@/src/components/quote/other/cellingfan/CeilingFanSt1";
 import CeilingFanSt2 from "@/src/components/quote/other/cellingfan/CeilingFanSt2";
@@ -42,6 +43,7 @@ import { router } from "expo-router";
 import React, { useRef, useState } from "react";
 import {
   Animated,
+  Pressable,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -300,6 +302,17 @@ const OtherFormProgress = () => {
             label={currentStep === totalSteps - 1 ? "Submit" : "Continue"}
             onPress={goNext}
           />
+          {currentStep === totalSteps - 1 ? (
+            <SavedEditAction title={"Edit"} onPress={goBack} />
+          ) : (
+            <Pressable>
+              <SavedEditAction
+                title={"Save for Later"}
+                onPress={() => router.push("/saved-draft")}
+              />
+            </Pressable>
+          )}
+          <View className="h-24" />
         </ScrollView>
       </SafeAreaView>
     </ScreenWrapper>

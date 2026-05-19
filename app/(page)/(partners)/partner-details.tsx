@@ -336,6 +336,7 @@ const Partnerdetails = () => {
 
             {/* Save Partner — outlined */}
             <TouchableOpacity
+              onPress={() => router.push("/favorite-partners")}
               activeOpacity={0.85}
               className="border border-gray-200 rounded-2xl py-4 flex-row items-center justify-center gap-2 bg-white"
             >

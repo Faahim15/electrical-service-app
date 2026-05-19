@@ -86,7 +86,7 @@ const OutletsSt1 = () => {
   const { intendedUse, otherUseText, quantity } = useSelector(selectOutletsSt1);
 
   const [quantityFocused, setQuantityFocused] = useState(false);
-  console.log(intendedUse);
+  // console.log(intendedUse);
 
   const animatedValues = useRef(
     INTENDED_USES.map(() => new Animated.Value(1)),
