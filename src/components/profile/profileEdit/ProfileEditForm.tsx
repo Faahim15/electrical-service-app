@@ -125,7 +125,7 @@ const ProfileEditForm: React.FC = () => {
             onChangeText={(val) =>
               handleAddressChange(addr.id, "locationnickname", val)
             }
-            placeholder=""
+            placeholder="Home/Office"
             autoCapitalize="none"
           />
 
