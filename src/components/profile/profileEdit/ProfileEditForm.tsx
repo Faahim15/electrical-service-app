@@ -1,7 +1,8 @@
 import EvilIcons from "@expo/vector-icons/build/EvilIcons";
+import { router } from "expo-router";
 import React, { useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
-import InputField from "../../shared/InputFiend";
+import { Pressable, Text, TouchableOpacity, View } from "react-native";
+import InputField2 from "../../shared/InputField2";
 import LinearButton from "../../shared/LinearButton";
 
 interface ServiceAddress {
@@ -54,33 +55,25 @@ const ProfileEditForm: React.FC = () => {
   };
 
   const handleSave = () => {
-    console.log("Saving changes...", {
-      fullName,
-      email,
-      phone,
-      currentPassword,
-      newPassword,
-      confirmPassword,
-      serviceAddresses,
-    });
+    router.back();
   };
 
   const handleCancel = () => {
-    console.log("Cancelled");
+    router.back();
   };
 
   return (
     <View className="flex-1 flex-col gap-4">
       {/* Profile Info Card */}
       <View className="bg-white rounded-[20px] px-5 py-5 gap-1 shadow-md">
-        <InputField
+        <InputField2
           label="Full Name"
           value={fullName}
           onChangeText={setFullName}
           placeholder="Enter your full name"
           autoCapitalize="words"
         />
-        <InputField
+        <InputField2
           label="Email Address"
           value={email}
           onChangeText={setEmail}
@@ -88,7 +81,7 @@ const ProfileEditForm: React.FC = () => {
           keyboardType="email-address"
           autoCapitalize="none"
         />
-        <InputField
+        <InputField2
           label="Phone Number"
           value={phone}
           onChangeText={setPhone}
@@ -126,7 +119,7 @@ const ProfileEditForm: React.FC = () => {
               </TouchableOpacity>
             )}
           </View>
-          <InputField
+          <InputField2
             label="Location NickName"
             value={addr.locationnickname}
             onChangeText={(val) =>
@@ -136,24 +129,24 @@ const ProfileEditForm: React.FC = () => {
             autoCapitalize="none"
           />
 
-          <InputField
+          <InputField2
             label="Street Address"
             value={addr.street}
             onChangeText={(val) => handleAddressChange(addr.id, "street", val)}
             placeholder="123 Main Street"
             autoCapitalize="none"
           />
-          <InputField
+          <InputField2
             label="City"
             value={addr.city}
             onChangeText={(val) => handleAddressChange(addr.id, "city", val)}
-            placeholder=""
+            placeholder="San Francisco"
             autoCapitalize="none"
           />
 
           <View className="flex-row gap-2 items-center justify-between">
             <View className="w-[45%]">
-              <InputField
+              <InputField2
                 label="State"
                 value={addr.state}
                 onChangeText={(val) =>
@@ -164,7 +157,7 @@ const ProfileEditForm: React.FC = () => {
               />
             </View>
             <View className="w-[45%]">
-              <InputField
+              <InputField2
                 label="ZIP Code"
                 value={addr.zip}
                 onChangeText={(val) => handleAddressChange(addr.id, "zip", val)}
@@ -176,11 +169,21 @@ const ProfileEditForm: React.FC = () => {
 
           {/* Add button only on last card */}
           {index === serviceAddresses.length - 1 && (
-            <LinearButton
-              title="Add Other Location"
+            <Pressable
+              className="border border-[#E2E8F0] bg-[#F6F6F6] h-[54px] justify-center items-center rounded-2xl "
               onPress={handleNewLocation}
-              variant="secondary"
-            />
+            >
+              <Text
+                className={`text-[16px] tracking-[0.2px] text-[#6B7280] font-Inter_Medium`}
+              >
+                Add Other Location
+              </Text>
+            </Pressable>
+            // <LinearButton
+            //   title="Add Other Location"
+            //   onPress={handleNewLocation}
+            //   variant="secondary"
+            // />
           )}
         </View>
       ))}
@@ -194,24 +197,24 @@ const ProfileEditForm: React.FC = () => {
           </Text>
         </View>
 
-        <InputField
+        <InputField2
           label="Street Address"
           value={""}
           onChangeText={setCurrentPassword}
           placeholder="123 Main Street"
           autoCapitalize="none"
         />
-        <InputField
+        <InputField2
           label="City"
           value={""}
           onChangeText={setNewPassword}
-          placeholder=""
+          placeholder="San Francisco"
           autoCapitalize="none"
         />
 
         <View className="flex-row gap-2 items-center justify-between">
           <View className="w-[45%]">
-            <InputField
+            <InputField2
               label="State"
               value={""}
               onChangeText={setNewPassword}
@@ -220,7 +223,7 @@ const ProfileEditForm: React.FC = () => {
             />
           </View>
           <View className="w-[45%]">
-            <InputField
+            <InputField2
               label="ZIP Code"
               value={confirmPassword}
               onChangeText={setConfirmPassword}
@@ -240,7 +243,7 @@ const ProfileEditForm: React.FC = () => {
           </Text>
         </View>
 
-        <InputField
+        <InputField2
           label="Current Password"
           value={currentPassword}
           onChangeText={setCurrentPassword}
@@ -248,7 +251,7 @@ const ProfileEditForm: React.FC = () => {
           secureTextEntry
           autoCapitalize="none"
         />
-        <InputField
+        <InputField2
           label="New Password"
           value={newPassword}
           onChangeText={setNewPassword}
@@ -256,7 +259,7 @@ const ProfileEditForm: React.FC = () => {
           secureTextEntry
           autoCapitalize="none"
         />
-        <InputField
+        <InputField2
           label="Confirm New Password"
           value={confirmPassword}
           onChangeText={setConfirmPassword}

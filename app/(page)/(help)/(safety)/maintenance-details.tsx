@@ -158,19 +158,13 @@ const MaintenanceDetails = () => {
                   transform: [{ translateY: cardAnims[index].slide }],
                   opacity: cardAnims[index].opacity,
                 }}
-                className="bg-white rounded-2xl p-4 shadow-sm"
+                className="bg-white rounded-2xl  shadow-sm p-4"
               >
-                <View className="flex-row items-center gap-x-2 mb-1">
-                  <Feather
-                    name={detail.icon as any}
-                    size={20}
-                    color="#06B6D4"
-                  />
-                  <Text className="text-[16px] font-Inter_Medium text-[#1F2937]">
-                    {detail.title}
-                  </Text>
-                </View>
-                <Text className="text-[14px] text-[#6B7280] font-Inter_Regular leading-5 pl-6">
+                <Text className="text-base font-Inter_Medium text-[#1F2937] mb-2">
+                  {detail.title}
+                </Text>
+
+                <Text className="text-sm text-[#6B7280] font-Inter_Regular leading-5 ">
                   {detail.body}
                 </Text>
               </Animated.View>
