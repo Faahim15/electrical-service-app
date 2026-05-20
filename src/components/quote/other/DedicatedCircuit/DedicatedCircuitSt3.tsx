@@ -276,6 +276,7 @@ const DedicatedCircuitSt3 = () => {
                       className="flex-row items-center justify-between px-4 py-3"
                       style={{ backgroundColor: "#EEF9FF" }}
                     >
+                      <Text className="text-lg font-Inter_SemiBold text-[#0369A1]" />
                       <TouchableOpacity
                         onPress={() => setIsVisible(false)}
                         className="w-[26px] h-[26px] rounded-full items-center justify-center"
@@ -284,6 +285,7 @@ const DedicatedCircuitSt3 = () => {
                         <Ionicons name="close" size={14} color="#0369A1" />
                       </TouchableOpacity>
                     </View>
+
                     <ScrollView
                       showsVerticalScrollIndicator={false}
                       bounces={false}
@@ -291,7 +293,7 @@ const DedicatedCircuitSt3 = () => {
                     >
                       <CustomSvg
                         xml={nemaChart}
-                        width={screenWidth - 78}
+                        width={screenWidth - 48}
                         height={800}
                       />
                     </ScrollView>
