@@ -12,13 +12,15 @@ const drafts = [
     id: "1",
     title: "EV Charger Installation",
     lastEdited: "April 3, 2026",
-    progress: 60,
+    progress: 44,
+    route: "/quote/ev-charger/ev-projectDetails",
   },
   {
     id: "2",
-    title: "Panel Upgrade",
+    title: "Panel Upgrade / Replacement",
     lastEdited: "April 1, 2026",
-    progress: 30,
+    progress: 67,
+    route: "/quote/panel-upgrade/panel-location",
   },
 ];
 
@@ -192,7 +194,7 @@ const SavedDraft = () => {
 
                 <GradientButton
                   label="Resume"
-                  onPress={() => console.log("")}
+                  onPress={() => router.push(draft.route as any)}
                 />
               </Animated.View>
             );

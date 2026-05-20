@@ -1,3 +1,4 @@
+import { scale } from "@/src/utils/Scaling";
 import React from "react";
 import { Text, TextInput, TextInputProps, View } from "react-native";
 
@@ -38,7 +39,7 @@ const TextAreaInput = ({
         onChangeText={onChangeText}
         style={{
           backgroundColor: "#FFFFFF",
-          borderRadius: 16,
+          borderRadius: scale(12),
           borderWidth: 1.5,
           borderColor: "#E2E8F0",
           padding: 14,

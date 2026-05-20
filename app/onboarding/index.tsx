@@ -1,9 +1,9 @@
 import { router } from "expo-router";
 import React, { useCallback, useState } from "react";
 import {
+  Pressable,
   StatusBar,
   Text,
-  TouchableOpacity,
   useWindowDimensions,
   View,
 } from "react-native";
@@ -137,13 +137,12 @@ export default function OnboardingScreen() {
         />
 
         {slide.secondaryBtn && (
-          <TouchableOpacity
+          <Pressable
             onPress={() => {
               if (currentIndex === 0) animateTo(TOTAL - 1);
               else if (currentIndex === TOTAL - 1) router.push("/auth/sign-in");
               else animateTo(currentIndex - 1);
             }}
-            activeOpacity={0.7}
             className="items-center py-3"
           >
             <Text
@@ -152,7 +151,7 @@ export default function OnboardingScreen() {
             >
               {slide.secondaryBtn}
             </Text>
-          </TouchableOpacity>
+          </Pressable>
         )}
 
         <DotsIndicator total={TOTAL} active={currentIndex} />

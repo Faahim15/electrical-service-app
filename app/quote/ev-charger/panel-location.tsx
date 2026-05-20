@@ -103,11 +103,12 @@ export default function PanelLocation() {
               numColumns={1}
             />
           </View>
-
-          <GradientButton
-            label="Continue"
-            onPress={() => router.push("/quote/ev-charger/photos-needed")}
-          />
+          <View className="mt-[0%]">
+            <GradientButton
+              label="Continue"
+              onPress={() => router.push("/quote/ev-charger/photos-needed")}
+            />
+          </View>
           <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>

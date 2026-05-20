@@ -12,7 +12,7 @@ import { updateGeneratorDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function BackupNeeds() {
@@ -68,11 +68,12 @@ export default function BackupNeeds() {
             }
             numColumns={1}
           />
-
-          <GradientButton
-            label="Continue"
-            onPress={() => router.push("/quote/generator/photos-needed")}
-          />
+          <View className="mt-[3%]">
+            <GradientButton
+              label="Continue"
+              onPress={() => router.push("/quote/generator/photos-needed")}
+            />
+          </View>
           <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
