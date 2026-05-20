@@ -30,7 +30,7 @@ const ListHeader = ({
 
     {/* Search Bar */}
     <View
-      className="flex-row items-center bg-white rounded-xl  mb-5 px-4 h-12"
+      className="flex-row items-center border-2 border-[#E2E8F0] bg-white rounded-xl  mb-5 px-4 h-12"
       style={{
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 1 },
@@ -41,7 +41,7 @@ const ListHeader = ({
     >
       <Ionicons name="search-outline" size={18} color="#AAAAAA" />
       <TextInput
-        className="flex-1 font-Inter_Regular text-[14px] text-gray-700 ml-2"
+        className="flex-1 font-Inter_Regular bg-white text-[14px] text-gray-700 ml-2"
         placeholder="Search service type"
         placeholderTextColor="#BBBBBB"
         value={searchQuery}

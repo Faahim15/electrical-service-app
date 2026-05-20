@@ -25,7 +25,7 @@ export const SlideContent = ({ slide }: SlideContentProps) => {
 
       {/* Text Content */}
       <Text
-        className="font-Inter_Bold text-gray-900 mb-2"
+        className="font-Inter_Bold text-center text-gray-900 mb-2"
         style={{
           fontSize: isSmallDevice ? 20 : 24,
           lineHeight: isSmallDevice ? 28 : 32,

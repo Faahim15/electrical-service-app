@@ -75,7 +75,7 @@ export default function GeneratorType() {
             numColumns={1}
           />
 
-          <View className="mt-[1%]">
+          <View className="mt-[3%]">
             <GradientButton
               label="Continue"
               onPress={handleContinue}

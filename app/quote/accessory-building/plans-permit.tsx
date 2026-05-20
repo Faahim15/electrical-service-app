@@ -12,7 +12,7 @@ import { updateAccessoryBuildingDetails } from "@/src/redux/slices/serviceFormSl
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function PlansPermit() {
@@ -120,13 +120,14 @@ export default function PlansPermit() {
               }}
             />
           )}
-
-          <GradientButton
-            label="Submit"
-            onPress={() =>
-              router.push("/quote/accessory-building/photos-needed")
-            }
-          />
+          <View className="mt-[3%]">
+            <GradientButton
+              label="Submit"
+              onPress={() =>
+                router.push("/quote/accessory-building/photos-needed")
+              }
+            />
+          </View>
           <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>
