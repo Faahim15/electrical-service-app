@@ -29,9 +29,10 @@ export const otherCategoryData: Record<string, CategoryData> = {
     },
 
     steps: [
-      { id: 1, label: "Upload panel photos" },
-      { id: 2, label: "Add notes" },
-      { id: 3, label: "Review & submit" },
+      { id: 1, label: "Contact details" },
+      { id: 2, label: "Upload panel photos" },
+      { id: 3, label: "Add notes" },
+      { id: 4, label: "Review & submit" },
     ],
   },
 
@@ -55,10 +56,11 @@ export const otherCategoryData: Record<string, CategoryData> = {
       sublabel: "Helpful for install preparation",
     },
     steps: [
-      { id: 1, label: "Equipment details" },
-      { id: 2, label: "Dish location" },
-      { id: 3, label: "Router room info" },
-      { id: 4, label: "Review & submit" },
+      { id: 1, label: "Contact details" },
+      { id: 2, label: "Equipment details" },
+      { id: 3, label: "Dish location" },
+      { id: 4, label: "Router room info" },
+      { id: 5, label: "Review & submit" },
     ],
   },
 
@@ -82,10 +84,11 @@ export const otherCategoryData: Record<string, CategoryData> = {
       sublabel: "Best for custom dedicated circuit requests",
     },
     steps: [
-      { id: 1, label: "Circuit purpose" },
-      { id: 2, label: "Install location" },
-      { id: 3, label: "Electrical specs" },
-      { id: 4, label: "Review & submit" },
+      { id: 1, label: "Contact details" },
+      { id: 2, label: "Circuit purpose" },
+      { id: 3, label: "Install location" },
+      { id: 4, label: "Electrical specs" },
+      { id: 5, label: "Review & submit" },
     ],
   },
 
@@ -109,10 +112,11 @@ export const otherCategoryData: Record<string, CategoryData> = {
       sublabel: "Quick fan installation request",
     },
     steps: [
-      { id: 1, label: "Fan type & location" },
-      { id: 2, label: "Project details" },
-      { id: 3, label: "Panel info" },
-      { id: 4, label: "Review & submit" },
+      { id: 1, label: "Contact details" },
+      { id: 2, label: "Fan type & location" },
+      { id: 3, label: "Project details" },
+      { id: 4, label: "Panel info" },
+      { id: 5, label: "Review & submit" },
     ],
   },
 
@@ -136,10 +140,11 @@ export const otherCategoryData: Record<string, CategoryData> = {
       sublabel: "Simple and flexible outlet request",
     },
     steps: [
-      { id: 1, label: "Outlet purpose" },
-      { id: 2, label: "Install type" },
-      { id: 3, label: "Electrical details" },
-      { id: 4, label: "Review & submit" },
+      { id: 1, label: "Contact details" },
+      { id: 2, label: "Outlet purpose" },
+      { id: 3, label: "Install type" },
+      { id: 4, label: "Electrical details" },
+      { id: 5, label: "Review & submit" },
     ],
   },
 
@@ -163,10 +168,11 @@ export const otherCategoryData: Record<string, CategoryData> = {
       sublabel: "Quick switch upgrade request",
     },
     steps: [
-      { id: 1, label: "Quantity & type" },
-      { id: 2, label: "Upload photos" },
-      { id: 3, label: "Project timing" },
-      { id: 4, label: "Review & submit" },
+      { id: 1, label: "Contact details" },
+      { id: 2, label: "Quantity & type" },
+      { id: 3, label: "Upload photos" },
+      { id: 4, label: "Project timing" },
+      { id: 5, label: "Review & submit" },
     ],
   },
 
@@ -190,11 +196,12 @@ export const otherCategoryData: Record<string, CategoryData> = {
       sublabel: "Covers both indoor and outdoor lighting",
     },
     steps: [
-      { id: 1, label: "Lighting category" },
-      { id: 2, label: "Fixture details" },
-      { id: 3, label: "Install type" },
-      { id: 4, label: "Switch setup" },
-      { id: 5, label: "Review & submit" },
+      { id: 1, label: "Contact details" },
+      { id: 2, label: "Lighting category" },
+      { id: 3, label: "Fixture details" },
+      { id: 4, label: "Install type" },
+      { id: 5, label: "Switch setup" },
+      { id: 6, label: "Review & submit" },
     ],
   },
 
@@ -217,10 +224,11 @@ export const otherCategoryData: Record<string, CategoryData> = {
       sublabel: "Easy ceiling fan quote process",
     },
     steps: [
-      { id: 1, label: "Install type" },
-      { id: 2, label: "Fan details" },
-      { id: 3, label: "Switch setup" },
-      { id: 4, label: "Review & submit" },
+      { id: 1, label: "Contact details" },
+      { id: 2, label: "Install type" },
+      { id: 3, label: "Fan details" },
+      { id: 4, label: "Switch setup" },
+      { id: 5, label: "Review & submit" },
     ],
   },
 };
