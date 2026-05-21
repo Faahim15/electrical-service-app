@@ -38,11 +38,13 @@ import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import { selectOutletsSt1 } from "@/src/redux/slices/globalstore/outletsDataSlice";
 import { RootState } from "@/src/redux/store";
 import { Feather } from "@expo/vector-icons";
+import { useFocusEffect } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React, { useRef, useState } from "react";
 import {
   Animated,
+  BackHandler,
   Pressable,
   ScrollView,
   Text,
@@ -281,6 +283,28 @@ const OtherFormProgress = () => {
     inputRange: [0, 100],
     outputRange: ["0%", "100%"],
   });
+
+  // ✅ Hardware back button handler — screen focus এ active থাকে
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        if (currentStep > 0) {
+          // প্রথম step না হলে → previous step এ যাও
+          animateProgress(currentStep - 1);
+          return true; // default back navigation বন্ধ করো
+        }
+        // প্রথম step এ থাকলে → স্বাভাবিকভাবে পেছনে যাও
+        return false;
+      };
+
+      const subscription = BackHandler.addEventListener(
+        "hardwareBackPress",
+        onBackPress,
+      );
+
+      return () => subscription.remove(); // cleanup
+    }, [currentStep]), // currentStep বদলালে re-register হবে
+  );
 
   return (
     <ScreenWrapper>
