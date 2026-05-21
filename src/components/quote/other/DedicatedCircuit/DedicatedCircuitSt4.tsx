@@ -69,7 +69,7 @@ const DedicatedCircuitSt4 = () => {
       />
 
       <PhotoUploadSection
-        label="Upload a photo showing path from panel to install location"
+        label="Upload a photo showing path from circuit to panel install location"
         photos={pathPhotos}
         onPhotosChange={(newPhotos) =>
           dispatch(

@@ -28,14 +28,6 @@ const CategoryItem = ({
       dispatch(setSelectedRouteOtherCategory(item));
       router.push("/other-start" as any);
     }
-
-    // if (item.title === "Other Custom Service") {
-    //   router.push("/other-custom-service");
-    // } else if (item.title === "Solar Installation") {
-    //   router.push("/sollar-installation");
-    // } else {
-    //   router.push("/quote/service-details");
-    // }
   };
 
   return (

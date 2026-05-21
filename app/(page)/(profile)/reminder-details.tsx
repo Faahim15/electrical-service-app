@@ -208,6 +208,7 @@ const Reminderdetails = () => {
           onCancel={() => setShowDeleteModal(false)}
           onConfirm={() => {
             setShowDeleteModal(false);
+            router.back();
           }}
         />
       </SafeAreaView>
@@ -289,7 +290,7 @@ const DeleteModal = ({
 
           {/* Cancel */}
           <TouchableOpacity
-            className=" rounded-2xl w-full py-4 items-center mb-3"
+            className=" rounded-2xl w-full py-4 items-center mb-3 border border-[#6b7280]"
             onPress={onCancel}
             activeOpacity={0.7}
           >

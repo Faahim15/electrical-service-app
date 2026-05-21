@@ -269,21 +269,6 @@ const OtherFormProgress = () => {
     }
   };
 
-  const CurrentStepComponent = STEPS[currentStep].component;
-
-  React.useEffect(() => {
-    Animated.timing(progressAnim, {
-      toValue: progressPercent,
-      duration: 500,
-      useNativeDriver: false,
-    }).start();
-  }, []);
-
-  const progressWidth = progressAnim.interpolate({
-    inputRange: [0, 100],
-    outputRange: ["0%", "100%"],
-  });
-
   // ✅ Hardware back button handler — screen focus এ active থাকে
   useFocusEffect(
     React.useCallback(() => {
@@ -305,6 +290,33 @@ const OtherFormProgress = () => {
       return () => subscription.remove(); // cleanup
     }, [currentStep]), // currentStep বদলালে re-register হবে
   );
+  React.useEffect(() => {
+    Animated.timing(progressAnim, {
+      toValue: progressPercent,
+      duration: 500,
+      useNativeDriver: false,
+    }).start();
+  }, []);
+
+  React.useEffect(() => {
+    setCurrentStep(0);
+    progressAnim.setValue((1 / STEPS.length) * 100);
+  }, [selectedTitle]);
+  // ২. CurrentStepComponent নেওয়ার আগে guard দাও
+  const currentStepConfig = STEPS[currentStep];
+
+  if (!currentStepConfig?.component) {
+    // Step out of bounds — reset
+    setCurrentStep(0);
+    return null;
+  }
+
+  const CurrentStepComponent = currentStepConfig.component;
+
+  const progressWidth = progressAnim.interpolate({
+    inputRange: [0, 100],
+    outputRange: ["0%", "100%"],
+  });
 
   return (
     <ScreenWrapper>

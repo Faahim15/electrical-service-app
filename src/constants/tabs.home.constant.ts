@@ -167,7 +167,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
 
   // other section Rasel Islam
   {
-    id: "13",
+    id: "12",
     title: "Whole Home Surge Protection",
     description: "Protect your entire electrical system",
     iconName: "shield-checkmark-outline",
@@ -175,15 +175,16 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     iconColor: "#2DC99C",
   },
   {
-    id: "14",
+    id: "13",
     title: "Starlink Installation",
     description: "Satellite internet setup",
     iconName: "wifi-outline",
     iconBg: "#E8F3FD",
     iconColor: "#4A90D9",
   },
+
   {
-    id: "15",
+    id: "14",
     title: "Dedicated Circuit",
     description: "For RV and equipment",
     iconName: "hardware-chip-outline",
@@ -191,7 +192,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     iconColor: "#7B61FF",
   },
   {
-    id: "16",
+    id: "15",
     title: "Exhaust Fan",
     description: "Kitchen, bathroom, or attic fans",
     iconName: "partly-sunny-outline",
@@ -199,7 +200,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     iconColor: "#F5A623",
   },
   {
-    id: "17",
+    id: "16",
     title: "Outlets",
     description: "Install or replace electrical outlets",
     iconName: "radio-outline",
@@ -207,7 +208,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     iconColor: "#888888",
   },
   {
-    id: "18",
+    id: "17",
     title: "Switches",
     description: "Light switches and controls",
     iconName: "toggle-outline",
@@ -215,7 +216,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     iconColor: "#F5C623",
   },
   {
-    id: "19",
+    id: "18",
     title: "Lighting",
     description: "Interior and exterior lighting",
     iconName: "bulb-outline",
@@ -223,7 +224,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     iconColor: "#F5C623",
   },
   {
-    id: "20",
+    id: "19",
     title: "Ceiling Fan",
     description: "Interior and exterior ceiling fan",
     iconName: "refresh-outline",
