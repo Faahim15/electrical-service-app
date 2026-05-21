@@ -1,7 +1,7 @@
 import { setPhotos } from "@/src/redux/slices/globalstore/wholeHomeDataSlice";
 import { RootState } from "@/src/redux/store";
 import React, { useEffect, useRef } from "react";
-import { Animated, Easing, ScrollView, Text } from "react-native";
+import { Animated, Easing, ScrollView, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import PhotoUploadSection from "../../PhotoUploadSection";
 
@@ -91,17 +91,14 @@ const WholeHomeSt1 = () => {
       </Animated.Text>
 
       {/* Upload Card */}
-      <Animated.View
-        style={fadeSlideUp(cardAnim)}
-        className="bg-white rounded-2xl p-6 mb-5 shadow-sm"
-      >
+      <View className="bg-white rounded-2xl p-6 mb-5 shadow-sm">
         {/* Upload prompt area */}
         <PhotoUploadSection
           label="Upload photos of your electrical panel up close so we can see the breakers/panel label and about 10 ft away"
           photos={photos}
           onPhotosChange={(newPhotos) => dispatch(setPhotos(newPhotos))}
         />
-      </Animated.View>
+      </View>
     </ScrollView>
   );
 };
