@@ -181,24 +181,57 @@ const OtherFormProgress = () => {
             ];
 
   const [currentStep, setCurrentStep] = useState(0);
-  const progressAnim = useRef(new Animated.Value(0)).current;
+  // const progressAnim = useRef(new Animated.Value(0)).current;
   const fadeAnim = useRef(new Animated.Value(1)).current;
+  // Replace your refs:
+  const progressAnim = useRef(new Animated.Value(0)).current;
+  const slideAnim = useRef(new Animated.Value(0)).current;
 
   const totalSteps = STEPS.length;
   const progressPercent = Math.round(((currentStep + 1) / totalSteps) * 100);
 
+  // const animateProgress = (nextStep: number) => {
+  //   const nextPercent = ((nextStep + 1) / totalSteps) * 100;
+
+  //   Animated.timing(fadeAnim, {
+  //     toValue: 0,
+  //     duration: 150,
+  //     useNativeDriver: true,
+  //   }).start(() => {
+  //     setCurrentStep(nextStep);
+  //     Animated.timing(fadeAnim, {
+  //       toValue: 1,
+  //       duration: 200,
+  //       useNativeDriver: true,
+  //     }).start();
+  //   });
+
+  //   Animated.timing(progressAnim, {
+  //     toValue: nextPercent,
+  //     duration: 400,
+  //     useNativeDriver: false,
+  //   }).start();
+  // };
+  // Replace your animateProgress function:
   const animateProgress = (nextStep: number) => {
     const nextPercent = ((nextStep + 1) / totalSteps) * 100;
+    const isGoingForward = nextStep > currentStep;
 
-    Animated.timing(fadeAnim, {
-      toValue: 0,
-      duration: 150,
+    // Slide current content out
+    Animated.timing(slideAnim, {
+      toValue: isGoingForward ? -400 : 400, // exit left or right
+      duration: 200,
       useNativeDriver: true,
     }).start(() => {
       setCurrentStep(nextStep);
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 200,
+
+      // Position new content off-screen (opposite side)
+      slideAnim.setValue(isGoingForward ? 400 : -400);
+
+      // Slide new content in
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 250,
         useNativeDriver: true,
       }).start();
     });
@@ -293,7 +326,11 @@ const OtherFormProgress = () => {
           className="flex-1"
           contentContainerStyle={{ paddingBottom: 16 }}
         >
-          <Animated.View style={{ opacity: fadeAnim }} className="flex-1">
+          {/* ── Step Content ── */}
+          <Animated.View
+            style={{ transform: [{ translateX: slideAnim }] }}
+            className="flex-1"
+          >
             <CurrentStepComponent />
           </Animated.View>
 
