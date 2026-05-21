@@ -186,7 +186,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
   {
     id: "14",
     title: "Dedicated Circuit",
-    description: "For RV and equipment",
+    description: "For RV and equipment/tools",
     iconName: "hardware-chip-outline",
     iconBg: "#F0EDFB",
     iconColor: "#7B61FF",
