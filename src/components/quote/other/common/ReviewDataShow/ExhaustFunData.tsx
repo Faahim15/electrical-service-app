@@ -54,16 +54,35 @@ const ExhaustFunData = () => {
                 : "—"
             }
           />
-          <ReviewRow label="Panel Distance" value={s.kitchenDist ?? "—"} />
-          <ReviewPhotos
-            label="Current Fan Photos"
-            photos={s.photosKitchenCurrentFan}
-          />
-          {s.kitchenYesNo === "Yes" && (
-            <ReviewPhotos
-              label="New Fan Photos"
-              photos={s.photosKitchenNewFan}
-            />
+          {s.installType === "New Installation" && (
+            <View>
+              <ReviewPhotos
+                label="installation location Photos"
+                photos={s.photosKitchenLocation}
+              />
+              {s.kitchenYesNo === "Yes" && (
+                <ReviewPhotos
+                  label="installation location Photos"
+                  photos={s.photosKitchenLocation}
+                />
+              )}
+            </View>
+          )}
+
+          {s.installType === "Replacement" && (
+            <View>
+              <ReviewRow label="Panel Distance" value={s.kitchenDist ?? "—"} />
+              <ReviewPhotos
+                label="Current Fan Photos"
+                photos={s.photosKitchenCurrentFan}
+              />
+              {s.kitchenYesNo === "Yes" && (
+                <ReviewPhotos
+                  label="New Fan Photos"
+                  photos={s.photosKitchenNewFan}
+                />
+              )}
+            </View>
           )}
         </>
       )}
@@ -92,15 +111,34 @@ const ExhaustFunData = () => {
             }
           />
           <ReviewRow label="Panel Distance" value={s.bathroomDist ?? "—"} />
-          <ReviewPhotos
-            label="Current Fan Photos"
-            photos={s.photosBathroomCurrentFan}
-          />
-          {s.bathroomYesNo === "Yes" && (
-            <ReviewPhotos
-              label="New Fan Photos"
-              photos={s.photosBathroomNewFan}
-            />
+
+          {s.installType === "New Installation" && (
+            <View>
+              <ReviewPhotos
+                label="installation location Photos"
+                photos={s.photosBathromlocation}
+              />
+              {s.kitchenYesNo === "Yes" && (
+                <ReviewPhotos
+                  label="installation location Photos"
+                  photos={s.photosBathromlocation}
+                />
+              )}
+            </View>
+          )}
+          {s.installType === "Replacement" && (
+            <View>
+              <ReviewPhotos
+                label="Current Fan Photos"
+                photos={s.photosBathroomCurrentFan}
+              />
+              {s.bathroomYesNo === "Yes" && (
+                <ReviewPhotos
+                  label="New Fan Photos"
+                  photos={s.photosBathroomNewFan}
+                />
+              )}
+            </View>
           )}
         </>
       )}

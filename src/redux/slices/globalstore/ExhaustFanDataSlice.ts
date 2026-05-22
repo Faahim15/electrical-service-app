@@ -66,6 +66,7 @@ interface ExhaustFanState {
   kitchenDuctInfo: string;
   photosKitchenCurrentFan: string[];
   photosKitchenNewFan: string[];
+  photosKitchenLocation: string[];
 
   // ── Step 1: Bathroom ───────────────────────────────────────────────────────
   bathroomYesNo: YesNo;
@@ -77,6 +78,7 @@ interface ExhaustFanState {
   bathroomDuctInfo: string;
   photosBathroomCurrentFan: string[];
   photosBathroomNewFan: string[];
+  photosBathromlocation: string[];
 
   // ── Step 1: Electrical Panel ───────────────────────────────────────────────
   panelLocation: PanelLocation;
@@ -110,6 +112,7 @@ const initialState: ExhaustFanState = {
   kitchenDuctInfo: "",
   photosKitchenCurrentFan: [],
   photosKitchenNewFan: [],
+  photosKitchenLocation: [],
 
   // Bathroom
   bathroomYesNo: "Yes",
@@ -121,6 +124,7 @@ const initialState: ExhaustFanState = {
   bathroomDuctInfo: "",
   photosBathroomCurrentFan: [],
   photosBathroomNewFan: [],
+  photosBathromlocation: [],
 
   // Electrical Panel
   panelLocation: "Basement (Finished)",
@@ -196,6 +200,9 @@ const exhaustFanSlice = createSlice({
     setPhotosKitchenNewFan(state, action: PayloadAction<string[]>) {
       state.photosKitchenNewFan = action.payload;
     },
+    setphotosKitchenLocation(state, action: PayloadAction<string[]>) {
+      state.photosKitchenLocation = action.payload;
+    },
 
     // ── Bathroom ──────────────────────────────────────────────────────────────
     setBathroomYesNo(state, action: PayloadAction<YesNo>) {
@@ -233,6 +240,10 @@ const exhaustFanSlice = createSlice({
     },
     setPhotosBathroomNewFan(state, action: PayloadAction<string[]>) {
       state.photosBathroomNewFan = action.payload;
+    },
+
+    setphotosBathromlocation(state, action: PayloadAction<string[]>) {
+      state.photosBathromlocation = action.payload;
     },
 
     // ── Electrical Panel ──────────────────────────────────────────────────────
@@ -281,6 +292,7 @@ export const {
   setKitchenDuctInfo,
   setPhotosKitchenCurrentFan,
   setPhotosKitchenNewFan,
+  setphotosKitchenLocation,
   // Bathroom
   setBathroomYesNo,
   setBathroomFanType,
@@ -292,6 +304,7 @@ export const {
   setBathroomDuctInfo,
   setPhotosBathroomCurrentFan,
   setPhotosBathroomNewFan,
+  setphotosBathromlocation,
   // Panel
   setPanelLocation,
   setPanelLocationOther,

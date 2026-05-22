@@ -12,27 +12,16 @@ import {
   View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-// import {
-
-// } from "./switchesDataSlice";
 
 const SWITCH_TYPES: SwitchType[] = [
   "Standard (Toggle)",
-  "Standard (Rocker/Decorator)",
-  "Dimmer (Toggle)",
-  "Dimmer (Rocker/Decorator)",
   "Smart",
+  "Standard (Rocker/Decorator)",
+  "Dimmer (Rocker/Decorator)",
+  "Dimmer (Toggle)",
   "Motion",
   "Timer",
   "I'll provide my own",
-];
-
-const CHIP_ROWS: SwitchType[][] = [
-  ["Standard (Toggle)"],
-  ["Standard (Rocker/Decorator)"],
-  ["Dimmer (Toggle)"],
-  ["Dimmer (Rocker/Decorator)", "Smart"],
-  ["Motion", "Timer", "I'll provide my own"],
 ];
 
 const SwitchesSt3 = () => {
@@ -84,47 +73,43 @@ const SwitchesSt3 = () => {
           What type of switch(es) do you need?
         </Text>
 
-        {/* Chips — row layout */}
-        <View className="mb-6">
-          {CHIP_ROWS.map((row, rowIdx) => (
-            <View key={rowIdx} className="flex-row flex-wrap mb-2">
-              {row.map((chip) => {
-                const index = SWITCH_TYPES.indexOf(chip);
-                const isSelected = selectedTypes.includes(chip);
-                return (
-                  <Animated.View
-                    key={chip}
-                    style={{
-                      transform: [{ scale: chipAnims[index] }],
-                      marginRight: 8,
-                      marginBottom: 4,
-                    }}
+        {/* Two-column grid — same as CeilingFanSt3 TwoColGrid */}
+        <View className="flex-row flex-wrap gap-2 mb-6">
+          {SWITCH_TYPES.map((item, index) => {
+            const isSelected = selectedTypes.includes(item);
+            return (
+              <Animated.View
+                key={item}
+                style={{
+                  transform: [{ scale: chipAnims[index] }],
+                  width: "48%",
+                }}
+              >
+                <TouchableOpacity
+                  onPress={() => handleToggleType(item)}
+                  activeOpacity={0.85}
+                >
+                  <View
+                    className={`rounded-xl border py-3 px-3 items-center justify-center ${
+                      isSelected
+                        ? "bg-[#4AA9F5] border-[#4AA9F5]"
+                        : "bg-white border-gray-200"
+                    }`}
+                    style={{ minHeight: 48 }}
                   >
-                    <TouchableOpacity
-                      onPress={() => handleToggleType(chip)}
-                      activeOpacity={0.8}
-                      className="px-4 py-2 rounded-full border"
-                      style={{
-                        backgroundColor: isSelected ? "#60A5FA" : "#ffffff",
-                        borderColor: isSelected ? "#60A5FA" : "#E5E7EB",
-                      }}
+                    <Text
+                      className={`text-sm font-Inter_SemiBold text-center ${
+                        isSelected ? "text-white" : "text-[#1F2937]"
+                      }`}
                     >
-                      <Text
-                        className={`font-Inter_Medium text-sm ${
-                          isSelected ? "text-white" : "text-[#1F2937]"
-                        }`}
-                      >
-                        {chip}
-                      </Text>
-                    </TouchableOpacity>
-                  </Animated.View>
-                );
-              })}
-            </View>
-          ))}
+                      {item}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </Animated.View>
+            );
+          })}
         </View>
-
-        <View className="mb-6" />
       </ScrollView>
     </View>
   );

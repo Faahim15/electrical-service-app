@@ -254,12 +254,11 @@ const Partnerdetails = () => {
                     <Text className="text-xs text-gray-400 font-Inter_Regular">
                       Website
                     </Text>
-                    <Text
-                      className="text-sm text-[#111827] font-Inter_SemiBold"
-                      numberOfLines={1}
-                    >
-                      {PARTNER.website}
-                    </Text>
+                    <View className="flex-1 flex-row flex-wrap">
+                      <Text className="text-sm font-Inter_Regular text-[#0F172A] ml-2 flex-shrink flex-wrap">
+                        {PARTNER.website}
+                      </Text>
+                    </View>
                   </View>
                 </View>
               </View>

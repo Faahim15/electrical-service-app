@@ -22,12 +22,12 @@ const InputField2: React.FC<InputFieldProps> = ({
 
   return (
     <View className="mb-3">
-      <Text className="text-[13px] font-Inter_SemiBold text-[#111827] mb-[6px] tracking-[0.1px]">
+      <Text className="text-base font-Inter_SemiBold text-[#111827] mb-2 tracking-[0.1px]">
         {label}
       </Text>
 
       <TextInput
-        className={`h-[50px] font-Inter_Regular rounded-xl border-[1.5px] px-[14px] text-[15px] text-[#111827] bg-[#FFFFFF] ${
+        className={`h-[50px] font-Inter_Regular rounded-xl border px-4 text-sm text-[#111827] bg-[#FFFFFF] ${
           isFocused ? "border-cyan-500 bg-[#FFFFFF]" : "border-[#E2E8F0]"
         }`}
         value={value}

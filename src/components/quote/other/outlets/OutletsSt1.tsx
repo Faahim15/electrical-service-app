@@ -18,8 +18,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 const INTENDED_USES: IntendedUse[] = [
   "General Use",
-  "Freezer",
-  "Tools / Equipment",
+  // "Freezer",
+  // "Tools / Equipment",
   "Other",
 ];
 

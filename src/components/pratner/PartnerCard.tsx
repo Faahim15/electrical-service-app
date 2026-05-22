@@ -72,7 +72,7 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
       >
         {/* Name + Favourite */}
         <View className="flex-row items-start justify-between mb-0.5">
-          <Text className="text-[15px] font-Inter_Bold text-[#0F172A] flex-1 mr-2">
+          <Text className="text-base font-Inter_Bold text-[#0F172A] flex-1 mr-2">
             {item.name}
           </Text>
           <TouchableOpacity
@@ -88,7 +88,7 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
         </View>
 
         {/* Category */}
-        <Text className="text-[13px] font-Inter_Regular text-[#64748B] mb-3">
+        <Text className="text-sm font-Inter_Regular text-[#64748B] mb-3">
           {item.category}
         </Text>
 
@@ -98,7 +98,7 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
           onPress={() => Linking.openURL(`tel:${item.contact.phone}`)}
         >
           <Feather name="phone" size={14} color="#64748B" />
-          <Text className="text-[13px] font-Inter_Regular text-[#0F172A] ml-2">
+          <Text className="text-sm font-Inter_Regular text-[#0F172A] ml-2">
             {item.contact.phone}
           </Text>
         </TouchableOpacity>
@@ -113,7 +113,7 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
               <Feather name="globe" size={14} color="#64748B" />
             </View>
             <View className="flex-1 flex-row flex-wrap">
-              <Text className="text-[13px] font-Inter_Regular text-[#0F172A] ml-2 flex-shrink flex-wrap">
+              <Text className="text-sm font-Inter_Regular text-[#0F172A] ml-2 flex-shrink flex-wrap">
                 {item?.contact?.website}
               </Text>
             </View>
@@ -130,7 +130,7 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
             onPress={() => Linking.openURL(`tel:${item.contact.phone}`)}
           >
             <Feather name="phone" size={14} color="#0F172A" />
-            <Text className="text-[13px] font-Inter_SemiBold text-[#0F172A]">
+            <Text className="text-sm font-Inter_SemiBold text-[#0F172A]">
               Call
             </Text>
           </TouchableOpacity>
@@ -143,10 +143,7 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
               style={{ borderRadius: 16 }}
               className="py-4 items-center"
             >
-              <Text
-                className="font-Inter_SemiBold text-white"
-                style={{ fontSize: 16 }}
-              >
+              <Text className="font-Inter_SemiBold text-sm text-white">
                 View Detais
               </Text>
             </LinearGradient>
@@ -158,7 +155,7 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
             className="flex-row items-center justify-center border border-slate-200 rounded-xl px-4 py-4 gap-1.5 mt-3"
           >
             <Feather name="globe" size={14} color="#0F172A" />
-            <Text className="text-[13px] font-Inter_SemiBold text-[#0F172A]">
+            <Text className="text-sm font-Inter_SemiBold text-[#0F172A]">
               Website
             </Text>
           </TouchableOpacity>

@@ -60,17 +60,17 @@ const editprofile = () => {
               {/* ==============The main content of the card */}
 
               <View className="flex-row items-center ">
-                <View className="w-[66px] h-[66px] bg-white rounded-[18px] items-center justify-center mr-4 shadow-md elevation-6">
-                  <Text className="text-[22px] font-extrabold text-[#0EA5E9] tracking-[1px]">
+                <View className="w-16 h-16 bg-white rounded-2xl items-center justify-center mr-4 shadow-md elevation-6">
+                  <Text className="text-2xl font-extrabold text-[#0EA5E9] tracking-[1px]">
                     AM
                   </Text>
                 </View>
 
-                <View className="gap-[2px]">
-                  <Text className="text-white text-[20px] font-Inter_Bold leading-[24px]">
+                <View className="gap-1">
+                  <Text className="text-white text-xl font-Inter_Bold leading-[24px]">
                     Ashley Martinez
                   </Text>
-                  <Text className="text-[#FFFFFFE5] text-[13.5px] font-Inter_Medium">
+                  <Text className="text-[#FFFFFFE5] text-sm font-Inter_Medium">
                     Update your profile information
                   </Text>
                 </View>

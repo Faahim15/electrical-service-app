@@ -65,7 +65,8 @@ export const partnerCategories: PartnerCategory[] = [
   },
   {
     name: "Graphic Design / Printing",
-    description: "Graphic Design needs.",
+    description:
+      "Contact our trusted partners for your graphic design/printing needs",
     partnerCount: 2,
   },
   {
@@ -108,7 +109,7 @@ export const partnerCategories: PartnerCategory[] = [
   },
   {
     name: "Solar",
-    description: "Solar needs & Graphic Design needs",
+    description: "Contact our trusted partners for your solar needs ",
     partnerCount: 1,
   },
 ];

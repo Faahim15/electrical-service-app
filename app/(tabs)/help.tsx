@@ -86,7 +86,7 @@ const HelpCard = ({
         }}
       >
         <View
-          className="bg-white rounded-2xl px-4 py-4 flex-row items-center gap-4"
+          className="bg-white rounded-2xl px-2 py-4 flex-row items-center gap-4"
           style={{
             shadowColor: "#06B6D4",
             shadowOffset: { width: 0, height: 2 },
@@ -151,7 +151,7 @@ const Help = () => {
 
   return (
     <ScreenWrapper>
-      <SafeAreaView edges={["top"]} className="flex-1 px-4">
+      <SafeAreaView edges={["top"]} className="flex-1">
         {/* ── Header (original, untouched) ── */}
         <Animated.View
           style={{

@@ -420,6 +420,18 @@ const InteriorSection = () => {
         </>
       )}
 
+      {s.upgradeSwitch === "Yes" && (
+        <>
+          <Label>What kind of switch do you want installed?</Label>
+          <TwoColGrid
+            items={switchKinds}
+            selected={s.switchKind}
+            onSelect={(v) => dispatch(setInteriorSwitchKind(v as SwitchType))}
+          />
+          <View className="mb-4" />
+        </>
+      )}
+
       <Label>Will there be more than one switch location?</Label>
       <YesNoRow
         value={s.multiSwitch}
@@ -603,6 +615,27 @@ const FloodLightsSection = () => {
                 value={s.upgradeSwitch}
                 onChange={(v) => dispatch(setFloodUpgradeSwitch(v))}
               />
+              <View className="mb-4" />
+            </>
+          )}
+
+          {s.upgradeSwitch === "Yes" && (
+            <>
+              <Label>What kind of switch do you want installed?</Label>
+              <TwoColGrid
+                items={switchKinds}
+                selected={s.switchKind}
+                onSelect={(v) => dispatch(setFloodSwitchKind(v as SwitchType))}
+              />
+              {s.switchKind === "Other" && (
+                <TextInput
+                  className="border mt-3 border-gray-200 rounded-xl px-4 py-3 mb-4 text-gray-800 font-Inter_Regular"
+                  placeholder="Enter the Name of switch want install"
+                  placeholderTextColor="#aaa"
+                  value={s.switchOtherText}
+                  onChangeText={(v) => dispatch(setFloodSwitchOtherText(v))}
+                />
+              )}
               <View className="mb-4" />
             </>
           )}
@@ -960,6 +993,29 @@ const DrivewaySection = () => {
                 value={s.upgradeSwitch}
                 onChange={(v) => dispatch(setDrivewayUpgradeSwitch(v))}
               />
+              <View className="mb-4" />
+            </>
+          )}
+
+          {s.upgradeSwitch === "Yes" && (
+            <>
+              <Label>What kind of switch do you want installed?</Label>
+              <TwoColGrid
+                items={["Standard", "Smart", "Other", "I'll provide my own"]}
+                selected={s.switchKind}
+                onSelect={(v) =>
+                  dispatch(setDrivewaySwitchKind(v as SwitchType))
+                }
+              />
+              {s.switchKind === "Other" && (
+                <TextInput
+                  className="border mt-3 border-gray-200 rounded-xl px-4 py-3 mb-4 text-gray-800 font-Inter_Regular"
+                  placeholder="Enter the Name of switch want install"
+                  placeholderTextColor="#aaa"
+                  value={s.switchOtherText}
+                  onChangeText={(v) => dispatch(setDrivewaySwitchOtherText(v))}
+                />
+              )}
               <View className="mb-4" />
             </>
           )}

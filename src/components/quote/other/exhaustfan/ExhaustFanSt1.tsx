@@ -30,9 +30,11 @@ import {
   setPanelLocation,
   setPanelLocationOther,
   setPhotosAtticLocation,
+  setphotosBathromlocation,
   setPhotosBathroomCurrentFan,
   setPhotosBathroomNewFan,
   setPhotosKitchenCurrentFan,
+  setphotosKitchenLocation,
   setPhotosKitchenNewFan,
   setPhotosNewFan,
   setPhotosPanelClose,
@@ -367,7 +369,7 @@ const StyledInput = ({
       multiline={multiline}
       onFocus={() => setFocused(true)}
       onBlur={() => setFocused(false)}
-      className="font-Inter_Regular text-[13px] text-slate-800"
+      className="font-Inter_Regular text-sm text-slate-800"
       style={{
         borderWidth: 1.5,
         borderColor: focused ? "#60A5FA" : "#E2E8F0",
@@ -545,20 +547,36 @@ const ExhaustFanSt1 = () => {
     if (state.fanLocation === "Kitchen") {
       return (
         <SectionCard title="Kitchen Exhaust Fan Details">
-          <Label text="Current Kitchen Fan" />
-          <Label text="Upload photo of current exhaust fan" />
-          <PhotoUploadSection
-            label="Upload Current Fan Photo"
-            photos={state.photosKitchenCurrentFan}
-            onPhotosChange={(p) => dispatch(setPhotosKitchenCurrentFan(p))}
-          />
+          {state.installType === "New Installation" && (
+            <View>
+              <Label text="New Kitchen  Fan" />
+              {/* <Label text="Upload photo of current exhaust fan" /> */}
+              <PhotoUploadSection
+                label="upload photo of installation location"
+                photos={state.photosKitchenLocation}
+                onPhotosChange={(p) => dispatch(setphotosKitchenLocation(p))}
+              />
+            </View>
+          )}
 
-          <Label text="Existing duct diameter and vent location if known" />
-          <StyledInput
-            placeholder="e.g., 6 in duct venting through exterior wall"
-            value={state.kitchenDuctInfo}
-            onChangeText={(t) => dispatch(setKitchenDuctInfo(t))}
-          />
+          {state.installType === "Replacement" && (
+            <View>
+              <Label text="Current Kitchen Fan" />
+              <Label text="Upload photo of current exhaust fan" />
+              <PhotoUploadSection
+                label="Upload Current Fan Photo"
+                photos={state.photosKitchenCurrentFan}
+                onPhotosChange={(p) => dispatch(setPhotosKitchenCurrentFan(p))}
+              />
+
+              <Label text="Existing duct diameter and vent location if known" />
+              <StyledInput
+                placeholder="duct venting through exterior wall"
+                value={state.kitchenDuctInfo}
+                onChangeText={(t) => dispatch(setKitchenDuctInfo(t))}
+              />
+            </View>
+          )}
 
           <Label text="Will you be providing the new kitchen exhaust fan?" />
           <View className="flex-row gap-2.5 mb-4">
@@ -643,20 +661,36 @@ const ExhaustFanSt1 = () => {
     // ── Bathroom ───────────────────────────────────────────────────────────
     return (
       <SectionCard title="Bathroom Exhaust Fan Details">
-        <Label text="Current Bathroom Fan" />
-        <Label text="Upload photo of current exhaust fan" />
-        <PhotoUploadSection
-          label="Upload Current Fan Photo"
-          photos={state.photosBathroomCurrentFan}
-          onPhotosChange={(p) => dispatch(setPhotosBathroomCurrentFan(p))}
-        />
+        {state.installType === "New Installation" && (
+          <View>
+            <Label text="New Bathroom Fan" />
+            {/* <Label text="Upload photo of current exhaust fan" /> */}
+            <PhotoUploadSection
+              label="upload photo of installation location"
+              photos={state.photosBathromlocation}
+              onPhotosChange={(p) => dispatch(setphotosBathromlocation(p))}
+            />
+          </View>
+        )}
 
-        <Label text="Existing duct diameter and vent location if known" />
-        <StyledInput
-          placeholder="e.g., 6 in duct venting through exterior wall"
-          value={state.bathroomDuctInfo}
-          onChangeText={(t) => dispatch(setBathroomDuctInfo(t))}
-        />
+        {state.installType === "Replacement" && (
+          <View>
+            <Label text="Current Bathroom Fan" />
+            <Label text="Upload photo of current exhaust fan" />
+            <PhotoUploadSection
+              label="Upload Current Fan Photo"
+              photos={state.photosBathroomCurrentFan}
+              onPhotosChange={(p) => dispatch(setPhotosBathroomCurrentFan(p))}
+            />
+
+            <Label text="Existing duct diameter and vent location if known" />
+            <StyledInput
+              placeholder="duct venting through exterior wall"
+              value={state.bathroomDuctInfo}
+              onChangeText={(t) => dispatch(setBathroomDuctInfo(t))}
+            />
+          </View>
+        )}
 
         <Label text="Will you be providing the new bathroom exhaust fan?" />
         <View className="flex-row gap-2.5 mb-4">

@@ -52,7 +52,8 @@ const CATEGORIES: Category[] = [
   {
     id: "5",
     title: "Graphic Design / Printing",
-    description: "Graphic Design needs.",
+    description:
+      "Contact our trusted partners for your graphic design/printing needs",
     partners: 2,
     emoji: "🖨️",
   },
@@ -113,7 +114,7 @@ const CATEGORIES: Category[] = [
     id: "13",
 
     title: "Solar",
-    description: "Solar needs",
+    description: "Contact our trusted partners for your solar needs ",
     partners: 1,
     emoji: "☀️",
   },
@@ -185,19 +186,13 @@ const CategoryCard = ({
         </View>
 
         <View className="flex-1 mr-2">
-          <Text
-            className="text-[15px] font-Inter_Bold text-[#101828] leading-snug mb-0.5"
-            numberOfLines={2}
-          >
+          <Text className="text-base font-Inter_Bold text-[#101828] leading-snug mb-0.5">
             {item.title}
           </Text>
-          <Text
-            className="text-[13px] font-Inter_Regular text-[#6A7282] leading-snug mb-1"
-            numberOfLines={2}
-          >
+          <Text className="text-sm font-Inter_Regular text-[#6A7282] leading-snug mb-1">
             {item.description}
           </Text>
-          <Text className="text-[13px] font-Inter_Regular text-[#0092B8]">
+          <Text className="text-sm font-Inter_Regular text-[#0092B8]">
             {item.partners} partners available
           </Text>
         </View>
@@ -231,7 +226,7 @@ const Partners = () => {
 
   return (
     <ScreenWrapper>
-      <SafeAreaView edges={["top"]} className="flex-1 px-4">
+      <SafeAreaView edges={["top"]} className="flex-1 ">
         <Animated.View
           style={{
             transform: [{ translateY: headerSlide }],
