@@ -19,10 +19,10 @@ import React, { useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   ScrollView,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
   useWindowDimensions,
 } from "react-native";
@@ -47,22 +47,21 @@ const SectionLabel = ({
   hasInfo?: boolean;
   onInfoPress?: () => void;
 }) => (
-  <View className="flex-row items-center mb-2">
-    <Text className="text-[#1E293B] text-[13.5px] font-Inter_SemiBold">
+  <View className="flex-row items-center mb-2" style={{ flexWrap: "wrap" }}>
+    <Text
+      className="text-[#1E293B] text-[13.5px] font-Inter_SemiBold"
+      style={{ flexShrink: 1, flexWrap: "wrap" }}
+    >
       {label}
     </Text>
     {hasInfo && (
-      <TouchableOpacity
+      <Pressable
         onPress={onInfoPress}
         hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+        style={{ marginLeft: 4 }}
       >
-        <Ionicons
-          name="information-circle-outline"
-          size={16}
-          color="#94A3B8"
-          style={{ marginLeft: 4 }}
-        />
-      </TouchableOpacity>
+        <Ionicons name="information-circle-outline" size={16} color="#94A3B8" />
+      </Pressable>
     )}
   </View>
 );
@@ -76,8 +75,7 @@ const SelectOption = ({
   selected: boolean;
   onPress: () => void;
 }) => (
-  <TouchableOpacity
-    activeOpacity={0.8}
+  <Pressable
     onPress={onPress}
     style={{
       paddingVertical: 13,
@@ -100,7 +98,7 @@ const SelectOption = ({
     >
       {label}
     </Text>
-  </TouchableOpacity>
+  </Pressable>
 );
 
 export default function EVChargerDetails() {
@@ -240,13 +238,13 @@ export default function EVChargerDetails() {
                         <Text className="text-lg font-Inter_SemiBold text-[#0369A1]">
                           {/* NEMA Configuration Chart */}
                         </Text>
-                        <TouchableOpacity
+                        <Pressable
                           onPress={() => setShowNemaChart(false)}
                           className="w-[26px] h-[26px] rounded-full items-center justify-center"
                           style={{ backgroundColor: "#BAE6FD" }}
                         >
                           <Ionicons name="close" size={14} color="#0369A1" />
-                        </TouchableOpacity>
+                        </Pressable>
                       </View>
 
                       {/* SVG — full width, scrollable vertically */}

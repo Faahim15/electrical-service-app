@@ -154,9 +154,12 @@ export const initialGeneratorDetails: GeneratorDetails = {
   purchaseSize: "",
   backedUpCircuits: "",
   hasPropane: "",
-
+  panelLocations: "",
   panelPhotos: [],
   installLocationPhotos: [],
+  panelLocationOther: "",
+  // ✅ ADD THIS
+  meterPhotos: [],
 };
 
 export const initialNewConstructionDetails: NewConstructionDetails = {
