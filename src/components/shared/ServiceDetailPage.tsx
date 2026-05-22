@@ -1,4 +1,5 @@
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
+import { scale, verticalScale } from "@/src/utils/Scaling";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
@@ -200,7 +201,8 @@ export default function ServiceDetailPage({
                 opacity: titleOpacity,
                 transform: [{ translateY: titleSlide }],
                 alignItems: "center",
-                marginBottom: 20,
+                marginBottom: verticalScale(20),
+                paddingHorizontal: scale(4),
               }}
             >
               <Text

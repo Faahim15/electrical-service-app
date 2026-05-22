@@ -419,9 +419,11 @@ export interface GeneratorDetails {
   // Whole Home Standby specific
   backedUpCircuits: string;
   hasPropane: HasPropane;
-
+  panelLocations: string;
   panelPhotos: string[];
   installLocationPhotos: string[];
+  panelLocationOther: string;
+  meterPhotos: string[];
 }
 
 // ============================================

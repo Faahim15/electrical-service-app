@@ -2,7 +2,6 @@ import AuthHeading from "@/src/components/auth/AuthHeading";
 import SavedEditAction from "@/src/components/common/SavedButton";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import OptionGrid from "@/src/components/quote/OptionGrid";
-import PhotoUploadSection from "@/src/components/quote/PhotoUploadSection";
 import { CategoryTag } from "@/src/components/quote/review/CategoryTag";
 import BackButton from "@/src/components/shared/BackButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
@@ -12,7 +11,7 @@ import { updateGeneratorDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React from "react";
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 const KW_OUTPUTS = [
@@ -163,16 +162,16 @@ export default function GeneratorOwnership() {
                 numColumns={1}
               />
 
-              <PhotoUploadSection
-                label="Upload a photo of the generator"
+              {/* <PhotoUploadSection
+                label="upload photo of the receptacle on the generator"
                 photos={generatorPhotos}
                 onPhotosChange={(p) =>
                   dispatch(updateGeneratorDetails({ generatorPhotos: p }))
                 }
-              />
+              /> */}
 
               <OptionGrid
-                label="What is the approximate distance of the electrical panel from intel location?"
+                label="What is the approximate distance of the electrical panel from inlet location?"
                 options={PANEL_DISTANCES}
                 selected={panelDistance}
                 onSelect={(val) =>
@@ -234,15 +233,15 @@ export default function GeneratorOwnership() {
                 }
                 numColumns={1}
               />
-              <PhotoUploadSection
+              {/* <PhotoUploadSection
                 label="Upload photo of where your generator inlet will be"
                 photos={generatorPhotos}
                 onPhotosChange={(p) =>
                   dispatch(updateGeneratorDetails({ generatorPhotos: p }))
                 }
-              />
+              /> */}
               <OptionGrid
-                label="What is the approximate distance of the electrical panel from intel location?"
+                label="What is the approximate distance of the electrical panel from inlet location?"
                 options={PANEL_DISTANCES}
                 selected={panelDistance}
                 onSelect={(val) =>
@@ -282,11 +281,12 @@ export default function GeneratorOwnership() {
               )}
             </>
           )}
-
-          <GradientButton
-            label="Continue"
-            onPress={() => router.push("/quote/generator/photos-needed")}
-          />
+          <View className="mt-[3%]">
+            <GradientButton
+              label="Continue"
+              onPress={() => router.push("/quote/generator/photos-needed")}
+            />
+          </View>
           <SavedEditAction />
         </ScrollView>
       </KeyboardAvoidingView>

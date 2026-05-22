@@ -30,7 +30,31 @@ export default function GeneratorPhotosNeeded() {
       return data.details.installLocationPhotos;
     return [];
   });
+  const generatorPhotos = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "9" && data.details)
+      return data.details.generatorPhotos;
+    return [];
+  });
+  const hasGenerator = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
+    if (data?.categoryId === "9" && data.details)
+      return data.details.hasGenerator;
+    return "" as const;
+  });
+  const generatorDetails = useSelector((state: RootState) => {
+    const data = state.serviceForm.categoryData;
 
+    if (data?.categoryId === "9" && data.details) {
+      return data.details;
+    }
+
+    return null;
+  });
+  const hasExisting = hasGenerator === "Yes";
+  const generatorType = generatorDetails?.generatorType || "";
+
+  const isWholeHomeStandby = generatorType === "Whole Home Standby";
   return (
     <ScreenWrapper paddingHorizontal={20}>
       <KeyboardAvoidingView
@@ -55,6 +79,35 @@ export default function GeneratorPhotosNeeded() {
               dispatch(updateGeneratorDetails({ panelPhotos: p }))
             }
           />
+
+          {hasExisting && (
+            <PhotoUploadSection
+              label="Upload photo of the receptacle on the generator"
+              photos={generatorPhotos}
+              onPhotosChange={(p) =>
+                dispatch(updateGeneratorDetails({ generatorPhotos: p }))
+              }
+            />
+          )}
+
+          {!isWholeHomeStandby && (
+            <PhotoUploadSection
+              label="Upload photo of where your generator inlet will be"
+              photos={generatorPhotos}
+              onPhotosChange={(p) =>
+                dispatch(updateGeneratorDetails({ generatorPhotos: p }))
+              }
+            />
+          )}
+          {isWholeHomeStandby && (
+            <PhotoUploadSection
+              label="Upload photo of your electrical meter"
+              photos={generatorDetails?.meterPhotos || []}
+              onPhotosChange={(p) =>
+                dispatch(updateGeneratorDetails({ meterPhotos: p }))
+              }
+            />
+          )}
 
           <PhotoUploadSection
             label="Upload photo of where you would like the generator installed"
