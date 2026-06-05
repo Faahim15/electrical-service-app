@@ -2,7 +2,7 @@ import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
-import { Animated, Text, TouchableOpacity, View } from "react-native";
+import { Animated, Pressable, Text, View } from "react-native";
 
 const UserProfileCard = () => {
   const cardScale = useRef(new Animated.Value(0.88)).current;
@@ -76,16 +76,15 @@ const UserProfileCard = () => {
           </View>
 
           {/* Edit Profile button */}
-          <TouchableOpacity
-            onPress={() => router.push("/editprofile")}
-            activeOpacity={0.82}
+          <Pressable
+            onPress={() => router.push("/(tabs)/profile/editprofile")}
             className="bg-white rounded-[18px] py-[13px] flex-row items-center justify-center gap-[9px]"
           >
             <Feather name="edit" size={18} color="#0ea5e9" />
             <Text className="text-sky-500 text-[15px] font-Inter_Bold">
               Edit Profile
             </Text>
-          </TouchableOpacity>
+          </Pressable>
         </LinearGradient>
       </Animated.View>
     </View>

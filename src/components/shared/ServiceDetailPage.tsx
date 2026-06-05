@@ -157,7 +157,7 @@ export default function ServiceDetailPage({
         <View style={{ flex: 1 }}>
           <ScrollView
             style={{ flex: 1 }}
-            contentContainerStyle={{ paddingBottom: 32 }}
+            contentContainerStyle={{ paddingBottom: verticalScale(90) }}
             showsVerticalScrollIndicator={false}
           >
             {/* Back Button */}
@@ -421,7 +421,8 @@ export default function ServiceDetailPage({
                 label="Start Quote"
                 onPress={
                   onStartQuote ??
-                  (() => router.push("/quote/common/contact-details"))
+                  (() =>
+                    router.push("/(tabs)/quotes/quote/common/contact-details"))
                 }
               />
             </Animated.View>

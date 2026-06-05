@@ -16,7 +16,7 @@ export default function ActivityCard({ item }: { item: ActivityItem }) {
       }}
       onPress={() =>
         router.push({
-          pathname: "/recent-activity/details",
+          pathname: "/(tabs)/home/details",
           params: {
             id: item.id,
             icon: item.icon,

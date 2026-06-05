@@ -6,28 +6,28 @@ import {
 export const quickActions: QuickAction[] = [
   {
     id: "1",
-    route: "/safety",
+    route: "/(tabs)/home/safety",
     icon: "shield-checkmark-outline",
     title: "Safety Reminders",
     subtitle: "Stay safe and informed",
   },
   {
     id: "2",
-    route: "/trobleshooting",
+    route: "/(tabs)/home/trobleshooting",
     icon: "construct-outline",
     title: "Troubleshooting",
     subtitle: "Fix common issues fast",
   },
   {
     id: "3",
-    route: "/saved-draft",
+    route: "/(tabs)/home/saved-draft",
     icon: "document-text-outline",
     title: "Saved Draft Quotes",
     subtitle: "Get in touch quickly",
   },
   {
     id: "4",
-    route: "/quote/my-quotes",
+    route: "/(tabs)/home/my-quotes",
     icon: "document-outline",
     title: "My Quotes",
     subtitle: "Get in touch quickly",

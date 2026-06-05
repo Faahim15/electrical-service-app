@@ -2,7 +2,7 @@ import { Entypo } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Href, router } from "expo-router";
 import React, { useEffect, useRef } from "react";
-import { Animated, Text, TouchableOpacity, View } from "react-native";
+import { Animated, Pressable, Text, View } from "react-native";
 import { SvgXml } from "react-native-svg";
 type MenuRowProps = {
   emoji: string;
@@ -45,7 +45,7 @@ const MenuRowProfile = ({
       style={{ transform: [{ translateX }, { scale }], opacity }}
       className="mb-3"
     >
-      <TouchableOpacity
+      <Pressable
         onPress={() => router.push(route)}
         className="bg-white rounded-2xl px-4 py-3.5 flex-row items-center shadow-sm"
         style={{
@@ -83,7 +83,7 @@ const MenuRowProfile = ({
         <View>
           <Entypo name="chevron-small-right" size={24} color="#CBD5E1" />
         </View>
-      </TouchableOpacity>
+      </Pressable>
     </Animated.View>
   );
 };

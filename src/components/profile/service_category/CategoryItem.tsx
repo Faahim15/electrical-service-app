@@ -21,7 +21,7 @@ const CategoryItem = ({
     dispatch(setSelectedRouteCategory(item));
 
     if (Number(item.id) < 11) {
-      router.push("/quote/service-details");
+      router.push("/(tabs)/quotes/quote/service-details");
     } else if (Number(item.id) === 11) {
       router.push("/sollar-installation");
     } else {

@@ -1,0 +1,164 @@
+import ActivityCard from "@/src/components/home/AcitivityCard";
+import SearchModal from "@/src/components/home/Modal/SearchModal";
+import QuickActionCard from "@/src/components/home/QuickActionCard";
+import QuickActionFullCard from "@/src/components/home/QuickActionFullCard";
+import ElectricalHelpCard from "@/src/components/profile/ElectricalHelpCard";
+import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
+import {
+  quickActions,
+  recentActivity,
+} from "@/src/constants/tabs.home.constant";
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import { useState } from "react";
+import { Pressable, ScrollView, Text, View } from "react-native";
+
+// ─── Main Screen ──────────────────────────────────────────
+
+export default function HomeScreen() {
+  const [searchVisible, setSearchVisible] = useState(false);
+
+  return (
+    <ScreenWrapper>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 100 }}
+      >
+        <View className="pt-[14%]">
+          {/* ── Top Bar ── */}
+          <View className="flex-row items-center justify-between mb-1">
+            <View>
+              <Text className="font-Inter_Bold text-2xl text-gray-900">
+                Good morning,
+              </Text>
+              <Text className="font-Inter_Bold text-2xl text-gray-900">
+                Ashley
+              </Text>
+            </View>
+            <View className="flex-row items-center gap-3">
+              <Pressable
+                className="w-10 h-10 rounded-full bg-white items-center justify-center"
+                style={{
+                  shadowColor: "#000",
+                  shadowOpacity: 0.06,
+                  shadowRadius: 4,
+                  elevation: 2,
+                }}
+                onPress={() => router.push("/shared/notifications")}
+              >
+                <Ionicons
+                  name="notifications-outline"
+                  size={20}
+                  color="#374151"
+                />
+              </Pressable>
+
+              <Pressable
+                onPress={() => router.push("/(tabs)/profile/editprofile")}
+              >
+                <View className="w-10 h-10 rounded-full bg-[#00ABB0] items-center justify-center">
+                  <Text className="font-Inter_Bold text-sm text-white">AM</Text>
+                </View>
+              </Pressable>
+            </View>
+          </View>
+
+          <Text className="font-Inter_Regular text-sm text-gray-400 mb-5">
+            How can we help today?
+          </Text>
+
+          {/* ── Search Bar ── */}
+          <Pressable
+            onPress={() => setSearchVisible(true)}
+            className="flex-row items-center border-2 border-[#E2E8F0] bg-white rounded-2xl px-4 mb-6"
+            style={{
+              height: 46,
+              shadowColor: "#000",
+              shadowOpacity: 0.05,
+              shadowRadius: 6,
+              elevation: 2,
+            }}
+          >
+            <Ionicons name="search-outline" size={18} color="#9CA3AF" />
+            <Text className="font-Inter_Regular text-sm text-gray-400 ml-2">
+              Search services, activity, actions...
+            </Text>
+          </Pressable>
+
+          {/* ── Hero Banner ── */}
+          <ElectricalHelpCard />
+
+          {/* ── Quick Actions ── */}
+          <Text className="font-Inter_Bold text-base text-gray-900 mb-3">
+            Quick Actions
+          </Text>
+
+          <View className="flex-row flex-wrap justify-between">
+            {quickActions.slice(0, 4).map((item) => (
+              <QuickActionCard key={item.id} item={item} />
+            ))}
+          </View>
+
+          {quickActions[4] && <QuickActionFullCard item={quickActions[4]} />}
+
+          {/* ── Recent Activity ── */}
+          <View className="flex-row items-center justify-between mb-3 mt-1">
+            <Text className="font-Inter_Bold text-base text-gray-900">
+              Recent Activity
+            </Text>
+            <Pressable
+              onPress={() => router.push("/(tabs)/home/recent-activity")}
+            >
+              <Text className="font-Inter_Medium text-sm text-[#00ABB0]">
+                View All &rsaquo;
+              </Text>
+            </Pressable>
+          </View>
+
+          {recentActivity.map((item) => (
+            <ActivityCard key={item.id} item={item} />
+          ))}
+
+          {/* ── Emergency Banner ── */}
+          <View className="bg-red-50 border border-red-100 rounded-2xl p-4 mt-2">
+            <View className="flex-row items-center mb-2">
+              <View className="w-8 h-8 rounded-full bg-red-100 items-center justify-center mr-3">
+                <Ionicons name="warning-outline" size={16} color="#EF4444" />
+              </View>
+              <Text className="font-Inter_SemiBold text-sm text-gray-800">
+                Power issue or urgent{"\n"}concern?
+              </Text>
+            </View>
+            <Text className="font-Inter_Regular text-xs text-gray-500 mb-4 ml-11">
+              Get immediate help from our team.{"\n"}If you're dealing with an
+              electrical emergency.
+            </Text>
+            <View className="flex-row items-center gap-3 ml-11">
+              <Pressable
+                className="bg-red-500 rounded-xl px-4 py-2.5"
+                onPress={() => router.push("/(tabs)/home/help")}
+              >
+                <Text className="font-Inter_SemiBold text-sm text-white">
+                  Call Now
+                </Text>
+              </Pressable>
+              <Pressable
+                onPress={() => router.push("/(tabs)/home/safety-warning")}
+              >
+                <Text className="font-Inter_Medium text-sm text-gray-600">
+                  View Safety Tips
+                </Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+
+      {/* ── Search Modal ── */}
+      <SearchModal
+        visible={searchVisible}
+        onClose={() => setSearchVisible(false)}
+      />
+    </ScreenWrapper>
+  );
+}

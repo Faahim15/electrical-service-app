@@ -2,7 +2,7 @@ import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
-import { Animated, Text, TouchableOpacity, View } from "react-native";
+import { Animated, Pressable, Text, View } from "react-native";
 
 const ElectricalHelpCard = () => {
   const cardScale = useRef(new Animated.Value(0.88)).current;
@@ -71,25 +71,25 @@ const ElectricalHelpCard = () => {
 
           {/* Action buttons */}
           <View className="flex-row gap-[10px]">
-            <TouchableOpacity
-              onPress={() => router.push("/quote/choose-category")}
-              activeOpacity={0.82}
+            <Pressable
+              onPress={() =>
+                router.push("/(tabs)/quotes/quote/choose-category")
+              }
               className="flex-1 bg-white rounded-[18px] py-[13px] items-center justify-center"
             >
               <Text className="text-sky-500 text-[15px] font-Inter_Bold">
                 Start a Quote
               </Text>
-            </TouchableOpacity>
+            </Pressable>
 
-            <TouchableOpacity
-              onPress={() => router.push("/shared/help")}
-              activeOpacity={0.82}
+            <Pressable
+              onPress={() => router.push("/(tabs)/home/help")}
               className="flex-1 bg-[#FFFFFF26] rounded-[18px] py-[13px] items-center justify-center"
             >
               <Text className="text-white text-[15px] font-Inter_Bold">
                 Get Help
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         </LinearGradient>
       </Animated.View>
