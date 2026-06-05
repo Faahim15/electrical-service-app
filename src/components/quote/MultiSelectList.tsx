@@ -1,5 +1,5 @@
 // src/components/shared/MultiSelectList.tsx
-import { Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
 interface MultiSelectListProps {
   label: string;
@@ -28,9 +28,8 @@ const MultiSelectList = ({
         {options.map((option) => {
           const isSelected = selected.includes(option);
           return (
-            <TouchableOpacity
+            <Pressable
               key={option}
-              activeOpacity={0.8}
               onPress={() => onToggle(option)}
               style={{
                 paddingVertical: 13,
@@ -52,7 +51,7 @@ const MultiSelectList = ({
               >
                 {option}
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           );
         })}
       </View>

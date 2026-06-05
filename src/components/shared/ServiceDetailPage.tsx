@@ -4,13 +4,7 @@ import { Feather, Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
-import {
-  Animated,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Animated, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ScreenWrapper from "./ScreenWrapper";
 
@@ -162,13 +156,12 @@ export default function ServiceDetailPage({
           >
             {/* Back Button */}
             <View style={{ paddingTop: 12, paddingBottom: 4 }}>
-              <TouchableOpacity
+              <Pressable
                 onPress={onBackToCategories ?? (() => router.back())}
-                activeOpacity={0.7}
                 style={{ padding: 4, alignSelf: "flex-start" }}
               >
                 <Feather name="arrow-left" size={22} color="#1F2937" />
-              </TouchableOpacity>
+              </Pressable>
             </View>
 
             {/* Icon — same spring scale as OtherStart */}

@@ -81,10 +81,10 @@ import { RootState } from "@/src/redux/store";
 import React, { useRef } from "react";
 import {
   Animated,
+  Pressable,
   ScrollView,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -118,9 +118,7 @@ const AnimatedTouchable = ({
   };
   return (
     <Animated.View style={[{ transform: [{ scale }] }, style]}>
-      <TouchableOpacity onPress={press} activeOpacity={0.85}>
-        {children}
-      </TouchableOpacity>
+      <Pressable onPress={press}>{children}</Pressable>
     </Animated.View>
   );
 };

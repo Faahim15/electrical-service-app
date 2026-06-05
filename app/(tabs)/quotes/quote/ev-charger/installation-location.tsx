@@ -14,9 +14,9 @@ import React from "react";
 import {
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   ScrollView,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,8 +31,7 @@ const SelectOption = ({
   selected: boolean;
   onPress: () => void;
 }) => (
-  <TouchableOpacity
-    activeOpacity={0.8}
+  <Pressable
     onPress={onPress}
     style={{
       paddingVertical: 13,
@@ -55,7 +54,7 @@ const SelectOption = ({
     >
       {label}
     </Text>
-  </TouchableOpacity>
+  </Pressable>
 );
 
 export default function InstallationLocation() {

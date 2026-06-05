@@ -1,7 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, Pressable, Text, View } from "react-native";
 
 const UploadArea = ({
   tittle,
@@ -22,7 +22,7 @@ const UploadArea = ({
       <Text className="text-[#1F2937] text-sm font-Inter_Regular text-center leading-5 mb-4">
         {tittle}
       </Text>
-      <TouchableOpacity activeOpacity={0.85} onPress={pickImage}>
+      <Pressable onPress={pickImage}>
         <LinearGradient
           colors={["#EFF6FF", "#EFF6FF"]}
           start={{ x: 0, y: 0 }}
@@ -37,7 +37,7 @@ const UploadArea = ({
             Choose File
           </Text>
         </LinearGradient>
-      </TouchableOpacity>
+      </Pressable>
     </View>
 
     {images.length > 0 && (
@@ -52,13 +52,12 @@ const UploadArea = ({
               className="w-full h-full"
               resizeMode="cover"
             />
-            <TouchableOpacity
+            <Pressable
               onPress={() => onRemove(uri)}
-              activeOpacity={0.8}
               className="absolute top-1 right-1 w-5 h-5 bg-black/60 rounded-full items-center justify-center"
             >
               <Feather name="x" size={11} color="#fff" />
-            </TouchableOpacity>
+            </Pressable>
           </View>
         ))}
       </View>

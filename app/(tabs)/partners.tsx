@@ -3,13 +3,7 @@ import { setSelectedCategory } from "@/src/redux/slices/partnersRouterSlice";
 import { Entypo } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
-import {
-  Animated,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Animated, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
 interface Category {
@@ -169,8 +163,7 @@ const CategoryCard = ({
       }}
       className="mb-3"
     >
-      <TouchableOpacity
-        activeOpacity={0.75}
+      <Pressable
         className="bg-white rounded-2xl  px-4 py-4 flex-row items-center shadow-sm"
         style={{
           shadowColor: "#06B6D4",
@@ -200,7 +193,7 @@ const CategoryCard = ({
         <View className="w-6 h-6 items-center justify-center">
           <Entypo name="chevron-small-right" size={24} color="#99A1AF" />
         </View>
-      </TouchableOpacity>
+      </Pressable>
     </Animated.View>
   );
 };

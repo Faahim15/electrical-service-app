@@ -1,7 +1,7 @@
 import { updateContactDetails } from "@/src/redux/slices/serviceFormSlice";
 import { RootState } from "@/src/redux/store";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 const OPTIONS = ["Call", "Text", "Email"] as const;
@@ -25,9 +25,8 @@ export default function PreferredContactSelector() {
         {OPTIONS.map((option) => {
           const isSelected = selected === option;
           return (
-            <TouchableOpacity
+            <Pressable
               key={option}
-              activeOpacity={0.8}
               onPress={() =>
                 dispatch(updateContactDetails({ preferredContact: option }))
               }
@@ -51,7 +50,7 @@ export default function PreferredContactSelector() {
               >
                 {option}
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           );
         })}
       </View>

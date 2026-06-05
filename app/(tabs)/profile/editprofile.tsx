@@ -7,9 +7,9 @@ import React from "react";
 import {
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   ScrollView,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -20,9 +20,9 @@ const editprofile = () => {
       <SafeAreaView edges={["top"]} className="flex-1">
         {/* header */}
         <View className="flex-row justify-between items-center pb-2 ">
-          <TouchableOpacity onPress={() => router.back()} className="">
+          <Pressable onPress={() => router.back()} className="">
             <Feather name="arrow-left" size={24} color="#111827" />
-          </TouchableOpacity>
+          </Pressable>
           <Text className="text-2xl text-[#111827] font-Inter_Bold">
             Edit Profile
           </Text>

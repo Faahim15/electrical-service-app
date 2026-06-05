@@ -5,7 +5,7 @@ import {
 } from "@/src/redux/slices/globalstore/StarlinkDataSlice";
 import { AppDispatch, RootState } from "@/src/redux/store";
 import React from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, TextInput, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import PhotoUploadSection from "../../PhotoUploadSection";
 
@@ -62,10 +62,9 @@ const StarlinkSt3 = () => {
         {ABOVE_OPTIONS.map((opt) => {
           const sel = aboveOptions.includes(opt);
           return (
-            <TouchableOpacity
+            <Pressable
               key={opt}
               onPress={() => dispatch(toggleAboveOption(opt))}
-              activeOpacity={0.8}
               style={{
                 backgroundColor: sel ? "#3B82F6" : "#FFFFFF",
                 borderRadius: 50,
@@ -81,7 +80,7 @@ const StarlinkSt3 = () => {
               >
                 {opt}
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           );
         })}
       </View>

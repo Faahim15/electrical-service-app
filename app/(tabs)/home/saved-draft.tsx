@@ -4,7 +4,7 @@ import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, Modal, Text, TouchableOpacity, View } from "react-native";
+import { Animated, Modal, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const drafts = [
@@ -119,9 +119,9 @@ const SavedDraft = () => {
           }}
           className="flex-row items-center px-4 pt-2 pb-3"
         >
-          <TouchableOpacity onPress={() => router.back()} className="p-1 mr-2">
+          <Pressable onPress={() => router.back()} className="p-1 mr-2">
             <Feather name="arrow-left" size={22} color="#0F172A" />
-          </TouchableOpacity>
+          </Pressable>
           <Text className="text-xl text-[#0F172A] font-Inter_Bold">
             Saved Drafts
           </Text>
@@ -157,12 +157,12 @@ const SavedDraft = () => {
                   <Text className="text-[#0F172A] font-Inter_SemiBold text-base  flex-1 pr-2">
                     {draft.title}
                   </Text>
-                  <TouchableOpacity
+                  <Pressable
                     onPress={() => openDeleteModal(draft.id)}
                     className="p-1"
                   >
                     <Feather name="trash-2" size={18} color="#EF4444" />
-                  </TouchableOpacity>
+                  </Pressable>
                 </View>
 
                 {/* Last edited */}
@@ -253,8 +253,7 @@ const SavedDraft = () => {
 
               {/* Buttons */}
               <View className="flex-row gap-x-3 mt-2">
-                <TouchableOpacity
-                  activeOpacity={0.8}
+                <Pressable
                   onPress={closeModal}
                   className="flex-1 rounded-full py-3.5 items-center"
                   style={{
@@ -267,10 +266,9 @@ const SavedDraft = () => {
                   >
                     No
                   </Text>
-                </TouchableOpacity>
+                </Pressable>
 
-                <TouchableOpacity
-                  activeOpacity={0.85}
+                <Pressable
                   onPress={confirmDelete}
                   className="flex-1 rounded-full py-3.5 items-center"
                   style={{
@@ -288,7 +286,7 @@ const SavedDraft = () => {
                   >
                     Yes, Delete
                   </Text>
-                </TouchableOpacity>
+                </Pressable>
               </View>
             </Animated.View>
           </View>

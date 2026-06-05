@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Modal, ScrollView, TouchableOpacity, View } from "react-native";
+import { Image, Modal, Pressable, ScrollView, View } from "react-native";
 
 const NEMAModal = ({
   visible = true,
@@ -17,7 +17,7 @@ const NEMAModal = ({
     >
       <View className="flex-1 bg-[#0000006e]">
         {/* Close button */}
-        <TouchableOpacity
+        <Pressable
           className="absolute top-10 right-4 z-10 w-10 h-10 rounded-full bg-[#0000005b] justify-center items-center"
           onPress={onClose}
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
@@ -26,7 +26,7 @@ const NEMAModal = ({
             <View className="absolute w-[18px] h-0.5 rounded bg-white rotate-45" />
             <View className="absolute w-[18px] h-0.5 rounded bg-white -rotate-45" />
           </View>
-        </TouchableOpacity>
+        </Pressable>
 
         {/* Scrollable image */}
         <ScrollView

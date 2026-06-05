@@ -9,9 +9,9 @@ import {
   Animated,
   Easing,
   Linking,
+  Pressable,
   ScrollView,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -238,10 +238,10 @@ function ContactRow({
   const hasValue = !!value;
   return (
     <>
-      <TouchableOpacity
+      <Pressable
         className="flex-row items-center gap-3 py-0.5"
         onPress={hasValue ? onPress : undefined}
-        activeOpacity={hasValue ? 0.6 : 1}
+        // activeOpacity={hasValue ? 0.6 : 1}
         disabled={!hasValue}
       >
         <View>{icon}</View>
@@ -252,7 +252,7 @@ function ContactRow({
         >
           {value || placeholder}
         </Text>
-      </TouchableOpacity>
+      </Pressable>
       {showDivider && <Divider />}
     </>
   );
@@ -264,9 +264,9 @@ function AttachmentItem({ name }: { name: string }) {
   const ext = name.split(".").pop()?.toUpperCase() ?? "FILE";
   const isImage = ["JPG", "JPEG", "PNG", "WEBP"].includes(ext);
   return (
-    <TouchableOpacity
+    <Pressable
       className="flex-row items-center gap-2.5 py-2 px-1 rounded-xl mb-1 bg-slate-50"
-      activeOpacity={0.7}
+      // activeOpacity={0.7}
     >
       <View className="w-8 h-8 rounded-lg bg-sky-50 items-center justify-center">
         <Feather name={isImage ? "image" : "file"} size={16} color="#0EA5E9" />
@@ -278,7 +278,7 @@ function AttachmentItem({ name }: { name: string }) {
         {name}
       </Text>
       <Feather name="download" size={16} color="#9CA3AF" />
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 
@@ -396,9 +396,9 @@ const Myquotedetais = () => {
           style={{ opacity: headerFade }}
           className="flex-row justify-between items-center pb-2"
         >
-          <TouchableOpacity onPress={() => router.back()}>
+          <Pressable onPress={() => router.back()}>
             <Feather name="arrow-left" size={24} color="#111827" />
-          </TouchableOpacity>
+          </Pressable>
           <Text className="text-2xl text-[#111827] font-Inter_Bold">
             Quote Details
           </Text>
@@ -419,15 +419,14 @@ const Myquotedetais = () => {
             <Text className="text-sm font-Inter_Regular text-gray-400 text-center mb-2">
               {`This quote may have been removed or doesn't exist.`}
             </Text>
-            <TouchableOpacity
+            <Pressable
               className="bg-[#06B6D4] rounded-2xl px-8 py-4 mt-2"
               onPress={() => router.back()}
-              activeOpacity={0.85}
             >
               <Text className="text-white text-[15px] font-Inter_SemiBold">
                 Go Back
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         ) : (
           /* ── Content ── */

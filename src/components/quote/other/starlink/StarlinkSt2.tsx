@@ -6,7 +6,7 @@ import {
 import { setDishLocation } from "@/src/redux/slices/starlinkTheRouteSlice";
 import { AppDispatch, RootState } from "@/src/redux/store";
 import React, { useEffect, useRef } from "react";
-import { Animated, Text, TouchableOpacity, View } from "react-native";
+import { Animated, Pressable, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import PhotoUploadSection from "../../PhotoUploadSection";
 
@@ -36,7 +36,7 @@ const OptionRow = ({
     outputRange: ["#1F2937", "#ffffff"],
   });
   return (
-    <TouchableOpacity onPress={onPress} activeOpacity={0.85}>
+    <Pressable onPress={onPress}>
       <Animated.View
         style={{
           backgroundColor: bg,
@@ -55,7 +55,7 @@ const OptionRow = ({
           {label}
         </Animated.Text>
       </Animated.View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

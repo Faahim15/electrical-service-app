@@ -4,7 +4,7 @@ import { ServiceCategory } from "@/src/types/tabs.home.types";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { useDispatch } from "react-redux";
 
 const CategoryItem = ({
@@ -31,9 +31,8 @@ const CategoryItem = ({
   };
 
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={handlePress}
-      activeOpacity={0.7}
       className="flex-row border border-green-50 items-center bg-white rounded-2xl  mb-3 px-4 py-4"
       style={{
         shadowColor: "#000",
@@ -73,7 +72,7 @@ const CategoryItem = ({
 
       {/* Chevron */}
       <Ionicons name="chevron-forward" size={18} color="#BBBBBB" />
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

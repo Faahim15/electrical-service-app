@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { Pressable, Text } from "react-native";
 import CustomSvg from "../shared/CustomSvg";
 
 const SocialButton = ({
@@ -12,9 +12,8 @@ const SocialButton = ({
   svgXml: string;
 }) => {
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={onPress}
-      activeOpacity={0.8}
       className="flex-row items-center justify-center border border-gray-200 bg-white rounded-2xl"
       style={{ height: 52 }}
     >
@@ -22,7 +21,7 @@ const SocialButton = ({
       <Text className="ml-3 font-Inter_Medium text-sm text-gray-800">
         {label}
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

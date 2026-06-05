@@ -1,6 +1,6 @@
 // src/components/shared/TimelineOption.tsx
 import { Ionicons } from "@expo/vector-icons";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
 type TimelineItem = {
   label: string;
@@ -65,9 +65,8 @@ const TimelineOption = ({ selected, onSelect }: TimelineOptionProps) => {
         {TIMELINE_OPTIONS.map((item) => {
           const isSelected = selected === item.label;
           return (
-            <TouchableOpacity
+            <Pressable
               key={item.label}
-              activeOpacity={0.8}
               onPress={() => onSelect(item.label)}
               style={{
                 flexDirection: "row",
@@ -109,7 +108,7 @@ const TimelineOption = ({ selected, onSelect }: TimelineOptionProps) => {
                   {item.tag}
                 </Text>
               </View>
-            </TouchableOpacity>
+            </Pressable>
           );
         })}
       </View>

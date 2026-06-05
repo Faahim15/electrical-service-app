@@ -12,10 +12,10 @@ import { AppDispatch, RootState } from "@/src/redux/store";
 import React, { useRef } from "react";
 import {
   Animated,
+  Pressable,
   ScrollView,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -72,14 +72,13 @@ const CeilingFanSt2 = () => {
     animKey: string;
   }) => (
     <Animated.View style={{ transform: [{ scale: getAnim(animKey) }] }}>
-      <TouchableOpacity
+      <Pressable
         onPress={() => animatePress(animKey, onPress)}
         className={`w-full py-3 px-4 rounded-lg mb-2 border ${
           isSelected
             ? "bg-[#60A5FA] border-[#60A5FA]"
             : "bg-white border-gray-200"
         }`}
-        activeOpacity={0.85}
       >
         <Text
           className={`text-base font-medium ${
@@ -88,7 +87,7 @@ const CeilingFanSt2 = () => {
         >
           {label}
         </Text>
-      </TouchableOpacity>
+      </Pressable>
     </Animated.View>
   );
 

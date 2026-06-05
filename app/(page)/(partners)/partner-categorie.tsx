@@ -7,13 +7,7 @@ import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React, { useEffect, useMemo, useRef } from "react";
-import {
-  Animated,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Animated, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 
@@ -74,9 +68,9 @@ const Partnercategorie = () => {
           }}
           className="flex-row justify-between items-center pb-2 px-4"
         >
-          <TouchableOpacity onPress={() => router.back()}>
+          <Pressable onPress={() => router.back()}>
             <Feather name="arrow-left" size={24} color="#111827" />
-          </TouchableOpacity>
+          </Pressable>
           <Text className="text-xl text-[#111827] font-Inter_Bold">
             {category?.title}
           </Text>

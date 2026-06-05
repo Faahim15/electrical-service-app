@@ -4,13 +4,7 @@ import { selectSelectedItem } from "@/src/redux/slices/seftymaintanceSlice";
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
-import {
-  Animated,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Animated, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 
@@ -103,9 +97,9 @@ const MaintenanceDetails = () => {
           <Text className="text-[#6B7280] font-Inter_Regular text-sm">
             No item selected.
           </Text>
-          <TouchableOpacity onPress={() => router.back()} className="mt-4">
+          <Pressable onPress={() => router.back()} className="mt-4">
             <Text className="text-[#155DFC] font-Inter_SemiBold">Go Back</Text>
-          </TouchableOpacity>
+          </Pressable>
         </SafeAreaView>
       </ScreenWrapper>
     );
@@ -122,9 +116,9 @@ const MaintenanceDetails = () => {
           }}
           className="flex-row justify-between items-center pb-2 "
         >
-          <TouchableOpacity onPress={() => router.back()}>
+          <Pressable onPress={() => router.back()}>
             <Feather name="arrow-left" size={24} color="#111827" />
-          </TouchableOpacity>
+          </Pressable>
           <Text className="text-xl text-[#1F2937] font-Inter_SemiBold">
             Maintenance Details
           </Text>

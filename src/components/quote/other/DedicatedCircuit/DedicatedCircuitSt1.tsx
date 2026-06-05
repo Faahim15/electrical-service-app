@@ -8,10 +8,10 @@ import { AppDispatch, RootState } from "@/src/redux/store";
 import React, { useEffect, useRef } from "react";
 import {
   Animated,
+  Pressable,
   ScrollView,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -92,9 +92,8 @@ const DedicatedCircuitSt1 = () => {
     isSelected: boolean,
     onPress: () => void,
   ) => (
-    <TouchableOpacity
+    <Pressable
       key={label}
-      activeOpacity={0.75}
       onPress={onPress}
       className={`rounded-2xl px-4 py-4 mb-2 ${isSelected ? "bg-[#60A5FA]" : "bg-white"}`}
       style={{
@@ -112,7 +111,7 @@ const DedicatedCircuitSt1 = () => {
       >
         {label}
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 
   return (

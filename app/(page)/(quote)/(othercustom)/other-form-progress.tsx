@@ -48,7 +48,6 @@ import {
   Pressable,
   ScrollView,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -323,9 +322,9 @@ const OtherFormProgress = () => {
       <SafeAreaView edges={["top"]} className="flex-1">
         {/* ── Header ── */}
         <View className="flex-row justify-between items-center pb-2">
-          <TouchableOpacity onPress={goBack}>
+          <Pressable onPress={goBack}>
             <Feather name="arrow-left" size={24} color="#111827" />
-          </TouchableOpacity>
+          </Pressable>
           <Text className="text-2xl text-[#111827] font-Inter_Bold"></Text>
           <View />
         </View>
@@ -381,7 +380,7 @@ const OtherFormProgress = () => {
             <Pressable>
               <SavedEditAction
                 title={"Save for Later"}
-                onPress={() => router.push("/saved-draft")}
+                onPress={() => router.push("/(tabs)/home/saved-draft")}
               />
             </Pressable>
           )}

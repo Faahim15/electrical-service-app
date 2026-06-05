@@ -19,10 +19,10 @@ import { Ionicons } from "@expo/vector-icons";
 import React, { useRef, useState } from "react";
 import {
   Animated,
+  Pressable,
   ScrollView,
   Text,
   TextInput,
-  TouchableOpacity,
   useWindowDimensions,
   View,
 } from "react-native";
@@ -89,12 +89,11 @@ const OutletsSt2 = () => {
                 key={item}
                 style={{ transform: [{ scale: installAnims[index] }] }}
               >
-                <TouchableOpacity
+                <Pressable
                   onPress={() => {
                     animatePressIn(installAnims[index]);
                     dispatch(setSt2InstallType(item));
                   }}
-                  activeOpacity={0.85}
                   className="mb-2 rounded-xl border px-4 py-4"
                   style={{
                     backgroundColor: isSelected ? "#60A5FA" : "#ffffff",
@@ -108,7 +107,7 @@ const OutletsSt2 = () => {
                   >
                     {item}
                   </Text>
-                </TouchableOpacity>
+                </Pressable>
               </Animated.View>
             );
           },
@@ -134,12 +133,11 @@ const OutletsSt2 = () => {
                   key={amp}
                   style={{ transform: [{ scale: ampAnims[index] }] }}
                 >
-                  <TouchableOpacity
+                  <Pressable
                     onPress={() => {
                       animatePressIn(ampAnims[index]);
                       dispatch(setSt2SelectedAmp(amp));
                     }}
-                    activeOpacity={0.85}
                     className="mb-2 rounded-xl border px-4 py-4"
                     style={{
                       backgroundColor: isSelected ? "#60A5FA" : "#ffffff",
@@ -153,7 +151,7 @@ const OutletsSt2 = () => {
                     >
                       {amp}
                     </Text>
-                  </TouchableOpacity>
+                  </Pressable>
                 </Animated.View>
               );
             })}
@@ -169,12 +167,11 @@ const OutletsSt2 = () => {
                   key={volt}
                   style={{ transform: [{ scale: voltAnims[index] }] }}
                 >
-                  <TouchableOpacity
+                  <Pressable
                     onPress={() => {
                       animatePressIn(voltAnims[index]);
                       dispatch(setSt2SelectedVolt(volt));
                     }}
-                    activeOpacity={0.85}
                     className="mb-2 rounded-xl border px-4 py-4"
                     style={{
                       backgroundColor: isSelected ? "#60A5FA" : "#ffffff",
@@ -188,18 +185,18 @@ const OutletsSt2 = () => {
                     >
                       {volt}
                     </Text>
-                  </TouchableOpacity>
+                  </Pressable>
                 </Animated.View>
               );
             })}
 
             {/* NEMA */}
-            <TouchableOpacity onPress={() => setIsVisiable(true)}>
+            <Pressable onPress={() => setIsVisiable(true)}>
               <Text className="text-base font-Inter_SemiBold text-[#1F2937] mt-5 mb-4">
                 What is the NEMA configuration for the receptacle (if there will
                 be one)? <Text style={{ color: "#60A5FA" }}>ⓘ</Text>
               </Text>
-            </TouchableOpacity>
+            </Pressable>
             <TextInput
               value={nemaConfig}
               onChangeText={(v) => dispatch(setSt2NemaConfig(v))}
@@ -231,13 +228,13 @@ const OutletsSt2 = () => {
                   style={{ backgroundColor: "#EEF9FF" }}
                 >
                   <Text className="text-lg font-Inter_SemiBold text-[#0369A1]" />
-                  <TouchableOpacity
+                  <Pressable
                     onPress={() => setIsVisiable(false)}
                     className="w-[26px] h-[26px] rounded-full items-center justify-center"
                     style={{ backgroundColor: "#BAE6FD" }}
                   >
                     <Ionicons name="close" size={14} color="#0369A1" />
-                  </TouchableOpacity>
+                  </Pressable>
                 </View>
 
                 <ScrollView

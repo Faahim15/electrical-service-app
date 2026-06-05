@@ -8,13 +8,7 @@ import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
-import {
-  Animated,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Animated, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
 
@@ -55,8 +49,7 @@ const TroubleshootingCard = ({
       }}
       className="mb-3"
     >
-      <TouchableOpacity
-        activeOpacity={0.82}
+      <Pressable
         onPress={() => {
           dispatch(setSelectedCategory(item)); // ✅ now TroubleshootingCategory, type matches
           router.push("/troubleshooting-guides");
@@ -101,7 +94,7 @@ const TroubleshootingCard = ({
           {/* Chevron */}
           <Feather name="chevron-right" size={18} color="#CBD5E1" />
         </View>
-      </TouchableOpacity>
+      </Pressable>
     </Animated.View>
   );
 };
@@ -179,9 +172,9 @@ const Trobleshooting = () => {
           }}
           className="flex-row justify-between items-center pb-2 px-4"
         >
-          <TouchableOpacity onPress={() => router.back()}>
+          <Pressable onPress={() => router.back()}>
             <Feather name="arrow-left" size={24} color="#111827" />
-          </TouchableOpacity>
+          </Pressable>
           <Text className="text-xl text-[#111827] font-Inter_Bold">
             Troubleshooting
           </Text>
@@ -251,14 +244,13 @@ const Trobleshooting = () => {
                 Stop and call our trained professionals if you notice sparks,
                 burning smells, heat, or visible damage.
               </Text>
-              <TouchableOpacity
-                onPress={() => router.push("/safety-warning")}
-                activeOpacity={0.7}
+              <Pressable
+                onPress={() => router.push("/(tabs)/home/safety-warning")}
               >
                 <Text className="text-[13px] font-Inter_SemiBold text-[#F59E0B]">
                   View Safety Warning
                 </Text>
-              </TouchableOpacity>
+              </Pressable>
             </View>
           </Animated.View>
 
@@ -291,10 +283,7 @@ const Trobleshooting = () => {
               <Text className="text-sm font-Inter_Regular text-[#64748B] leading-5 mb-4">
                 Contact us or request service if your issue is not resolved.
               </Text>
-              <TouchableOpacity
-                onPress={() => router.push("/shared/help")}
-                activeOpacity={0.85}
-              >
+              <Pressable onPress={() => router.push("/(tabs)/home/help")}>
                 <LinearGradient
                   colors={["#06B6D4", "#14B8A6"]}
                   start={{ x: 0, y: 0 }}
@@ -310,7 +299,7 @@ const Trobleshooting = () => {
                     Contact Us
                   </Text>
                 </LinearGradient>
-              </TouchableOpacity>
+              </Pressable>
             </View>
           </Animated.View>
           <View className="h-40" />

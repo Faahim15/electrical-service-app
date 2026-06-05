@@ -10,9 +10,9 @@ import {
   FlatList,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
 
@@ -60,15 +60,14 @@ const ListFooter = () => (
     <Text className="font-Inter_Regular text-sm text-[#4C51BF] mb-[2%]">
       Our team can help you determine the best{"\n"}service for your needs
     </Text>
-    <TouchableOpacity
-      activeOpacity={0.8}
-      onPress={() => router.push("/shared/help")}
+    <Pressable
+      onPress={() => router.push("/(tabs)/home/help")}
       className="border border-gray-300 bg-white rounded-xl px-6 py-3 self-start"
     >
       <Text className="font-Inter_Medium text-sm text-[#4C51BF]">
         Contact Us
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   </View>
 );
 

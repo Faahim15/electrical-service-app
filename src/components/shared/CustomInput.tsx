@@ -1,13 +1,7 @@
 import { verticalScale } from "@/src/utils/Scaling";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
-import {
-  Text,
-  TextInput,
-  TextInputProps,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Pressable, Text, TextInput, TextInputProps, View } from "react-native";
 
 type CustomInputProps = {
   label?: string;
@@ -75,13 +69,13 @@ export default function CustomInput({
 
         {/* Eye Icon */}
         {isPassword && (
-          <TouchableOpacity onPress={() => setShowPassword((prev) => !prev)}>
+          <Pressable onPress={() => setShowPassword((prev) => !prev)}>
             <Ionicons
               name={showPassword ? "eye-off" : "eye"}
               size={18}
               color="#6C6C70"
             />
-          </TouchableOpacity>
+          </Pressable>
         )}
       </View>
 

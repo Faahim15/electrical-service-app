@@ -3,7 +3,7 @@ import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Pressable, Text, View } from "react-native";
 
 const NOTIFICATIONS = [
   {
@@ -100,18 +100,18 @@ export default function Notifications() {
         <View className="bg-white px-[4%] pt-[4%] pb-4">
           <View className="flex-row items-center justify-between">
             <View className="flex-row items-center gap-3">
-              <TouchableOpacity onPress={() => router.back()}>
+              <Pressable onPress={() => router.back()}>
                 <Ionicons name="arrow-back" size={22} color="#1E293B" />
-              </TouchableOpacity>
+              </Pressable>
               <Text className="text-[#1E293B] text-[20px] font-Inter_Bold">
                 Notifications
               </Text>
             </View>
-            <TouchableOpacity onPress={markAllRead}>
+            <Pressable onPress={markAllRead}>
               <Text className="text-[#0EA5E9] text-[13px] font-Inter_Medium">
                 Mark all read
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         </View>
 
@@ -122,8 +122,7 @@ export default function Notifications() {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ padding: 16, gap: 10 }}
           renderItem={({ item }) => (
-            <TouchableOpacity
-              activeOpacity={0.85}
+            <Pressable
               style={{
                 backgroundColor: "#fff",
                 borderRadius: 16,
@@ -194,7 +193,7 @@ export default function Notifications() {
                   </View>
                 </View>
               </View>
-            </TouchableOpacity>
+            </Pressable>
           )}
         />
       </View>

@@ -3,7 +3,7 @@ import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import { router } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, Text, TouchableOpacity, View } from "react-native";
+import { Animated, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SvgXml } from "react-native-svg";
 
@@ -159,8 +159,7 @@ const SubmitQuoteRequest = () => {
             style={{ opacity: checkboxAnim }}
             className="flex-row items-start p-6 bg-white rounded-lg"
           >
-            <TouchableOpacity
-              activeOpacity={0.8}
+            <Pressable
               onPress={handleCheck}
               className="mt-0.5 mr-3"
               style={{
@@ -185,7 +184,7 @@ const SubmitQuoteRequest = () => {
               >
                 ✓
               </Animated.Text>
-            </TouchableOpacity>
+            </Pressable>
             <Text className="font-Inter_Regular text-[#334155] text-[13px] flex-1 leading-5">
               I confirm the information is correct and authorize Four Elements
               Electric to contact me about this request
@@ -199,15 +198,14 @@ const SubmitQuoteRequest = () => {
               onPress={() => router.push("/request-received")}
             />
 
-            <TouchableOpacity
+            <Pressable
               onPress={() => router.back()}
-              activeOpacity={0.7}
               className="items-center py-1"
             >
               <Text className="font-Inter_Medium text-[#334155] text-sm">
                 Back to Review
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           </Animated.View>
         </View>
       </SafeAreaView>

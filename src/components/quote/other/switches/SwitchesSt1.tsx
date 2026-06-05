@@ -7,10 +7,10 @@ import {
 import React, { useRef } from "react";
 import {
   Animated,
+  Pressable,
   ScrollView,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -80,12 +80,11 @@ const SwitchesSt1 = () => {
               key={item}
               style={{ transform: [{ scale: installAnims[index] }] }}
             >
-              <TouchableOpacity
+              <Pressable
                 onPress={() => {
                   animatePressIn(installAnims[index]);
                   dispatch(setInstallType(item));
                 }}
-                activeOpacity={0.85}
                 className="mb-2 rounded-xl border px-4 py-4"
                 style={{
                   backgroundColor: isSelected ? "#60A5FA" : "#ffffff",
@@ -99,7 +98,7 @@ const SwitchesSt1 = () => {
                 >
                   {item}
                 </Text>
-              </TouchableOpacity>
+              </Pressable>
             </Animated.View>
           );
         })}

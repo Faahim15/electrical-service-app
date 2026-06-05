@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
-import { Platform, Text, TouchableOpacity, View } from "react-native";
+import { Platform, Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface CustomHeaderProps {
@@ -35,9 +35,8 @@ export default function CustomHeader({
       <View className="flex-row items-center h-[56px] px-[2%]">
         {/* Left — Back Button */}
         <View className="w-12 items-start justify-center">
-          <TouchableOpacity
+          <Pressable
             onPress={() => router.back()}
-            activeOpacity={0.6}
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
             className="w-10 h-10 items-center justify-center rounded-full"
           >
@@ -46,7 +45,7 @@ export default function CustomHeader({
               size={Platform.OS === "ios" ? 28 : 24}
               color={tintColor}
             />
-          </TouchableOpacity>
+          </Pressable>
         </View>
 
         {/* Center — Title */}
@@ -61,14 +60,13 @@ export default function CustomHeader({
         {/* Right — Optional Action */}
         <View className="w-12 items-end justify-center">
           {rightAction && (
-            <TouchableOpacity
+            <Pressable
               onPress={rightAction.onPress}
-              activeOpacity={0.6}
               hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
               className="w-10 h-10 items-center justify-center rounded-full"
             >
               <Ionicons name={rightAction.icon} size={22} color={tintColor} />
-            </TouchableOpacity>
+            </Pressable>
           )}
         </View>
       </View>

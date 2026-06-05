@@ -4,13 +4,7 @@ import {
 } from "@/src/redux/slices/globalstore/StarlinkDataSlice";
 import { AppDispatch, RootState } from "@/src/redux/store";
 import React, { useEffect, useRef } from "react";
-import {
-  Animated,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Animated, Pressable, Text, TextInput, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 const OptionRow = ({
@@ -42,7 +36,7 @@ const OptionRow = ({
   });
 
   return (
-    <TouchableOpacity onPress={onPress} activeOpacity={0.85}>
+    <Pressable onPress={onPress}>
       <Animated.View
         style={{
           backgroundColor: bg,
@@ -61,7 +55,7 @@ const OptionRow = ({
           {label}
         </Animated.Text>
       </Animated.View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

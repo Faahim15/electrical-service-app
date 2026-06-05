@@ -6,10 +6,10 @@ import { router } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
+  Pressable,
   ScrollView,
   Switch,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -100,7 +100,7 @@ const SafetyCard = ({
     router.push("/maintenance-details");
   };
   return (
-    <TouchableOpacity activeOpacity={0.82} onPress={handleroute}>
+    <Pressable onPress={handleroute}>
       <Animated.View
         style={{
           transform: [{ translateY: slideAnim }],
@@ -167,7 +167,7 @@ const SafetyCard = ({
           ios_backgroundColor="#E5E7EB"
         />
       </Animated.View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 
@@ -229,9 +229,9 @@ const Safety = () => {
           }}
           className="flex-row justify-between items-center pb-2 px-4"
         >
-          <TouchableOpacity onPress={() => router.back()}>
+          <Pressable onPress={() => router.back()}>
             <Feather name="arrow-left" size={24} color="#111827" />
-          </TouchableOpacity>
+          </Pressable>
           <Text className="text-xl text-[#111827] font-Inter_Bold">
             Safety & Maintenance
           </Text>

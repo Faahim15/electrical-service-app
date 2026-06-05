@@ -5,7 +5,7 @@ import { SERVICE_CATEGORIES } from "@/src/constants/tabs.home.constant";
 import { RootState } from "@/src/redux/store";
 import { router } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, Text, TouchableOpacity, View } from "react-native";
+import { Animated, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SvgXml } from "react-native-svg";
 import { useSelector } from "react-redux";
@@ -189,8 +189,7 @@ const SubmitQuoteRequest = () => {
             className="flex-row items-start p-6 bg-white rounded-lg"
             style={{ opacity: checkboxAnim }}
           >
-            <TouchableOpacity
-              activeOpacity={0.8}
+            <Pressable
               onPress={handleCheck}
               className="mt-[2px] mr-3 items-center justify-center"
               style={{
@@ -208,7 +207,7 @@ const SubmitQuoteRequest = () => {
               >
                 ✓
               </Animated.Text>
-            </TouchableOpacity>
+            </Pressable>
             <Text className="text-[#334155] font-Inter_Regular text-[13px] flex-1 leading-5">
               I confirm the information is correct and authorize Four Elements
               Electric to contact me about this request
@@ -217,11 +216,10 @@ const SubmitQuoteRequest = () => {
 
           {/* Bottom Buttons */}
           <Animated.View style={{ opacity: btnAnim }}>
-            <TouchableOpacity
+            <Pressable
               onPress={() =>
                 router.push("/(tabs)/quotes/quote/common/request-received")
               }
-              activeOpacity={0.85}
               className="rounded-full py-4 items-center mb-4"
               style={{
                 backgroundColor: "#06B6D4",
@@ -235,17 +233,16 @@ const SubmitQuoteRequest = () => {
               <Text className="text-white text-base font-Inter_SemiBold">
                 Submit Request
               </Text>
-            </TouchableOpacity>
+            </Pressable>
 
-            <TouchableOpacity
-              activeOpacity={0.7}
+            <Pressable
               className="items-center py-1"
               onPress={() => router.back()}
             >
               <Text className="text-[#334155] font-Inter_Medium text-sm">
                 Back to Review
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           </Animated.View>
         </View>
       </SafeAreaView>

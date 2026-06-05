@@ -7,13 +7,7 @@ import {
   toggleOutletType,
 } from "@/src/redux/slices/globalstore/outletsDataSlice";
 import React, { useRef } from "react";
-import {
-  Animated,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Animated, Pressable, ScrollView, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 const OUTLET_TYPES: OutletType[] = [
@@ -93,9 +87,8 @@ const OutletsSt4 = () => {
                   key={chip}
                   style={{ transform: [{ scale: chipAnims[flatIndex] }] }}
                 >
-                  <TouchableOpacity
+                  <Pressable
                     onPress={() => handleToggleType(chip, flatIndex)}
-                    activeOpacity={0.8}
                     className="px-4 py-2 rounded-full border"
                     style={{
                       backgroundColor: isSelected ? "#60A5FA" : "#ffffff",
@@ -109,7 +102,7 @@ const OutletsSt4 = () => {
                     >
                       {chip}
                     </Text>
-                  </TouchableOpacity>
+                  </Pressable>
                 </Animated.View>
               );
             }),

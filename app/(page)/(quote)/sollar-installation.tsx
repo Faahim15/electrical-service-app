@@ -7,7 +7,7 @@ import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
-import { Animated, Text, TouchableOpacity, View } from "react-native";
+import { Animated, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
 
@@ -256,11 +256,7 @@ const SolarInstallation = () => {
               </Text>
 
               {/* Contact Partner Button */}
-              <TouchableOpacity
-                onPress={handleView}
-                activeOpacity={0.85}
-                className="w-full"
-              >
+              <Pressable onPress={handleView} className="w-full">
                 <LinearGradient
                   colors={["#0EA5E9", "#14B8A6"]}
                   start={{ x: 0, y: 0 }}
@@ -294,10 +290,10 @@ const SolarInstallation = () => {
                   </Text>
                 </LinearGradient>
                 {/* Since RN doesn't support backgroundImage on View, use two-tone approach */}
-              </TouchableOpacity>
+              </Pressable>
 
               {/* Visit Support */}
-              {/* <TouchableOpacity
+              {/* <Pressable
                 onPress={() => router.push("/shared/help")}
                 activeOpacity={0.7}
               >
@@ -310,7 +306,7 @@ const SolarInstallation = () => {
                 >
                   Visit Support
                 </Text>
-              </TouchableOpacity> */}
+              </Pressable> */}
             </View>
           </Animated.View>
 
@@ -322,7 +318,7 @@ const SolarInstallation = () => {
               marginTop: 28,
             }}
           >
-            <TouchableOpacity onPress={() => router.back()} activeOpacity={0.7}>
+            <Pressable onPress={() => router.back()}>
               <Text
                 style={{
                   fontSize: 14,
@@ -332,7 +328,7 @@ const SolarInstallation = () => {
               >
                 Back to Quote Categories
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           </Animated.View>
         </View>
       </SafeAreaView>

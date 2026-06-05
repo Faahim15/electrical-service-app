@@ -1,7 +1,7 @@
 // src/components/shared/GradientPressable.tsx
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { Pressable, Text } from "react-native";
 
 const GRADIENT_COLORS = [
   "#0EA5E9",
@@ -32,8 +32,7 @@ export const GradientPressable = ({
   onPress,
   style,
 }: GradientPressableProps) => (
-  <TouchableOpacity
-    activeOpacity={0.85}
+  <Pressable
     onPress={onPress}
     style={[{ borderRadius: 12, overflow: "hidden" }, style]}
   >
@@ -50,5 +49,5 @@ export const GradientPressable = ({
         {label}
       </Text>
     </LinearGradient>
-  </TouchableOpacity>
+  </Pressable>
 );

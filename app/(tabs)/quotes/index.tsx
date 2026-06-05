@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import { useDispatch } from "react-redux";
 
 // Quick Actions এর জন্য টাইপ
@@ -125,8 +125,7 @@ export default function QuotesScreen() {
               <Text className="text-[#64748B] text-[13px] font-Inter_Regular text-center mb-6">
                 Choose a service and send us your request in just a few steps.
               </Text>
-              <TouchableOpacity
-                activeOpacity={0.85}
+              <Pressable
                 onPress={() =>
                   router.push("/(tabs)/quotes/quote/choose-category")
                 }
@@ -142,7 +141,7 @@ export default function QuotesScreen() {
                     New Quote
                   </Text>
                 </LinearGradient>
-              </TouchableOpacity>
+              </Pressable>
             </View>
           </View>
 
@@ -173,9 +172,8 @@ export default function QuotesScreen() {
             </Text>
             <View className="flex-row flex-wrap justify-between">
               {popularServices.map((item) => (
-                <TouchableOpacity
+                <Pressable
                   key={item.id}
-                  activeOpacity={0.8}
                   onPress={() => handleServicePress(item)}
                   className="bg-white rounded-2xl items-center justify-center py-[6%] shadow-sm"
                   style={{ width: "48%", marginBottom: 12 }}
@@ -193,7 +191,7 @@ export default function QuotesScreen() {
                   <Text className="text-[#1E293B] text-[12.5px] font-Inter_Medium text-center">
                     {item.title}
                   </Text>
-                </TouchableOpacity>
+                </Pressable>
               ))}
             </View>
           </View>
@@ -207,14 +205,14 @@ export default function QuotesScreen() {
               <Text className="text-[#64748B] text-[13px] font-Inter_Regular mb-4">
                 Contact us and find the right option for your project
               </Text>
-              <TouchableOpacity
-                onPress={() => router.push("/shared/help")}
+              <Pressable
+                onPress={() => router.push("/(tabs)/home/help")}
                 className="bg-white rounded-2xl py-[3.5%] items-center shadow-sm"
               >
                 <Text className="text-[#1E293B] text-[13.5px] font-Inter_SemiBold">
                   Contact for Services
                 </Text>
-              </TouchableOpacity>
+              </Pressable>
             </View>
           </View>
         </ScrollView>

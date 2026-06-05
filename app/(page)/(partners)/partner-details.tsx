@@ -7,9 +7,9 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
   Linking,
+  Pressable,
   ScrollView,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -143,9 +143,9 @@ const Partnerdetails = () => {
           }}
           className="flex-row justify-between items-center pb-2 px-4 pt-2"
         >
-          <TouchableOpacity onPress={() => router.back()} className="p-1">
+          <Pressable onPress={() => router.back()} className="p-1">
             <Feather name="arrow-left" size={24} color="#111827" />
-          </TouchableOpacity>
+          </Pressable>
           <Text className="text-xl text-[#111827] font-Inter_Bold">
             Partner Details
           </Text>
@@ -191,16 +191,13 @@ const Partnerdetails = () => {
                   </Text>
                 </View>
               </View>
-              <TouchableOpacity
-                onPress={() => setIslove(!islove)}
-                className="p-1 "
-              >
+              <Pressable onPress={() => setIslove(!islove)} className="p-1 ">
                 {islove ? (
                   <AntDesign name="heart" size={24} color="#991b1b" />
                 ) : (
                   <Feather name="heart" size={22} color="#9CA3AF" />
                 )}
-              </TouchableOpacity>
+              </Pressable>
             </View>
 
             {/* Description */}
@@ -299,7 +296,7 @@ const Partnerdetails = () => {
             }}
             className="mt-4 gap-3"
           >
-            <TouchableOpacity onPress={handleCall} activeOpacity={0.85}>
+            <Pressable onPress={handleCall}>
               <LinearGradient
                 colors={["#0EA5E9", "#14B8A6"]}
                 start={{ x: 0, y: 0 }}
@@ -317,33 +314,31 @@ const Partnerdetails = () => {
                   Call Now
                 </Text>
               </LinearGradient>
-            </TouchableOpacity>
+            </Pressable>
 
             {/* Visit Website — outlined */}
             {PARTNER.website && (
-              <TouchableOpacity
+              <Pressable
                 onPress={handleWebsite}
-                activeOpacity={0.85}
                 className="border border-gray-200 rounded-2xl py-4 flex-row items-center justify-center gap-2 bg-white"
               >
                 <Feather name="globe" size={18} color="#374151" />
                 <Text className="text-[#374151] font-Inter_SemiBold text-base">
                   Visit Website
                 </Text>
-              </TouchableOpacity>
+              </Pressable>
             )}
 
             {/* Save Partner — outlined */}
-            <TouchableOpacity
-              onPress={() => router.push("/favorite-partners")}
-              activeOpacity={0.85}
+            <Pressable
+              onPress={() => router.push("/(tabs)/profile/favorite-partners")}
               className="border border-gray-200 rounded-2xl py-4 flex-row items-center justify-center gap-2 bg-white"
             >
               <Feather name="heart" size={18} color="#374151" />
               <Text className="text-[#374151] font-Inter_SemiBold text-base">
                 Save Partner
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           </Animated.View>
 
           <View className="h-40" />

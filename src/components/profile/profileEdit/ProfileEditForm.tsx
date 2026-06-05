@@ -1,7 +1,7 @@
 import EvilIcons from "@expo/vector-icons/build/EvilIcons";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import InputField2 from "../../shared/InputField2";
 import LinearButton from "../../shared/LinearButton";
 
@@ -109,14 +109,14 @@ const ProfileEditForm: React.FC = () => {
 
             {/* Remove button — only show on extra addresses */}
             {index > 0 && (
-              <TouchableOpacity
+              <Pressable
                 onPress={() => handleRemoveLocation(addr.id)}
                 className="bg-red-50 px-3 py-1 rounded-full border border-red-200"
               >
                 <Text className="text-red-500 text-xs font-semibold">
                   Remove
                 </Text>
-              </TouchableOpacity>
+              </Pressable>
             )}
           </View>
           <InputField2

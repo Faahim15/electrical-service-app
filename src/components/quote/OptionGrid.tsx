@@ -1,5 +1,5 @@
 import { verticalScale } from "@/src/utils/Scaling";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
 interface OptionGridProps {
   label: string;
@@ -45,9 +45,8 @@ const OptionGrid = ({
         {options.map((option) => {
           const isSelected = selected === option;
           return (
-            <TouchableOpacity
+            <Pressable
               key={option}
-              activeOpacity={0.8}
               onPress={() => onSelect(option)}
               style={{
                 width: isFullWidth ? "100%" : "48%",
@@ -70,7 +69,7 @@ const OptionGrid = ({
               >
                 {option}
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           );
         })}
       </View>

@@ -8,10 +8,10 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
+  Pressable,
   ScrollView,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -147,9 +147,8 @@ const OutletsSt1 = () => {
                 key={item}
                 style={{ transform: [{ scale: animatedValues[index] }] }}
               >
-                <TouchableOpacity
+                <Pressable
                   onPress={() => handleSelect(item, index)}
-                  activeOpacity={0.85}
                   className="mb-2 rounded-xl px-4 py-4"
                   style={{
                     backgroundColor: isSelected ? "#60A5FA" : "#F8FAFC",
@@ -164,7 +163,7 @@ const OutletsSt1 = () => {
                   >
                     {item}
                   </Text>
-                </TouchableOpacity>
+                </Pressable>
 
                 {item === "Other" && (
                   <OtherInput

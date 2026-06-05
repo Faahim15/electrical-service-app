@@ -5,13 +5,7 @@ import {
 } from "@/src/redux/slices/globalstore/cellingfanDataSlice";
 import { AppDispatch, RootState } from "@/src/redux/store";
 import React, { useRef } from "react";
-import {
-  Animated,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Animated, Pressable, ScrollView, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 const switchKinds = [
@@ -73,14 +67,13 @@ const CeilingFanSt3 = () => {
     animKey: string;
   }) => (
     <Animated.View style={{ transform: [{ scale: getAnim(animKey) }] }}>
-      <TouchableOpacity
+      <Pressable
         onPress={() => animatePress(animKey, onPress)}
         className={`py-3 px-3 rounded-lg border mb-2 ${
           isSelected
             ? "bg-[#60A5FA] border-[#60A5FA]"
             : "bg-white border-gray-200"
         }`}
-        activeOpacity={0.85}
       >
         <Text
           className={`text-base font-Inter_Medium ${
@@ -89,7 +82,7 @@ const CeilingFanSt3 = () => {
         >
           {label}
         </Text>
-      </TouchableOpacity>
+      </Pressable>
     </Animated.View>
   );
 
@@ -196,7 +189,7 @@ const TwoColGrid = ({
   <View className="flex-row flex-wrap gap-2">
     {items.map((item) => (
       <View key={item} style={{ width: "48%" }}>
-        <TouchableOpacity onPress={() => onSelect(item)}>
+        <Pressable onPress={() => onSelect(item)}>
           <View
             className={`rounded-xl border py-3 px-3 items-center justify-center ${
               selected === item
@@ -213,7 +206,7 @@ const TwoColGrid = ({
               {item}
             </Text>
           </View>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     ))}
   </View>

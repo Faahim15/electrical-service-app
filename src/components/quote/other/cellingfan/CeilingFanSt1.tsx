@@ -10,13 +10,7 @@ import {
 } from "@/src/redux/slices/globalstore/cellingfanDataSlice";
 import { AppDispatch, RootState } from "@/src/redux/store";
 import React, { useRef } from "react";
-import {
-  Animated,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Animated, Pressable, ScrollView, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import PhotoUploadSection from "../../PhotoUploadSection";
 
@@ -91,14 +85,13 @@ const CeilingFanSt1 = () => {
     animKey: string;
   }) => (
     <Animated.View style={{ transform: [{ scale: getAnim(animKey) }] }}>
-      <TouchableOpacity
+      <Pressable
         onPress={() => animatePress(animKey, onPress)}
         className={`w-full py-4 px-4 rounded-lg mb-2 border ${
           isSelected
             ? "bg-[#60A5FA] border-[#60A5FA]"
             : "bg-white border-gray-200"
         }`}
-        activeOpacity={0.85}
       >
         <Text
           className={`text-base font-Inter_Medium ${
@@ -107,7 +100,7 @@ const CeilingFanSt1 = () => {
         >
           {label}
         </Text>
-      </TouchableOpacity>
+      </Pressable>
     </Animated.View>
   );
 
@@ -169,10 +162,9 @@ const CeilingFanSt1 = () => {
               {AREA_OPTIONS.map((area) => {
                 const isSelected = selectedAreas.includes(area);
                 return (
-                  <TouchableOpacity
+                  <Pressable
                     key={area}
                     onPress={() => dispatch(toggleSelectedArea(area))}
-                    activeOpacity={0.8}
                     style={{
                       paddingHorizontal: 16,
                       paddingVertical: 10,
@@ -188,7 +180,7 @@ const CeilingFanSt1 = () => {
                     >
                       {area}
                     </Text>
-                  </TouchableOpacity>
+                  </Pressable>
                 );
               })}
             </View>

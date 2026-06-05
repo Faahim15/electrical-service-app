@@ -1,5 +1,5 @@
 // src/components/shared/QuickTags.tsx
-import { Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
 interface QuickTagsProps {
   tags: string[];
@@ -17,9 +17,8 @@ const QuickTags = ({ tags, selected, onToggle }: QuickTagsProps) => {
         {tags.map((tag) => {
           const isSelected = selected.includes(tag);
           return (
-            <TouchableOpacity
+            <Pressable
               key={tag}
-              activeOpacity={0.8}
               onPress={() => onToggle(tag)}
               style={{
                 paddingHorizontal: 14,
@@ -36,7 +35,7 @@ const QuickTags = ({ tags, selected, onToggle }: QuickTagsProps) => {
               >
                 {tag}
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           );
         })}
       </View>

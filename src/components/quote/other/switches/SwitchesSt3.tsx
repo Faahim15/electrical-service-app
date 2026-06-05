@@ -4,13 +4,7 @@ import {
   toggleSwitchType,
 } from "@/src/redux/slices/globalstore/switchesDataSlice";
 import React, { useRef } from "react";
-import {
-  Animated,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Animated, Pressable, ScrollView, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 const SWITCH_TYPES: SwitchType[] = [
@@ -85,10 +79,7 @@ const SwitchesSt3 = () => {
                   width: "48%",
                 }}
               >
-                <TouchableOpacity
-                  onPress={() => handleToggleType(item)}
-                  activeOpacity={0.85}
-                >
+                <Pressable onPress={() => handleToggleType(item)}>
                   <View
                     className={`rounded-xl border py-3 px-3 items-center justify-center ${
                       isSelected
@@ -105,7 +96,7 @@ const SwitchesSt3 = () => {
                       {item}
                     </Text>
                   </View>
-                </TouchableOpacity>
+                </Pressable>
               </Animated.View>
             );
           })}

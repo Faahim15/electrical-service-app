@@ -3,7 +3,7 @@ import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
-import { Animated, Text, TouchableOpacity, View } from "react-native";
+import { Animated, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SvgXml } from "react-native-svg";
 
@@ -191,8 +191,7 @@ const RequestReceived = () => {
 
             {/* New Quote + My Quotes */}
             <View className="flex-row gap-x-3">
-              <TouchableOpacity
-                activeOpacity={0.8}
+              <Pressable
                 className="flex-1 rounded-full py-3.5 items-center bg-white"
                 style={{
                   shadowColor: "#0EA5E9",
@@ -201,16 +200,17 @@ const RequestReceived = () => {
                   shadowOffset: { width: 0, height: 2 },
                   elevation: 1,
                 }}
-                onPress={() => router.replace("/quote/choose-category")}
+                onPress={() =>
+                  router.replace("/(tabs)/quotes/quote/choose-category")
+                }
               >
                 <Text className="font-Inter_Medium text-[#0F172A] text-sm">
                   New Quote
                 </Text>
-              </TouchableOpacity>
+              </Pressable>
 
-              <TouchableOpacity
-                onPress={() => router.push("/quote/my-quotes")}
-                activeOpacity={0.8}
+              <Pressable
+                onPress={() => router.push("/(tabs)/quotes/quote/my-quotes")}
                 className="flex-1 rounded-full py-3.5 items-center bg-white"
                 style={{
                   shadowColor: "#0EA5E9",
@@ -223,7 +223,7 @@ const RequestReceived = () => {
                 <Text className="font-Inter_Medium text-[#0F172A] text-sm">
                   My Quotes
                 </Text>
-              </TouchableOpacity>
+              </Pressable>
             </View>
           </Animated.View>
         </View>

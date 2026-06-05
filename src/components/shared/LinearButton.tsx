@@ -1,6 +1,6 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 interface ButtonProps {
   title: string;
   onPress: () => void;
@@ -12,12 +12,11 @@ const LinearButton = ({ title, onPress, variant = "primary" }: ButtonProps) => {
   const isPrimary = variant === "primary";
 
   return (
-    <TouchableOpacity
+    <Pressable
       className={`h-[54px] rounded-2xl items-center justify-center `}
       onPress={onPress}
       onPressIn={() => setPressed(true)}
       onPressOut={() => setPressed(false)}
-      activeOpacity={1}
     >
       {isPrimary ? (
         <LinearGradient
@@ -48,7 +47,7 @@ const LinearButton = ({ title, onPress, variant = "primary" }: ButtonProps) => {
           </Text>
         </View>
       )}
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

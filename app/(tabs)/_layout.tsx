@@ -8,7 +8,7 @@ import {
 import { router, Tabs, usePathname } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { SvgXml } from "react-native-svg";
 
 const tabs = [
@@ -64,10 +64,9 @@ function CustomTabBar() {
       {tabs.map((tab) => {
         const focused = pathname.includes(tab.name);
         return (
-          <TouchableOpacity
+          <Pressable
             key={tab.name}
             onPress={() => router.push(tab.route as any)}
-            activeOpacity={0.8}
             style={{
               flex: 1,
               alignItems: "center",
@@ -110,7 +109,7 @@ function CustomTabBar() {
             >
               {tab.label}
             </Text>
-          </TouchableOpacity>
+          </Pressable>
         );
       })}
     </View>

@@ -3,7 +3,7 @@ import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
-import { Animated, Text, TouchableOpacity, View } from "react-native";
+import { Animated, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const WARNING_ITEMS = [
@@ -76,9 +76,9 @@ const Safetywarning = () => {
           }}
           className="flex-row justify-between items-center pb-2 px-4"
         >
-          <TouchableOpacity onPress={() => router.back()}>
+          <Pressable onPress={() => router.back()}>
             <Feather name="arrow-left" size={24} color="#111827" />
-          </TouchableOpacity>
+          </Pressable>
           <Text className="text-xl text-[#111827] font-Inter_Bold">
             Safety Warning
           </Text>
@@ -144,10 +144,7 @@ const Safetywarning = () => {
               opacity: buttonOpacity,
             }}
           >
-            <TouchableOpacity
-              onPress={() => router.push("/shared/help")}
-              activeOpacity={0.85}
-            >
+            <Pressable onPress={() => router.push("/(tabs)/home/help")}>
               <LinearGradient
                 colors={["#06B6D4", "#14B8A6"]}
                 start={{ x: 0, y: 0 }}
@@ -163,7 +160,7 @@ const Safetywarning = () => {
                   Contact Us
                 </Text>
               </LinearGradient>
-            </TouchableOpacity>
+            </Pressable>
           </Animated.View>
         </View>
       </SafeAreaView>

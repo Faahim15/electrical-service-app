@@ -4,13 +4,7 @@ import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
-import {
-  Animated,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Animated, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 
@@ -107,9 +101,9 @@ const Troubleshootingguides = () => {
           }}
           className="flex-row justify-between items-center pb-2 px-4"
         >
-          <TouchableOpacity onPress={() => router.back()}>
+          <Pressable onPress={() => router.back()}>
             <Feather name="arrow-left" size={24} color="#111827" />
-          </TouchableOpacity>
+          </Pressable>
           <Text className="text-xl text-[#111827] font-Inter_Bold">
             {pageTitle}
           </Text>
@@ -226,10 +220,7 @@ const Troubleshootingguides = () => {
             </Text>
 
             {/* Contact Us */}
-            <TouchableOpacity
-              onPress={() => router.push("/shared/help")}
-              activeOpacity={0.85}
-            >
+            <Pressable onPress={() => router.push("/(tabs)/home/help")}>
               <LinearGradient
                 colors={["#06B6D4", "#14B8A6"]}
                 start={{ x: 0, y: 0 }}
@@ -245,13 +236,14 @@ const Troubleshootingguides = () => {
                   Contact Us
                 </Text>
               </LinearGradient>
-            </TouchableOpacity>
+            </Pressable>
 
             {/* Request Service */}
             {category?.title === "Outlet Not Working" && (
-              <TouchableOpacity
-                onPress={() => router.replace("/quote/choose-category")}
-                activeOpacity={0.85}
+              <Pressable
+                onPress={() =>
+                  router.replace("/(tabs)/quotes/quote/choose-category")
+                }
                 className="rounded-2xl py-4 items-center border border-[#14B8A6]"
               >
                 <Text
@@ -260,7 +252,7 @@ const Troubleshootingguides = () => {
                 >
                   Request Service
                 </Text>
-              </TouchableOpacity>
+              </Pressable>
             )}
           </Animated.View>
           <View className="h-40" />

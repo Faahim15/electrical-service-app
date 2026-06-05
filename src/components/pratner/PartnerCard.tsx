@@ -3,7 +3,7 @@ import { AntDesign, Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, Linking, Text, TouchableOpacity, View } from "react-native";
+import { Animated, Linking, Pressable, Text, View } from "react-native";
 
 import { useDispatch } from "react-redux";
 
@@ -75,7 +75,7 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
           <Text className="text-base font-Inter_Bold text-[#0F172A] flex-1 mr-2">
             {item.name}
           </Text>
-          <TouchableOpacity
+          <Pressable
             onPress={() => setIslove(!islove)}
             hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
           >
@@ -84,7 +84,7 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
             ) : (
               <Feather name="heart" size={22} color="#9CA3AF" />
             )}
-          </TouchableOpacity>
+          </Pressable>
         </View>
 
         {/* Category */}
@@ -93,7 +93,7 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
         </Text>
 
         {/* Phone */}
-        <TouchableOpacity
+        <Pressable
           className="flex-row items-center mb-1.5"
           onPress={() => Linking.openURL(`tel:${item.contact.phone}`)}
         >
@@ -101,11 +101,11 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
           <Text className="text-sm font-Inter_Regular text-[#0F172A] ml-2">
             {item.contact.phone}
           </Text>
-        </TouchableOpacity>
+        </Pressable>
 
         {/* Website (conditional) */}
         {item?.contact?.website && (
-          <TouchableOpacity
+          <Pressable
             className="flex-row items-center mb-3"
             onPress={() => Linking.openURL(item?.contact?.website!)}
           >
@@ -117,7 +117,7 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
                 {item?.contact?.website}
               </Text>
             </View>
-          </TouchableOpacity>
+          </Pressable>
         )}
 
         {/* Divider */}
@@ -125,7 +125,7 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
 
         {/* Action buttons */}
         <View className="flex-row gap-2">
-          <TouchableOpacity
+          <Pressable
             className="flex-row items-center justify-center border border-slate-200 rounded-xl px-4 py-4 gap-1.5"
             onPress={() => Linking.openURL(`tel:${item.contact.phone}`)}
           >
@@ -133,9 +133,9 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
             <Text className="text-sm font-Inter_SemiBold text-[#0F172A]">
               Call
             </Text>
-          </TouchableOpacity>
+          </Pressable>
 
-          <TouchableOpacity className="flex-1 " onPress={handleView}>
+          <Pressable className="flex-1 " onPress={handleView}>
             <LinearGradient
               colors={["#0EA5E9", "#14B8A6"]}
               start={{ x: 0, y: 0 }}
@@ -147,10 +147,10 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
                 View Detais
               </Text>
             </LinearGradient>
-          </TouchableOpacity>
+          </Pressable>
         </View>
         {item?.contact?.website && (
-          <TouchableOpacity
+          <Pressable
             onPress={() => handleWebsite(item?.contact?.website)}
             className="flex-row items-center justify-center border border-slate-200 rounded-xl px-4 py-4 gap-1.5 mt-3"
           >
@@ -158,7 +158,7 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
             <Text className="text-sm font-Inter_SemiBold text-[#0F172A]">
               Website
             </Text>
-          </TouchableOpacity>
+          </Pressable>
         )}
       </View>
     </Animated.View>

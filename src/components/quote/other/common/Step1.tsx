@@ -4,7 +4,7 @@ import CustomInput from "@/src/components/shared/CustomInput";
 import { updateContactDetails } from "@/src/redux/slices/globalstore/commonContractdetailsStoreSlice";
 import { RootState } from "@/src/redux/store";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 // ─── Constants ─────────────────────────────────────────────────────────────────
@@ -31,9 +31,8 @@ const PreferredContactSection = () => {
         {CONTACT_OPTIONS.map((option) => {
           const isSelected = selected === option;
           return (
-            <TouchableOpacity
+            <Pressable
               key={option}
-              activeOpacity={0.8}
               onPress={() =>
                 dispatch(updateContactDetails({ preferredContact: option }))
               }
@@ -57,7 +56,7 @@ const PreferredContactSection = () => {
               >
                 {option}
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           );
         })}
       </View>

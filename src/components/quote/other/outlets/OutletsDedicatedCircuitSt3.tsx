@@ -12,10 +12,10 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
   Keyboard,
+  Pressable,
   ScrollView,
   Text,
   TextInput,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   useWindowDimensions,
   View,
@@ -114,8 +114,7 @@ const OutletsDedicatedCircuitSt3 = () => {
 
     return (
       <View key={label} style={{ marginBottom: 8 }}>
-        <TouchableOpacity
-          activeOpacity={1}
+        <Pressable
           onPressIn={() => animatePressIn(index)}
           onPressOut={() => animatePressOut(index)}
           onPress={onPress}
@@ -140,7 +139,7 @@ const OutletsDedicatedCircuitSt3 = () => {
           >
             {label}
           </Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     );
   };
@@ -232,12 +231,12 @@ const OutletsDedicatedCircuitSt3 = () => {
                   <Text className="text-base font-Inter_SemiBold text-[#1F2937]">
                     What is the NEMA configuration?
                   </Text>
-                  <TouchableOpacity
+                  <Pressable
                     onPress={() => setIsVisiable(true)}
                     className="h-4 w-4 rounded-full border border-[#60A5FA] justify-center items-center"
                   >
                     <Text className="text-[#60A5FA] font-Inter_Bold">i</Text>
-                  </TouchableOpacity>
+                  </Pressable>
                 </View>
 
                 <Text
@@ -297,13 +296,13 @@ const OutletsDedicatedCircuitSt3 = () => {
                       style={{ backgroundColor: "#EEF9FF" }}
                     >
                       <Text className="text-lg font-Inter_SemiBold text-[#0369A1]" />
-                      <TouchableOpacity
+                      <Pressable
                         onPress={() => setIsVisiable(false)}
                         className="w-[26px] h-[26px] rounded-full items-center justify-center"
                         style={{ backgroundColor: "#BAE6FD" }}
                       >
                         <Ionicons name="close" size={14} color="#0369A1" />
-                      </TouchableOpacity>
+                      </Pressable>
                     </View>
 
                     <ScrollView

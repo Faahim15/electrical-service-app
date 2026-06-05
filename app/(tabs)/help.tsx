@@ -3,7 +3,7 @@ import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Href, router } from "expo-router";
 import React, { useEffect, useRef } from "react";
-import { Animated, Linking, Text, TouchableOpacity, View } from "react-native";
+import { Animated, Linking, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 // ── Help categories data ──
 interface HelpItem {
@@ -19,14 +19,14 @@ const HELP_ITEMS: HelpItem[] = [
     icon: "zap",
     title: "Troubleshooting",
     description: "Step-by-step guides for common electrical issues",
-    route: "/trobleshooting",
+    route: "/(tabs)/home/trobleshooting",
   },
   {
     id: "2",
     icon: "shield",
     title: "Safety & Maintenance",
     description: "Keep your home safe with regular maintenance",
-    route: "/safety",
+    route: "/(tabs)/home/safety",
   },
   {
     id: "3",
@@ -34,7 +34,7 @@ const HELP_ITEMS: HelpItem[] = [
     title: "Elemental Harmony",
     description:
       "Maintenance Program memberships for your home electrical system, EV charger, and generator.",
-    route: "https://www.fourelementselectric.com/elemental-harmony" as any,
+    route: "https://www.fourelementselectric.com/elemental-harmony",
   },
 ];
 
@@ -74,8 +74,7 @@ const HelpCard = ({
       }}
       className="mb-3"
     >
-      <TouchableOpacity
-        activeOpacity={0.82}
+      <Pressable
         onPress={() => {
           const url = item.route as string;
           if (url.startsWith("http")) {
@@ -124,7 +123,7 @@ const HelpCard = ({
           {/* Chevron */}
           <Feather name="chevron-right" size={18} color="#CBD5E1" />
         </View>
-      </TouchableOpacity>
+      </Pressable>
     </Animated.View>
   );
 };
