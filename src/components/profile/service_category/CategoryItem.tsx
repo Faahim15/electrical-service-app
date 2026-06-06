@@ -23,10 +23,10 @@ const CategoryItem = ({
     if (Number(item.id) < 11) {
       router.push("/(tabs)/quotes/quote/service-details");
     } else if (Number(item.id) === 11) {
-      router.push("/sollar-installation");
+      router.push("/(tabs)/quotes/quote/other/sollar-installation");
     } else {
       dispatch(setSelectedRouteOtherCategory(item));
-      router.push("/other-start" as any);
+      router.push("/(tabs)/quotes/quote/other/other-start");
     }
   };
 

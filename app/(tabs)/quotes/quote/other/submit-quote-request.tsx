@@ -195,7 +195,9 @@ const SubmitQuoteRequest = () => {
           <Animated.View style={{ opacity: btnAnim }}>
             <GradientButton
               label="Submit Request"
-              onPress={() => router.push("/request-received")}
+              onPress={() =>
+                router.push("/(tabs)/quotes/quote/common/request-received")
+              }
             />
 
             <Pressable

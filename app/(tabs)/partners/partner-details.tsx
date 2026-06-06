@@ -331,7 +331,7 @@ const Partnerdetails = () => {
 
             {/* Save Partner — outlined */}
             <Pressable
-              onPress={() => router.push("/(tabs)/profile/favorite-partners")}
+              onPress={() => router.push("/(tabs)/partners/favorite-partners")}
               className="border border-gray-200 rounded-2xl py-4 flex-row items-center justify-center gap-2 bg-white"
             >
               <Feather name="heart" size={18} color="#374151" />

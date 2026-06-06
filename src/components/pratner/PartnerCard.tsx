@@ -44,7 +44,7 @@ const PartnerCard = ({ item, index }: { item: PartnerItem; index: number }) => {
   const dispatch = useDispatch();
   const handleView = () => {
     dispatch(setSelectedDetail(item));
-    router.push("/partner-details");
+    router.push("/(tabs)/partners/partner-details");
   };
 
   const handleWebsite = (url: string | undefined) => {
