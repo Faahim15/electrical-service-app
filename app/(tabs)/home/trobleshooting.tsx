@@ -52,7 +52,7 @@ const TroubleshootingCard = ({
       <Pressable
         onPress={() => {
           dispatch(setSelectedCategory(item)); // ✅ now TroubleshootingCategory, type matches
-          router.push("/troubleshooting-guides");
+          router.push("/(tabs)/home/troubleshooting-guides");
         }}
       >
         <View
@@ -162,8 +162,8 @@ const Trobleshooting = () => {
   }, []);
 
   return (
-    <ScreenWrapper>
-      <SafeAreaView edges={["top"]} className="flex-1">
+    <ScreenWrapper paddingHorizontal={0}>
+      <SafeAreaView edges={["top"]} className="flex-1 mt-[4%] ">
         {/* ── Header ── */}
         <Animated.View
           style={{
@@ -283,7 +283,9 @@ const Trobleshooting = () => {
               <Text className="text-sm font-Inter_Regular text-[#64748B] leading-5 mb-4">
                 Contact us or request service if your issue is not resolved.
               </Text>
-              <Pressable onPress={() => router.push("/(tabs)/home/help")}>
+              <Pressable
+                onPress={() => router.push("/(tabs)/help/contact-details")}
+              >
                 <LinearGradient
                   colors={["#06B6D4", "#14B8A6"]}
                   start={{ x: 0, y: 0 }}

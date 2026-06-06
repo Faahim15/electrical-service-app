@@ -122,7 +122,7 @@ const PartnerCard = ({
 
     dispatch(setSelectedCategory(partner.categoryData));
     dispatch(setSelectedDetail(categoryPartner));
-    router.push("/partner-details");
+    router.push("/(tabs)/partners/partner-details");
   };
 
   return (

@@ -256,7 +256,7 @@ const OtherFormProgress = () => {
       animateProgress(currentStep + 1);
     } else {
       // Last step — submit / navigate
-      router.push("/submit-quote-request");
+      router.push("/(tabs)/quotes/quote/common/submit-quote");
     }
   };
 

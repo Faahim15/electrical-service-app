@@ -144,7 +144,9 @@ const Safetywarning = () => {
               opacity: buttonOpacity,
             }}
           >
-            <Pressable onPress={() => router.push("/(tabs)/home/help")}>
+            <Pressable
+              onPress={() => router.push("/(tabs)/help/contact-details")}
+            >
               <LinearGradient
                 colors={["#06B6D4", "#14B8A6"]}
                 start={{ x: 0, y: 0 }}

@@ -61,7 +61,7 @@ const ListFooter = () => (
       Our team can help you determine the best{"\n"}service for your needs
     </Text>
     <Pressable
-      onPress={() => router.push("/(tabs)/home/help")}
+      onPress={() => router.push("/(tabs)/help/contact-details")}
       className="border border-gray-300 bg-white rounded-xl px-6 py-3 self-start"
     >
       <Text className="font-Inter_Medium text-sm text-[#4C51BF]">

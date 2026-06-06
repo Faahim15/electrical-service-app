@@ -2,6 +2,7 @@ import { getCategoryData } from "@/data/otherCategoryData";
 import { GradientButton } from "@/src/components/onboarding/GradientButton";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
 import { RootState } from "@/src/redux/store";
+import { verticalScale } from "@/src/utils/Scaling";
 import { Feather, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
@@ -124,7 +125,7 @@ const OtherStart = () => {
         <View style={{ flex: 1 }}>
           <ScrollView
             style={{ flex: 1 }}
-            contentContainerStyle={{ paddingBottom: 32 }}
+            contentContainerStyle={{ paddingBottom: verticalScale(120) }}
             showsVerticalScrollIndicator={false}
           >
             {/* Back Button */}
@@ -422,7 +423,9 @@ const OtherStart = () => {
             >
               <GradientButton
                 label="Start Quote"
-                onPress={() => router.push("/other-form-progress")}
+                onPress={() =>
+                  router.push("/(tabs)/quotes/quote/other/other-form-progress")
+                }
               />
             </Animated.View>
           </ScrollView>
