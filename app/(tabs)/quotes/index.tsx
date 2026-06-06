@@ -206,7 +206,7 @@ export default function QuotesScreen() {
                 Contact us and find the right option for your project
               </Text>
               <Pressable
-                onPress={() => router.push("/(tabs)/home/help")}
+                onPress={() => router.push("/(tabs)/help/contact-details")}
                 className="bg-white rounded-2xl py-[3.5%] items-center shadow-sm"
               >
                 <Text className="text-[#1E293B] text-[13.5px] font-Inter_SemiBold">

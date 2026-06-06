@@ -97,7 +97,7 @@ const SafetyCard = ({
   const dispatch = useDispatch();
   const handleroute = () => {
     dispatch(setSelectedItem(item.id));
-    router.push("/maintenance-details");
+    router.push("/(tabs)/home/maintenance-details");
   };
   return (
     <Pressable onPress={handleroute}>
@@ -219,7 +219,7 @@ const Safety = () => {
   }, []);
 
   return (
-    <ScreenWrapper>
+    <ScreenWrapper paddingHorizontal={20}>
       <SafeAreaView edges={["top"]} className="flex-1">
         {/* ── Header ── */}
         <Animated.View

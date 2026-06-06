@@ -153,7 +153,7 @@ const CategoryCard = ({
 
   const handleRoute = () => {
     dispatch(setSelectedCategory(item));
-    router.push("/partner-categorie");
+    router.push("/(tabs)/partners/partner-categorie");
   };
   return (
     <Animated.View
@@ -219,7 +219,7 @@ const Partners = () => {
 
   return (
     <ScreenWrapper>
-      <SafeAreaView edges={["top"]} className="flex-1 ">
+      <SafeAreaView edges={["top"]} className="flex-1 mt-[2%] ">
         <Animated.View
           style={{
             transform: [{ translateY: headerSlide }],

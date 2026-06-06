@@ -108,7 +108,7 @@ const SolarInstallation = () => {
       }),
     );
     dispatch(setSelectedDetail(categoryPartners[0]));
-    router.push("/partner-details");
+    router.push("/(tabs)/partners/partner-details");
   };
 
   return (
