@@ -44,7 +44,7 @@ export default function HomeScreen() {
                   shadowRadius: 4,
                   elevation: 2,
                 }}
-                onPress={() => router.push("/shared/notifications")}
+                onPress={() => router.push("/(tabs)/home/notifications")}
               >
                 <Ionicons
                   name="notifications-outline"
@@ -136,7 +136,7 @@ export default function HomeScreen() {
             <View className="flex-row items-center gap-3 ml-11">
               <Pressable
                 className="bg-red-500 rounded-xl px-4 py-2.5"
-                onPress={() => router.push("/(tabs)/home/help")}
+                onPress={() => router.push("/(tabs)/help/contact-details")}
               >
                 <Text className="font-Inter_SemiBold text-sm text-white">
                   Call Now

@@ -83,7 +83,7 @@ const ElectricalHelpCard = () => {
             </Pressable>
 
             <Pressable
-              onPress={() => router.push("/(tabs)/home/help")}
+              onPress={() => router.push("/(tabs)/help/contact-details")}
               className="flex-1 bg-[#FFFFFF26] rounded-[18px] py-[13px] items-center justify-center"
             >
               <Text className="text-white text-[15px] font-Inter_Bold">

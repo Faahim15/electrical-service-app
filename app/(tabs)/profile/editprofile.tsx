@@ -1,5 +1,6 @@
 import ProfileEditForm from "@/src/components/profile/profileEdit/ProfileEditForm";
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
+import { verticalScale } from "@/src/utils/Scaling";
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
@@ -37,7 +38,7 @@ const editprofile = () => {
           <ScrollView
             showsVerticalScrollIndicator={false}
             className="flex-1 "
-            contentContainerStyle={{ paddingBottom: 32 }}
+            contentContainerStyle={{ paddingBottom: verticalScale(120) }}
           >
             <LinearGradient
               colors={["#0EA5E9", "#14B8A6"]}

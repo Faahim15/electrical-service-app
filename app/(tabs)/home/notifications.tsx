@@ -1,5 +1,6 @@
 // src/app/notifications/index.tsx
 import ScreenWrapper from "@/src/components/shared/ScreenWrapper";
+import { verticalScale } from "@/src/utils/Scaling";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
@@ -95,7 +96,7 @@ export default function Notifications() {
 
   return (
     <ScreenWrapper paddingHorizontal={0}>
-      <View className="flex-1">
+      <View className="flex-1 pt-[4%] ">
         {/* Header */}
         <View className="bg-white px-[4%] pt-[4%] pb-4">
           <View className="flex-row items-center justify-between">
@@ -120,7 +121,11 @@ export default function Notifications() {
           data={notifications}
           keyExtractor={(item) => item.id}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ padding: 16, gap: 10 }}
+          contentContainerStyle={{
+            padding: 16,
+            gap: 10,
+            paddingBottom: verticalScale(100),
+          }}
           renderItem={({ item }) => (
             <Pressable
               style={{
